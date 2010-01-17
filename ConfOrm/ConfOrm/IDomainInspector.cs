@@ -1,5 +1,4 @@
 using System;
-using System.Data;
 using System.Reflection;
 
 namespace ConfOrm
@@ -11,9 +10,9 @@ namespace ConfOrm
 		bool IsComplex(Type type);
 		bool IsEntity(Type type);
 
-		bool ApplyTablePerClass(Type type);
-		bool ApplyTablePerHierarchy(Type type);
-		bool ApplyTablePerConcreteClass(Type type);
+		bool IsTablePerClass(Type type);
+		bool IsTablePerHierarchy(Type type);
+		bool IsTablePerConcreteClass(Type type);
 
 		bool IsOneToOne(Type from, Type to);
 		bool IsManyToOne(Type from, Type to);
@@ -26,8 +25,11 @@ namespace ConfOrm
 		bool IsPersistentId(MemberInfo member);
 
 		bool IsPersistentProperty(MemberInfo role);
-		DbType GetPersistentType(MemberInfo role);
+		IDbColumnSpecification[] GetPersistentSpecification(MemberInfo role);
 
-		CollectionSemantic GetCollectionSemantic(MemberInfo role);
+		bool IsSet(MemberInfo role);
+		bool IsBag(MemberInfo role);
+		bool IsList(MemberInfo role);
+		bool IsArray(MemberInfo role);
 	}
 }
