@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using ConfOrm.Patterns;
 
 namespace ConfOrm
 {
@@ -11,6 +12,13 @@ namespace ConfOrm
 		private readonly HashSet<Type> tablePerClassEntities = new HashSet<Type>();
 		private HashSet<Type> tablePerClassHierarchyEntities = new HashSet<Type>();
 		private HashSet<Type> tablePerConcreteClassEntities = new HashSet<Type>();
+		private readonly List<IPattern<MemberInfo>> poidPatterns;
+		
+		public ObjectRelationalMapper()
+		{
+			poidPatterns = new List<IPattern<MemberInfo>> {new PoIdPattern()};
+		}
+
 		#region Implementation of IObjectRelationalMapper
 
 		public void TablePerClassHierarchy<TBaseEntity>() where TBaseEntity : class
@@ -82,15 +90,17 @@ namespace ConfOrm
 		public bool IsTablePerClass(Type type)
 		{
 			var isExplicitTablePerClass = tablePerClassEntities.Contains(type);
+			bool isDerived = false;
+
 			if (!isExplicitTablePerClass)
 			{
-				var derived = type.GetBaseTypes().Any(t => tablePerClassEntities.Contains(t));
-				if(derived)
+				isDerived = type.GetBaseTypes().Any(t => tablePerClassEntities.Contains(t));
+				if(isDerived)
 				{
 					tablePerClassEntities.Add(type);
 				}
 			}
-			return isExplicitTablePerClass;
+			return isExplicitTablePerClass || isDerived;
 		}
 
 		public bool IsTablePerHierarchy(Type type)
@@ -140,12 +150,12 @@ namespace ConfOrm
 
 		public bool IsPersistentId(MemberInfo member)
 		{
-			throw new NotImplementedException();
+			return poidPatterns.Any(pattern => pattern.Match(member));
 		}
 
 		public bool IsPersistentProperty(MemberInfo role)
 		{
-			throw new NotImplementedException();
+			return true;
 		}
 
 		public IDbColumnSpecification[] GetPersistentSpecification(MemberInfo role)

@@ -28,8 +28,8 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		[Test]
 		public void IsRecognizedAsTablePerClass()
 		{
-			(typeof(TestSubEntity)).Satisfy(te => mapper.IsTablePerClass(te));
-			(typeof(TestSubSubEntity)).Satisfy(te => mapper.IsTablePerClass(te));
+			mapper.IsTablePerClass(typeof (TestSubEntity)).Should().Be.True();
+			mapper.IsTablePerClass(typeof(TestSubSubEntity)).Should().Be.True();
 		}
 
 		[Test]
