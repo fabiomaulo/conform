@@ -46,6 +46,13 @@
     <Compile Include="IDomainInspector.cs" />
     <Compile Include="IObjectRelationalMapper.cs" />
     <Compile Include="IPattern.cs" />
+    <Compile Include="Mappers\ICollectionElementRelation.cs" />
+    <Compile Include="Mappers\ICollectionPropertiesMapper.cs" />
+    <Compile Include="Mappers\IComponentMapper.cs" />
+    <Compile Include="Mappers\IOneToOneMapper.cs" />
+    <Compile Include="Mappers\IPropertyContainerMapper.cs" />
+    <Compile Include="MappingException.cs" />
+    <Compile Include="NH\AbstractPropertyContainerMapper.cs" />
     <Compile Include="NH\Mapper.cs" />
     <Compile Include="ObjectRelationalMapper.cs" />
     <Compile Include="Patterns\PoIdGuidStrategyPattern.cs" />

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NHibernate.Cfg.MappingSchema;
 
 namespace ConfOrm.NH
@@ -24,6 +25,13 @@ namespace ConfOrm.NH
 			if (types == null)
 			{
 				throw new ArgumentNullException("types");
+			}
+			foreach (var type in types.Where(type => domainInspector.IsEntity(type) && domainInspector.IsRootEntity(type)))
+			{
+				if (domainInspector.IsTablePerClass(type))
+				{
+					
+				}
 			}
 			return mapping;
 		}
