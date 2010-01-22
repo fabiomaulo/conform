@@ -17,7 +17,7 @@ namespace ConfOrmTests.NH.MapperTests
 			public string Name { get; set; }
 		}
 
-		[Test, Ignore("Not supported yet")]
+		[Test]
 		public void MappingContainsClass()
 		{
 			var orm = new Mock<IDomainInspector>();

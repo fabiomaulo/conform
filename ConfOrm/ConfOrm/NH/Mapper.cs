@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using NHibernate.Cfg.MappingSchema;
 
 namespace ConfOrm.NH
@@ -30,10 +31,20 @@ namespace ConfOrm.NH
 			{
 				if (domainInspector.IsTablePerClass(type))
 				{
-					
+					var rootClassMapper = new ClassMapper(type, mapping, GetPoidPropertyOrField(type));
+					new IdMapper(rootClassMapper.Id);
+					foreach (var property in type.GetProperties().Where(p=> domainInspector.IsPersistentProperty(p)))
+					{
+						rootClassMapper.Property(property);
+					}
 				}
 			}
 			return mapping;
+		}
+
+		private MemberInfo GetPoidPropertyOrField(Type type)
+		{
+			return type.GetProperties().Cast<MemberInfo>().Concat(type.GetFields()).FirstOrDefault(mi=> domainInspector.IsPersistentId(mi));
 		}
 	}
 }

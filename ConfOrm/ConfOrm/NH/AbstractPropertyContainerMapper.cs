@@ -84,5 +84,20 @@ namespace ConfOrm.NH
 		}
 
 		#endregion
+
+		protected Type GetMemberType(MemberInfo propertyOrField)
+		{
+			if(propertyOrField.MemberType == MemberTypes.Property)
+			{
+				return ((PropertyInfo) propertyOrField).PropertyType;
+			}
+
+			if (propertyOrField.MemberType == MemberTypes.Field)
+			{
+				return ((FieldInfo)propertyOrField).FieldType;
+			}
+			throw new ArgumentOutOfRangeException("propertyOrField",
+			                                      "Expected PropertyInfo or FieldInfo; found :" + propertyOrField.MemberType);
+		}
 	}
 }
