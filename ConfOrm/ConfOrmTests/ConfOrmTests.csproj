@@ -61,6 +61,7 @@
     <Compile Include="NH\MapperTests\HierarchyTablePerClass.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerClassHierarchyTest.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerConcreteClassTest.cs" />
+    <Compile Include="NH\MapperTests\ManyToOneRelationTest.cs" />
     <Compile Include="NH\MapperTests\SimplePerClassTest.cs">
       <SubType>Code</SubType>
     </Compile>

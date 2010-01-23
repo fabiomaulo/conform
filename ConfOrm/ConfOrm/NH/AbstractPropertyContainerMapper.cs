@@ -55,7 +55,8 @@ namespace ConfOrm.NH
 
 		public void ManyToOne(MemberInfo property)
 		{
-			throw new NotImplementedException();
+			var hbm = new HbmManyToOne { name = property.Name };
+			AddProperty(hbm);
 		}
 
 		public void OneToOne(MemberInfo property, Action<IOneToOneMapper> mapping)
@@ -87,17 +88,7 @@ namespace ConfOrm.NH
 
 		protected Type GetMemberType(MemberInfo propertyOrField)
 		{
-			if(propertyOrField.MemberType == MemberTypes.Property)
-			{
-				return ((PropertyInfo) propertyOrField).PropertyType;
-			}
-
-			if (propertyOrField.MemberType == MemberTypes.Field)
-			{
-				return ((FieldInfo)propertyOrField).FieldType;
-			}
-			throw new ArgumentOutOfRangeException("propertyOrField",
-			                                      "Expected PropertyInfo or FieldInfo; found :" + propertyOrField.MemberType);
+			return propertyOrField.GetPropertyOrFieldType();
 		}
 	}
 }

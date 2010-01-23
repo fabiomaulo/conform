@@ -68,7 +68,15 @@ namespace ConfOrm.NH
 			var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 			foreach (var property in properties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p)))
 			{
-				propertiesContainer.Property(property);
+				var propertyType = property.GetPropertyOrFieldType();
+				if(domainInspector.IsManyToOne(type, propertyType))
+				{
+					propertiesContainer.ManyToOne(property);
+				}
+				else
+				{
+					propertiesContainer.Property(property);					
+				}
 			}
 		}
 

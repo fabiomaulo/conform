@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Type;
 
@@ -60,6 +61,21 @@ namespace ConfOrm
 			}
 
 			return type.Name;
+		}
+
+		public static Type GetPropertyOrFieldType(this MemberInfo propertyOrField)
+		{
+			if (propertyOrField.MemberType == MemberTypes.Property)
+			{
+				return ((PropertyInfo)propertyOrField).PropertyType;
+			}
+
+			if (propertyOrField.MemberType == MemberTypes.Field)
+			{
+				return ((FieldInfo)propertyOrField).FieldType;
+			}
+			throw new ArgumentOutOfRangeException("propertyOrField",
+																						"Expected PropertyInfo or FieldInfo; found :" + propertyOrField.MemberType);
 		}
 	}
 }
