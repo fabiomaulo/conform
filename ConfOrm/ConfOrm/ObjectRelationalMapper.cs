@@ -155,7 +155,7 @@ namespace ConfOrm
 
 		public bool IsPersistentProperty(MemberInfo role)
 		{
-			return !IsPersistentId(role);
+			return true;
 		}
 
 		public IDbColumnSpecification[] GetPersistentSpecification(MemberInfo role)

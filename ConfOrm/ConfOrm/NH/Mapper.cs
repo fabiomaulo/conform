@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
 
 namespace ConfOrm.NH
@@ -32,12 +33,9 @@ namespace ConfOrm.NH
 			{
 				if (domainInspector.IsTablePerClass(type))
 				{
-					var rootClassMapper = new ClassMapper(type, mapping, GetPoidPropertyOrField(type));
-					new IdMapper(rootClassMapper.Id);
-					foreach (var property in type.GetProperties().Where(p=> domainInspector.IsPersistentProperty(p)))
-					{
-						rootClassMapper.Property(property);
-					}
+					var classMapper = new ClassMapper(type, mapping, GetPoidPropertyOrField(type));
+					new IdMapper(classMapper.Id);
+					MapProperties(type, classMapper);
 				}
 			}
 			// Map joined-subclass
@@ -45,15 +43,20 @@ namespace ConfOrm.NH
 			{
 				if (domainInspector.IsTablePerClass(type))
 				{
-					var rootClassMapper = new JoinedSubclassMapper(type, mapping);
-					var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance| BindingFlags.DeclaredOnly);
-					foreach (var property in properties.Where(p => domainInspector.IsPersistentProperty(p)))
-					{
-						rootClassMapper.Property(property);
-					}
+					var classMapper = new JoinedSubclassMapper(type, mapping);
+					MapProperties(type, classMapper);
 				}
 			}
 			return mapping;
+		}
+
+		private void MapProperties(Type type, IPropertyContainerMapper propertiesContainer)
+		{
+			var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+			foreach (var property in properties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p)))
+			{
+				propertiesContainer.Property(property);
+			}
 		}
 
 		private MemberInfo GetPoidPropertyOrField(Type type)
