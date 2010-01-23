@@ -34,9 +34,10 @@ namespace ConfOrmTests.NH.MapperTests
 			VerifyEntitySimpleMapping(mapping);
 		}
 
-		private HbmMapping GetMapping(IDomainInspector domainInspector) {
+		private HbmMapping GetMapping(IDomainInspector domainInspector)
+		{
 			Mapper mapper = new Mapper(domainInspector);
-			return mapper.CompileMappingFor(new[] { typeof(Hinherited), typeof(EntitySimple) });
+			return mapper.CompileMappingFor(new[] {typeof (Hinherited), typeof (EntitySimple)});
 		}
 
 		private Mock<IDomainInspector> GetMockedDomainInspector()
