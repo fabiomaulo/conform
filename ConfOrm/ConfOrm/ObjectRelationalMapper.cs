@@ -10,8 +10,8 @@ namespace ConfOrm
 	{
 		private readonly HashSet<Type> rootEntities = new HashSet<Type>();
 		private readonly HashSet<Type> tablePerClassEntities = new HashSet<Type>();
-		private HashSet<Type> tablePerClassHierarchyEntities = new HashSet<Type>();
-		private HashSet<Type> tablePerConcreteClassEntities = new HashSet<Type>();
+		private readonly HashSet<Type> tablePerClassHierarchyEntities = new HashSet<Type>();
+		private readonly HashSet<Type> tablePerConcreteClassEntities = new HashSet<Type>();
 		private readonly List<IPattern<MemberInfo>> poidPatterns;
 		
 		public ObjectRelationalMapper()
