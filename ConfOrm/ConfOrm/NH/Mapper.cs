@@ -27,6 +27,7 @@ namespace ConfOrm.NH
 			{
 				throw new ArgumentNullException("types");
 			}
+			// Map root classes
 			foreach (var type in types.Where(type => domainInspector.IsEntity(type) && domainInspector.IsRootEntity(type)))
 			{
 				if (domainInspector.IsTablePerClass(type))
@@ -34,6 +35,19 @@ namespace ConfOrm.NH
 					var rootClassMapper = new ClassMapper(type, mapping, GetPoidPropertyOrField(type));
 					new IdMapper(rootClassMapper.Id);
 					foreach (var property in type.GetProperties().Where(p=> domainInspector.IsPersistentProperty(p)))
+					{
+						rootClassMapper.Property(property);
+					}
+				}
+			}
+			// Map joined-subclass
+			foreach (var type in types.Where(type => domainInspector.IsEntity(type) && !domainInspector.IsRootEntity(type)))
+			{
+				if (domainInspector.IsTablePerClass(type))
+				{
+					var rootClassMapper = new JoinedSubclassMapper(type, mapping);
+					var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance| BindingFlags.DeclaredOnly);
+					foreach (var property in properties.Where(p => domainInspector.IsPersistentProperty(p)))
 					{
 						rootClassMapper.Property(property);
 					}

@@ -52,12 +52,14 @@
     <Compile Include="Mappers\IComponentMapper.cs" />
     <Compile Include="Mappers\IGenerator.cs" />
     <Compile Include="Mappers\IIdMapper.cs" />
+    <Compile Include="Mappers\IJoinedSubclassMapper.cs" />
     <Compile Include="Mappers\IOneToOneMapper.cs" />
     <Compile Include="Mappers\IPropertyContainerMapper.cs" />
     <Compile Include="MappingException.cs" />
     <Compile Include="NH\AbstractPropertyContainerMapper.cs" />
     <Compile Include="NH\ClassMapper.cs" />
     <Compile Include="NH\IdMapper.cs" />
+    <Compile Include="NH\JoinedSubclassMapper.cs" />
     <Compile Include="NH\Mapper.cs" />
     <Compile Include="ObjectRelationalMapper.cs" />
     <Compile Include="Patterns\PoIdGuidStrategyPattern.cs" />
