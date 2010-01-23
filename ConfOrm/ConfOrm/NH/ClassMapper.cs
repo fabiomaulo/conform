@@ -16,6 +16,11 @@ namespace ConfOrm.NH
 		{
 			var toAdd = new[] { classMapping };
 			classMapping.name = rootClass.AssemblyQualifiedName;
+			if(rootClass.IsAbstract)
+			{
+				classMapping.@abstract = true;
+				classMapping.abstractSpecified = true;
+			}
 			var idType = GetMemberType(idProperty);
 			id = new HbmId { name = idProperty.Name, type1 = idType.GetTypeName() };
 			classMapping.Item = id;

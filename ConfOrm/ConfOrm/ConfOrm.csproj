@@ -63,6 +63,7 @@
     <Compile Include="NH\JoinedSubclassMapper.cs" />
     <Compile Include="NH\Mapper.cs" />
     <Compile Include="NH\SubclassMapper.cs" />
+    <Compile Include="NH\UnionSubclassMapper.cs" />
     <Compile Include="ObjectRelationalMapper.cs" />
     <Compile Include="Patterns\PoIdGuidStrategyPattern.cs" />
     <Compile Include="Patterns\PoIdPattern.cs" />

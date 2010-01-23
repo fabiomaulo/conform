@@ -39,7 +39,7 @@ namespace ConfOrm.NH
 				}
 				MapProperties(type, classMapper);
 			}
-			// Map joined-subclass
+			// Map subclasses
 			foreach (var type in types.Where(type => domainInspector.IsEntity(type) && !domainInspector.IsRootEntity(type)))
 			{
 				IPropertyContainerMapper propertiesContainer = null;
@@ -51,6 +51,11 @@ namespace ConfOrm.NH
 				else if (domainInspector.IsTablePerClassHierarchy(type))
 				{
 					var classMapper = new SubclassMapper(type, mapping);
+					propertiesContainer = classMapper;
+				}
+				else if (domainInspector.IsTablePerConcreteClass(type))
+				{
+					var classMapper = new UnionSubclassMapper(type, mapping);
 					propertiesContainer = classMapper;
 				}
 				MapProperties(type, propertiesContainer);

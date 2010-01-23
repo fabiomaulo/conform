@@ -37,7 +37,9 @@ namespace ConfOrm
 
 		public void TablePerConcreteClass<TBaseEntity>() where TBaseEntity : class
 		{
-			throw new NotImplementedException();
+			var type = typeof(TBaseEntity);
+			rootEntities.Add(type);
+			tablePerConcreteClassEntities.Add(type);
 		}
 
 		public void ValueObject<TComponent>()
@@ -123,7 +125,18 @@ namespace ConfOrm
 
 		public bool IsTablePerConcreteClass(Type type)
 		{
-			return tablePerConcreteClassEntities.Contains(type);
+			var isExplicitTablePerConcreteClass = tablePerConcreteClassEntities.Contains(type);
+			bool isDerived = false;
+
+			if (!isExplicitTablePerConcreteClass)
+			{
+				isDerived = type.GetBaseTypes().Any(t => tablePerConcreteClassEntities.Contains(t));
+				if (isDerived)
+				{
+					tablePerConcreteClassEntities.Add(type);
+				}
+			}
+			return isExplicitTablePerConcreteClass || isDerived;
 		}
 
 		public bool IsOneToOne(Type from, Type to)
