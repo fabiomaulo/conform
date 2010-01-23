@@ -14,6 +14,7 @@ namespace ConfOrm
 		private readonly HashSet<Type> tablePerConcreteClassEntities = new HashSet<Type>();
 		private readonly HashSet<Relation> manyToOneRelation = new HashSet<Relation>();
 		private readonly HashSet<Relation> oneToManyRelation = new HashSet<Relation>();
+		private readonly HashSet<Relation> oneToOneRelation = new HashSet<Relation>();
 		private readonly List<IPattern<MemberInfo>> poidPatterns;
 		
 		public ObjectRelationalMapper()
@@ -62,7 +63,8 @@ namespace ConfOrm
 
 		public void OneToOne<TLeftEntity, TRigthEntity>()
 		{
-			throw new NotImplementedException();
+			oneToOneRelation.Add(new Relation(typeof(TLeftEntity), typeof(TRigthEntity)));
+			oneToOneRelation.Add(new Relation(typeof(TRigthEntity), typeof(TLeftEntity)));
 		}
 
 		#endregion
@@ -139,7 +141,7 @@ namespace ConfOrm
 
 		public bool IsOneToOne(Type from, Type to)
 		{
-			throw new NotImplementedException();
+			return IsEntity(from) && IsEntity(to) && oneToOneRelation.Contains(new Relation(from, to));
 		}
 
 		public bool IsManyToOne(Type from, Type to)
