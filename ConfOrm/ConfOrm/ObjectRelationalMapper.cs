@@ -146,7 +146,8 @@ namespace ConfOrm
 
 		public bool IsManyToOne(Type from, Type to)
 		{
-			return IsEntity(from) && IsEntity(to) && manyToOneRelation.Contains(new Relation(from, to));
+			var areEntities = IsEntity(from) && IsEntity(to);
+			return (areEntities && manyToOneRelation.Contains(new Relation(from, to))) || (areEntities && !IsOneToOne(from, to));
 		}
 
 		public bool IsManyToMany(Type role1, Type role2)
@@ -161,7 +162,8 @@ namespace ConfOrm
 
 		public bool IsOneToMany(Type from, Type to)
 		{
-			return IsEntity(from) && IsEntity(to) && oneToManyRelation.Contains(new Relation(from, to));
+			var areEntities = IsEntity(from) && IsEntity(to);
+			return (areEntities && oneToManyRelation.Contains(new Relation(from, to))) || (areEntities && !IsOneToOne(from, to));
 		}
 
 		public bool IsOneToMany(Type from, Type to, MemberInfo toRole)

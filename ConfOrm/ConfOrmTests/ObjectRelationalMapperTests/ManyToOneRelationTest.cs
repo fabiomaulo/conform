@@ -52,5 +52,26 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			mapper.ManyToOne<AEntity, BEntity>();
 			mapper.IsOneToMany(typeof(BEntity), typeof(AEntity)).Should().Be.True();
 		}
+
+		[Test]
+		public void WhenExplicitRegisteredAsOneToOneNotRecognizeRelation()
+		{
+			var mapper = new ObjectRelationalMapper();
+			mapper.TablePerClass<AEntity>();
+			mapper.TablePerClass<BEntity>();
+			mapper.OneToOne<AEntity, BEntity>();
+			mapper.IsOneToMany(typeof(BEntity), typeof(AEntity)).Should().Be.False();
+			mapper.IsManyToOne(typeof(AEntity), typeof(BEntity)).Should().Be.False();
+		}
+
+		[Test]
+		public void WhenNotRegisteredAsManyToOneRecognizeRelation()
+		{
+			var mapper = new ObjectRelationalMapper();
+			mapper.TablePerClass<AEntity>();
+			mapper.TablePerClass<BEntity>();
+			mapper.IsOneToMany(typeof(BEntity), typeof(AEntity)).Should().Be.True();
+			mapper.IsManyToOne(typeof(AEntity), typeof(BEntity)).Should().Be.True();
+		}
 	}
 }
