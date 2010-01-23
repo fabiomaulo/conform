@@ -11,7 +11,7 @@ namespace ConfOrm
 		bool IsEntity(Type type);
 
 		bool IsTablePerClass(Type type);
-		bool IsTablePerHierarchy(Type type);
+		bool IsTablePerClassHierarchy(Type type);
 		bool IsTablePerConcreteClass(Type type);
 
 		bool IsOneToOne(Type from, Type to);

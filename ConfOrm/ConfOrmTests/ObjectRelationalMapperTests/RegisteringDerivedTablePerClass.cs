@@ -56,8 +56,8 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		[Test]
 		public void IsNotRecognizedAsTablePerHierarchy()
 		{
-			(typeof(TestSubEntity)).Satisfy(te => !mapper.IsTablePerHierarchy(te));
-			(typeof(TestSubSubEntity)).Satisfy(te => !mapper.IsTablePerHierarchy(te));
+			(typeof(TestSubEntity)).Satisfy(te => !mapper.IsTablePerClassHierarchy(te));
+			(typeof(TestSubSubEntity)).Satisfy(te => !mapper.IsTablePerClassHierarchy(te));
 		}
 
 		[Test]

@@ -31,21 +31,29 @@ namespace ConfOrm.NH
 			// Map root classes
 			foreach (var type in types.Where(type => domainInspector.IsEntity(type) && domainInspector.IsRootEntity(type)))
 			{
-				if (domainInspector.IsTablePerClass(type))
+				var classMapper = new ClassMapper(type, mapping, GetPoidPropertyOrField(type));
+				new IdMapper(classMapper.Id);
+				if (domainInspector.IsTablePerClassHierarchy(type))
 				{
-					var classMapper = new ClassMapper(type, mapping, GetPoidPropertyOrField(type));
-					new IdMapper(classMapper.Id);
-					MapProperties(type, classMapper);
+					classMapper.Discriminator();
 				}
+				MapProperties(type, classMapper);
 			}
 			// Map joined-subclass
 			foreach (var type in types.Where(type => domainInspector.IsEntity(type) && !domainInspector.IsRootEntity(type)))
 			{
+				IPropertyContainerMapper propertiesContainer = null;
 				if (domainInspector.IsTablePerClass(type))
 				{
 					var classMapper = new JoinedSubclassMapper(type, mapping);
-					MapProperties(type, classMapper);
+					propertiesContainer = classMapper;
 				}
+				else if (domainInspector.IsTablePerClassHierarchy(type))
+				{
+					var classMapper = new SubclassMapper(type, mapping);
+					propertiesContainer = classMapper;
+				}
+				MapProperties(type, propertiesContainer);
 			}
 			return mapping;
 		}

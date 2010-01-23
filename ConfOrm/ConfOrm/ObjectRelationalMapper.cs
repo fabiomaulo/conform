@@ -23,7 +23,9 @@ namespace ConfOrm
 
 		public void TablePerClassHierarchy<TBaseEntity>() where TBaseEntity : class
 		{
-			throw new NotImplementedException();
+			var type = typeof(TBaseEntity);
+			rootEntities.Add(type);
+			tablePerClassHierarchyEntities.Add(type);
 		}
 
 		public void TablePerClass<TBaseEntity>() where TBaseEntity : class
@@ -103,9 +105,20 @@ namespace ConfOrm
 			return isExplicitTablePerClass || isDerived;
 		}
 
-		public bool IsTablePerHierarchy(Type type)
+		public bool IsTablePerClassHierarchy(Type type)
 		{
-			return tablePerClassHierarchyEntities.Contains(type);
+			var isExplicitTablePerClassHierarchy = tablePerClassHierarchyEntities.Contains(type);
+			bool isDerived = false;
+
+			if (!isExplicitTablePerClassHierarchy)
+			{
+				isDerived = type.GetBaseTypes().Any(t => tablePerClassHierarchyEntities.Contains(t));
+				if (isDerived)
+				{
+					tablePerClassHierarchyEntities.Add(type);
+				}
+			}
+			return isExplicitTablePerClassHierarchy || isDerived;
 		}
 
 		public bool IsTablePerConcreteClass(Type type)
