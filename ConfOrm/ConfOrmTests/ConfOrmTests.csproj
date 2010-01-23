@@ -64,6 +64,7 @@
     <Compile Include="NH\MapperTests\SimplePerClassTest.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ObjectRelationalMapperTests\ManyToOneRelationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\PersistentIdTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\RegisteringDerivedTablePerClass.cs" />
     <Compile Include="ObjectRelationalMapperTests\RegisteringTablePerClass.cs" />

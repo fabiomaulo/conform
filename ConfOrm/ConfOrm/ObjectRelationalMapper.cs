@@ -12,6 +12,8 @@ namespace ConfOrm
 		private readonly HashSet<Type> tablePerClassEntities = new HashSet<Type>();
 		private readonly HashSet<Type> tablePerClassHierarchyEntities = new HashSet<Type>();
 		private readonly HashSet<Type> tablePerConcreteClassEntities = new HashSet<Type>();
+		private readonly HashSet<Relation> manyToOneRelation = new HashSet<Relation>();
+		private readonly HashSet<Relation> oneToManyRelation = new HashSet<Relation>();
 		private readonly List<IPattern<MemberInfo>> poidPatterns;
 		
 		public ObjectRelationalMapper()
@@ -42,7 +44,7 @@ namespace ConfOrm
 			tablePerConcreteClassEntities.Add(type);
 		}
 
-		public void ValueObject<TComponent>()
+		public void Component<TComponent>()
 		{
 			throw new NotImplementedException();
 		}
@@ -54,12 +56,8 @@ namespace ConfOrm
 
 		public void ManyToOne<TLeftEntity, TRigthEntity>()
 		{
-			throw new NotImplementedException();
-		}
-
-		public void OneToMany<TLeftEntity, TRigthEntity>()
-		{
-			throw new NotImplementedException();
+			manyToOneRelation.Add(new Relation(typeof (TLeftEntity), typeof (TRigthEntity)));
+			oneToManyRelation.Add(new Relation(typeof(TRigthEntity), typeof(TLeftEntity)));
 		}
 
 		public void OneToOne<TLeftEntity, TRigthEntity>()
@@ -146,7 +144,7 @@ namespace ConfOrm
 
 		public bool IsManyToOne(Type from, Type to)
 		{
-			throw new NotImplementedException();
+			return IsEntity(from) && IsEntity(to) && manyToOneRelation.Contains(new Relation(from, to));
 		}
 
 		public bool IsManyToMany(Type role1, Type role2)
@@ -161,7 +159,7 @@ namespace ConfOrm
 
 		public bool IsOneToMany(Type from, Type to)
 		{
-			throw new NotImplementedException();
+			return IsEntity(from) && IsEntity(to) && oneToManyRelation.Contains(new Relation(from, to));
 		}
 
 		public bool IsOneToMany(Type from, Type to, MemberInfo toRole)
