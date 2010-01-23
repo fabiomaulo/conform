@@ -17,9 +17,7 @@ namespace ConfOrm
 		bool IsOneToOne(Type from, Type to);
 		bool IsManyToOne(Type from, Type to);
 		bool IsManyToMany(Type role1, Type role2);
-		bool IsManyToMany(Type role1, Type role2, MemberInfo relationOwnerRole);
 		bool IsOneToMany(Type from, Type to);
-		bool IsOneToMany(Type from, Type to, MemberInfo toRole);
 		bool IsHeterogeneousAssociations(MemberInfo member);
 
 		bool IsPersistentId(MemberInfo member);

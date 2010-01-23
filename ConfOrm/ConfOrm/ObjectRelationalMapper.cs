@@ -155,20 +155,10 @@ namespace ConfOrm
 			throw new NotImplementedException();
 		}
 
-		public bool IsManyToMany(Type role1, Type role2, MemberInfo relationOwnerRole)
-		{
-			throw new NotImplementedException();
-		}
-
 		public bool IsOneToMany(Type from, Type to)
 		{
 			var areEntities = IsEntity(from) && IsEntity(to);
 			return (areEntities && oneToManyRelation.Contains(new Relation(from, to))) || (areEntities && !IsOneToOne(from, to));
-		}
-
-		public bool IsOneToMany(Type from, Type to, MemberInfo toRole)
-		{
-			throw new NotImplementedException();
 		}
 
 		public bool IsHeterogeneousAssociations(MemberInfo member)
