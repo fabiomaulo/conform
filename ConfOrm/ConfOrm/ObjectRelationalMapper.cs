@@ -15,6 +15,7 @@ namespace ConfOrm
 		private readonly HashSet<Relation> manyToOneRelation = new HashSet<Relation>();
 		private readonly HashSet<Relation> oneToManyRelation = new HashSet<Relation>();
 		private readonly HashSet<Relation> oneToOneRelation = new HashSet<Relation>();
+		private readonly HashSet<Relation> manyToManyRelation = new HashSet<Relation>();
 		private readonly List<IPattern<MemberInfo>> poidPatterns;
 		private readonly HashSet<Type> components = new HashSet<Type>();
 		
@@ -70,7 +71,8 @@ namespace ConfOrm
 
 		public void ManyToMany<TLeftEntity, TRigthEntity>()
 		{
-			throw new NotImplementedException();
+			manyToManyRelation.Add(new Relation(typeof(TLeftEntity), typeof(TRigthEntity)));
+			manyToManyRelation.Add(new Relation(typeof(TRigthEntity), typeof(TLeftEntity)));
 		}
 
 		public void ManyToOne<TLeftEntity, TRigthEntity>()
@@ -170,7 +172,7 @@ namespace ConfOrm
 
 		public bool IsManyToMany(Type role1, Type role2)
 		{
-			throw new NotImplementedException();
+			return IsEntity(role1) && IsEntity(role2) && manyToManyRelation.Contains(new Relation(role1, role2));
 		}
 
 		public bool IsOneToMany(Type from, Type to)

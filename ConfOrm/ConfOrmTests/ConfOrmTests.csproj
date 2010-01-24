@@ -66,6 +66,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ObjectRelationalMapperTests\ComponentRegistrationTest.cs" />
+    <Compile Include="ObjectRelationalMapperTests\ManyToManyRelationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\ManyToOneRelationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\OneToOneRelationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\PersistentIdTest.cs" />
