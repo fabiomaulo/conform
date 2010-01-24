@@ -113,50 +113,33 @@ namespace ConfOrm
 
 		public bool IsTablePerClass(Type type)
 		{
-			var isExplicitTablePerClass = tablePerClassEntities.Contains(type);
-			bool isDerived = false;
-
-			if (!isExplicitTablePerClass)
-			{
-				isDerived = type.GetBaseTypes().Any(t => tablePerClassEntities.Contains(t));
-				if(isDerived)
-				{
-					tablePerClassEntities.Add(type);
-				}
-			}
-			return isExplicitTablePerClass || isDerived;
+			return IsMappedFor(tablePerClassEntities, type);
 		}
 
 		public bool IsTablePerClassHierarchy(Type type)
 		{
-			var isExplicitTablePerClassHierarchy = tablePerClassHierarchyEntities.Contains(type);
+			return IsMappedFor(tablePerClassHierarchyEntities, type);
+		}
+
+		private bool IsMappedFor(ICollection<Type> explicitMappedEntities, Type type)
+		{
+			var isExplicitMapped = explicitMappedEntities.Contains(type);
 			bool isDerived = false;
 
-			if (!isExplicitTablePerClassHierarchy)
+			if (!isExplicitMapped)
 			{
-				isDerived = type.GetBaseTypes().Any(t => tablePerClassHierarchyEntities.Contains(t));
+				isDerived = type.GetBaseTypes().Any(explicitMappedEntities.Contains);
 				if (isDerived)
 				{
-					tablePerClassHierarchyEntities.Add(type);
+					explicitMappedEntities.Add(type);
 				}
 			}
-			return isExplicitTablePerClassHierarchy || isDerived;
+			return isExplicitMapped || isDerived;
 		}
 
 		public bool IsTablePerConcreteClass(Type type)
 		{
-			var isExplicitTablePerConcreteClass = tablePerConcreteClassEntities.Contains(type);
-			bool isDerived = false;
-
-			if (!isExplicitTablePerConcreteClass)
-			{
-				isDerived = type.GetBaseTypes().Any(t => tablePerConcreteClassEntities.Contains(t));
-				if (isDerived)
-				{
-					tablePerConcreteClassEntities.Add(type);
-				}
-			}
-			return isExplicitTablePerConcreteClass || isDerived;
+			return IsMappedFor(tablePerConcreteClassEntities, type);
 		}
 
 		public bool IsOneToOne(Type from, Type to)
