@@ -6,12 +6,6 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 {
 	public class ComponentRegistrationTest
 	{
-		private class AEntity
-		{
-			public int Id { get; set; }
-			public AComponent Name { get; set; }
-		}
-
 		private class AComponent
 		{
 			public string Fisrt { get; set; }
