@@ -16,6 +16,7 @@ namespace ConfOrm
 		private readonly HashSet<Relation> oneToManyRelation = new HashSet<Relation>();
 		private readonly HashSet<Relation> oneToOneRelation = new HashSet<Relation>();
 		private readonly List<IPattern<MemberInfo>> poidPatterns;
+		private readonly HashSet<Type> components = new HashSet<Type>();
 		
 		public ObjectRelationalMapper()
 		{
@@ -27,6 +28,10 @@ namespace ConfOrm
 		public void TablePerClassHierarchy<TBaseEntity>() where TBaseEntity : class
 		{
 			var type = typeof(TBaseEntity);
+			if (IsComponent(type))
+			{
+				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
+			}
 			rootEntities.Add(type);
 			tablePerClassHierarchyEntities.Add(type);
 		}
@@ -34,6 +39,10 @@ namespace ConfOrm
 		public void TablePerClass<TBaseEntity>() where TBaseEntity : class
 		{
 			var type = typeof (TBaseEntity);
+			if (IsComponent(type))
+			{
+				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
+			}
 			rootEntities.Add(type);
 			tablePerClassEntities.Add(type);
 		}
@@ -41,13 +50,22 @@ namespace ConfOrm
 		public void TablePerConcreteClass<TBaseEntity>() where TBaseEntity : class
 		{
 			var type = typeof(TBaseEntity);
+			if (IsComponent(type))
+			{
+				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
+			}
 			rootEntities.Add(type);
 			tablePerConcreteClassEntities.Add(type);
 		}
 
 		public void Component<TComponent>()
 		{
-			throw new NotImplementedException();
+			var type = typeof(TComponent);
+			if(IsEntity(type))
+			{
+				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
+			}
+			components.Add(type);
 		}
 
 		public void ManyToMany<TLeftEntity, TRigthEntity>()
@@ -78,7 +96,7 @@ namespace ConfOrm
 
 		public bool IsComponent(Type type)
 		{
-			return false;
+			return components.Contains(type);
 		}
 
 		public bool IsComplex(Type type)
