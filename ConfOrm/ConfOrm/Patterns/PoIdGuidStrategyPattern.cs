@@ -13,12 +13,8 @@ namespace ConfOrm.Patterns
 			{
 				throw new ArgumentNullException("subject");
 			}
-			var pi = subject as PropertyInfo;
-			if(pi!=null)
-			{
-				return pi.PropertyType == typeof (Guid);
-			}
-			return false;
+			var propertyOrFieldType = subject.GetPropertyOrFieldType();
+			return propertyOrFieldType  == typeof(Guid);
 		}
 
 		#endregion
