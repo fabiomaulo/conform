@@ -65,6 +65,7 @@
     <Compile Include="NH\SubclassMapper.cs" />
     <Compile Include="NH\UnionSubclassMapper.cs" />
     <Compile Include="ObjectRelationalMapper.cs" />
+    <Compile Include="Patterns\BidirectionalRelationPattern.cs" />
     <Compile Include="Patterns\PoIdGuidStrategyPattern.cs" />
     <Compile Include="Patterns\PoIdPattern.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

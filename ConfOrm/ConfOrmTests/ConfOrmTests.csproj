@@ -72,6 +72,7 @@
     <Compile Include="ObjectRelationalMapperTests\PersistentIdTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\RegisteringDerivedTablePerClass.cs" />
     <Compile Include="ObjectRelationalMapperTests\RegisteringTablePerClass.cs" />
+    <Compile Include="Patterns\BidirectionalRelationPatternTest.cs" />
     <Compile Include="Patterns\PoIdGuidStrategyPatternTest.cs" />
     <Compile Include="Patterns\PoIdPatternTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
