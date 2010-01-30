@@ -8,7 +8,7 @@ namespace ConfOrmTests.Patterns
 {
 	public class ListCollectionPatternTest
 	{
-		private class EntityWithSets
+		private class Entity
 		{
 			private ICollection<string> others;
 			private IList<string> emails;
@@ -28,7 +28,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void MatchWithListProperty()
 		{
-			var mi = typeof(EntityWithSets).GetProperty("NickNames");
+			var mi = typeof(Entity).GetProperty("NickNames");
 			var p = new ListCollectionPattern();
 			p.Match(mi).Should().Be.True();
 		}
@@ -36,7 +36,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void MatchWithListField()
 		{
-			var mi = typeof(EntityWithSets).GetField("emails", BindingFlags.NonPublic | BindingFlags.Instance);
+			var mi = typeof(Entity).GetField("emails", BindingFlags.NonPublic | BindingFlags.Instance);
 			var p = new ListCollectionPattern();
 			p.Match(mi).Should().Be.True();
 		}
@@ -44,7 +44,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void MatchWithCollectionPropertyAndListField()
 		{
-			var mi = typeof(EntityWithSets).GetProperty("Emails");
+			var mi = typeof(Entity).GetProperty("Emails");
 			var p = new ListCollectionPattern();
 			p.Match(mi).Should().Be.True();
 		}
@@ -52,7 +52,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void NotMatchWithCollectionField()
 		{
-			var mi = typeof(EntityWithSets).GetField("others", BindingFlags.NonPublic | BindingFlags.Instance);
+			var mi = typeof(Entity).GetField("others", BindingFlags.NonPublic | BindingFlags.Instance);
 			var p = new ListCollectionPattern();
 			p.Match(mi).Should().Be.False();
 		}
@@ -60,7 +60,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void NotMatchWithCollectionProperty()
 		{
-			var mi = typeof(EntityWithSets).GetProperty("Others");
+			var mi = typeof(Entity).GetProperty("Others");
 			var p = new ListCollectionPattern();
 			p.Match(mi).Should().Be.False();
 		}
