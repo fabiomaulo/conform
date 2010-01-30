@@ -13,7 +13,8 @@ namespace ConfOrm.Patterns
 				{
 					new PropertyToFieldCamelCasePattern(),
 					new PropertyToFieldUnderscorePascalCasePattern(),
-					new PropertyToFieldMUnderscorePascalCasePattern()
+					new PropertyToFieldMUnderscorePascalCasePattern(),
+					new PropertyToFieldUnderscoreCamelCasePattern()
 				};
 
 		#region Implementation of IPattern<MemberInfo>

@@ -81,6 +81,7 @@
     <Compile Include="Patterns\PoIdPatternTest.cs" />
     <Compile Include="Patterns\PropertyToFieldCamelCasePatternTest.cs" />
     <Compile Include="Patterns\PropertyToFieldMUnderscorePascalCasePatternTest.cs" />
+    <Compile Include="Patterns\PropertyToFieldUnderscoreCamelCasePatternTest.cs" />
     <Compile Include="Patterns\PropertyToFieldUnderscorePascalCasePatternTest.cs" />
     <Compile Include="Patterns\SetCollectionPatternTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
