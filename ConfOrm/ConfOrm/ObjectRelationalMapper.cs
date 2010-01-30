@@ -21,12 +21,13 @@ namespace ConfOrm
 		private readonly HashSet<MemberInfo> bags = new HashSet<MemberInfo>();
 		private readonly HashSet<MemberInfo> lists = new HashSet<MemberInfo>();
 		private readonly HashSet<MemberInfo> arrays = new HashSet<MemberInfo>();
-		private readonly List<IPattern<MemberInfo>> poidPatterns;
-		private readonly List<IPattern<MemberInfo>> setPatterns;
-		private readonly List<IPattern<MemberInfo>> bagPatterns;
-		private readonly List<IPattern<MemberInfo>> listPatterns;
-		private readonly List<IPattern<MemberInfo>> arrayPatterns;
 		private readonly HashSet<Type> components = new HashSet<Type>();
+
+		protected readonly List<IPattern<MemberInfo>> poidPatterns;
+		protected readonly List<IPattern<MemberInfo>> setPatterns;
+		protected readonly List<IPattern<MemberInfo>> bagPatterns;
+		protected readonly List<IPattern<MemberInfo>> listPatterns;
+		protected readonly List<IPattern<MemberInfo>> arrayPatterns;
 		
 		public ObjectRelationalMapper()
 		{
