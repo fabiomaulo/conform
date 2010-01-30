@@ -203,7 +203,7 @@ namespace ConfOrm
 
 		public bool IsHeterogeneousAssociations(MemberInfo member)
 		{
-			throw new NotImplementedException();
+			return false;
 		}
 
 		public bool IsPersistentId(MemberInfo member)
@@ -218,7 +218,7 @@ namespace ConfOrm
 
 		public IDbColumnSpecification[] GetPersistentSpecification(MemberInfo role)
 		{
-			throw new NotImplementedException();
+			return new IDbColumnSpecification[0];
 		}
 
 		public bool IsSet(MemberInfo role)
