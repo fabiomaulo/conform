@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Iesi.Collections;
@@ -6,27 +5,11 @@ using Iesi.Collections.Generic;
 
 namespace ConfOrm.Patterns
 {
-	public class SetCollectionPattern : IPattern<MemberInfo>
+	public class SetCollectionPattern : AbstractCollectionPattern
 	{
 		#region Implementation of IPattern<MemberInfo>
 
-		public bool Match(MemberInfo subject)
-		{
-			if (MemberMatch(subject)) return true;
-			var pi = subject as PropertyInfo;
-			if(pi != null)
-			{
-				var fieldPattern = PropertyToFieldPatterns.Defaults.FirstOrDefault(pp => pp.Match(pi));
-				if(fieldPattern != null)
-				{
-					var fieldInfo = fieldPattern.GetBackFieldInfo(pi);
-					return MemberMatch(fieldInfo);
-				}
-			}
-			return false;
-		}
-
-		private static bool MemberMatch(MemberInfo subject)
+		protected override bool MemberMatch(MemberInfo subject)
 		{
 				var memberType = subject.GetPropertyOrFieldType();
 			if (typeof (ISet).IsAssignableFrom(memberType))

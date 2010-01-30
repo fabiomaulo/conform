@@ -69,6 +69,7 @@
     <Compile Include="NH\SubclassMapper.cs" />
     <Compile Include="NH\UnionSubclassMapper.cs" />
     <Compile Include="ObjectRelationalMapper.cs" />
+    <Compile Include="Patterns\AbstractCollectionPattern.cs" />
     <Compile Include="Patterns\AbstractPropertyToFieldPattern.cs" />
     <Compile Include="Patterns\ArrayCollectionPattern.cs" />
     <Compile Include="Patterns\BagCollectionPattern.cs" />
