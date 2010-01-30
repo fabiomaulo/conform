@@ -1,25 +1,28 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Iesi.Collections;
-using Iesi.Collections.Generic;
 
 namespace ConfOrm.Patterns
 {
-	public class SetCollectionPattern : IPattern<MemberInfo>
+	public class ListCollectionPattern : IPattern<MemberInfo>
 	{
 		#region Implementation of IPattern<MemberInfo>
 
 		public bool Match(MemberInfo subject)
 		{
-			if (MemberMatch(subject)) return true;
-			var pi = subject as PropertyInfo;
-			if(pi != null)
+			if (MemberMatch(subject))
 			{
-				var fieldPattern = PropertyToFieldPatterns.Defaults.FirstOrDefault(pp => pp.Match(pi));
-				if(fieldPattern != null)
+				return true;
+			}
+			var pi = subject as PropertyInfo;
+			if (pi != null)
+			{
+				AbstractPropertyToFieldPattern fieldPattern = PropertyToFieldPatterns.Defaults.FirstOrDefault(pp => pp.Match(pi));
+				if (fieldPattern != null)
 				{
-					var fieldInfo = fieldPattern.GetBackFieldInfo(pi);
+					FieldInfo fieldInfo = fieldPattern.GetBackFieldInfo(pi);
 					return MemberMatch(fieldInfo);
 				}
 			}
@@ -28,20 +31,20 @@ namespace ConfOrm.Patterns
 
 		private static bool MemberMatch(MemberInfo subject)
 		{
-				var memberType = subject.GetPropertyOrFieldType();
-			if (typeof (ISet).IsAssignableFrom(memberType))
+			Type memberType = subject.GetPropertyOrFieldType();
+			if (typeof (IList).IsAssignableFrom(memberType))
 			{
 				return true;
 			}
 			if (memberType.IsGenericType)
 			{
-				var interfaces =
+				List<Type> interfaces =
 					memberType.GetInterfaces().Where(t => t.IsGenericType).Select(t => t.GetGenericTypeDefinition()).ToList();
 				if (memberType.IsInterface)
 				{
 					interfaces.Add(memberType.GetGenericTypeDefinition());
 				}
-				return interfaces.Contains(typeof (ISet<>));
+				return interfaces.Contains(typeof (IList<>));
 			}
 			return false;
 		}

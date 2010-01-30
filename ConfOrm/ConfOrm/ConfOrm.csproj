@@ -71,10 +71,12 @@
     <Compile Include="ObjectRelationalMapper.cs" />
     <Compile Include="Patterns\AbstractPropertyToFieldPattern.cs" />
     <Compile Include="Patterns\BidirectionalRelationPattern.cs" />
+    <Compile Include="Patterns\ListCollectionPattern.cs" />
     <Compile Include="Patterns\PoIdGuidStrategyPattern.cs" />
     <Compile Include="Patterns\PoIdPattern.cs" />
     <Compile Include="Patterns\PropertyToFieldCamelCasePattern.cs" />
     <Compile Include="Patterns\PropertyToFieldMUnderscorePascalCasePattern.cs" />
+    <Compile Include="Patterns\PropertyToFieldPatterns.cs" />
     <Compile Include="Patterns\PropertyToFieldUnderscoreCamelCasePattern.cs" />
     <Compile Include="Patterns\PropertyToFieldUnderscorePascalCasePattern.cs" />
     <Compile Include="Patterns\SetCollectionPattern.cs" />
