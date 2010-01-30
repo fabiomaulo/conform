@@ -83,6 +83,7 @@
     <Compile Include="Patterns\ArrayCollectionPatternTest.cs" />
     <Compile Include="Patterns\BagCollectionPatternTest.cs" />
     <Compile Include="Patterns\BidirectionalRelationPatternTest.cs" />
+    <Compile Include="Patterns\ComponentPatternTest.cs" />
     <Compile Include="Patterns\ListCollectionPatternTest.cs" />
     <Compile Include="Patterns\PoIdGuidStrategyPatternTest.cs" />
     <Compile Include="Patterns\PoIdPatternTest.cs" />
