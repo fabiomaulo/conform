@@ -13,5 +13,8 @@ namespace ConfOrm
 		void ManyToOne<TLeftEntity, TRigthEntity>();
 		void OneToOne<TLeftEntity, TRigthEntity>();
 		void Set<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
+		void Bag<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
+		void List<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
+		void Array<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 	}
 }

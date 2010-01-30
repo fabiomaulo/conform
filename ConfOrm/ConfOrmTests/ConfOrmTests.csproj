@@ -69,7 +69,10 @@
     <Compile Include="NH\MapperTests\SimplePerClassTest.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ObjectRelationalMapperTests\ArrayProperties.cs" />
+    <Compile Include="ObjectRelationalMapperTests\BagProperties.cs" />
     <Compile Include="ObjectRelationalMapperTests\ComponentRegistrationTest.cs" />
+    <Compile Include="ObjectRelationalMapperTests\ListProperties.cs" />
     <Compile Include="ObjectRelationalMapperTests\ManyToManyRelationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\ManyToOneRelationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\OneToOneRelationTest.cs" />

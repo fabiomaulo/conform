@@ -18,14 +18,23 @@ namespace ConfOrm
 		private readonly HashSet<Relation> oneToOneRelation = new HashSet<Relation>();
 		private readonly HashSet<Relation> manyToManyRelation = new HashSet<Relation>();
 		private readonly HashSet<MemberInfo> sets = new HashSet<MemberInfo>();
+		private readonly HashSet<MemberInfo> bags = new HashSet<MemberInfo>();
+		private readonly HashSet<MemberInfo> lists = new HashSet<MemberInfo>();
+		private readonly HashSet<MemberInfo> arrays = new HashSet<MemberInfo>();
 		private readonly List<IPattern<MemberInfo>> poidPatterns;
 		private readonly List<IPattern<MemberInfo>> setPatterns;
+		private readonly List<IPattern<MemberInfo>> bagPatterns;
+		private readonly List<IPattern<MemberInfo>> listPatterns;
+		private readonly List<IPattern<MemberInfo>> arrayPatterns;
 		private readonly HashSet<Type> components = new HashSet<Type>();
 		
 		public ObjectRelationalMapper()
 		{
 			poidPatterns = new List<IPattern<MemberInfo>> {new PoIdPattern()};
 			setPatterns = new List<IPattern<MemberInfo>> { new SetCollectionPattern() };
+			bagPatterns = new List<IPattern<MemberInfo>> { new BagCollectionPattern() };
+			listPatterns = new List<IPattern<MemberInfo>> { new ListCollectionPattern() };
+			arrayPatterns = new List<IPattern<MemberInfo>> { new ArrayCollectionPattern() };
 		}
 
 		#region Implementation of IObjectRelationalMapper
@@ -95,6 +104,24 @@ namespace ConfOrm
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
 			sets.Add(member);
+		}
+
+		public void Bag<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
+			bags.Add(member);
+		}
+
+		public void List<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
+			lists.Add(member);
+		}
+
+		public void Array<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
+			arrays.Add(member);
 		}
 
 		#endregion
@@ -196,22 +223,22 @@ namespace ConfOrm
 
 		public bool IsSet(MemberInfo role)
 		{
-			return sets.Contains(role) || setPatterns.Any(sp => sp.Match(role)); 
+			return sets.Contains(role) || setPatterns.Any(pattern => pattern.Match(role)); 
 		}
 
 		public bool IsBag(MemberInfo role)
 		{
-			throw new NotImplementedException();
+			return bags.Contains(role) || (!sets.Contains(role) && !lists.Contains(role) && !arrays.Contains(role) && bagPatterns.Any(pattern => pattern.Match(role)));
 		}
 
 		public bool IsList(MemberInfo role)
 		{
-			throw new NotImplementedException();
+			return lists.Contains(role) || (!arrays.Contains(role) && !bags.Contains(role) && listPatterns.Any(pattern => pattern.Match(role)));
 		}
 
 		public bool IsArray(MemberInfo role)
 		{
-			throw new NotImplementedException();
+			return arrays.Contains(role) || (!lists.Contains(role) && !bags.Contains(role) && arrayPatterns.Any(pattern => pattern.Match(role)));
 		}
 
 		#endregion
