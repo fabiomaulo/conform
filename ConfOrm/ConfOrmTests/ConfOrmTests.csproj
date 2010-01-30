@@ -77,6 +77,7 @@
     <Compile Include="ObjectRelationalMapperTests\RegisteringDerivedTablePerClass.cs" />
     <Compile Include="ObjectRelationalMapperTests\RegisteringTablePerClass.cs" />
     <Compile Include="ObjectRelationalMapperTests\SetProperties.cs" />
+    <Compile Include="Patterns\ArrayCollectionPatternTest.cs" />
     <Compile Include="Patterns\BidirectionalRelationPatternTest.cs" />
     <Compile Include="Patterns\ListCollectionPatternTest.cs" />
     <Compile Include="Patterns\PoIdGuidStrategyPatternTest.cs" />
