@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Reflection;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Type;
@@ -76,6 +77,20 @@ namespace ConfOrm
 			}
 			throw new ArgumentOutOfRangeException("propertyOrField",
 																						"Expected PropertyInfo or FieldInfo; found :" + propertyOrField.MemberType);
+		}
+
+		public static MemberInfo DecodeMemberAccessExpression<TEntity>(Expression<Func<TEntity, object>> expression)
+		{
+			if (expression.Body.NodeType != ExpressionType.MemberAccess)
+			{
+				if ((expression.Body.NodeType == ExpressionType.Convert) && (expression.Body.Type == typeof(object)))
+				{
+					return ((MemberExpression)((UnaryExpression)expression.Body).Operand).Member;
+				}
+				throw new Exception(string.Format("Invalid expression type: Expected ExpressionType.MemberAccess, Found {0}",
+																					expression.Body.NodeType));
+			}
+			return ((MemberExpression)expression.Body).Member;
 		}
 	}
 }

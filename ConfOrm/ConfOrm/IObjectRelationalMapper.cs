@@ -1,3 +1,6 @@
+using System;
+using System.Linq.Expressions;
+
 namespace ConfOrm
 {
 	public interface IObjectRelationalMapper
@@ -9,5 +12,6 @@ namespace ConfOrm
 		void ManyToMany<TLeftEntity, TRigthEntity>();
 		void ManyToOne<TLeftEntity, TRigthEntity>();
 		void OneToOne<TLeftEntity, TRigthEntity>();
+		void AsSet<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 	}
 }

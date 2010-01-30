@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using ConfOrm.Patterns;
 
@@ -16,12 +17,15 @@ namespace ConfOrm
 		private readonly HashSet<Relation> oneToManyRelation = new HashSet<Relation>();
 		private readonly HashSet<Relation> oneToOneRelation = new HashSet<Relation>();
 		private readonly HashSet<Relation> manyToManyRelation = new HashSet<Relation>();
+		private readonly HashSet<MemberInfo> sets = new HashSet<MemberInfo>();
 		private readonly List<IPattern<MemberInfo>> poidPatterns;
+		private readonly List<IPattern<MemberInfo>> setPatterns;
 		private readonly HashSet<Type> components = new HashSet<Type>();
 		
 		public ObjectRelationalMapper()
 		{
 			poidPatterns = new List<IPattern<MemberInfo>> {new PoIdPattern()};
+			setPatterns = new List<IPattern<MemberInfo>> { new SetCollectionPattern() };
 		}
 
 		#region Implementation of IObjectRelationalMapper
@@ -85,6 +89,12 @@ namespace ConfOrm
 		{
 			oneToOneRelation.Add(new Relation(typeof(TLeftEntity), typeof(TRigthEntity)));
 			oneToOneRelation.Add(new Relation(typeof(TRigthEntity), typeof(TLeftEntity)));
+		}
+
+		public void AsSet<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
+			sets.Add(member);
 		}
 
 		#endregion
@@ -186,7 +196,7 @@ namespace ConfOrm
 
 		public bool IsSet(MemberInfo role)
 		{
-			throw new NotImplementedException();
+			return sets.Contains(role) || setPatterns.Any(sp => sp.Match(role)); 
 		}
 
 		public bool IsBag(MemberInfo role)
