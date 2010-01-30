@@ -28,6 +28,7 @@ namespace ConfOrm
 		protected readonly List<IPattern<MemberInfo>> bagPatterns;
 		protected readonly List<IPattern<MemberInfo>> listPatterns;
 		protected readonly List<IPattern<MemberInfo>> arrayPatterns;
+		protected readonly List<IPattern<Type>> componetPatterns;
 		
 		public ObjectRelationalMapper()
 		{
@@ -36,6 +37,7 @@ namespace ConfOrm
 			bagPatterns = new List<IPattern<MemberInfo>> { new BagCollectionPattern() };
 			listPatterns = new List<IPattern<MemberInfo>> { new ListCollectionPattern() };
 			arrayPatterns = new List<IPattern<MemberInfo>> { new ArrayCollectionPattern() };
+			componetPatterns = new List<IPattern<Type>> { new ComponentPattern() };
 		}
 
 		#region Implementation of IObjectRelationalMapper
@@ -43,7 +45,7 @@ namespace ConfOrm
 		public void TablePerClassHierarchy<TBaseEntity>() where TBaseEntity : class
 		{
 			var type = typeof(TBaseEntity);
-			if (IsComponent(type))
+			if (components.Contains(type))
 			{
 				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
 			}
@@ -54,7 +56,7 @@ namespace ConfOrm
 		public void TablePerClass<TBaseEntity>() where TBaseEntity : class
 		{
 			var type = typeof (TBaseEntity);
-			if (IsComponent(type))
+			if (components.Contains(type))
 			{
 				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
 			}
@@ -65,7 +67,7 @@ namespace ConfOrm
 		public void TablePerConcreteClass<TBaseEntity>() where TBaseEntity : class
 		{
 			var type = typeof(TBaseEntity);
-			if (IsComponent(type))
+			if (components.Contains(type))
 			{
 				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
 			}
@@ -136,7 +138,7 @@ namespace ConfOrm
 
 		public bool IsComponent(Type type)
 		{
-			return components.Contains(type);
+			return components.Contains(type) || (componetPatterns.Any(pattern => pattern.Match(type)) && !IsEntity(type));
 		}
 
 		public bool IsComplex(Type type)

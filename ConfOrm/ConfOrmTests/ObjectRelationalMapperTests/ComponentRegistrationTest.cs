@@ -36,5 +36,20 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			mapper.TablePerClass<AComponent>();
 			ActionAssert.Throws(() => mapper.Component<AComponent>()).Should().Be.InstanceOf<MappingException>();
 		}
+
+		[Test]
+		public void WhenNotExplicitRegisteredRecognizeTheComponent()
+		{
+			var mapper = new ObjectRelationalMapper();
+			mapper.IsComponent(typeof(AComponent)).Should().Be.True();
+		}
+
+		[Test]
+		public void WhenExplicitRegisteredAsEntityIsNotComponent()
+		{
+			var mapper = new ObjectRelationalMapper();
+			mapper.TablePerClass<AComponent>();
+			mapper.IsComponent(typeof(AComponent)).Should().Be.False();
+		}
 	}
 }
