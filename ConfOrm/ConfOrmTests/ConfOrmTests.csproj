@@ -80,6 +80,7 @@
     <Compile Include="Patterns\PoIdGuidStrategyPatternTest.cs" />
     <Compile Include="Patterns\PoIdPatternTest.cs" />
     <Compile Include="Patterns\PropertyToFieldCamelCasePatternTest.cs" />
+    <Compile Include="Patterns\PropertyToFieldUnderscorePascalCasePatternTest.cs" />
     <Compile Include="Patterns\SetCollectionPatternTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -74,6 +74,7 @@
     <Compile Include="Patterns\PoIdGuidStrategyPattern.cs" />
     <Compile Include="Patterns\PoIdPattern.cs" />
     <Compile Include="Patterns\PropertyToFieldCamelCasePattern.cs" />
+    <Compile Include="Patterns\PropertyToFieldUnderscorePascalCasePattern.cs" />
     <Compile Include="Patterns\SetCollectionPattern.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Relation.cs" />

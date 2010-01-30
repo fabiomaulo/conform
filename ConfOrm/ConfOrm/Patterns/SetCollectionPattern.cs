@@ -9,7 +9,11 @@ namespace ConfOrm.Patterns
 	public class SetCollectionPattern : IPattern<MemberInfo>
 	{
 		private static readonly List<AbstractPropertyToFieldPattern> PropertyToFieldPatterns =
-			new List<AbstractPropertyToFieldPattern> {new PropertyToFieldCamelCasePattern()};
+			new List<AbstractPropertyToFieldPattern>
+				{
+					new PropertyToFieldCamelCasePattern(),
+					new PropertyToFieldUnderscorePascalCasePattern()
+				};
 
 		#region Implementation of IPattern<MemberInfo>
 
