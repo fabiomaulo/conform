@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Iesi.Collections;
@@ -8,18 +8,30 @@ namespace ConfOrm.Patterns
 {
 	public class SetCollectionPattern : IPattern<MemberInfo>
 	{
+		private static readonly List<AbstractPropertyToFieldPattern> PropertyToFieldPatterns =
+			new List<AbstractPropertyToFieldPattern> {new PropertyToFieldCamelCasePattern()};
+
 		#region Implementation of IPattern<MemberInfo>
 
 		public bool Match(MemberInfo subject)
 		{
-			var memberType = subject.GetPropertyOrFieldType();
-			if (MemberMatch(memberType)) return true;
-
+			if (MemberMatch(subject)) return true;
+			var pi = subject as PropertyInfo;
+			if(pi != null)
+			{
+				var fieldPattern = PropertyToFieldPatterns.FirstOrDefault(pp => pp.Match(pi));
+				if(fieldPattern != null)
+				{
+					var fieldInfo = fieldPattern.GetBackFieldInfo(pi);
+					return MemberMatch(fieldInfo);
+				}
+			}
 			return false;
 		}
 
-		private bool MemberMatch(Type memberType)
+		private static bool MemberMatch(MemberInfo subject)
 		{
+				var memberType = subject.GetPropertyOrFieldType();
 			if (typeof (ISet).IsAssignableFrom(memberType))
 			{
 				return true;

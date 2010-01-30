@@ -11,12 +11,18 @@ namespace ConfOrm.Patterns
 
 		public bool Match(PropertyInfo subject)
 		{
-			string fieldName = GetFieldName(subject.Name);
-			return subject.DeclaringType.GetField(fieldName, DefaultBinding) != null;
+			FieldInfo fieldInfo = GetBackFieldInfo(subject);
+			return fieldInfo != null;
 		}
 
 		#endregion
 
 		protected abstract string GetFieldName(string propertyName);
+
+		public FieldInfo GetBackFieldInfo(PropertyInfo subject)
+		{
+			string fieldName = GetFieldName(subject.Name);
+			return subject.DeclaringType.GetField(fieldName, DefaultBinding);
+		}
 	}
 }

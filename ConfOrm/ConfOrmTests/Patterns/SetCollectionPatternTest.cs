@@ -42,7 +42,7 @@ namespace ConfOrmTests.Patterns
 			p.Match(mi).Should().Be.True();
 		}
 
-		[Test, Ignore("Not supported yet")]
+		[Test]
 		public void MatchWithCollectionPropertyAndSetField()
 		{
 			var mi = typeof(EntityWithSets).GetProperty("Emails");
