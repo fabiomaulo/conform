@@ -27,7 +27,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		public void RecognizeExplicitRegisteredSetProperty()
 		{
 			var mapper = new ObjectRelationalMapper();
-			mapper.AsSet<A>(x => x.NickNames);
+			mapper.Set<A>(x => x.NickNames);
 			var mi = typeof(A).GetProperty("Set");
 			mapper.IsSet(mi).Should().Be.True();
 		}

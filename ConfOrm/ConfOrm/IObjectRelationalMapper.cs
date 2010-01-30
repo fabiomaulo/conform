@@ -12,6 +12,6 @@ namespace ConfOrm
 		void ManyToMany<TLeftEntity, TRigthEntity>();
 		void ManyToOne<TLeftEntity, TRigthEntity>();
 		void OneToOne<TLeftEntity, TRigthEntity>();
-		void AsSet<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
+		void Set<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 	}
 }

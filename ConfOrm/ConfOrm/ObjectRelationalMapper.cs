@@ -91,7 +91,7 @@ namespace ConfOrm
 			oneToOneRelation.Add(new Relation(typeof(TRigthEntity), typeof(TLeftEntity)));
 		}
 
-		public void AsSet<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
+		public void Set<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
 			sets.Add(member);
