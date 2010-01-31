@@ -84,9 +84,22 @@ namespace ConfOrm.NH
 							MapProperties(property.GetPropertyOrFieldType(), x);
 						});
 				}
+				else if (domainInspector.IsSet(property))
+				{
+					propertiesContainer.Set(property, x => { }, x => { });
+				}
+				else if (domainInspector.IsArray(property))
+				{
+				}
+				else if (domainInspector.IsList(property))
+				{
+				}
+				else if (domainInspector.IsBag(property))
+				{
+				}
 				else
 				{
-					propertiesContainer.Property(property);					
+					propertiesContainer.Property(property);
 				}
 			}
 		}

@@ -69,7 +69,8 @@ namespace ConfOrm.NH
 
 		public void Set(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
 		{
-			throw new NotImplementedException();
+			var hbm = new HbmSet { name = property.Name };
+			AddProperty(hbm);
 		}
 
 		public void Bag<TElement>(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
