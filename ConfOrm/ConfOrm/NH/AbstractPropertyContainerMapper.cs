@@ -61,7 +61,8 @@ namespace ConfOrm.NH
 
 		public void OneToOne(MemberInfo property, Action<IOneToOneMapper> mapping)
 		{
-			throw new NotImplementedException();
+			var hbm = new HbmOneToOne { name = property.Name };
+			AddProperty(hbm);
 		}
 
 		public void Set(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)

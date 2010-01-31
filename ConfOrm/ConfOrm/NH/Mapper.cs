@@ -73,6 +73,10 @@ namespace ConfOrm.NH
 				{
 					propertiesContainer.ManyToOne(property);
 				}
+				else if (domainInspector.IsOneToOne(type, propertyType))
+				{
+					propertiesContainer.OneToOne(property, x => { });
+				}
 				else
 				{
 					propertiesContainer.Property(property);					
