@@ -9,6 +9,8 @@ namespace ConfOrm
 {
 	public class ObjectRelationalMapper : IObjectRelationalMapper, IDomainInspector
 	{
+		#region Explicit mappings
+
 		private readonly HashSet<Type> rootEntities = new HashSet<Type>();
 		private readonly HashSet<Type> tablePerClassEntities = new HashSet<Type>();
 		private readonly HashSet<Type> tablePerClassHierarchyEntities = new HashSet<Type>();
@@ -23,13 +25,19 @@ namespace ConfOrm
 		private readonly HashSet<MemberInfo> arrays = new HashSet<MemberInfo>();
 		private readonly HashSet<Type> components = new HashSet<Type>();
 
+		#endregion
+
+		#region Patterns
+
 		protected readonly List<IPattern<MemberInfo>> poidPatterns;
 		protected readonly List<IPattern<MemberInfo>> setPatterns;
 		protected readonly List<IPattern<MemberInfo>> bagPatterns;
 		protected readonly List<IPattern<MemberInfo>> listPatterns;
 		protected readonly List<IPattern<MemberInfo>> arrayPatterns;
 		protected readonly List<IPattern<Type>> componetPatterns;
-		
+
+		#endregion
+
 		public ObjectRelationalMapper()
 		{
 			poidPatterns = new List<IPattern<MemberInfo>> {new PoIdPattern()};
