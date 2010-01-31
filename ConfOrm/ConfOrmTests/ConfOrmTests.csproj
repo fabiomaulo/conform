@@ -72,6 +72,7 @@
     <Compile Include="NH\MapperTests\SimplePerClassTest.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="NH\SetMapperTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\ArrayProperties.cs" />
     <Compile Include="ObjectRelationalMapperTests\BagProperties.cs" />
     <Compile Include="ObjectRelationalMapperTests\ComponentRegistrationTest.cs" />

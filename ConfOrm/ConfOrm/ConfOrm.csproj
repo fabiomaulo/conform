@@ -50,6 +50,7 @@
     <Compile Include="IDomainInspector.cs" />
     <Compile Include="IObjectRelationalMapper.cs" />
     <Compile Include="IPattern.cs" />
+    <Compile Include="Mappers\CollectionLazy.cs" />
     <Compile Include="Mappers\IClassMapper.cs" />
     <Compile Include="Mappers\ICollectionElementRelation.cs" />
     <Compile Include="Mappers\ICollectionPropertiesMapper.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Mappers\IGenerator.cs" />
     <Compile Include="Mappers\IIdMapper.cs" />
     <Compile Include="Mappers\IJoinedSubclassMapper.cs" />
+    <Compile Include="Mappers\IKeyMapper.cs" />
     <Compile Include="Mappers\IOneToOneMapper.cs" />
     <Compile Include="Mappers\IPropertyContainerMapper.cs" />
     <Compile Include="Mappers\ISubclassMapper.cs" />
@@ -66,7 +68,9 @@
     <Compile Include="NH\ComponentMapper.cs" />
     <Compile Include="NH\IdMapper.cs" />
     <Compile Include="NH\JoinedSubclassMapper.cs" />
+    <Compile Include="NH\KeyMapper.cs" />
     <Compile Include="NH\Mapper.cs" />
+    <Compile Include="NH\SetMapper.cs" />
     <Compile Include="NH\SubclassMapper.cs" />
     <Compile Include="NH\UnionSubclassMapper.cs" />
     <Compile Include="ObjectRelationalMapper.cs" />

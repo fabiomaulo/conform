@@ -86,7 +86,7 @@ namespace ConfOrm.NH
 				}
 				else if (domainInspector.IsSet(property))
 				{
-					propertiesContainer.Set(property, x => { }, x => { });
+					propertiesContainer.Set(property, MapCollectionProperties, x => { });
 				}
 				else if (domainInspector.IsArray(property))
 				{
@@ -102,6 +102,11 @@ namespace ConfOrm.NH
 					propertiesContainer.Property(property);
 				}
 			}
+		}
+
+		protected virtual void MapCollectionProperties(ICollectionPropertiesMapper mapped)
+		{
+			throw new NotImplementedException();
 		}
 
 		private MemberInfo GetPoidPropertyOrField(Type type)
