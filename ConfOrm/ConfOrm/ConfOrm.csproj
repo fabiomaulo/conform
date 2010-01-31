@@ -63,6 +63,7 @@
     <Compile Include="MappingException.cs" />
     <Compile Include="NH\AbstractPropertyContainerMapper.cs" />
     <Compile Include="NH\ClassMapper.cs" />
+    <Compile Include="NH\ComponentMapper.cs" />
     <Compile Include="NH\IdMapper.cs" />
     <Compile Include="NH\JoinedSubclassMapper.cs" />
     <Compile Include="NH\Mapper.cs" />

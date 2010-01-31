@@ -50,7 +50,9 @@ namespace ConfOrm.NH
 
 		public void Component(MemberInfo property, Action<IComponentMapper> mapping)
 		{
-			throw new NotImplementedException();
+			var hbm = new HbmComponent { name = property.Name };
+			mapping(new ComponentMapper(hbm, property.GetPropertyOrFieldType(), MapDoc));
+			AddProperty(hbm);
 		}
 
 		public void ManyToOne(MemberInfo property)

@@ -62,6 +62,7 @@
     <Compile Include="NH\ClassMapperTest.cs" />
     <Compile Include="NH\IdMapperTest.cs" />
     <Compile Include="NH\MapperTests\BaseFuncionality.cs" />
+    <Compile Include="NH\MapperTests\ComponentPropertyTest.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerClass.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerClassHierarchyTest.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerConcreteClassTest.cs" />

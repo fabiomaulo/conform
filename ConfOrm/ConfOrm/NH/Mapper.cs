@@ -77,6 +77,13 @@ namespace ConfOrm.NH
 				{
 					propertiesContainer.OneToOne(property, x => { });
 				}
+				else if (domainInspector.IsComponent(propertyType))
+				{
+					propertiesContainer.Component(property, x =>
+						{
+							MapProperties(property.GetPropertyOrFieldType(), x);
+						});
+				}
 				else
 				{
 					propertiesContainer.Property(property);					
