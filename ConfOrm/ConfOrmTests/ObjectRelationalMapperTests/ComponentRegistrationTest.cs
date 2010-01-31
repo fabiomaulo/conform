@@ -1,3 +1,4 @@
+using System;
 using ConfOrm;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -50,6 +51,15 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			var mapper = new ObjectRelationalMapper();
 			mapper.TablePerClass<AComponent>();
 			mapper.IsComponent(typeof(AComponent)).Should().Be.False();
+		}
+
+		[Test]
+		public void ValueTypesAndSystemTypesShouldBeNotComponents()
+		{
+			var mapper = new ObjectRelationalMapper();
+			mapper.IsComponent(typeof(string)).Should().Be.False();
+			mapper.IsComponent(typeof(DateTime)).Should().Be.False();
+			mapper.IsComponent(typeof(int)).Should().Be.False();
 		}
 	}
 }

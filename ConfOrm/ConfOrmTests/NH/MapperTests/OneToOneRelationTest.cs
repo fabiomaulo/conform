@@ -43,7 +43,7 @@ namespace ConfOrmTests.NH.MapperTests
 		}
 
 		[Test]
-		public void MappingContainsHinheritedClass()
+		public void MappingContainsClassWithRelation()
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();
 
