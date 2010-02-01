@@ -37,7 +37,7 @@ namespace ConfOrmTests.NH.MapperTests
 			return mapper.CompileMappingFor(new[] { typeof(Person) });
 		}
 
-		[Test, Ignore("Not supported yet")]
+		[Test]
 		public void MappingContainsClassWithComponent()
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();
@@ -58,7 +58,17 @@ namespace ConfOrmTests.NH.MapperTests
 			collection.ElementRelationship.Should().Be.OfType<HbmElement>();
 			var elementRelation = (HbmElement) collection.ElementRelationship;
 			elementRelation.Type.Should().Not.Be.Null();
-			elementRelation.Type.name.Should().Be.EqualTo("string");
+			elementRelation.Type.name.Should().Be.EqualTo("String");
+		}
+
+		[Test]
+		public void IntegrationWithObjectRelationalMapper()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Person>();
+			HbmMapping mapping = GetMapping(orm);
+
+			VerifyMapping(mapping);
 		}
 	}
 }

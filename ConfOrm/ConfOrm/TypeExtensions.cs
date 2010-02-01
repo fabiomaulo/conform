@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using NHibernate.Cfg.MappingSchema;
@@ -91,6 +92,24 @@ namespace ConfOrm
 																					expression.Body.NodeType));
 			}
 			return ((MemberExpression)expression.Body).Member;
+		}
+
+		public static Type DetermineCollectionElementType(this Type genericCollection)
+		{
+			if (genericCollection.IsGenericType)
+			{
+				List<Type> interfaces = genericCollection.GetInterfaces().Where(t => t.IsGenericType).ToList();
+				if (genericCollection.IsInterface)
+				{
+					interfaces.Add(genericCollection);
+				}
+				var enumerableInterface = interfaces.FirstOrDefault(t => t.GetGenericTypeDefinition() == typeof(IEnumerable<>));
+				if (enumerableInterface != null)
+				{
+					return enumerableInterface.GetGenericArguments()[0];
+				}
+			}
+			return null;
 		}
 	}
 }

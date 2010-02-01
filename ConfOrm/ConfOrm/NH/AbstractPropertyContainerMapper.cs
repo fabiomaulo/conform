@@ -70,6 +70,10 @@ namespace ConfOrm.NH
 		public void Set(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
 		{
 			var hbm = new HbmSet { name = property.Name };
+			var propertyType = property.GetPropertyOrFieldType();
+			var collectionElementType = propertyType.DetermineCollectionElementType();
+			collectionMapping(new SetMapper(container, collectionElementType, hbm));
+			mapping(new CollectionElementRelation(collectionElementType, MapDoc, rel => hbm.Item = rel));
 			AddProperty(hbm);
 		}
 

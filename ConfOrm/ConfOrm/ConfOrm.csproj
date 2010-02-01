@@ -54,6 +54,7 @@
     <Compile Include="Mappers\IClassMapper.cs" />
     <Compile Include="Mappers\ICollectionElementRelation.cs" />
     <Compile Include="Mappers\ICollectionPropertiesMapper.cs" />
+    <Compile Include="Mappers\IComponentElementMapper.cs" />
     <Compile Include="Mappers\IComponentMapper.cs" />
     <Compile Include="Mappers\IGenerator.cs" />
     <Compile Include="Mappers\IIdMapper.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="MappingException.cs" />
     <Compile Include="NH\AbstractPropertyContainerMapper.cs" />
     <Compile Include="NH\ClassMapper.cs" />
+    <Compile Include="NH\CollectionElementRelation.cs" />
     <Compile Include="NH\ComponentMapper.cs" />
     <Compile Include="NH\IdMapper.cs" />
     <Compile Include="NH\JoinedSubclassMapper.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="NH\Mapper.cs" />
     <Compile Include="NH\SetMapper.cs" />
     <Compile Include="NH\SubclassMapper.cs" />
+    <Compile Include="NH\TypeNameUtil.cs" />
     <Compile Include="NH\UnionSubclassMapper.cs" />
     <Compile Include="ObjectRelationalMapper.cs" />
     <Compile Include="Patterns\AbstractCollectionPattern.cs" />

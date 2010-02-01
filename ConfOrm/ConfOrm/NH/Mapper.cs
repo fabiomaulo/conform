@@ -77,16 +77,11 @@ namespace ConfOrm.NH
 				{
 					propertiesContainer.OneToOne(property, x => { });
 				}
-				else if (domainInspector.IsComponent(propertyType))
-				{
-					propertiesContainer.Component(property, x =>
-						{
-							MapProperties(property.GetPropertyOrFieldType(), x);
-						});
-				}
 				else if (domainInspector.IsSet(property))
 				{
-					propertiesContainer.Set(property, MapCollectionProperties, x => { });
+					Type collectionElementType = GetCollectionElementTypeOrThrow(type, property, propertyType);
+					var cert = DetermineCollectionElementRelationType(property, collectionElementType);
+					propertiesContainer.Set(property, MapCollectionProperties, cert.Map);
 				}
 				else if (domainInspector.IsArray(property))
 				{
@@ -97,6 +92,10 @@ namespace ConfOrm.NH
 				else if (domainInspector.IsBag(property))
 				{
 				}
+				else if (domainInspector.IsComponent(propertyType))
+				{
+					propertiesContainer.Component(property, x => MapProperties(propertyType, x));
+				}
 				else
 				{
 					propertiesContainer.Property(property);
@@ -104,9 +103,54 @@ namespace ConfOrm.NH
 			}
 		}
 
+		private Type GetCollectionElementTypeOrThrow(Type type, PropertyInfo property, Type propertyType)
+		{
+			Type collectionElementType = propertyType.DetermineCollectionElementType();
+			if (collectionElementType == null)
+			{
+				throw new NotSupportedException(string.Format("Can't determine collection element relation (property{0} in {1})",
+				                                              property.Name, type));
+			}
+			return collectionElementType;
+		}
+
+		private interface ICollectionElementRelationMapper
+		{
+			void Map(ICollectionElementRelation relation);
+		}
+
+		private class ElementRelationMapper : ICollectionElementRelationMapper
+		{
+			#region Implementation of ICollectionElementRelationMapper
+
+			public void Map(ICollectionElementRelation relation)
+			{
+				relation.Element();
+			}
+
+			#endregion
+		}
+
+		private ICollectionElementRelationMapper DetermineCollectionElementRelationType(MemberInfo property, Type collectionElementType)
+		{
+			var ownerType = property.DeclaringType;
+			if (domainInspector.IsOneToMany(ownerType, collectionElementType))
+			{
+				return null;
+			}
+			else if (domainInspector.IsManyToMany(ownerType, collectionElementType))
+			{
+				return null;
+			}
+			else if (domainInspector.IsComponent(collectionElementType))
+			{
+				return null;
+			}
+			return new ElementRelationMapper();
+		}
+
 		protected virtual void MapCollectionProperties(ICollectionPropertiesMapper mapped)
 		{
-			throw new NotImplementedException();
 		}
 
 		private MemberInfo GetPoidPropertyOrField(Type type)
