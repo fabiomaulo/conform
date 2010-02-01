@@ -85,6 +85,7 @@
     <Compile Include="Patterns\BagCollectionPattern.cs" />
     <Compile Include="Patterns\BidirectionalRelationPattern.cs" />
     <Compile Include="Patterns\ComponentPattern.cs" />
+    <Compile Include="Patterns\DictionaryCollectionPattern.cs" />
     <Compile Include="Patterns\ListCollectionPattern.cs" />
     <Compile Include="Patterns\PoIdGuidStrategyPattern.cs" />
     <Compile Include="Patterns\PoIdPattern.cs" />

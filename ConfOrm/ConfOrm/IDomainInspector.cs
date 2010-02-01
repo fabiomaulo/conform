@@ -29,5 +29,6 @@ namespace ConfOrm
 		bool IsBag(MemberInfo role);
 		bool IsList(MemberInfo role);
 		bool IsArray(MemberInfo role);
+		bool IsDictionary(MemberInfo role);
 	}
 }

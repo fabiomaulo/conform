@@ -252,6 +252,11 @@ namespace ConfOrm
 			return arrays.Contains(role) || (!lists.Contains(role) && !bags.Contains(role) && arrayPatterns.Any(pattern => pattern.Match(role)));
 		}
 
+		public bool IsDictionary(MemberInfo role)
+		{
+			throw new NotImplementedException();
+		}
+
 		#endregion
 	}
 }
