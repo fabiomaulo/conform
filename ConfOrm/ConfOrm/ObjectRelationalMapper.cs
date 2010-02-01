@@ -207,7 +207,8 @@ namespace ConfOrm
 		public bool IsManyToOne(Type from, Type to)
 		{
 			var areEntities = IsEntity(from) && IsEntity(to);
-			return (areEntities && manyToOneRelation.Contains(new Relation(from, to))) || (areEntities && !IsOneToOne(from, to));
+			return (areEntities && manyToOneRelation.Contains(new Relation(from, to)))
+			       || (areEntities && !IsOneToOne(from, to) && !manyToManyRelation.Contains(new Relation(from, to)));
 		}
 
 		public bool IsManyToMany(Type role1, Type role2)
@@ -218,7 +219,8 @@ namespace ConfOrm
 		public bool IsOneToMany(Type from, Type to)
 		{
 			var areEntities = IsEntity(from) && IsEntity(to);
-			return (areEntities && oneToManyRelation.Contains(new Relation(from, to))) || (areEntities && !IsOneToOne(from, to));
+			return (areEntities && oneToManyRelation.Contains(new Relation(from, to)))
+			       || (areEntities && !IsOneToOne(from, to) && !manyToManyRelation.Contains(new Relation(from, to)));
 		}
 
 		public bool IsHeterogeneousAssociations(MemberInfo member)

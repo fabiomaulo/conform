@@ -162,6 +162,18 @@ namespace ConfOrm.NH
 			#endregion
 		}
 
+		private class ManyToManyRelationMapper : ICollectionElementRelationMapper
+		{
+			#region Implementation of ICollectionElementRelationMapper
+
+			public void Map(ICollectionElementRelation relation)
+			{
+				relation.ManyToMany();
+			}
+
+			#endregion
+		}
+
 		private ICollectionElementRelationMapper DetermineCollectionElementRelationType(MemberInfo property, Type collectionElementType)
 		{
 			var ownerType = property.DeclaringType;
@@ -171,7 +183,7 @@ namespace ConfOrm.NH
 			}
 			else if (domainInspector.IsManyToMany(ownerType, collectionElementType))
 			{
-				return null;
+				return new ManyToManyRelationMapper();
 			}
 			else if (domainInspector.IsComponent(collectionElementType))
 			{
