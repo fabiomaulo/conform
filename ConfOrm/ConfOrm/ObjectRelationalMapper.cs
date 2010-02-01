@@ -23,6 +23,7 @@ namespace ConfOrm
 		private readonly HashSet<MemberInfo> bags = new HashSet<MemberInfo>();
 		private readonly HashSet<MemberInfo> lists = new HashSet<MemberInfo>();
 		private readonly HashSet<MemberInfo> arrays = new HashSet<MemberInfo>();
+		private readonly HashSet<MemberInfo> dictionaries = new HashSet<MemberInfo>();
 		private readonly HashSet<Type> components = new HashSet<Type>();
 
 		#endregion
@@ -35,6 +36,7 @@ namespace ConfOrm
 		protected readonly List<IPattern<MemberInfo>> listPatterns;
 		protected readonly List<IPattern<MemberInfo>> arrayPatterns;
 		protected readonly List<IPattern<Type>> componetPatterns;
+		protected readonly List<IPattern<MemberInfo>> dictionaryPatterns;
 
 		#endregion
 
@@ -46,6 +48,7 @@ namespace ConfOrm
 			listPatterns = new List<IPattern<MemberInfo>> { new ListCollectionPattern() };
 			arrayPatterns = new List<IPattern<MemberInfo>> { new ArrayCollectionPattern() };
 			componetPatterns = new List<IPattern<Type>> { new ComponentPattern() };
+			dictionaryPatterns = new List<IPattern<MemberInfo>> { new DictionaryCollectionPattern() };
 		}
 
 		#region Implementation of IObjectRelationalMapper
@@ -133,6 +136,12 @@ namespace ConfOrm
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
 			arrays.Add(member);
+		}
+
+		public void Dictionary<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
+			dictionaries.Add(member);
 		}
 
 		#endregion
@@ -254,7 +263,7 @@ namespace ConfOrm
 
 		public bool IsDictionary(MemberInfo role)
 		{
-			throw new NotImplementedException();
+			return dictionaries.Contains(role) || dictionaryPatterns.Any(pattern => pattern.Match(role));
 		}
 
 		#endregion
