@@ -97,9 +97,16 @@ namespace ConfOrm.NH
 			AddProperty(hbm);
 		}
 
-		public void Map<TKey, TElement>(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
+		public void Map(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
 		{
-			throw new NotImplementedException();
+			var hbm = new HbmMap { name = property.Name };
+			var propertyType = property.GetPropertyOrFieldType();
+			Type dictionaryKeyType = propertyType.DetermineDictionaryKeyType();
+			Type dictionaryValueType = propertyType.DetermineDictionaryValueType();
+
+			collectionMapping(new MapMapper(container, dictionaryKeyType, dictionaryValueType, hbm));
+			mapping(new CollectionElementRelation(dictionaryValueType, MapDoc, rel => hbm.Item1 = rel));
+			AddProperty(hbm);
 		}
 
 		#endregion

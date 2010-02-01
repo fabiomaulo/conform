@@ -83,6 +83,19 @@ namespace ConfOrm.NH
 					var cert = DetermineCollectionElementRelationType(property, collectionElementType);
 					propertiesContainer.Set(property, MapCollectionProperties, cert.Map);
 				}
+				else if (domainInspector.IsDictionary(property))
+				{
+					Type dictionaryKeyType = propertyType.DetermineDictionaryKeyType();
+					if (dictionaryKeyType == null)
+					{
+						throw new NotSupportedException(string.Format("Can't determine collection element relation (property{0} in {1})",
+																													property.Name, type));
+					}
+					Type dictionaryValueType = propertyType.DetermineDictionaryValueType();
+					// TODO : determine RelationType for Key
+					var cert = DetermineCollectionElementRelationType(property, dictionaryValueType);
+					propertiesContainer.Map(property, MapCollectionProperties, cert.Map);
+				}
 				else if (domainInspector.IsArray(property))
 				{
 				}

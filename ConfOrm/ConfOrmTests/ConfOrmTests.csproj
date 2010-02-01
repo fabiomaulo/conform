@@ -64,9 +64,11 @@
     <Compile Include="NH\CollectionElementRelationTest.cs" />
     <Compile Include="NH\IdMapperTest.cs" />
     <Compile Include="NH\ListMapperTest.cs" />
+    <Compile Include="NH\MapMapperTest.cs" />
     <Compile Include="NH\MapperTests\BagOfElementsTest.cs" />
     <Compile Include="NH\MapperTests\BaseFuncionality.cs" />
     <Compile Include="NH\MapperTests\ComponentPropertyTest.cs" />
+    <Compile Include="NH\MapperTests\DictionaryOfElements.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerClass.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerClassHierarchyTest.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerConcreteClassTest.cs" />
@@ -104,6 +106,7 @@
     <Compile Include="Patterns\PropertyToFieldUnderscorePascalCasePatternTest.cs" />
     <Compile Include="Patterns\SetCollectionPatternTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeExtensionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConfOrm\ConfOrm.csproj">

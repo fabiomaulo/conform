@@ -111,5 +111,41 @@ namespace ConfOrm
 			}
 			return null;
 		}
+
+		public static Type DetermineDictionaryKeyType(this Type genericDictionary)
+		{
+			if (genericDictionary.IsGenericType)
+			{
+				Type dictionaryInterface = GetDictionaryInterface(genericDictionary);
+				if (dictionaryInterface != null)
+				{
+					return dictionaryInterface.GetGenericArguments()[0];
+				}
+			}
+			return null;
+		}
+
+		private static Type GetDictionaryInterface(Type genericDictionary)
+		{
+			List<Type> interfaces = genericDictionary.GetInterfaces().Where(t => t.IsGenericType).ToList();
+			if (genericDictionary.IsInterface)
+			{
+				interfaces.Add(genericDictionary);
+			}
+			return interfaces.FirstOrDefault(t => t.GetGenericTypeDefinition() == typeof (IDictionary<,>));
+		}
+
+		public static Type DetermineDictionaryValueType(this Type genericDictionary)
+		{
+			if (genericDictionary.IsGenericType)
+			{
+				Type dictionaryInterface = GetDictionaryInterface(genericDictionary);
+				if (dictionaryInterface != null)
+				{
+					return dictionaryInterface.GetGenericArguments()[1];
+				}
+			}
+			return null;
+		}
 	}
 }

@@ -21,7 +21,7 @@ namespace ConfOrm.Mappers
 		void List(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping,
 		                    Action<ICollectionElementRelation> mapping);
 
-		void Map<TKey, TElement>(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping,
+		void Map(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping,
 		                         Action<ICollectionElementRelation> mapping);
 	}
 }
