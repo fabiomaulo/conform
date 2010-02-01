@@ -59,9 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NH\AbstractPropertyContainerMapperTest.cs" />
+    <Compile Include="NH\BagMapperTest.cs" />
     <Compile Include="NH\ClassMapperTest.cs" />
     <Compile Include="NH\CollectionElementRelationTest.cs" />
     <Compile Include="NH\IdMapperTest.cs" />
+    <Compile Include="NH\MapperTests\BagOfElementsTest.cs" />
     <Compile Include="NH\MapperTests\BaseFuncionality.cs" />
     <Compile Include="NH\MapperTests\ComponentPropertyTest.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerClass.cs" />

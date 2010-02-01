@@ -91,6 +91,9 @@ namespace ConfOrm.NH
 				}
 				else if (domainInspector.IsBag(property))
 				{
+					Type collectionElementType = GetCollectionElementTypeOrThrow(type, property, propertyType);
+					var cert = DetermineCollectionElementRelationType(property, collectionElementType);
+					propertiesContainer.Bag(property, MapCollectionProperties, cert.Map);
 				}
 				else if (domainInspector.IsComponent(propertyType))
 				{

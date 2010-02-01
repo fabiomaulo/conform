@@ -65,6 +65,7 @@
     <Compile Include="Mappers\ISubclassMapper.cs" />
     <Compile Include="MappingException.cs" />
     <Compile Include="NH\AbstractPropertyContainerMapper.cs" />
+    <Compile Include="NH\BagMapper.cs" />
     <Compile Include="NH\ClassMapper.cs" />
     <Compile Include="NH\CollectionElementRelation.cs" />
     <Compile Include="NH\ComponentMapper.cs" />

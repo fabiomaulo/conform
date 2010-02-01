@@ -15,7 +15,7 @@ namespace ConfOrm.Mappers
 		void Set(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping,
 		         Action<ICollectionElementRelation> mapping);
 
-		void Bag<TElement>(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping,
+		void Bag(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping,
 		                   Action<ICollectionElementRelation> mapping);
 
 		void List<TElement>(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping,
