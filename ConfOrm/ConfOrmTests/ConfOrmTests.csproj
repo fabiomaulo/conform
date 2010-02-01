@@ -65,6 +65,7 @@
     <Compile Include="NH\IdMapperTest.cs" />
     <Compile Include="NH\ListMapperTest.cs" />
     <Compile Include="NH\MapMapperTest.cs" />
+    <Compile Include="NH\MapperTests\BagOfComponentsTest.cs" />
     <Compile Include="NH\MapperTests\BagOfElementsTest.cs" />
     <Compile Include="NH\MapperTests\BagOfManyToManyTest.cs" />
     <Compile Include="NH\MapperTests\BagOfOneToManyTest.cs" />
