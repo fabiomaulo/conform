@@ -40,6 +40,7 @@ namespace ConfOrm.NH
 		public void Component(Action<IComponentElementMapper> mapping)
 		{
 			var hbm = new HbmCompositeElement { @class = collectionElementType.AssemblyQualifiedName };
+			mapping(new ComponentElementMapper(collectionElementType, mapDoc, hbm));
 			elementRelationshipAssing(hbm);
 		}
 

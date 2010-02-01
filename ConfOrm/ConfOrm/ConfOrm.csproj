@@ -63,6 +63,8 @@
     <Compile Include="Mappers\IOneToOneMapper.cs" />
     <Compile Include="Mappers\IPropertyContainerMapper.cs" />
     <Compile Include="Mappers\ISubclassMapper.cs" />
+    <Compile Include="NH\ComponentElementMapper.cs" />
+    <Compile Include="NH\ComponentNestedElementMapper.cs" />
     <Compile Include="NH\MapMapper.cs" />
     <Compile Include="MappingException.cs" />
     <Compile Include="NH\AbstractPropertyContainerMapper.cs" />

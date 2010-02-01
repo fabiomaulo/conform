@@ -174,6 +174,49 @@ namespace ConfOrm.NH
 			#endregion
 		}
 
+		private class ComponentRelationMapper : ICollectionElementRelationMapper
+		{
+			private readonly Type componentType;
+			private readonly IDomainInspector domainInspector;
+
+			public ComponentRelationMapper(Type componentType, IDomainInspector domainInspector)
+			{
+				this.componentType = componentType;
+				this.domainInspector = domainInspector;
+			}
+
+			#region Implementation of ICollectionElementRelationMapper
+
+			public void Map(ICollectionElementRelation relation)
+			{
+				relation.Component(x => MapProperties(componentType, x));
+			}
+
+			#endregion
+
+			private void MapProperties(Type type, IComponentElementMapper propertiesContainer)
+			{
+				var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+				foreach (var property in properties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p)))
+				{
+					var propertyType = property.GetPropertyOrFieldType();
+					if (domainInspector.IsManyToOne(type, propertyType))
+					{
+						propertiesContainer.ManyToOne(property);
+					}
+					else if (domainInspector.IsComponent(propertyType))
+					{
+						propertiesContainer.Component(property, x => MapProperties(propertyType, x));
+					}
+					else
+					{
+						propertiesContainer.Property(property);
+					}
+				}
+			}
+
+		}
+
 		private ICollectionElementRelationMapper DetermineCollectionElementRelationType(MemberInfo property, Type collectionElementType)
 		{
 			var ownerType = property.DeclaringType;
@@ -187,7 +230,7 @@ namespace ConfOrm.NH
 			}
 			else if (domainInspector.IsComponent(collectionElementType))
 			{
-				return null;
+				return new ComponentRelationMapper(collectionElementType, domainInspector);
 			}
 			return new ElementRelationMapper();
 		}
