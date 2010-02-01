@@ -72,6 +72,7 @@
     <Compile Include="NH\IdMapper.cs" />
     <Compile Include="NH\JoinedSubclassMapper.cs" />
     <Compile Include="NH\KeyMapper.cs" />
+    <Compile Include="NH\ListMapper.cs" />
     <Compile Include="NH\Mapper.cs" />
     <Compile Include="NH\SetMapper.cs" />
     <Compile Include="NH\SubclassMapper.cs" />

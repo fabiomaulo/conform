@@ -63,12 +63,14 @@
     <Compile Include="NH\ClassMapperTest.cs" />
     <Compile Include="NH\CollectionElementRelationTest.cs" />
     <Compile Include="NH\IdMapperTest.cs" />
+    <Compile Include="NH\ListMapperTest.cs" />
     <Compile Include="NH\MapperTests\BagOfElementsTest.cs" />
     <Compile Include="NH\MapperTests\BaseFuncionality.cs" />
     <Compile Include="NH\MapperTests\ComponentPropertyTest.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerClass.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerClassHierarchyTest.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerConcreteClassTest.cs" />
+    <Compile Include="NH\MapperTests\ListOfElementsTest.cs" />
     <Compile Include="NH\MapperTests\ManyToOneRelationTest.cs" />
     <Compile Include="NH\MapperTests\OneToOneRelationTest.cs" />
     <Compile Include="NH\MapperTests\SetOfElementsTest.cs" />

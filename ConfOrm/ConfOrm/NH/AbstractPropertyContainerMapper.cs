@@ -87,9 +87,14 @@ namespace ConfOrm.NH
 			AddProperty(hbm);
 		}
 
-		public void List<TElement>(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
+		public void List(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
 		{
-			throw new NotImplementedException();
+			var hbm = new HbmList { name = property.Name };
+			var propertyType = property.GetPropertyOrFieldType();
+			var collectionElementType = propertyType.DetermineCollectionElementType();
+			collectionMapping(new ListMapper(container, collectionElementType, hbm));
+			mapping(new CollectionElementRelation(collectionElementType, MapDoc, rel => hbm.Item1 = rel));
+			AddProperty(hbm);
 		}
 
 		public void Map<TKey, TElement>(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
