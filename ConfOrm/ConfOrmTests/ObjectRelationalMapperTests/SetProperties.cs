@@ -28,7 +28,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		{
 			var mapper = new ObjectRelationalMapper();
 			mapper.Set<A>(x => x.NickNames);
-			var mi = typeof(A).GetProperty("Set");
+			var mi = typeof(A).GetProperty("NickNames");
 			mapper.IsSet(mi).Should().Be.True();
 		}
 
