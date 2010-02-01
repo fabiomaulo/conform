@@ -76,6 +76,7 @@
     <Compile Include="NH\MapperTests\HierarchyTablePerClass.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerClassHierarchyTest.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerConcreteClassTest.cs" />
+    <Compile Include="NH\MapperTests\ListOfComponentsTest.cs" />
     <Compile Include="NH\MapperTests\ListOfElementsTest.cs" />
     <Compile Include="NH\MapperTests\ListOfManyToManyTest.cs" />
     <Compile Include="NH\MapperTests\ListOfOneToManyTest.cs" />
