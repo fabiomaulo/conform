@@ -66,6 +66,7 @@
     <Compile Include="NH\ListMapperTest.cs" />
     <Compile Include="NH\MapMapperTest.cs" />
     <Compile Include="NH\MapperTests\BagOfElementsTest.cs" />
+    <Compile Include="NH\MapperTests\BagOfManyToManyTest.cs" />
     <Compile Include="NH\MapperTests\BagOfOneToManyTest.cs" />
     <Compile Include="NH\MapperTests\BaseFuncionality.cs" />
     <Compile Include="NH\MapperTests\ComponentPropertyTest.cs" />
