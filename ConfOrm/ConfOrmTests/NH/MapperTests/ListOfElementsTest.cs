@@ -38,7 +38,7 @@ namespace ConfOrmTests.NH.MapperTests
 		}
 
 		[Test]
-		public void MappingContainsClassWithComponent()
+		public void MappingThroughMock()
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();
 
