@@ -150,12 +150,24 @@ namespace ConfOrm.NH
 			#endregion
 		}
 
+		private class OneToManyRelationMapper : ICollectionElementRelationMapper
+		{
+			#region Implementation of ICollectionElementRelationMapper
+
+			public void Map(ICollectionElementRelation relation)
+			{
+				relation.OneToMany();
+			}
+
+			#endregion
+		}
+
 		private ICollectionElementRelationMapper DetermineCollectionElementRelationType(MemberInfo property, Type collectionElementType)
 		{
 			var ownerType = property.DeclaringType;
 			if (domainInspector.IsOneToMany(ownerType, collectionElementType))
 			{
-				return null;
+				return new OneToManyRelationMapper();
 			}
 			else if (domainInspector.IsManyToMany(ownerType, collectionElementType))
 			{

@@ -76,6 +76,7 @@
     <Compile Include="NH\MapperTests\ManyToOneRelationTest.cs" />
     <Compile Include="NH\MapperTests\OneToOneRelationTest.cs" />
     <Compile Include="NH\MapperTests\SetOfElementsTest.cs" />
+    <Compile Include="NH\MapperTests\SetOfOneToManyTest.cs" />
     <Compile Include="NH\MapperTests\SimplePerClassTest.cs">
       <SubType>Code</SubType>
     </Compile>
