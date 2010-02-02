@@ -157,6 +157,18 @@ namespace ConfOrm.NH
 
 		private class OneToManyRelationMapper : ICollectionElementRelationMapper
 		{
+			private const BindingFlags FlattenHierarchyBindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
+			private readonly Type ownerType;
+			private readonly Type collectionElementType;
+			private readonly IDomainInspector domainInspector;
+
+			public OneToManyRelationMapper(Type ownerType, Type collectionElementType, IDomainInspector domainInspector)
+			{
+				this.ownerType = ownerType;
+				this.collectionElementType = collectionElementType;
+				this.domainInspector = domainInspector;
+			}
+
 			#region Implementation of ICollectionElementRelationMapper
 
 			public void Map(ICollectionElementRelation relation)
@@ -166,6 +178,25 @@ namespace ConfOrm.NH
 
 			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)
 			{
+				if(domainInspector.IsBidirectionalOneToMany(ownerType, collectionElementType))
+				{
+					mapped.Inverse = true;
+					var parentColumnNameInChild = GetParentColumnNameInChild();
+					if (parentColumnNameInChild != null)
+					{
+						mapped.Key(k => k.Column(parentColumnNameInChild));
+					}
+				}
+			}
+
+			private string GetParentColumnNameInChild()
+			{
+				var propertyInfo = collectionElementType.GetProperties(FlattenHierarchyBindingFlags).FirstOrDefault(p => p.PropertyType.IsAssignableFrom(ownerType));
+				if (propertyInfo != null)
+				{
+					return propertyInfo.Name;
+				}
+				return null;
 			}
 
 			#endregion
@@ -238,7 +269,7 @@ namespace ConfOrm.NH
 			var ownerType = property.DeclaringType;
 			if (domainInspector.IsOneToMany(ownerType, collectionElementType))
 			{
-				return new OneToManyRelationMapper();
+				return new OneToManyRelationMapper(ownerType, collectionElementType, domainInspector);
 			}
 			else if (domainInspector.IsManyToMany(ownerType, collectionElementType))
 			{

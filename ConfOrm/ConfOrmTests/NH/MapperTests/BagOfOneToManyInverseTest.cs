@@ -46,7 +46,7 @@ namespace ConfOrmTests.NH.MapperTests
 			return mapper.CompileMappingFor(new[] { typeof(Parent), typeof(Child) });
 		}
 
-		[Test, Ignore("Not supported yet")]
+		[Test]
 		public void MappingThroughMock()
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();
