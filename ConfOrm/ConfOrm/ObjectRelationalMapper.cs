@@ -223,11 +223,6 @@ namespace ConfOrm
 			       || (areEntities && !IsOneToOne(from, to) && !manyToManyRelation.Contains(new Relation(from, to)));
 		}
 
-		public bool IsBidirectionalOneToMany(Type from, Type to)
-		{
-			return false;
-		}
-
 		public bool IsHeterogeneousAssociations(MemberInfo member)
 		{
 			return false;

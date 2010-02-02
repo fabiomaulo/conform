@@ -34,7 +34,6 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
 			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
 			orm.Setup(m => m.IsOneToMany(It.Is<Type>(t => t == typeof(Parent)), It.Is<Type>(t => t == typeof(Child)))).Returns(true);
-			orm.Setup(m => m.IsBidirectionalOneToMany(It.Is<Type>(t => t == typeof(Parent)), It.Is<Type>(t => t == typeof(Child)))).Returns(true);
 			orm.Setup(m => m.IsManyToOne(It.Is<Type>(t => t == typeof(Child)), It.Is<Type>(t => t == typeof(Parent)))).Returns(true);
 			orm.Setup(m => m.IsBag(It.Is<MemberInfo>(p => p == typeof(Parent).GetProperty("Children")))).Returns(true);
 			return orm;
@@ -66,6 +65,18 @@ namespace ConfOrmTests.NH.MapperTests
 			var collection = (HbmBag)relation;
 			collection.Satisfy(c => c.Inverse);
 			collection.Key.Columns.First().name.Should().Be.EqualTo("Owner");
+		}
+
+		[Test]
+		public void IntegrationWithObjectRelationalMapper()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Parent>();
+			orm.TablePerClass<Child>();
+			orm.ManyToOne<Child, Parent>();
+			HbmMapping mapping = GetMapping(orm);
+
+			VerifyMapping(mapping);
 		}
 	}
 }

@@ -178,14 +178,11 @@ namespace ConfOrm.NH
 
 			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)
 			{
-				if(domainInspector.IsBidirectionalOneToMany(ownerType, collectionElementType))
+				var parentColumnNameInChild = GetParentColumnNameInChild();
+				if (parentColumnNameInChild != null)
 				{
 					mapped.Inverse = true;
-					var parentColumnNameInChild = GetParentColumnNameInChild();
-					if (parentColumnNameInChild != null)
-					{
-						mapped.Key(k => k.Column(parentColumnNameInChild));
-					}
+					mapped.Key(k => k.Column(parentColumnNameInChild));
 				}
 			}
 
