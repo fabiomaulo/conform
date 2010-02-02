@@ -61,6 +61,7 @@ namespace ConfOrmTests.NH.MapperTests
 			var relation = rc.Properties.First(p => p.Name == "Pets");
 			relation.Should().Be.OfType<HbmBag>();
 			var collection = (HbmBag)relation;
+			collection.Satisfy("Inverse association not required.", c => !c.Inverse);
 			collection.ElementRelationship.Should().Be.OfType<HbmOneToMany>();
 			var elementRelation = (HbmOneToMany)collection.ElementRelationship;
 			elementRelation.Class.Should().Not.Be.Null();

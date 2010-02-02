@@ -13,5 +13,18 @@ namespace ConfOrm.NH
 			this.mapping = mapping;
 			this.mapping.column1 = ownerEntityType.Name.ToLowerInvariant() + "_key";
 		}
+
+		#region Implementation of IKeyMapper
+
+		public void Column(string columnName)
+		{
+			if (string.IsNullOrEmpty(columnName))
+			{
+				throw new ArgumentNullException("columnName","Valid column name required.");
+			}
+			mapping.column1 = columnName;
+		}
+
+		#endregion
 	}
 }

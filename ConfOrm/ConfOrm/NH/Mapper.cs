@@ -81,7 +81,7 @@ namespace ConfOrm.NH
 				{
 					Type collectionElementType = GetCollectionElementTypeOrThrow(type, property, propertyType);
 					var cert = DetermineCollectionElementRelationType(property, collectionElementType);
-					propertiesContainer.Set(property, MapCollectionProperties, cert.Map);
+					propertiesContainer.Set(property, cert.MapCollectionProperties, cert.Map);
 				}
 				else if (domainInspector.IsDictionary(property))
 				{
@@ -94,7 +94,7 @@ namespace ConfOrm.NH
 					Type dictionaryValueType = propertyType.DetermineDictionaryValueType();
 					// TODO : determine RelationType for Key
 					var cert = DetermineCollectionElementRelationType(property, dictionaryValueType);
-					propertiesContainer.Map(property, MapCollectionProperties, cert.Map);
+					propertiesContainer.Map(property, cert.MapCollectionProperties, cert.Map);
 				}
 				else if (domainInspector.IsArray(property))
 				{
@@ -103,13 +103,13 @@ namespace ConfOrm.NH
 				{
 					Type collectionElementType = GetCollectionElementTypeOrThrow(type, property, propertyType);
 					var cert = DetermineCollectionElementRelationType(property, collectionElementType);
-					propertiesContainer.List(property, MapCollectionProperties, cert.Map);
+					propertiesContainer.List(property, cert.MapCollectionProperties, cert.Map);
 				}
 				else if (domainInspector.IsBag(property))
 				{
 					Type collectionElementType = GetCollectionElementTypeOrThrow(type, property, propertyType);
 					var cert = DetermineCollectionElementRelationType(property, collectionElementType);
-					propertiesContainer.Bag(property, MapCollectionProperties, cert.Map);
+					propertiesContainer.Bag(property, cert.MapCollectionProperties, cert.Map);
 				}
 				else if (domainInspector.IsComponent(propertyType))
 				{
@@ -133,9 +133,10 @@ namespace ConfOrm.NH
 			return collectionElementType;
 		}
 
-		private interface ICollectionElementRelationMapper
+		protected interface ICollectionElementRelationMapper
 		{
 			void Map(ICollectionElementRelation relation);
+			void MapCollectionProperties(ICollectionPropertiesMapper mapped);
 		}
 
 		private class ElementRelationMapper : ICollectionElementRelationMapper
@@ -145,6 +146,10 @@ namespace ConfOrm.NH
 			public void Map(ICollectionElementRelation relation)
 			{
 				relation.Element();
+			}
+
+			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)
+			{
 			}
 
 			#endregion
@@ -159,6 +164,10 @@ namespace ConfOrm.NH
 				relation.OneToMany();
 			}
 
+			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)
+			{
+			}
+
 			#endregion
 		}
 
@@ -169,6 +178,10 @@ namespace ConfOrm.NH
 			public void Map(ICollectionElementRelation relation)
 			{
 				relation.ManyToMany();
+			}
+
+			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)
+			{
 			}
 
 			#endregion
@@ -190,6 +203,10 @@ namespace ConfOrm.NH
 			public void Map(ICollectionElementRelation relation)
 			{
 				relation.Component(x => MapProperties(componentType, x));
+			}
+
+			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)
+			{
 			}
 
 			#endregion
@@ -214,10 +231,9 @@ namespace ConfOrm.NH
 					}
 				}
 			}
-
 		}
 
-		private ICollectionElementRelationMapper DetermineCollectionElementRelationType(MemberInfo property, Type collectionElementType)
+		protected virtual ICollectionElementRelationMapper DetermineCollectionElementRelationType(MemberInfo property, Type collectionElementType)
 		{
 			var ownerType = property.DeclaringType;
 			if (domainInspector.IsOneToMany(ownerType, collectionElementType))
@@ -233,10 +249,6 @@ namespace ConfOrm.NH
 				return new ComponentRelationMapper(collectionElementType, domainInspector);
 			}
 			return new ElementRelationMapper();
-		}
-
-		protected virtual void MapCollectionProperties(ICollectionPropertiesMapper mapped)
-		{
 		}
 
 		private MemberInfo GetPoidPropertyOrField(Type type)
