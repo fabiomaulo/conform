@@ -19,6 +19,7 @@ namespace ConfOrm
 		bool IsManyToMany(Type role1, Type role2);
 		bool IsOneToMany(Type from, Type to);
 		bool IsHeterogeneousAssociations(MemberInfo member);
+		Cascade ApplyCascade(Type from, Type to);
 
 		bool IsPersistentId(MemberInfo member);
 

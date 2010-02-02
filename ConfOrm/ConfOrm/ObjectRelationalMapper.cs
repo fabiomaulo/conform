@@ -25,6 +25,7 @@ namespace ConfOrm
 		private readonly HashSet<MemberInfo> arrays = new HashSet<MemberInfo>();
 		private readonly HashSet<MemberInfo> dictionaries = new HashSet<MemberInfo>();
 		private readonly HashSet<Type> components = new HashSet<Type>();
+		private readonly Dictionary<Relation, Cascade> cascade = new Dictionary<Relation, Cascade>();
 
 		#endregion
 
@@ -144,6 +145,11 @@ namespace ConfOrm
 			dictionaries.Add(member);
 		}
 
+		public void Cascade<TFromEntity, TToEntity>(Cascade cascadeOptions)
+		{
+			cascade.Add(new Relation(typeof(TFromEntity), typeof(TToEntity)), cascadeOptions);
+		}
+
 		#endregion
 
 		#region Implementation of IDomainInspector
@@ -226,6 +232,12 @@ namespace ConfOrm
 		public bool IsHeterogeneousAssociations(MemberInfo member)
 		{
 			return false;
+		}
+
+		public Cascade ApplyCascade(Type from, Type to)
+		{
+			ConfOrm.Cascade result;
+			return cascade.TryGetValue(new Relation(from, to), out result) ? result : ConfOrm.Cascade.None;
 		}
 
 		public bool IsPersistentId(MemberInfo member)

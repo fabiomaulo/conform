@@ -184,6 +184,11 @@ namespace ConfOrm.NH
 					mapped.Inverse = true;
 					mapped.Key(k => k.Column(parentColumnNameInChild));
 				}
+				var cascadeToApply = domainInspector.ApplyCascade(ownerType, collectionElementType);
+				if(cascadeToApply != Cascade.None)
+				{
+					mapped.Cascade(cascadeToApply);
+				}
 			}
 
 			private string GetParentColumnNameInChild()

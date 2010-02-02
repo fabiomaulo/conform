@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="NH\AbstractPropertyContainerMapperTest.cs" />
     <Compile Include="NH\BagMapperTest.cs" />
+    <Compile Include="NH\CascadeConverterTest.cs" />
     <Compile Include="NH\ClassMapperTest.cs" />
     <Compile Include="NH\CollectionElementRelationTest.cs" />
     <Compile Include="NH\IdMapperTest.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="NH\MapperTests\BagOfComponentsTest.cs" />
     <Compile Include="NH\MapperTests\BagOfElementsTest.cs" />
     <Compile Include="NH\MapperTests\BagOfManyToManyTest.cs" />
+    <Compile Include="NH\MapperTests\BagOfOneToManyCascadeTest.cs" />
     <Compile Include="NH\MapperTests\BagOfOneToManyInverseTest.cs" />
     <Compile Include="NH\MapperTests\BagOfOneToManyTest.cs" />
     <Compile Include="NH\MapperTests\BaseFuncionality.cs" />

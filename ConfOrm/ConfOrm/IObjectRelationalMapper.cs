@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace ConfOrm
@@ -18,5 +17,6 @@ namespace ConfOrm
 		void List<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 		void Array<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 		void Dictionary<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
+		void Cascade<TFromEntity, TToEntity>(Cascade cascadeOptions);
 	}
 }

@@ -117,6 +117,12 @@ namespace ConfOrm.NH
 		}
 
 		public void Sort() { }
+
+		public void Cascade(Cascade cascadeStyle)
+		{
+			mapping.cascade = cascadeStyle.ToCascadeString();
+		}
+
 		#endregion
 	}
 }

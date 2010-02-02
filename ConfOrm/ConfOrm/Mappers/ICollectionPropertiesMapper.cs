@@ -13,5 +13,6 @@ namespace ConfOrm.Mappers
 		void Key(Action<IKeyMapper> keyMapping);
 		void OrderBy(MemberInfo property);
 		void Sort();
+		void Cascade(Cascade cascadeStyle);
 	}
 }
