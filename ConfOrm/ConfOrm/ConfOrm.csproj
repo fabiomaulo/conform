@@ -52,12 +52,14 @@
     <Compile Include="IObjectRelationalMapper.cs" />
     <Compile Include="IPattern.cs" />
     <Compile Include="Mappers\CollectionLazy.cs" />
+    <Compile Include="Mappers\Generators.cs" />
     <Compile Include="Mappers\IClassMapper.cs" />
     <Compile Include="Mappers\ICollectionElementRelation.cs" />
     <Compile Include="Mappers\ICollectionPropertiesMapper.cs" />
     <Compile Include="Mappers\IComponentElementMapper.cs" />
     <Compile Include="Mappers\IComponentMapper.cs" />
     <Compile Include="Mappers\IGenerator.cs" />
+    <Compile Include="Mappers\IGeneratorMapper.cs" />
     <Compile Include="Mappers\IIdMapper.cs" />
     <Compile Include="Mappers\IJoinedSubclassMapper.cs" />
     <Compile Include="Mappers\IKeyMapper.cs" />
@@ -69,6 +71,8 @@
     <Compile Include="NH\CascadeConverter.cs" />
     <Compile Include="NH\ComponentElementMapper.cs" />
     <Compile Include="NH\ComponentNestedElementMapper.cs" />
+    <Compile Include="NH\GeneratorMapper.cs" />
+    <Compile Include="NH\GeneratorsMappers.cs" />
     <Compile Include="NH\ManyToOneMapper.cs" />
     <Compile Include="NH\MapMapper.cs" />
     <Compile Include="MappingException.cs" />

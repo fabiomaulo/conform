@@ -1,3 +1,4 @@
+using System;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
 
@@ -6,24 +7,39 @@ namespace ConfOrm.NH
 	public class IdMapper : IIdMapper
 	{
 		private readonly HbmId hbmId;
-		private IGenerator generator;
 
 		public IdMapper(HbmId hbmId)
 		{
 			this.hbmId = hbmId;
-			Generator = Generators.Native;
+			Generator(Generators.Native);
 		}
 
-		#region Implementation of IIdMapping
+		#region Implementation of IIdMapper
 
-		public IGenerator Generator
+		public void Generator(Generators generator)
 		{
-			get { return generator; }
-			set
+			Generator(generator, x => { });
+		}
+
+		private void ApplyGenerator(Generators generator)
+		{
+			switch (generator)
 			{
-				generator = value;
-				hbmId.generator = generator != null ? ((Generators.AbstractGenerator)generator).GetCompiledGenerator() : null;
+				case Generators.Native:
+					new NativeGenerator(hbmId);
+					break;
+				case Generators.HighLow:
+					new HighLowGenerator(hbmId);
+					break;
+				default:
+					throw new ArgumentOutOfRangeException("generator");
 			}
+		}
+
+		public void Generator(Generators generator, Action<IGeneratorMapper> generatorMapping)
+		{
+			ApplyGenerator(generator);
+			generatorMapping(new GeneratorMapper(hbmId.generator));
 		}
 
 		#endregion

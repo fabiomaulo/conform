@@ -71,13 +71,46 @@ namespace ConfOrm.NH
 
 		private void AddRootClassMapping(Type type, HbmMapping mapping)
 		{
-			var classMapper = new ClassMapper(type, mapping, GetPoidPropertyOrField(type));
-			new IdMapper(classMapper.Id);
+			var poidPropertyOrField = GetPoidPropertyOrField(type);
+			var classMapper = new ClassMapper(type, mapping, poidPropertyOrField);
+			var idMapper = new IdMapper(classMapper.Id);
+			var persistentIdStrategy = domainInspector.GetPersistentIdStrategy(poidPropertyOrField);
+			if(persistentIdStrategy != null)
+			{
+				idMapper.Generator(GetGenerator(persistentIdStrategy.Strategy), gm =>
+					{
+						if(persistentIdStrategy.Params != null)
+						{
+							gm.Params(persistentIdStrategy.Params);
+						}
+					});
+			}
 			if (domainInspector.IsTablePerClassHierarchy(type))
 			{
 				classMapper.Discriminator();
 			}
 			MapProperties(type, classMapper);
+		}
+
+		private Generators GetGenerator(PoIdStrategy strategy)
+		{
+			switch (strategy)
+			{
+				case PoIdStrategy.HighLow:
+					return Generators.HighLow;
+				case PoIdStrategy.Sequence:
+					return Generators.Native;
+				case PoIdStrategy.Guid:
+					return Generators.Native;
+				case PoIdStrategy.GuidOptimized:
+					return Generators.Native;
+				case PoIdStrategy.Identity:
+					return Generators.Native;
+				case PoIdStrategy.Native:
+					return Generators.Native;
+				default:
+					throw new ArgumentOutOfRangeException("strategy");
+			}
 		}
 
 		private void MapProperties(Type type, IPropertyContainerMapper propertiesContainer)

@@ -1,8 +1,18 @@
 namespace ConfOrm
 {
+	public enum PoIdStrategy
+	{
+		HighLow,
+		Sequence,
+		Guid,
+		GuidOptimized,
+		Identity,
+		Native
+	}
+
 	public interface IPersistentIdStrategy
 	{
-		string CodeName { get; }
+		PoIdStrategy Strategy { get; }
 
 		/// <summary>
 		/// Any object as "property value" container

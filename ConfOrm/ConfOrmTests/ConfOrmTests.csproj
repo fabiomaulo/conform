@@ -92,6 +92,7 @@
     <Compile Include="NH\MapperTests\ManyToOneRelationTest.cs" />
     <Compile Include="NH\MapperTests\MappingPerClass.cs" />
     <Compile Include="NH\MapperTests\OneToOneRelationTest.cs" />
+    <Compile Include="NH\MapperTests\PoidStrategyTest.cs" />
     <Compile Include="NH\MapperTests\SetOfComponentsTest.cs" />
     <Compile Include="NH\MapperTests\SetOfElementsTest.cs" />
     <Compile Include="NH\MapperTests\SetOfManyToManyTest.cs" />
