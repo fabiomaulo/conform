@@ -237,7 +237,7 @@ namespace ConfOrm
 
 		public Cascade ApplyCascade(Type from, Type to)
 		{
-			ConfOrm.Cascade result;
+			Cascade result;
 			var relation = new Relation(from, to);
 			if (cascade.TryGetValue(relation, out result))
 			{
@@ -253,6 +253,11 @@ namespace ConfOrm
 		public bool IsPersistentId(MemberInfo member)
 		{
 			return poidPatterns.Any(pattern => pattern.Match(member));
+		}
+
+		public IPersistentIdStrategy GetPersistentIdStrategy(MemberInfo member)
+		{
+			return null;
 		}
 
 		public bool IsPersistentProperty(MemberInfo role)

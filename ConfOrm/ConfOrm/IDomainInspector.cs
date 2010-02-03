@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using ConfOrm.Mappers;
 
 namespace ConfOrm
 {
@@ -22,6 +23,7 @@ namespace ConfOrm
 		Cascade ApplyCascade(Type from, Type to);
 
 		bool IsPersistentId(MemberInfo member);
+		IPersistentIdStrategy GetPersistentIdStrategy(MemberInfo member);
 
 		bool IsPersistentProperty(MemberInfo role);
 		IDbColumnSpecification[] GetPersistentSpecification(MemberInfo role);

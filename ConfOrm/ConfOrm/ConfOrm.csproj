@@ -63,6 +63,7 @@
     <Compile Include="Mappers\IKeyMapper.cs" />
     <Compile Include="Mappers\IManyToOneMapper.cs" />
     <Compile Include="Mappers\IOneToOneMapper.cs" />
+    <Compile Include="IPersistentIdStrategy.cs" />
     <Compile Include="Mappers\IPropertyContainerMapper.cs" />
     <Compile Include="Mappers\ISubclassMapper.cs" />
     <Compile Include="NH\CascadeConverter.cs" />
