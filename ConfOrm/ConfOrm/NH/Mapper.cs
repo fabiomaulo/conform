@@ -88,7 +88,14 @@ namespace ConfOrm.NH
 				var propertyType = property.GetPropertyOrFieldType();
 				if(domainInspector.IsManyToOne(type, propertyType))
 				{
-					propertiesContainer.ManyToOne(property);
+					propertiesContainer.ManyToOne(property, x =>
+						{
+							var cascade = domainInspector.ApplyCascade(type, propertyType);
+							if(cascade != Cascade.None)
+							{
+								x.Cascade(cascade);
+							}
+						});
 				}
 				else if (domainInspector.IsOneToOne(type, propertyType))
 				{

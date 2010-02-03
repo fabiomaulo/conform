@@ -9,7 +9,7 @@ namespace ConfOrm.Mappers
 
 		void Component(MemberInfo property, Action<IComponentMapper> mapping);
 
-		void ManyToOne(MemberInfo property);
+		void ManyToOne(MemberInfo property, Action<IManyToOneMapper> mapping);
 		void OneToOne(MemberInfo property, Action<IOneToOneMapper> mapping);
 
 		void Set(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping,
