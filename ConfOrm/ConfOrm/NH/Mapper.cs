@@ -22,11 +22,11 @@ namespace ConfOrm.NH
 
 		public HbmMapping CompileMappingFor(IEnumerable<Type> types)
 		{
-			var mapping = new HbmMapping();
 			if (types == null)
 			{
 				throw new ArgumentNullException("types");
 			}
+			var mapping = new HbmMapping();
 			foreach (var type in RootClasses(types))
 			{
 				AddRootClassMapping(type, mapping);
@@ -304,6 +304,26 @@ namespace ConfOrm.NH
 		private MemberInfo GetPoidPropertyOrField(Type type)
 		{
 			return type.GetProperties().Cast<MemberInfo>().Concat(type.GetFields()).FirstOrDefault(mi=> domainInspector.IsPersistentId(mi));
+		}
+
+		public IEnumerable<HbmMapping> CompileMappingForEach(IEnumerable<Type> types)
+		{
+			if (types == null)
+			{
+				throw new ArgumentNullException("types");
+			}
+			foreach (var type in RootClasses(types))
+			{
+				var mapping = new HbmMapping();
+				AddRootClassMapping(type, mapping);
+				yield return mapping;
+			}
+			foreach (var type in Subclasses(types))
+			{
+				var mapping = new HbmMapping();
+				AddSubclassMapping(mapping, type);
+				yield return mapping;
+			}
 		}
 	}
 }

@@ -87,6 +87,7 @@
     <Compile Include="NH\MapperTests\ListOfManyToManyTest.cs" />
     <Compile Include="NH\MapperTests\ListOfOneToManyTest.cs" />
     <Compile Include="NH\MapperTests\ManyToOneRelationTest.cs" />
+    <Compile Include="NH\MapperTests\MappingPerClass.cs" />
     <Compile Include="NH\MapperTests\OneToOneRelationTest.cs" />
     <Compile Include="NH\MapperTests\SetOfComponentsTest.cs" />
     <Compile Include="NH\MapperTests\SetOfElementsTest.cs" />
