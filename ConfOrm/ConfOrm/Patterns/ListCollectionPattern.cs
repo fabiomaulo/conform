@@ -25,7 +25,9 @@ namespace ConfOrm.Patterns
 				{
 					interfaces.Add(memberType.GetGenericTypeDefinition());
 				}
-				return interfaces.Contains(typeof (IList<>));
+				var isList = interfaces.Contains(typeof (IList<>));
+				// a bidirectional one-to-many should use Bag or Set
+				return isList && !(new BidirectionalOneToManyPattern().Match(new Relation(subject.DeclaringType, memberType.DetermineCollectionElementType())));
 			}
 			return false;
 		}
