@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -146,6 +147,11 @@ namespace ConfOrm
 				}
 			}
 			return null;
+		}
+
+		public static bool IsGenericCollection(this Type source)
+		{
+			return source.IsGenericType && typeof(IEnumerable).IsAssignableFrom(source);
 		}
 	}
 }
