@@ -51,6 +51,7 @@
     <Compile Include="IDomainInspector.cs" />
     <Compile Include="IObjectRelationalMapper.cs" />
     <Compile Include="IPattern.cs" />
+    <Compile Include="IPatternApplier.cs" />
     <Compile Include="Mappers\CollectionLazy.cs" />
     <Compile Include="Mappers\Generators.cs" />
     <Compile Include="Mappers\IClassMapper.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Patterns\BidirectionalRelationPattern.cs" />
     <Compile Include="Patterns\ComponentPattern.cs" />
     <Compile Include="Patterns\DictionaryCollectionPattern.cs" />
+    <Compile Include="Patterns\HighLowPoidPattern.cs" />
     <Compile Include="Patterns\ListCollectionPattern.cs" />
     <Compile Include="Patterns\PoIdGuidStrategyPattern.cs" />
     <Compile Include="Patterns\PoIdPattern.cs" />

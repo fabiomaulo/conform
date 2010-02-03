@@ -121,6 +121,7 @@
     <Compile Include="Patterns\BidirectionalRelationPatternTest.cs" />
     <Compile Include="Patterns\ComponentPatternTest.cs" />
     <Compile Include="Patterns\DictionaryCollectionPatternTest.cs" />
+    <Compile Include="Patterns\HighLowPoidPatternTest.cs" />
     <Compile Include="Patterns\ListCollectionPatternTest.cs" />
     <Compile Include="Patterns\PoIdGuidStrategyPatternTest.cs" />
     <Compile Include="Patterns\PoIdPatternTest.cs" />
