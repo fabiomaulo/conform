@@ -99,7 +99,14 @@ namespace ConfOrm.NH
 				}
 				else if (domainInspector.IsOneToOne(type, propertyType))
 				{
-					propertiesContainer.OneToOne(property, x => { });
+					propertiesContainer.OneToOne(property, x =>
+						{
+							var cascade = domainInspector.ApplyCascade(type, propertyType);
+							if (cascade != Cascade.None)
+							{
+								x.Cascade(cascade);
+							}
+						});
 				}
 				else if (domainInspector.IsSet(property))
 				{

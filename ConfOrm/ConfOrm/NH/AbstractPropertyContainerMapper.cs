@@ -65,6 +65,7 @@ namespace ConfOrm.NH
 		public void OneToOne(MemberInfo property, Action<IOneToOneMapper> mapping)
 		{
 			var hbm = new HbmOneToOne { name = property.Name };
+			mapping(new OneToOneMapper(hbm));
 			AddProperty(hbm);
 		}
 
