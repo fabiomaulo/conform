@@ -9,7 +9,6 @@ namespace ConfOrm.NH
 {
 	public class Mapper
 	{
-		private readonly HbmMapping mapping;
 		private readonly IDomainInspector domainInspector;
 
 		public Mapper(IDomainInspector domainInspector)
@@ -19,11 +18,11 @@ namespace ConfOrm.NH
 				throw new ArgumentNullException("domainInspector");
 			}
 			this.domainInspector = domainInspector;
-			mapping = new HbmMapping();
 		}
 
 		public HbmMapping CompileMappingFor(IEnumerable<Type> types)
 		{
+			var mapping = new HbmMapping();
 			if (types == null)
 			{
 				throw new ArgumentNullException("types");
