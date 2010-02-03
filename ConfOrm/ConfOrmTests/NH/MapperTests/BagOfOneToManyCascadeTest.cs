@@ -81,5 +81,33 @@ namespace ConfOrmTests.NH.MapperTests
 
 			VerifyMapping(mapping);
 		}
+
+		[Test]
+		public void IntegrationWithObjectRelationalMapperWithoutExplicitCascade()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Parent>();
+			orm.TablePerClass<Child>();
+			orm.ManyToOne<Child, Parent>();
+			HbmMapping mapping = GetMapping(orm);
+
+			VerifyMapping(mapping);
+		}
+
+		[Test]
+		public void IntegrationWithObjectRelationalMapperWithoutExplicitCascadeNone()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Parent>();
+			orm.TablePerClass<Child>();
+			orm.ManyToOne<Child, Parent>();
+			orm.Cascade<Parent, Child>(Cascade.None);
+			HbmMapping mapping = GetMapping(orm);
+
+			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Parent"));
+			var relation = rc.Properties.First(p => p.Name == "Children");
+			var collection = (HbmBag)relation;
+			collection.Cascade.Satisfy(c => string.IsNullOrEmpty(c));
+		}
 	}
 }

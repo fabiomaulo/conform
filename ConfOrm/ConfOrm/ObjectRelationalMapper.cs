@@ -38,7 +38,7 @@ namespace ConfOrm
 		protected readonly List<IPattern<MemberInfo>> arrayPatterns;
 		protected readonly List<IPattern<Type>> componetPatterns;
 		protected readonly List<IPattern<MemberInfo>> dictionaryPatterns;
-
+		protected readonly List<IPattern<Relation>> bidirectionalRelationPatterns;
 		#endregion
 
 		public ObjectRelationalMapper()
@@ -50,6 +50,7 @@ namespace ConfOrm
 			arrayPatterns = new List<IPattern<MemberInfo>> { new ArrayCollectionPattern() };
 			componetPatterns = new List<IPattern<Type>> { new ComponentPattern() };
 			dictionaryPatterns = new List<IPattern<MemberInfo>> { new DictionaryCollectionPattern() };
+			bidirectionalRelationPatterns = new List<IPattern<Relation>> { new BidirectionalRelationPattern() };
 		}
 
 		#region Implementation of IObjectRelationalMapper
@@ -237,7 +238,16 @@ namespace ConfOrm
 		public Cascade ApplyCascade(Type from, Type to)
 		{
 			ConfOrm.Cascade result;
-			return cascade.TryGetValue(new Relation(from, to), out result) ? result : ConfOrm.Cascade.None;
+			var relation = new Relation(from, to);
+			if (cascade.TryGetValue(relation, out result))
+			{
+				return result;
+			}
+			if (bidirectionalRelationPatterns.Any(pattern => pattern.Match(relation)))
+			{
+				return ConfOrm.Cascade.All;
+			}
+			return ConfOrm.Cascade.None;
 		}
 
 		public bool IsPersistentId(MemberInfo member)
