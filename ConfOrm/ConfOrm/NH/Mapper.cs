@@ -223,6 +223,17 @@ namespace ConfOrm.NH
 
 		private class ManyToManyRelationMapper : ICollectionElementRelationMapper
 		{
+			private readonly Type ownerType;
+			private readonly Type collectionElementType;
+			private readonly IDomainInspector domainInspector;
+
+			public ManyToManyRelationMapper(Type ownerType, Type collectionElementType, IDomainInspector domainInspector)
+			{
+				this.ownerType = ownerType;
+				this.collectionElementType = collectionElementType;
+				this.domainInspector = domainInspector;
+			}
+
 			#region Implementation of ICollectionElementRelationMapper
 
 			public void Map(ICollectionElementRelation relation)
@@ -232,6 +243,11 @@ namespace ConfOrm.NH
 
 			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)
 			{
+				var cascadeToApply = domainInspector.ApplyCascade(ownerType, collectionElementType);
+				if (cascadeToApply != Cascade.None)
+				{
+					mapped.Cascade(cascadeToApply);
+				}
 			}
 
 			#endregion
@@ -292,7 +308,7 @@ namespace ConfOrm.NH
 			}
 			else if (domainInspector.IsManyToMany(ownerType, collectionElementType))
 			{
-				return new ManyToManyRelationMapper();
+				return new ManyToManyRelationMapper(ownerType, collectionElementType, domainInspector);
 			}
 			else if (domainInspector.IsComponent(collectionElementType))
 			{
