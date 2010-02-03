@@ -111,6 +111,7 @@
     <Compile Include="ObjectRelationalMapperTests\SetProperties.cs" />
     <Compile Include="Patterns\ArrayCollectionPatternTest.cs" />
     <Compile Include="Patterns\BagCollectionPatternTest.cs" />
+    <Compile Include="Patterns\BidirectionalOneToManyPatternTest.cs" />
     <Compile Include="Patterns\BidirectionalRelationPatternTest.cs" />
     <Compile Include="Patterns\ComponentPatternTest.cs" />
     <Compile Include="Patterns\DictionaryCollectionPatternTest.cs" />
