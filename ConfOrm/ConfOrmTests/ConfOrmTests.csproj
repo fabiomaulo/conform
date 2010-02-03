@@ -98,6 +98,7 @@
     <Compile Include="NH\SetMapperTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\ArrayProperties.cs" />
     <Compile Include="ObjectRelationalMapperTests\BagProperties.cs" />
+    <Compile Include="ObjectRelationalMapperTests\BidirectionalOneToManyCascadeTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\ComponentRegistrationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\DictionaryProperties.cs" />
     <Compile Include="ObjectRelationalMapperTests\ListProperties.cs" />
