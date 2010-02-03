@@ -27,39 +27,57 @@ namespace ConfOrm.NH
 			{
 				throw new ArgumentNullException("types");
 			}
-			// Map root classes
-			foreach (var type in types.Where(type => domainInspector.IsEntity(type) && domainInspector.IsRootEntity(type)))
+			foreach (var type in RootClasses(types))
 			{
-				var classMapper = new ClassMapper(type, mapping, GetPoidPropertyOrField(type));
-				new IdMapper(classMapper.Id);
-				if (domainInspector.IsTablePerClassHierarchy(type))
-				{
-					classMapper.Discriminator();
-				}
-				MapProperties(type, classMapper);
+				AddRootClassMapping(type, mapping);
 			}
-			// Map subclasses
-			foreach (var type in types.Where(type => domainInspector.IsEntity(type) && !domainInspector.IsRootEntity(type)))
+			foreach (var type in Subclasses(types))
 			{
-				IPropertyContainerMapper propertiesContainer = null;
-				if (domainInspector.IsTablePerClass(type))
-				{
-					var classMapper = new JoinedSubclassMapper(type, mapping);
-					propertiesContainer = classMapper;
-				}
-				else if (domainInspector.IsTablePerClassHierarchy(type))
-				{
-					var classMapper = new SubclassMapper(type, mapping);
-					propertiesContainer = classMapper;
-				}
-				else if (domainInspector.IsTablePerConcreteClass(type))
-				{
-					var classMapper = new UnionSubclassMapper(type, mapping);
-					propertiesContainer = classMapper;
-				}
-				MapProperties(type, propertiesContainer);
+				AddSubclassMapping(mapping, type);
 			}
 			return mapping;
+		}
+
+		private IEnumerable<Type> Subclasses(IEnumerable<Type> types)
+		{
+			return types.Where(type => domainInspector.IsEntity(type) && !domainInspector.IsRootEntity(type));
+		}
+
+		private IEnumerable<Type> RootClasses(IEnumerable<Type> types)
+		{
+			return types.Where(type => domainInspector.IsEntity(type) && domainInspector.IsRootEntity(type));
+		}
+
+		private void AddSubclassMapping(HbmMapping mapping, Type type)
+		{
+			IPropertyContainerMapper propertiesContainer = null;
+			if (domainInspector.IsTablePerClass(type))
+			{
+				var classMapper = new JoinedSubclassMapper(type, mapping);
+				propertiesContainer = classMapper;
+			}
+			else if (domainInspector.IsTablePerClassHierarchy(type))
+			{
+				var classMapper = new SubclassMapper(type, mapping);
+				propertiesContainer = classMapper;
+			}
+			else if (domainInspector.IsTablePerConcreteClass(type))
+			{
+				var classMapper = new UnionSubclassMapper(type, mapping);
+				propertiesContainer = classMapper;
+			}
+			MapProperties(type, propertiesContainer);
+		}
+
+		private void AddRootClassMapping(Type type, HbmMapping mapping)
+		{
+			var classMapper = new ClassMapper(type, mapping, GetPoidPropertyOrField(type));
+			new IdMapper(classMapper.Id);
+			if (domainInspector.IsTablePerClassHierarchy(type))
+			{
+				classMapper.Discriminator();
+			}
+			MapProperties(type, classMapper);
 		}
 
 		private void MapProperties(Type type, IPropertyContainerMapper propertiesContainer)
