@@ -22,7 +22,7 @@ namespace ConfOrm.NH
 				classMapping.abstractSpecified = true;
 			}
 			var idType = GetMemberType(idProperty);
-			id = new HbmId { name = idProperty.Name, type1 = idType.GetTypeName() };
+			id = new HbmId { name = idProperty.Name, type1 = idType.GetNhTypeName() };
 			classMapping.Item = id;
 			mapDoc.Items = mapDoc.Items == null ? toAdd : mapDoc.Items.Concat(toAdd).ToArray();
 		}

@@ -5,7 +5,7 @@ namespace ConfOrm.NH
 {
 	public static class TypeNameUtil
 	{
-		public static string GetTypeName(Type type)
+		public static string GetNhTypeName(this Type type)
 		{
 			string typeName;
 			var nhType = TypeFactory.HeuristicType(type.AssemblyQualifiedName);

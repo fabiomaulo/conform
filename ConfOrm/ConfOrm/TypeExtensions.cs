@@ -5,7 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using NHibernate.Cfg.MappingSchema;
-using NHibernate.Type;
 
 namespace ConfOrm
 {
@@ -19,21 +18,6 @@ namespace ConfOrm
 				analizing = analizing.BaseType;
 				yield return analizing;
 			}
-		}
-
-		public static string GetTypeName(this Type typeElement)
-		{
-			string typeName;
-			var nhType = TypeFactory.HeuristicType(typeElement.AssemblyQualifiedName);
-			if (nhType != null)
-			{
-				typeName = nhType.Name;
-			}
-			else
-			{
-				typeName = typeElement.FullName + ", " + typeElement.Assembly.GetName().Name;
-			}
-			return typeName;
 		}
 
 		public static string GetClassName(this Type type, HbmMapping mapDoc)

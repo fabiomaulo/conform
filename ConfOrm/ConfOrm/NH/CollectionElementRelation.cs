@@ -21,7 +21,7 @@ namespace ConfOrm.NH
 
 		public void Element()
 		{
-			var hbm = new HbmElement { type1 = collectionElementType.GetTypeName() };
+			var hbm = new HbmElement { type1 = collectionElementType.GetNhTypeName() };
 			elementRelationshipAssing(hbm);
 		}
 

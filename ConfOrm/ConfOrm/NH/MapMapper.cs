@@ -40,7 +40,7 @@ namespace ConfOrm.NH
 
 			if (KeyType.IsValueType || KeyType == typeof(string))
 			{
-				mapping.Item = new HbmMapKey { type = TypeNameUtil.GetTypeName(KeyType) };
+				mapping.Item = new HbmMapKey { type = KeyType.GetNhTypeName() };
 			}
 		}
 
