@@ -222,8 +222,10 @@ namespace ConfOrm
 		public bool IsManyToOne(Type from, Type to)
 		{
 			var areEntities = IsEntity(from) && IsEntity(to);
+			var isFromComponentToEntity = IsComponent(from) && IsEntity(to);
 			return (areEntities && manyToOneRelation.Contains(new Relation(from, to)))
-			       || (areEntities && !IsOneToOne(from, to) && !manyToManyRelation.Contains(new Relation(from, to)));
+			       || (areEntities && !IsOneToOne(from, to) && !manyToManyRelation.Contains(new Relation(from, to))) ||
+						 isFromComponentToEntity;
 		}
 
 		public bool IsManyToMany(Type role1, Type role2)
