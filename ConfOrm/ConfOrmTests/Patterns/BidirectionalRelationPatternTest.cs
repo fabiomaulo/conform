@@ -41,7 +41,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void BidiretionalSimple()
 		{
-			var p = new BidirectionalRelationCascadePattern();
+			var p = new BidirectionalRelationPattern();
 			p.Match(new Relation(typeof(AEntity), typeof(BEntity))).Should().Be.True();
 			p.Match(new Relation(typeof(BEntity), typeof(AEntity))).Should().Be.True();
 		}
@@ -49,7 +49,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void BidiretionalInherited()
 		{
-			var p = new BidirectionalRelationCascadePattern();
+			var p = new BidirectionalRelationPattern();
 			p.Match(new Relation(typeof(AInherited), typeof(BEntity))).Should().Be.True();
 			p.Match(new Relation(typeof(BEntity), typeof(AInherited))).Should().Be.True();
 		}
@@ -57,7 +57,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void NoBidiretional()
 		{
-			var p = new BidirectionalRelationCascadePattern();
+			var p = new BidirectionalRelationPattern();
 			p.Match(new Relation(typeof(AEntity), typeof(CEntity))).Should().Be.False();
 			p.Match(new Relation(typeof(BEntity), typeof(CEntity))).Should().Be.False();
 		}
@@ -65,7 +65,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void BidiretionalOneToMany()
 		{
-			var p = new BidirectionalRelationCascadePattern();
+			var p = new BidirectionalRelationPattern();
 			p.Match(new Relation(typeof(Parent), typeof(Child))).Should().Be.True();
 			p.Match(new Relation(typeof(Child), typeof(Parent))).Should().Be.True();
 		}
@@ -73,7 +73,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void BidiretionalManyToMany()
 		{
-			var p = new BidirectionalRelationCascadePattern();
+			var p = new BidirectionalRelationPattern();
 			p.Match(new Relation(typeof(Parent), typeof(Role))).Should().Be.True();
 			p.Match(new Relation(typeof(Role), typeof(Parent))).Should().Be.True();
 		}
