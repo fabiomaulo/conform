@@ -21,7 +21,7 @@ namespace ConfOrm.Patterns
 
 		public bool Match(Type subject)
 		{
-			return !subject.Namespace.StartsWith("System") /* hack */ &&
+			return !subject.IsEnum && !subject.Namespace.StartsWith("System") /* hack */ &&
 				subject.GetProperties(DefaultBinding).Cast<MemberInfo>().Concat(subject.GetFields(DefaultBinding)).All(
 					mi => !poidPatterns.Any(p => p.Match(mi)));
 		}

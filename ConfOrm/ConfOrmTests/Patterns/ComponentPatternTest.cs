@@ -20,6 +20,11 @@ namespace ConfOrmTests.Patterns
 			private int id;
 		}
 
+		private enum Something
+		{
+			
+		}
+
 		[Test]
 		public void ClassWithoutPoidIsComponent()
 		{
@@ -39,6 +44,13 @@ namespace ConfOrmTests.Patterns
 		{
 			var p = new ComponentPattern();
 			p.Match(typeof(Entity)).Should().Be.False();
+		}
+
+		[Test]
+		public void EnumIsNotComponent()
+		{
+			var p = new ComponentPattern();
+			p.Match(typeof(Something)).Should().Be.False();
 		}
 	}
 }
