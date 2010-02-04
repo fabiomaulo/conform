@@ -9,10 +9,10 @@ namespace ConfOrm.NH
 	{
 		private readonly HbmComponent component;
 
-		public ComponentMapper(HbmComponent component, Type container, HbmMapping mapDoc) : base(container, mapDoc)
+		public ComponentMapper(HbmComponent component, Type componentType, HbmMapping mapDoc) : base(componentType, mapDoc)
 		{
 			this.component = component;
-			component.@class = container.AssemblyQualifiedName;
+			component.@class = componentType.GetShortClassName(mapDoc);
 		}
 
 		#region Overrides of AbstractPropertyContainerMapper
