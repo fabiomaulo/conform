@@ -29,8 +29,9 @@ namespace ConfOrm.NH
 
 		public void Component(MemberInfo property, Action<IComponentElementMapper> mapping)
 		{
-			var hbm = new HbmNestedCompositeElement { name = property.Name };
 			var nestedComponentType = property.GetPropertyOrFieldType();
+			var hbm = new HbmNestedCompositeElement
+			          	{name = property.Name, @class = nestedComponentType.GetShortClassName(mapDoc)};
 			mapping(new ComponentNestedElementMapper(nestedComponentType, mapDoc, hbm));
 			AddProperty(hbm);
 		}

@@ -27,19 +27,19 @@ namespace ConfOrm.NH
 
 		public void OneToMany()
 		{
-			var hbm = new HbmOneToMany { @class = collectionElementType.AssemblyQualifiedName };
+			var hbm = new HbmOneToMany { @class = collectionElementType.GetShortClassName(mapDoc) };
 			elementRelationshipAssing(hbm);
 		}
 
 		public void ManyToMany()
 		{
-			var hbm = new HbmManyToMany { @class = collectionElementType.AssemblyQualifiedName };
+			var hbm = new HbmManyToMany { @class = collectionElementType.GetShortClassName(mapDoc) };
 			elementRelationshipAssing(hbm);
 		}
 
 		public void Component(Action<IComponentElementMapper> mapping)
 		{
-			var hbm = new HbmCompositeElement { @class = collectionElementType.AssemblyQualifiedName };
+			var hbm = new HbmCompositeElement { @class = collectionElementType.GetShortClassName(mapDoc) };
 			mapping(new ComponentElementMapper(collectionElementType, mapDoc, hbm));
 			elementRelationshipAssing(hbm);
 		}
