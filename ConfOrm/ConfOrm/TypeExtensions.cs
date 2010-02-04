@@ -20,36 +20,6 @@ namespace ConfOrm
 			}
 		}
 
-		public static string GetClassName(this Type type, HbmMapping mapDoc)
-		{
-			var typeAssembly = type.Assembly.GetName().Name;
-			var typeNameSpace = type.Namespace;
-			string assembly = null;
-			if (!typeAssembly.Equals(mapDoc.assembly))
-			{
-				assembly = typeAssembly;
-			}
-			string @namespace = null;
-			if (!typeNameSpace.Equals(mapDoc.@namespace))
-			{
-				@namespace = typeNameSpace;
-			}
-			if (!string.IsNullOrEmpty(assembly) && !string.IsNullOrEmpty(@namespace))
-			{
-				return type.AssemblyQualifiedName;
-			}
-			if (!string.IsNullOrEmpty(assembly) && string.IsNullOrEmpty(@namespace))
-			{
-				return string.Concat(type.Name, ", ", assembly);
-			}
-			if (string.IsNullOrEmpty(assembly) && !string.IsNullOrEmpty(@namespace))
-			{
-				return type.FullName;
-			}
-
-			return type.Name;
-		}
-
 		public static Type GetPropertyOrFieldType(this MemberInfo propertyOrField)
 		{
 			if (propertyOrField.MemberType == MemberTypes.Property)
