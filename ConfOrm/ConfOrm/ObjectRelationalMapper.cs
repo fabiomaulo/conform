@@ -162,7 +162,7 @@ namespace ConfOrm
 
 		public bool IsComponent(Type type)
 		{
-			return components.Contains(type) || (componetPatterns.Any(pattern => pattern.Match(type)) && !IsEntity(type));
+			return components.Contains(type) || (componetPatterns.Match(type) && !IsEntity(type));
 		}
 
 		public bool IsComplex(Type type)
@@ -244,7 +244,7 @@ namespace ConfOrm
 
 		public bool IsPersistentId(MemberInfo member)
 		{
-			return poidPatterns.Any(pattern => pattern.Match(member));
+			return poidPatterns.Match(member);
 		}
 
 		public IPersistentIdStrategy GetPersistentIdStrategy(MemberInfo member)
@@ -264,27 +264,27 @@ namespace ConfOrm
 
 		public bool IsSet(MemberInfo role)
 		{
-			return sets.Contains(role) || setPatterns.Any(pattern => pattern.Match(role)); 
+			return sets.Contains(role) || setPatterns.Match(role); 
 		}
 
 		public bool IsBag(MemberInfo role)
 		{
-			return bags.Contains(role) || (!sets.Contains(role) && !lists.Contains(role) && !arrays.Contains(role) && bagPatterns.Any(pattern => pattern.Match(role)));
+			return bags.Contains(role) || (!sets.Contains(role) && !lists.Contains(role) && !arrays.Contains(role) && bagPatterns.Match(role));
 		}
 
 		public bool IsList(MemberInfo role)
 		{
-			return lists.Contains(role) || (!arrays.Contains(role) && !bags.Contains(role) && listPatterns.Any(pattern => pattern.Match(role)));
+			return lists.Contains(role) || (!arrays.Contains(role) && !bags.Contains(role) && listPatterns.Match(role));
 		}
 
 		public bool IsArray(MemberInfo role)
 		{
-			return arrays.Contains(role) || (!lists.Contains(role) && !bags.Contains(role) && arrayPatterns.Any(pattern => pattern.Match(role)));
+			return arrays.Contains(role) || (!lists.Contains(role) && !bags.Contains(role) && arrayPatterns.Match(role));
 		}
 
 		public bool IsDictionary(MemberInfo role)
 		{
-			return dictionaries.Contains(role) || dictionaryPatterns.Any(pattern => pattern.Match(role));
+			return dictionaries.Contains(role) || dictionaryPatterns.Match(role);
 		}
 
 		#endregion
