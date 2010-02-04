@@ -15,7 +15,7 @@ namespace ConfOrm.NH
 			: base(rootClass, mapDoc)
 		{
 			var toAdd = new[] { classMapping };
-			classMapping.name = rootClass.AssemblyQualifiedName;
+			classMapping.name = rootClass.GetShortClassName(mapDoc);
 			if(rootClass.IsAbstract)
 			{
 				classMapping.@abstract = true;

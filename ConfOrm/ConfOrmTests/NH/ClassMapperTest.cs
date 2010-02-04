@@ -56,5 +56,14 @@ namespace ConfOrmTests.NH
 			rc.Discriminator();
 			mapdoc.RootClasses[0].discriminator.Should().Not.Be.Null();
 		}
+
+		[Test]
+		public void WhenMapDocHasDefaultClassElementHasClassName()
+		{
+			var rootClass = typeof (EntitySimple);
+			var mapdoc = new HbmMapping {assembly = rootClass.Assembly.FullName, @namespace = rootClass.Namespace};
+			new ClassMapper(rootClass, mapdoc, rootClass.GetProperty("Id"));
+			mapdoc.RootClasses[0].Name.Should().Be.EqualTo("EntitySimple");
+		}
 	}
 }

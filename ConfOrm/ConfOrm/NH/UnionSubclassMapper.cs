@@ -13,8 +13,8 @@ namespace ConfOrm.NH
 			: base(subClass, mapDoc)
 		{
 			var toAdd = new[] { classMapping };
-			classMapping.name = subClass.AssemblyQualifiedName;
-			classMapping.extends = subClass.BaseType.AssemblyQualifiedName;
+			classMapping.name = subClass.GetShortClassName(mapDoc);
+			classMapping.extends = subClass.BaseType.GetShortClassName(mapDoc);
 			mapDoc.Items = mapDoc.Items == null ? toAdd : mapDoc.Items.Concat(toAdd).ToArray();
 		}
 
