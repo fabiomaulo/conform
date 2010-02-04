@@ -1,5 +1,4 @@
 using ConfOrm;
-using ConfOrm.Mappers;
 using ConfOrm.NH;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -11,7 +10,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void ConvertAll()
 		{
-			Cascade.All.ToCascadeString().Should().Contain("all").And.Contain("delete-orphans");
+			Cascade.All.ToCascadeString().Should().Contain("all");
 		}
 
 		[Test]

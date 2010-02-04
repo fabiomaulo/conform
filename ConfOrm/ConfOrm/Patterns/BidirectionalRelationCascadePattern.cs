@@ -6,7 +6,7 @@ namespace ConfOrm.Patterns
 
 		public Cascade Apply(Relation subject)
 		{
-			return Cascade.All;
+			return Cascade.All | Cascade.DeleteOrphans;
 		}
 
 		#endregion

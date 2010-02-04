@@ -1,4 +1,3 @@
-using System;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
 
@@ -17,7 +16,7 @@ namespace ConfOrm.NH
 
 		public void Cascade(Cascade cascadeStyle)
 		{
-			oneToOne.cascade = cascadeStyle.ToCascadeString();
+			oneToOne.cascade = (cascadeStyle & CascadeConverter.EachButDeleteOrphans).ToCascadeString();
 		}
 
 		#endregion

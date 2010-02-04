@@ -47,7 +47,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			orm.TablePerClass<Parent>();
 			orm.TablePerClass<Child>();
 			orm.ManyToOne<Child, Parent>();
-			orm.Cascade<Parent, Child>(Cascade.All);
+			orm.Cascade<Parent, Child>(Cascade.All | Cascade.DeleteOrphans);
 			HbmMapping mapping = GetMapping(orm);
 
 			VerifyMapping(mapping);

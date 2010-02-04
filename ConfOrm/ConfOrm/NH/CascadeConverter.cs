@@ -1,18 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using ConfOrm.Mappers;
 
 namespace ConfOrm.NH
 {
 	public static class CascadeConverter
 	{
+		internal const Cascade EachButDeleteOrphans = Cascade.Persist | Cascade.Refresh | Cascade.Merge | Cascade.Remove
+		                                               | Cascade.Detach | Cascade.ReAttach | Cascade.All;
+
 		public static string ToCascadeString(this Cascade source)
 		{
-			if (source.Has(Cascade.All))
-			{
-				return "all, delete-orphans";
-			}
 			return string.Join(",", source.CascadeDefinitions().ToArray());
 		}
 
@@ -23,6 +20,10 @@ namespace ConfOrm.NH
 
 		private static IEnumerable<string> CascadeDefinitions(this Cascade source)
 		{
+			if (source.Has(Cascade.All))
+			{
+				yield return "all";				
+			}
 			if (source.Has(Cascade.Persist))
 			{
 				yield return "save-update, persist";
