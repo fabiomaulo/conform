@@ -75,7 +75,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateXmlMappingsDemo.cs" />
+    <Compile Include="Domain\Address.cs" />
+    <Compile Include="Domain\Animal.cs" />
+    <Compile Include="Domain\Classification.cs" />
+    <Compile Include="Domain\DomesticAnimal.cs" />
+    <Compile Include="Domain\Human.cs" />
+    <Compile Include="Domain\Mammal.cs" />
+    <Compile Include="Domain\Name.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Domain\Reptile.cs" />
+    <Compile Include="Domain\StateProvince.cs" />
+    <Compile Include="Domain\User.cs" />
+    <Compile Include="Domain\Zoo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConfOrm\ConfOrm.csproj">
