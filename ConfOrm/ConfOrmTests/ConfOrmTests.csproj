@@ -115,6 +115,7 @@
     <Compile Include="ObjectRelationalMapperTests\RegisteringDerivedTablePerClass.cs" />
     <Compile Include="ObjectRelationalMapperTests\RegisteringTablePerClass.cs" />
     <Compile Include="ObjectRelationalMapperTests\SetProperties.cs" />
+    <Compile Include="PatternExtensionsTest.cs" />
     <Compile Include="Patterns\ArrayCollectionPatternTest.cs" />
     <Compile Include="Patterns\BagCollectionPatternTest.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyPatternTest.cs" />

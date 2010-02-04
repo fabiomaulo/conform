@@ -50,7 +50,7 @@ namespace ConfOrm
 			arrayPatterns = new List<IPattern<MemberInfo>> { new ArrayCollectionPattern() };
 			componetPatterns = new List<IPattern<Type>> { new ComponentPattern() };
 			dictionaryPatterns = new List<IPattern<MemberInfo>> { new DictionaryCollectionPattern() };
-			bidirectionalRelationPatterns = new List<IPattern<Relation>> { new BidirectionalRelationPattern() };
+			bidirectionalRelationPatterns = new List<IPattern<Relation>> { new BidirectionalRelationCascadePattern() };
 		}
 
 		#region Implementation of IObjectRelationalMapper

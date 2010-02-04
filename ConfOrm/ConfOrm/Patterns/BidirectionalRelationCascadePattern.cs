@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace ConfOrm.Patterns
 {
-	public class BidirectionalRelationPattern: IPattern<Relation>
+	public class BidirectionalRelationCascadePattern: IPattern<Relation>
 	{
 		#region Implementation of IPattern<Relation>
 
