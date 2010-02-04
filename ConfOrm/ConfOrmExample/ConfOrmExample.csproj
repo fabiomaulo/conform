@@ -83,6 +83,7 @@
     <Compile Include="Domain\Human.cs" />
     <Compile Include="Domain\Mammal.cs" />
     <Compile Include="Domain\Name.cs" />
+    <Compile Include="NHIntegrationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Reptile.cs" />
     <Compile Include="Domain\StateProvince.cs" />

@@ -22,7 +22,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void ConvertDeleteOrphans()
 		{
-			Cascade.DeleteOrphans.ToCascadeString().Should().Be.EqualTo("delete-orphans");
+			Cascade.DeleteOrphans.ToCascadeString().Should().Be.EqualTo("delete-orphan");
 		}
 
 		[Test]

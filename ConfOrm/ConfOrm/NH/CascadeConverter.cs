@@ -50,7 +50,7 @@ namespace ConfOrm.NH
 			}
 			if (source.Has(Cascade.DeleteOrphans))
 			{
-				yield return "delete-orphans";
+				yield return "delete-orphan";
 			}
 		}
 	}
