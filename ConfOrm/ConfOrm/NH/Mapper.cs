@@ -26,7 +26,18 @@ namespace ConfOrm.NH
 			{
 				throw new ArgumentNullException("types");
 			}
-			var mapping = new HbmMapping();
+			string defaultAssemblyName = null;
+			string defaultNamespace = null;
+			var firstType = types.FirstOrDefault();
+			if (firstType != null && types.All(t => t.Assembly.Equals(firstType.Assembly)))
+			{
+				defaultAssemblyName = firstType.Assembly.GetName().Name;
+			}
+			if (firstType != null && types.All(t => t.Namespace.Equals(firstType.Namespace)))
+			{
+				defaultNamespace = firstType.Namespace;
+			}
+			var mapping = new HbmMapping {assembly = defaultAssemblyName, @namespace = defaultNamespace};
 			foreach (var type in RootClasses(types))
 			{
 				AddRootClassMapping(type, mapping);
@@ -377,13 +388,13 @@ namespace ConfOrm.NH
 			}
 			foreach (var type in RootClasses(types))
 			{
-				var mapping = new HbmMapping();
+				var mapping = new HbmMapping { assembly = type.Assembly.GetName().Name, @namespace = type.Namespace };
 				AddRootClassMapping(type, mapping);
 				yield return mapping;
 			}
 			foreach (var type in Subclasses(types))
 			{
-				var mapping = new HbmMapping();
+				var mapping = new HbmMapping { assembly = type.Assembly.GetName().Name, @namespace = type.Namespace };
 				AddSubclassMapping(mapping, type);
 				yield return mapping;
 			}

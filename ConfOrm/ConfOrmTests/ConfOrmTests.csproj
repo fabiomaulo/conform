@@ -77,6 +77,7 @@
     <Compile Include="NH\MapperTests\CascadeManyToOneTest.cs" />
     <Compile Include="NH\MapperTests\CascadeOneToOneTest.cs" />
     <Compile Include="NH\MapperTests\ComponentPropertyTest.cs" />
+    <Compile Include="NH\MapperTests\DefaultAssemblyAndNamespaceTest.cs" />
     <Compile Include="NH\MapperTests\DictionaryOfComponents.cs" />
     <Compile Include="NH\MapperTests\DictionaryOfElements.cs" />
     <Compile Include="NH\MapperTests\DictionaryOfManyToMany.cs" />

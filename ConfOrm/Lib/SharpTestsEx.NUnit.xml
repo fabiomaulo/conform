@@ -270,7 +270,7 @@
         </member>
         <member name="M:SharpTestsEx.IBooleanBeConstraints.False">
             <summary>
-            Verifies that actual is true.
+            Verifies that actual is false.
             </summary>
         </member>
         <member name="P:SharpTestsEx.ExtensionsImpl.NegableConstraints`2.Not">
