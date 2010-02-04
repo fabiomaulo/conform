@@ -2,11 +2,11 @@ using System.Reflection;
 
 namespace ConfOrm.Patterns
 {
-	public class HighLowPoidPattern : PoidIntPattern, IPatternApplier<MemberInfo, IPersistentIdStrategy>
+	public class SequencePoidPattern: PoidIntPattern, IPatternApplier<MemberInfo, IPersistentIdStrategy>
 	{
 		private readonly object parameters;
-		public HighLowPoidPattern() {}
-		public HighLowPoidPattern(object parameters)
+		public SequencePoidPattern() {}
+		public SequencePoidPattern(object parameters)
 		{
 			this.parameters = parameters;
 		}
@@ -15,18 +15,18 @@ namespace ConfOrm.Patterns
 
 		public IPersistentIdStrategy Apply(MemberInfo subject)
 		{
-			return new HighLowIdStrategy {Params = parameters};
+			return new SequenceIdStrategy { Params = parameters };
 		}
 
 		#endregion
 
-		private class HighLowIdStrategy: IPersistentIdStrategy
+		private class SequenceIdStrategy : IPersistentIdStrategy
 		{
 			#region Implementation of IPersistentIdStrategy
 
 			public PoIdStrategy Strategy
 			{
-				get { return PoIdStrategy.HighLow; }
+				get { return PoIdStrategy.Sequence; }
 			}
 
 			public object Params{get; set;}

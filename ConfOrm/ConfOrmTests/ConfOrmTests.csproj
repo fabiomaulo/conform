@@ -112,6 +112,7 @@
     <Compile Include="ObjectRelationalMapperTests\ManyToOneRelationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\OneToOneRelationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\PersistentIdTest.cs" />
+    <Compile Include="ObjectRelationalMapperTests\PoidStrategyTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\RegisteringDerivedTablePerClass.cs" />
     <Compile Include="ObjectRelationalMapperTests\RegisteringTablePerClass.cs" />
     <Compile Include="ObjectRelationalMapperTests\SetProperties.cs" />
@@ -123,13 +124,16 @@
     <Compile Include="Patterns\ComponentPatternTest.cs" />
     <Compile Include="Patterns\DictionaryCollectionPatternTest.cs" />
     <Compile Include="Patterns\HighLowPoidPatternTest.cs" />
+    <Compile Include="Patterns\IdentityPoidPatternTest.cs" />
     <Compile Include="Patterns\ListCollectionPatternTest.cs" />
+    <Compile Include="Patterns\NativePoidPatternTest.cs" />
     <Compile Include="Patterns\PoIdGuidStrategyPatternTest.cs" />
     <Compile Include="Patterns\PoIdPatternTest.cs" />
     <Compile Include="Patterns\PropertyToFieldCamelCasePatternTest.cs" />
     <Compile Include="Patterns\PropertyToFieldMUnderscorePascalCasePatternTest.cs" />
     <Compile Include="Patterns\PropertyToFieldUnderscoreCamelCasePatternTest.cs" />
     <Compile Include="Patterns\PropertyToFieldUnderscorePascalCasePatternTest.cs" />
+    <Compile Include="Patterns\SequencePoidPatternTest.cs" />
     <Compile Include="Patterns\SetCollectionPatternTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeExtensionsTest.cs" />

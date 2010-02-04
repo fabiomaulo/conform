@@ -39,6 +39,7 @@ namespace ConfOrm
 		protected readonly List<IPattern<Type>> componetPatterns;
 		protected readonly List<IPattern<MemberInfo>> dictionaryPatterns;
 		protected readonly List<IPatternApplier<Relation, Cascade>> cascadePatterns;
+		private readonly List<IPatternApplier<MemberInfo, IPersistentIdStrategy>> poidStrategyPatterns;
 		#endregion
 
 		public ObjectRelationalMapper()
@@ -51,6 +52,13 @@ namespace ConfOrm
 			componetPatterns = new List<IPattern<Type>> { new ComponentPattern() };
 			dictionaryPatterns = new List<IPattern<MemberInfo>> { new DictionaryCollectionPattern() };
 			cascadePatterns = new List<IPatternApplier<Relation, Cascade>> { new BidirectionalRelationCascadePattern() };
+			poidStrategyPatterns = new List<IPatternApplier<MemberInfo, IPersistentIdStrategy>>
+			                       	{new HighLowPoidPattern(), new GuidOptimizedPoidPattern()};
+		}
+
+		public ICollection<IPatternApplier<MemberInfo, IPersistentIdStrategy>> PoidStrategies
+		{
+			get { return poidStrategyPatterns; }
 		}
 
 		#region Implementation of IObjectRelationalMapper
@@ -249,7 +257,7 @@ namespace ConfOrm
 
 		public IPersistentIdStrategy GetPersistentIdStrategy(MemberInfo member)
 		{
-			return null;
+			return poidStrategyPatterns.ApplyFirstMatch(member);
 		}
 
 		public bool IsPersistentProperty(MemberInfo role)
