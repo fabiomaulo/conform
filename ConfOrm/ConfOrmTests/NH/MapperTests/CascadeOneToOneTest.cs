@@ -33,7 +33,7 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
 			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
 			orm.Setup(m => m.IsOneToOne(It.Is<Type>(t => t == typeof(AEntity)), It.Is<Type>(t => t == typeof(BEntity)))).Returns(true);
-			orm.Setup(m => m.ApplyCascade(It.Is<Type>(t => t == typeof(AEntity)), It.Is<Type>(t => t == typeof(BEntity)))).Returns(Cascade.Persist | Cascade.Remove);
+			orm.Setup(m => m.ApplyCascade(It.Is<Type>(t => t == typeof(AEntity)), It.IsAny<MemberInfo>(), It.Is<Type>(t => t == typeof(BEntity)))).Returns(Cascade.Persist | Cascade.Remove);
 			return orm;
 		}
 

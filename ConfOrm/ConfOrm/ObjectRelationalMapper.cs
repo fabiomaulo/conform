@@ -245,7 +245,7 @@ namespace ConfOrm
 			return false;
 		}
 
-		public Cascade ApplyCascade(Type from, Type to)
+		public Cascade ApplyCascade(Type from, MemberInfo on, Type to)
 		{
 			Cascade result;
 			var relation = new Relation(from, to);

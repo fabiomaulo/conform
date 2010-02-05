@@ -129,12 +129,13 @@ namespace ConfOrm.NH
 			var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
 			foreach (var property in properties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p)))
 			{
+				var member = property;
 				var propertyType = property.GetPropertyOrFieldType();
 				if(domainInspector.IsManyToOne(type, propertyType))
 				{
 					propertiesContainer.ManyToOne(property, x =>
 						{
-							var cascade = domainInspector.ApplyCascade(type, propertyType);
+							var cascade = domainInspector.ApplyCascade(type, member, propertyType);
 							if(cascade != Cascade.None)
 							{
 								x.Cascade(cascade);
@@ -145,7 +146,7 @@ namespace ConfOrm.NH
 				{
 					propertiesContainer.OneToOne(property, x =>
 						{
-							var cascade = domainInspector.ApplyCascade(type, propertyType);
+							var cascade = domainInspector.ApplyCascade(type, member, propertyType);
 							if (cascade != Cascade.None)
 							{
 								x.Cascade(cascade);
@@ -233,12 +234,14 @@ namespace ConfOrm.NH
 		private class OneToManyRelationMapper : ICollectionElementRelationMapper
 		{
 			private const BindingFlags FlattenHierarchyBindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
+			private readonly MemberInfo member;
 			private readonly Type ownerType;
 			private readonly Type collectionElementType;
 			private readonly IDomainInspector domainInspector;
 
-			public OneToManyRelationMapper(Type ownerType, Type collectionElementType, IDomainInspector domainInspector)
+			public OneToManyRelationMapper(MemberInfo member, Type ownerType, Type collectionElementType, IDomainInspector domainInspector)
 			{
+				this.member = member;
 				this.ownerType = ownerType;
 				this.collectionElementType = collectionElementType;
 				this.domainInspector = domainInspector;
@@ -259,7 +262,7 @@ namespace ConfOrm.NH
 					mapped.Inverse = true;
 					mapped.Key(k => k.Column(parentColumnNameInChild));
 				}
-				var cascadeToApply = domainInspector.ApplyCascade(ownerType, collectionElementType);
+				var cascadeToApply = domainInspector.ApplyCascade(ownerType, member, collectionElementType);
 				if(cascadeToApply != Cascade.None)
 				{
 					mapped.Cascade(cascadeToApply);
@@ -281,12 +284,14 @@ namespace ConfOrm.NH
 
 		private class ManyToManyRelationMapper : ICollectionElementRelationMapper
 		{
+			private readonly MemberInfo member;
 			private readonly Type ownerType;
 			private readonly Type collectionElementType;
 			private readonly IDomainInspector domainInspector;
 
-			public ManyToManyRelationMapper(Type ownerType, Type collectionElementType, IDomainInspector domainInspector)
+			public ManyToManyRelationMapper(MemberInfo member, Type ownerType, Type collectionElementType, IDomainInspector domainInspector)
 			{
+				this.member = member;
 				this.ownerType = ownerType;
 				this.collectionElementType = collectionElementType;
 				this.domainInspector = domainInspector;
@@ -301,7 +306,7 @@ namespace ConfOrm.NH
 
 			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)
 			{
-				var cascadeToApply = domainInspector.ApplyCascade(ownerType, collectionElementType);
+				var cascadeToApply = domainInspector.ApplyCascade(ownerType, member, collectionElementType);
 				if (cascadeToApply != Cascade.None)
 				{
 					mapped.Cascade(cascadeToApply);
@@ -362,11 +367,11 @@ namespace ConfOrm.NH
 			var ownerType = property.DeclaringType;
 			if (domainInspector.IsOneToMany(ownerType, collectionElementType))
 			{
-				return new OneToManyRelationMapper(ownerType, collectionElementType, domainInspector);
+				return new OneToManyRelationMapper(property, ownerType, collectionElementType, domainInspector);
 			}
 			else if (domainInspector.IsManyToMany(ownerType, collectionElementType))
 			{
-				return new ManyToManyRelationMapper(ownerType, collectionElementType, domainInspector);
+				return new ManyToManyRelationMapper(property, ownerType, collectionElementType, domainInspector);
 			}
 			else if (domainInspector.IsComponent(collectionElementType))
 			{
