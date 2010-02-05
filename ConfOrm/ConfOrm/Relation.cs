@@ -17,7 +17,7 @@ namespace ConfOrm
 			}
 			From = from;
 			To = to;
-			hashCode = from.GetHashCode() ^ to.GetHashCode();
+			hashCode = (37 * from.GetHashCode()) ^ to.GetHashCode();
 		}
 
 		public Type From { get; private set; }
