@@ -159,6 +159,12 @@ namespace ConfOrm
 			cascade.Add(new Relation(typeof(TFromEntity), typeof(TToEntity)), cascadeOptions);
 		}
 
+		public void Cascade<TFromEntity, TToEntity>(Expression<Func<TFromEntity, object>> propertyGetter, Cascade cascadeOptions)
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
+			cascade.Add(new RelationOn(typeof(TFromEntity), member, typeof(TToEntity)), cascadeOptions);
+		}
+
 		#endregion
 
 		#region Implementation of IDomainInspector

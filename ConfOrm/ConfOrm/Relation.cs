@@ -42,5 +42,10 @@ namespace ConfOrm
 		{
 			return hashCode;
 		}
+
+		public override string ToString()
+		{
+			return string.Format("From {0} To {1}", From.FullName, To.FullName);
+		}
 	}
 }

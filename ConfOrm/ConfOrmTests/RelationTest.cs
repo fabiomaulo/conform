@@ -32,5 +32,12 @@ namespace ConfOrmTests
 			(new Relation(typeof(A), typeof(B))).GetHashCode().Should().Be.EqualTo(new Relation(typeof(A), typeof(B)).GetHashCode());
 			(new Relation(typeof(B), typeof(A))).GetHashCode().Should().Not.Be.EqualTo(new Relation(typeof(A), typeof(B)).GetHashCode());
 		}
+
+		[Test]
+		public void FriendlyToString()
+		{
+			var friendly = (new Relation(typeof(A), typeof(B))).ToString();
+			friendly.Should().Contain(typeof(A).FullName).And.Contain(typeof(B).FullName);
+		}
 	}
 }
