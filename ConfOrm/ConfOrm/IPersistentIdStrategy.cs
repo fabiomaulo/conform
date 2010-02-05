@@ -7,6 +7,7 @@ namespace ConfOrm
 		Guid,
 		GuidOptimized,
 		Identity,
+		Assigned,
 		Native
 	}
 
