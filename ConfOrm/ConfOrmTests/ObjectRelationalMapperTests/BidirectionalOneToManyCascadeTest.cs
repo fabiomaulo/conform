@@ -10,6 +10,9 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 {
 	public class BidirectionalOneToManyCascadeTest
 	{
+		// in a Bidirectional OneToMany should apply cascade only for child collection and not
+		// to the reference to the parent in the child.
+
 		private class Parent
 		{
 			public int Id { get; set; }
@@ -30,13 +33,29 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 
 		private void VerifyMapping(HbmMapping mapping)
 		{
+			VerifyParentMapping(mapping);
+			VerifyChildMapping(mapping);
+		}
+
+		private void VerifyChildMapping(HbmMapping mapping)
+		{
+			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Child"));
+			rc.Properties.Should().Have.Count.EqualTo(1);
+			var relation = rc.Properties.First(p => p.Name == "Owner");
+			relation.Should().Be.OfType<HbmManyToOne>();
+			var collection = (HbmManyToOne)relation;
+			collection.cascade.Satisfy(c => string.IsNullOrEmpty(c));
+		}
+
+		private void VerifyParentMapping(HbmMapping mapping)
+		{
 			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Parent"));
 			rc.Properties.Should().Have.Count.EqualTo(1);
 			var relation = rc.Properties.First(p => p.Name == "Children");
 			relation.Should().Be.OfType<HbmBag>();
-			var collection = (HbmBag)relation;
+			var collection = (HbmBag) relation;
 			collection.Satisfy(c => c.Inverse);
-			collection.Cascade.Should().Contain("all").And.Contain("delete-orphans");
+			collection.Cascade.Should().Contain("all").And.Contain("delete-orphan");
 			collection.Key.Columns.First().name.Should().Be.EqualTo("Owner");
 		}
 

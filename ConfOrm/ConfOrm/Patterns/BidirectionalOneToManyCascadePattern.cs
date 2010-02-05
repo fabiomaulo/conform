@@ -1,6 +1,6 @@
 namespace ConfOrm.Patterns
 {
-	public class BidirectionalRelationCascadePattern: BidirectionalRelationPattern, IPatternApplier<Relation, Cascade>
+	public class BidirectionalOneToManyCascadePattern : BidirectionalOneToManyPattern, IPatternApplier<Relation, Cascade>
 	{
 		#region Implementation of IPatternApplier<Relation,Cascade>
 

@@ -65,7 +65,7 @@ namespace ConfOrmTests.NH.MapperTests
 			relation.Should().Be.OfType<HbmBag>();
 			var collection = (HbmBag)relation;
 			collection.Satisfy(c => c.Inverse);
-			collection.Cascade.Should().Contain("all").And.Contain("delete-orphans");
+			collection.Cascade.Should().Contain("all").And.Contain("delete-orphan");
 			collection.Key.Columns.First().name.Should().Be.EqualTo("Owner");
 		}
 	}
