@@ -253,9 +253,23 @@ namespace ConfOrm
 
 		public Cascade ApplyCascade(Type from, MemberInfo on, Type to)
 		{
-			Cascade result;
+			Cascade resultOnProperty;
+			var relationOn = new RelationOn(from, on, to);
+			if(cascade.TryGetValue(relationOn, out resultOnProperty))
+			{
+				// Has Explicit Cascade On Property
+				return resultOnProperty;
+			}
+
+			Cascade resultByClasses;
 			var relation = new Relation(from, to);
-			return cascade.TryGetValue(relation, out result) ? result : cascadePatterns.ApplyFirstMatch(relation);
+			if (cascade.TryGetValue(relation, out resultByClasses))
+			{
+				// Has Explicit Cascade By Classes
+				return resultByClasses;
+			}
+
+			return cascadePatterns.ApplyFirstMatch(relationOn);
 		}
 
 		public bool IsPersistentId(MemberInfo member)

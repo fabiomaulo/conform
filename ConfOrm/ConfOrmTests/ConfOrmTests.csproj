@@ -97,6 +97,7 @@
     <Compile Include="NH\SubclassMapperTest.cs" />
     <Compile Include="NH\TypeNamesUtilsTests\ClassNameTest.cs" />
     <Compile Include="NH\UnionSubclassMapperTest.cs" />
+    <Compile Include="ObjectRelationalMapperTests\BidirectionalOneToManyCascadeCircularTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\ManyToOneRelationInComponentTest.cs" />
     <Compile Include="NH\MapperTests\ManyToOneRelationTest.cs" />
     <Compile Include="NH\MapperTests\MappingPerClass.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="PatternExtensionsTest.cs" />
     <Compile Include="Patterns\ArrayCollectionPatternTest.cs" />
     <Compile Include="Patterns\BagCollectionPatternTest.cs" />
+    <Compile Include="Patterns\BidirectionalOneToManyPatternCircularTest.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyPatternTest.cs" />
     <Compile Include="Patterns\BidirectionalRelationPatternTest.cs" />
     <Compile Include="Patterns\ComponentPatternTest.cs" />

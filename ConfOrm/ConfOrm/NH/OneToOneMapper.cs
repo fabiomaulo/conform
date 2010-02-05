@@ -16,7 +16,7 @@ namespace ConfOrm.NH
 
 		public void Cascade(Cascade cascadeStyle)
 		{
-			oneToOne.cascade = (cascadeStyle & CascadeConverter.EachButDeleteOrphans).ToCascadeString();
+			oneToOne.cascade = (cascadeStyle & Extensions.EachButDeleteOrphans).ToCascadeString();
 		}
 
 		#endregion

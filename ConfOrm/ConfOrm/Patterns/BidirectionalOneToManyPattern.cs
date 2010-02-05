@@ -12,7 +12,7 @@ namespace ConfOrm.Patterns
 
 		#region Implementation of IPattern<Relation>
 
-		public bool Match(Relation subject)
+		public virtual bool Match(Relation subject)
 		{
 			// the 'from' represent the one-side, the 'to' represent the many-side
 			if (subject == null)
@@ -27,7 +27,7 @@ namespace ConfOrm.Patterns
 
 		#endregion
 
-		private bool HasCollectionOf(Type one, Type many)
+		protected bool HasCollectionOf(Type one, Type many)
 		{
 			foreach (Type propertyType in
 				one.GetProperties(PublicPropertiesOfClassHierarchy).Select(p => p.PropertyType))
@@ -53,7 +53,7 @@ namespace ConfOrm.Patterns
 			return false;
 		}
 
-		private bool HasPropertyOf(Type many, Type one)
+		protected bool HasPropertyOf(Type many, Type one)
 		{
 			return many.GetProperties(PublicPropertiesOfClassHierarchy).Select(p => p.PropertyType).Any(t => t.IsAssignableFrom(one));
 		}
