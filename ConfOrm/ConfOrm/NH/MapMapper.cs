@@ -9,8 +9,9 @@ namespace ConfOrm.NH
 	{
 		private readonly KeyMapper keyMapper;
 		private readonly HbmMap mapping;
+		private readonly HbmMapping mapDoc;
 
-		public MapMapper(Type ownerType, Type keyType, Type valueType, HbmMap mapping)
+		public MapMapper(Type ownerType, Type keyType, Type valueType, HbmMap mapping, HbmMapping mapDoc)
 		{
 			if (ownerType == null)
 			{
@@ -32,6 +33,7 @@ namespace ConfOrm.NH
 			KeyType = keyType;
 			ValueType = valueType;
 			this.mapping = mapping;
+			this.mapDoc = mapDoc;
 			if (mapping.Key == null)
 			{
 				mapping.key = new HbmKey();
@@ -41,6 +43,10 @@ namespace ConfOrm.NH
 			if (KeyType.IsValueType || KeyType == typeof(string))
 			{
 				mapping.Item = new HbmMapKey { type = KeyType.GetNhTypeName() };
+			}
+			else
+			{
+				mapping.Item = new HbmMapKeyManyToMany { @class = KeyType.GetShortClassName(mapDoc) };
 			}
 		}
 
@@ -139,7 +145,12 @@ namespace ConfOrm.NH
 
 		public void MapKeyManyToMany(Action<IMapKeyManyToManyMapper> mapKeyMapping)
 		{
-			
+			var mkManyToMany = mapping.Item as HbmMapKeyManyToMany;
+			if (mkManyToMany == null)
+			{
+				mapping.Item = new HbmMapKeyManyToMany {@class = KeyType.GetShortClassName(mapDoc)};
+			}
+			mapKeyMapping(null);
 		}
 
 		#endregion
