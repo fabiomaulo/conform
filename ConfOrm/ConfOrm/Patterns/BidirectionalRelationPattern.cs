@@ -26,31 +26,33 @@ namespace ConfOrm.Patterns
 				{
 					return true;
 				}
-				if (propertyType.IsGenericCollection())
+				if (!propertyType.IsGenericCollection())
 				{
-					List<Type> interfaces =
-						propertyType.GetInterfaces().Where(t => t.IsGenericType).ToList();
-					if (propertyType.IsInterface)
+					// can't determine relation for a no generic collection
+					continue;
+				}
+				List<Type> interfaces =
+					propertyType.GetInterfaces().Where(t => t.IsGenericType).ToList();
+				if (propertyType.IsInterface)
+				{
+					interfaces.Add(propertyType);
+				}
+				var genericEnumerable = interfaces.FirstOrDefault(t => t.GetGenericTypeDefinition() == typeof(IEnumerable<>));
+				if(genericEnumerable != null)
+				{
+					var genericArgument = genericEnumerable.GetGenericArguments()[0];
+					if (genericArgument.IsAssignableFrom(to))
 					{
-						interfaces.Add(propertyType);
+						return true;
 					}
-					var genericEnumerable = interfaces.FirstOrDefault(t => t.GetGenericTypeDefinition() == typeof(IEnumerable<>));
-					if(genericEnumerable != null)
+					if(genericArgument.IsGenericType && typeof(KeyValuePair<,>) == genericArgument.GetGenericTypeDefinition())
 					{
-						var genericArgument = genericEnumerable.GetGenericArguments()[0];
-						if (genericArgument.IsAssignableFrom(to))
+						var dictionaryGenericArguments = genericArgument.GetGenericArguments();
+						var keyType = dictionaryGenericArguments[0];
+						var valueType = dictionaryGenericArguments[1];
+						if (valueType.IsAssignableFrom(to) || keyType.IsAssignableFrom(to))
 						{
 							return true;
-						}
-						if(genericArgument.IsGenericType && typeof(KeyValuePair<,>) == genericArgument.GetGenericTypeDefinition())
-						{
-							var dictionaryGenericArguments = genericArgument.GetGenericArguments();
-							var keyType = dictionaryGenericArguments[0];
-							var valueType = dictionaryGenericArguments[1];
-							if (valueType.IsAssignableFrom(to) || keyType.IsAssignableFrom(to))
-							{
-								return true;
-							}
 						}
 					}
 				}
