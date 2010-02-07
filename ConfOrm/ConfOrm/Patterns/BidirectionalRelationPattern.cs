@@ -42,6 +42,16 @@ namespace ConfOrm.Patterns
 						{
 							return true;
 						}
+						if(genericArgument.IsGenericType && typeof(KeyValuePair<,>) == genericArgument.GetGenericTypeDefinition())
+						{
+							var dictionaryGenericArguments = genericArgument.GetGenericArguments();
+							var keyType = dictionaryGenericArguments[0];
+							var valueType = dictionaryGenericArguments[1];
+							if (valueType.IsAssignableFrom(to) || keyType.IsAssignableFrom(to))
+							{
+								return true;
+							}
+						}
 					}
 				}
 			}

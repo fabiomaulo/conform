@@ -24,6 +24,8 @@ namespace ConfOrmTests.Patterns
 		{
 			public IEnumerable<Child> Children { get; set; }
 			public IEnumerable<Role> Roles { get; set; }
+			public IDictionary<HasMapKey, string> RelationOnKey { get; set; }
+			public IDictionary<string, HasMapValue> RelationOnValue { get; set; }
 		}
 
 		private class Child
@@ -36,7 +38,15 @@ namespace ConfOrmTests.Patterns
 			public IEnumerable<Parent> Parents { get; set; }			
 		}
 
-		private class CEntity {}
+		private class HasMapKey
+		{
+			public Parent Parent { get; set; }			
+		}
+		private class HasMapValue
+		{
+			public Parent Parent { get; set; }
+		}
+		private class CEntity { }
 
 		[Test]
 		public void BidiretionalSimple()
@@ -76,6 +86,22 @@ namespace ConfOrmTests.Patterns
 			var p = new BidirectionalRelationPattern();
 			p.Match(new Relation(typeof(Parent), typeof(Role))).Should().Be.True();
 			p.Match(new Relation(typeof(Role), typeof(Parent))).Should().Be.True();
+		}
+
+		[Test]
+		public void BidiretionalOnDictionaryKey()
+		{
+			var p = new BidirectionalRelationPattern();
+			p.Match(new Relation(typeof(Parent), typeof(HasMapKey))).Should().Be.True();
+			p.Match(new Relation(typeof(HasMapKey), typeof(Parent))).Should().Be.True();
+		}
+
+		[Test]
+		public void BidiretionalOnDictionaryValue()
+		{
+			var p = new BidirectionalRelationPattern();
+			p.Match(new Relation(typeof(Parent), typeof(HasMapValue))).Should().Be.True();
+			p.Match(new Relation(typeof(HasMapValue), typeof(Parent))).Should().Be.True();
 		}
 	}
 }
