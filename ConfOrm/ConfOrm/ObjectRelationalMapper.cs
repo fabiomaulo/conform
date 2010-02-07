@@ -31,14 +31,14 @@ namespace ConfOrm
 
 		#region Patterns
 
-		protected readonly List<IPattern<MemberInfo>> poidPatterns;
-		protected readonly List<IPattern<MemberInfo>> setPatterns;
-		protected readonly List<IPattern<MemberInfo>> bagPatterns;
-		protected readonly List<IPattern<MemberInfo>> listPatterns;
-		protected readonly List<IPattern<MemberInfo>> arrayPatterns;
-		protected readonly List<IPattern<Type>> componetPatterns;
-		protected readonly List<IPattern<MemberInfo>> dictionaryPatterns;
-		protected readonly List<IPatternApplier<Relation, Cascade>> cascadePatterns;
+		private readonly List<IPattern<MemberInfo>> poidPatterns;
+		private readonly List<IPattern<MemberInfo>> setPatterns;
+		private readonly List<IPattern<MemberInfo>> bagPatterns;
+		private readonly List<IPattern<MemberInfo>> listPatterns;
+		private readonly List<IPattern<MemberInfo>> arrayPatterns;
+		private readonly List<IPattern<Type>> componetPatterns;
+		private readonly List<IPattern<MemberInfo>> dictionaryPatterns;
+		private readonly List<IPatternApplier<Relation, Cascade>> cascadePatterns;
 		private readonly List<IPatternApplier<MemberInfo, IPersistentIdStrategy>> poidStrategyPatterns;
 		#endregion
 
