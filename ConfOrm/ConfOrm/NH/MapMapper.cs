@@ -5,7 +5,7 @@ using NHibernate.Cfg.MappingSchema;
 
 namespace ConfOrm.NH
 {
-	public class MapMapper : ICollectionPropertiesMapper
+	public class MapMapper : IMapPropertiesMapper
 	{
 		private readonly KeyMapper keyMapper;
 		private readonly HbmMap mapping;
@@ -48,7 +48,7 @@ namespace ConfOrm.NH
 		public Type KeyType { get; private set; }
 		public Type ValueType { get; private set; }
 
-		#region Implementation of ICollectionPropertiesMapper
+		#region Implementation of IMapPropertiesMapper
 
 		public void Key(Action<IKeyMapper> keyMapping)
 		{
@@ -135,6 +135,11 @@ namespace ConfOrm.NH
 		public void Cascade(Cascade cascadeStyle)
 		{
 			mapping.cascade = cascadeStyle.ToCascadeString();
+		}
+
+		public void MapKeyManyToMany(Action<IMapKeyManyToManyMapper> mapKeyMapping)
+		{
+			
 		}
 
 		#endregion

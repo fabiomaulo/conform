@@ -66,6 +66,8 @@
     <Compile Include="Mappers\IJoinedSubclassMapper.cs" />
     <Compile Include="Mappers\IKeyMapper.cs" />
     <Compile Include="Mappers\IManyToOneMapper.cs" />
+    <Compile Include="Mappers\IMapKeyManyToManyMapper.cs" />
+    <Compile Include="Mappers\IMapPropertiesMapper.cs" />
     <Compile Include="Mappers\IOneToOneMapper.cs" />
     <Compile Include="IPersistentIdStrategy.cs" />
     <Compile Include="Mappers\IPropertyContainerMapper.cs" />
