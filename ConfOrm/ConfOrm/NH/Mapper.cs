@@ -340,11 +340,13 @@ namespace ConfOrm.NH
 
 		private class ComponentRelationMapper : ICollectionElementRelationMapper
 		{
+			private readonly Type ownerType;
 			private readonly Type componentType;
 			private readonly IDomainInspector domainInspector;
 
 			public ComponentRelationMapper(Type ownerType, Type componentType, IDomainInspector domainInspector)
 			{
+				this.ownerType = ownerType;
 				this.componentType = componentType;
 				this.domainInspector = domainInspector;
 			}
@@ -353,7 +355,18 @@ namespace ConfOrm.NH
 
 			public void Map(ICollectionElementRelation relation)
 			{
-				relation.Component(x => MapProperties(componentType, x));
+				relation.Component(x =>
+					{
+						// Note: should, the Parent relation, be managed through DomainInspector ?
+						var persistentProperties = GetPersistentProperties(componentType);
+						var parentReferenceProperty =
+							persistentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == ownerType);
+						if (parentReferenceProperty != null)
+						{
+							x.Parent(parentReferenceProperty);
+						}
+						MapProperties(componentType, x, persistentProperties.Where(pi => pi != parentReferenceProperty));
+					});
 			}
 
 			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)
@@ -362,10 +375,15 @@ namespace ConfOrm.NH
 
 			#endregion
 
-			private void MapProperties(Type type, IComponentElementMapper propertiesContainer)
+			private IEnumerable<PropertyInfo> GetPersistentProperties(Type type)
 			{
 				var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-				foreach (var property in properties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p)))
+				return properties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p));
+			}
+
+			private void MapProperties(Type type, IComponentElementMapper propertiesContainer, IEnumerable<PropertyInfo> persistentProperties)
+			{
+				foreach (var property in persistentProperties)
 				{
 					var propertyType = property.GetPropertyOrFieldType();
 					if (domainInspector.IsManyToOne(type, propertyType))
@@ -374,7 +392,7 @@ namespace ConfOrm.NH
 					}
 					else if (domainInspector.IsComponent(propertyType))
 					{
-						propertiesContainer.Component(property, x => MapProperties(propertyType, x));
+						propertiesContainer.Component(property, x => MapProperties(propertyType, x, GetPersistentProperties(propertyType)));
 					}
 					else
 					{
