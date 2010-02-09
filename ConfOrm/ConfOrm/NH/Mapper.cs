@@ -124,29 +124,39 @@ namespace ConfOrm.NH
 			}
 		}
 
-		private void MapProperties(Type type, IPropertyContainerMapper propertiesContainer)
+		private void MapProperties(Type propertiesContainerType, IPropertyContainerMapper propertiesContainer)
+		{
+			MapProperties(propertiesContainerType, GetPersistentProperties(propertiesContainerType), propertiesContainer);
+		}
+
+		private IEnumerable<PropertyInfo> GetPersistentProperties(Type type)
 		{
 			var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-			foreach (var property in properties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p)))
+			return properties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p));
+		}
+
+		private void MapProperties(Type propertiesContainerType, IEnumerable<PropertyInfo> propertiesToMap, IPropertyContainerMapper propertiesContainer)
+		{
+			foreach (var property in propertiesToMap)
 			{
 				var member = property;
 				var propertyType = property.GetPropertyOrFieldType();
-				if(domainInspector.IsManyToOne(type, propertyType))
+				if(domainInspector.IsManyToOne(propertiesContainerType, propertyType))
 				{
 					propertiesContainer.ManyToOne(property, x =>
 						{
-							var cascade = domainInspector.ApplyCascade(type, member, propertyType);
+							var cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
 							if(cascade != Cascade.None)
 							{
 								x.Cascade(cascade);
 							}
 						});
 				}
-				else if (domainInspector.IsOneToOne(type, propertyType))
+				else if (domainInspector.IsOneToOne(propertiesContainerType, propertyType))
 				{
 					propertiesContainer.OneToOne(property, x =>
 						{
-							var cascade = domainInspector.ApplyCascade(type, member, propertyType);
+							var cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
 							if (cascade != Cascade.None)
 							{
 								x.Cascade(cascade);
@@ -155,7 +165,7 @@ namespace ConfOrm.NH
 				}
 				else if (domainInspector.IsSet(property))
 				{
-					Type collectionElementType = GetCollectionElementTypeOrThrow(type, property, propertyType);
+					Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, property, propertyType);
 					var cert = DetermineCollectionElementRelationType(property, collectionElementType);
 					propertiesContainer.Set(property, cert.MapCollectionProperties, cert.Map);
 				}
@@ -165,7 +175,7 @@ namespace ConfOrm.NH
 					if (dictionaryKeyType == null)
 					{
 						throw new NotSupportedException(string.Format("Can't determine collection element relation (property{0} in {1})",
-																													property.Name, type));
+						                                              property.Name, propertiesContainerType));
 					}
 					Type dictionaryValueType = propertyType.DetermineDictionaryValueType();
 					// TODO : determine RelationType for Key
@@ -177,19 +187,31 @@ namespace ConfOrm.NH
 				}
 				else if (domainInspector.IsList(property))
 				{
-					Type collectionElementType = GetCollectionElementTypeOrThrow(type, property, propertyType);
+					Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, property, propertyType);
 					var cert = DetermineCollectionElementRelationType(property, collectionElementType);
 					propertiesContainer.List(property, cert.MapCollectionProperties, cert.Map);
 				}
 				else if (domainInspector.IsBag(property))
 				{
-					Type collectionElementType = GetCollectionElementTypeOrThrow(type, property, propertyType);
+					Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, property, propertyType);
 					var cert = DetermineCollectionElementRelationType(property, collectionElementType);
 					propertiesContainer.Bag(property, cert.MapCollectionProperties, cert.Map);
 				}
 				else if (domainInspector.IsComponent(propertyType))
 				{
-					propertiesContainer.Component(property, x => MapProperties(propertyType, x));
+					propertiesContainer.Component(property, x =>
+						{
+							// Note: should, the Parent relation, be managed through DomainInspector ?
+							var componentType = propertyType;
+							var persistentProperties = GetPersistentProperties(componentType);
+							var parentReferenceProperty =
+								persistentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == propertiesContainerType);
+							if (parentReferenceProperty != null)
+							{
+								x.Parent(parentReferenceProperty);
+							}
+							MapProperties(propertyType, persistentProperties.Where(pi => pi != parentReferenceProperty), x);
+						});
 				}
 				else
 				{
@@ -321,7 +343,7 @@ namespace ConfOrm.NH
 			private readonly Type componentType;
 			private readonly IDomainInspector domainInspector;
 
-			public ComponentRelationMapper(Type componentType, IDomainInspector domainInspector)
+			public ComponentRelationMapper(Type ownerType, Type componentType, IDomainInspector domainInspector)
 			{
 				this.componentType = componentType;
 				this.domainInspector = domainInspector;
@@ -375,7 +397,7 @@ namespace ConfOrm.NH
 			}
 			else if (domainInspector.IsComponent(collectionElementType))
 			{
-				return new ComponentRelationMapper(collectionElementType, domainInspector);
+				return new ComponentRelationMapper(ownerType, collectionElementType, domainInspector);
 			}
 			return new ElementRelationMapper();
 		}
