@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
 
@@ -25,6 +26,19 @@ namespace ConfOrm.NH
 			}
 			var toAdd = new[] { property };
 			component.Items = component.Items == null ? toAdd : component.Items.Concat(toAdd).ToArray();
+		}
+
+		#endregion
+
+		#region Implementation of IComponentMapper
+
+		public void Parent(MemberInfo parent)
+		{
+			if (parent == null)
+			{
+				throw new ArgumentNullException("parent");
+			}
+			component.parent = new HbmParent {name = parent.Name};
 		}
 
 		#endregion
