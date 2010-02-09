@@ -21,6 +21,15 @@ namespace ConfOrm.NH
 
 		#region Implementation of IComponentElementMapper
 
+		public void Parent(MemberInfo parent)
+		{
+			if (parent == null)
+			{
+				throw new ArgumentNullException("parent");
+			}
+			component.parent = new HbmParent { name = parent.Name };
+		}
+
 		public void Property(MemberInfo property)
 		{
 			var hbmProperty = new HbmProperty { name = property.Name };

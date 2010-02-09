@@ -63,7 +63,9 @@
     <Compile Include="NH\CascadeConverterTest.cs" />
     <Compile Include="NH\ClassMapperTest.cs" />
     <Compile Include="NH\CollectionElementRelationTest.cs" />
+    <Compile Include="NH\ComponentElementMapperTest.cs" />
     <Compile Include="NH\ComponentMapperTest.cs" />
+    <Compile Include="NH\ComponentNestedElementMapperTest.cs" />
     <Compile Include="NH\IdMapperTest.cs" />
     <Compile Include="NH\JoinedSubclassMapperTest.cs" />
     <Compile Include="NH\KeyMapperTest.cs" />
