@@ -392,7 +392,20 @@ namespace ConfOrm.NH
 					}
 					else if (domainInspector.IsComponent(propertyType))
 					{
-						propertiesContainer.Component(property, x => MapProperties(propertyType, x, GetPersistentProperties(propertyType)));
+						propertiesContainer.Component(property, x =>
+							{
+								// Note: for nested-components the Parent discovering is mandatory (recursive nested-component)
+								var componetOwnerType = type;
+								var componetPropertyType = propertyType;
+
+								var componentProperties = GetPersistentProperties(componetPropertyType);
+								var parentReferenceProperty = componentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == componetOwnerType);
+								if (parentReferenceProperty != null)
+								{
+									x.Parent(parentReferenceProperty);
+								}
+								MapProperties(componetPropertyType, x, componentProperties.Where(pi => pi != parentReferenceProperty));
+							});
 					}
 					else
 					{

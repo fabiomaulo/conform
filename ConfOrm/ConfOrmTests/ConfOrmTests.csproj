@@ -76,6 +76,7 @@
     <Compile Include="NH\MapperTests\BagOfComponentsWithParentTest.cs" />
     <Compile Include="NH\MapperTests\BagOfElementsTest.cs" />
     <Compile Include="NH\MapperTests\BagOfManyToManyTest.cs" />
+    <Compile Include="NH\MapperTests\BagOfNestedComponentsWithParentTest.cs" />
     <Compile Include="NH\MapperTests\BagOfOneToManyCascadeTest.cs" />
     <Compile Include="NH\MapperTests\BagOfOneToManyInverseTest.cs" />
     <Compile Include="NH\MapperTests\BagOfOneToManyTest.cs" />
