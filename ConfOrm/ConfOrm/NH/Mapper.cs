@@ -229,6 +229,21 @@ namespace ConfOrm.NH
 
 		private Accessor GetAccessor(PropertyInfo property)
 		{
+			var persistentPropertyAccessStrategy = domainInspector.PersistentPropertyAccessStrategy(property);
+			if(persistentPropertyAccessStrategy != StateAccessStrategy.Property)
+			{
+				switch (persistentPropertyAccessStrategy)
+				{
+					case StateAccessStrategy.Field:
+						return Accessor.Field;
+					case StateAccessStrategy.FieldOnSet:
+						return Accessor.NoSetter;
+					case StateAccessStrategy.ReadOnlyProperty:
+						return Accessor.ReadOnly;
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
+			}
 			var hasPublicSetter = property.GetSetMethod() != null;
 			if(!hasPublicSetter)
 			{
