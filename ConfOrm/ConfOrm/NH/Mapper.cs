@@ -9,6 +9,7 @@ namespace ConfOrm.NH
 {
 	public class Mapper
 	{
+		internal const BindingFlags PropertiesBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
 		private readonly IDomainInspector domainInspector;
 
 		public Mapper(IDomainInspector domainInspector)
@@ -131,7 +132,7 @@ namespace ConfOrm.NH
 
 		private IEnumerable<PropertyInfo> GetPersistentProperties(Type type)
 		{
-			var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+			var properties = type.GetProperties(PropertiesBindingFlags);
 			return properties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p));
 		}
 
@@ -248,7 +249,7 @@ namespace ConfOrm.NH
 						throw new ArgumentOutOfRangeException();
 				}
 			}
-			var hasPublicSetter = property.GetSetMethod() != null;
+			var hasPublicSetter = property.CanWrite;
 			if(!hasPublicSetter)
 			{
 				return Accessor.NoSetter;
@@ -413,7 +414,7 @@ namespace ConfOrm.NH
 
 			private IEnumerable<PropertyInfo> GetPersistentProperties(Type type)
 			{
-				var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+				var properties = type.GetProperties(PropertiesBindingFlags);
 				return properties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p));
 			}
 
