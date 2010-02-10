@@ -65,5 +65,24 @@ namespace ConfOrmTests.NH.MapperTests
 			HbmClass rc = mapping.RootClasses.Single();
 			rc.Properties.First(p => p.Name == "ReadOnlyWithField").Access.Should().Be.EqualTo("field.camelcase");
 		}
+
+		[Test]
+		public void WhenExplicitReadOnlyAccessThenUseAccessReadOnly()
+		{
+			var orm = new Mock<IDomainInspector>();
+			orm.Setup(m => m.IsEntity(It.Is<Type>(t => t == typeof(MyClass)))).Returns(true);
+			orm.Setup(m => m.IsRootEntity(It.Is<Type>(t => t == typeof(MyClass)))).Returns(true);
+			orm.Setup(m => m.IsTablePerClass(It.IsAny<Type>())).Returns(true);
+			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
+			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
+			orm.Setup(m => m.PersistentPropertyAccessStrategy(It.Is<MemberInfo>(mi => mi.Name == "ReadOnlyWithField"))).Returns(StateAccessStrategy.ReadOnlyProperty);
+
+			var domainInspector = orm.Object;
+			var mapper = new Mapper(domainInspector);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(MyClass) });
+
+			HbmClass rc = mapping.RootClasses.Single();
+			rc.Properties.First(p => p.Name == "ReadOnlyWithField").Access.Should().Be.EqualTo("readonly");
+		}
 	}
 }
