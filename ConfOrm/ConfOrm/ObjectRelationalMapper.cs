@@ -40,6 +40,7 @@ namespace ConfOrm
 		private readonly List<IPattern<MemberInfo>> dictionaryPatterns;
 		private readonly List<IPatternApplier<Relation, Cascade>> cascadePatterns;
 		private readonly List<IPatternApplier<MemberInfo, IPersistentIdStrategy>> poidStrategyPatterns;
+		private readonly List<IPattern<MemberInfo>> persistentPropertyExclusionPatterns;
 		#endregion
 
 		public ObjectRelationalMapper()
@@ -54,6 +55,7 @@ namespace ConfOrm
 			cascadePatterns = new List<IPatternApplier<Relation, Cascade>> { new BidirectionalOneToManyCascadePattern() };
 			poidStrategyPatterns = new List<IPatternApplier<MemberInfo, IPersistentIdStrategy>>
 			                       	{new HighLowPoidPattern(), new GuidOptimizedPoidPattern()};
+			persistentPropertyExclusionPatterns = new List<IPattern<MemberInfo>> { new ReadOnlyPropertyPattern() };
 		}
 
 		public ICollection<IPatternApplier<MemberInfo, IPersistentIdStrategy>> PoidStrategies
@@ -284,7 +286,7 @@ namespace ConfOrm
 
 		public bool IsPersistentProperty(MemberInfo role)
 		{
-			return true;
+			return !persistentPropertyExclusionPatterns.Match(role);
 		}
 
 		public IDbColumnSpecification[] GetPersistentSpecification(MemberInfo role)
