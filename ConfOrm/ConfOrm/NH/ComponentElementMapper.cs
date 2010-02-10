@@ -30,7 +30,7 @@ namespace ConfOrm.NH
 			component.parent = new HbmParent { name = parent.Name };
 		}
 
-		public void Property(MemberInfo property)
+		public void Property(MemberInfo property, Action<IPropertyMapper> mapping)
 		{
 			var hbmProperty = new HbmProperty { name = property.Name };
 			AddProperty(hbmProperty);

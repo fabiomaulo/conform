@@ -44,7 +44,7 @@ namespace ConfOrmTests.NH
 			var mapdoc = new HbmMapping();
 			var component = new HbmNestedCompositeElement();
 			var mapper = new ComponentNestedElementMapper(typeof(Address), mapdoc, component);
-			mapper.Property(typeof(Address).GetProperty("Street"));
+			mapper.Property(typeof(Address).GetProperty("Street"), x => { });
 			component.Properties.Should().Have.Count.EqualTo(1);
 			component.Properties.First().Name.Should().Be.EqualTo("Street");
 		}

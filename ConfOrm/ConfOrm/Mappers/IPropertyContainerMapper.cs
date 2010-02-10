@@ -5,7 +5,7 @@ namespace ConfOrm.Mappers
 {
 	public interface IPropertyContainerMapper
 	{
-		void Property(MemberInfo property);
+		void Property(MemberInfo property, Action<IPropertyMapper> mapping);
 
 		void Component(MemberInfo property, Action<IComponentMapper> mapping);
 

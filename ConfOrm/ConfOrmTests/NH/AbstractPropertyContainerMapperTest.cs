@@ -40,8 +40,8 @@ namespace ConfOrmTests.NH
 		{
 			var properties = new List<object>();
 			var map = new StubPropertyContainerMapper<EntitySimple>(properties);
-			map.Property(typeof(EntitySimple).GetProperty("Name"));
-
+			map.Property(typeof (EntitySimple).GetProperty("Name"), x => { });
+		
 			properties.Should().Have.Count.EqualTo(1);
 			properties.First().Should().Be.OfType<HbmProperty>().And.ValueOf.Name.Should().Be.EqualTo("Name");
 		}
@@ -50,7 +50,7 @@ namespace ConfOrmTests.NH
 		public void CantAddPropertyOfNotInheritedType()
 		{
 			var map = new StubPropertyContainerMapper<OtherSimple>(new List<object>());
-			ActionAssert.Throws<ArgumentOutOfRangeException>(()=>map.Property(typeof(EntitySimple).GetProperty("Name")));
+			ActionAssert.Throws<ArgumentOutOfRangeException>(() => map.Property(typeof(EntitySimple).GetProperty("Name"), x => { }));
 		}
 
 		[Test]
@@ -58,7 +58,7 @@ namespace ConfOrmTests.NH
 		{
 			var properties = new List<object>();
 			var map = new StubPropertyContainerMapper<InheritedEntitySimple>(properties);
-			map.Property(typeof(InheritedEntitySimple).GetProperty("Name"));
+			map.Property(typeof(InheritedEntitySimple).GetProperty("Name"), x => { });
 
 			properties.Should().Have.Count.EqualTo(1);
 			properties.First().Should().Be.OfType<HbmProperty>().And.ValueOf.Name.Should().Be.EqualTo("Name");

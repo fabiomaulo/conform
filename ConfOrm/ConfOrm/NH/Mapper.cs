@@ -215,7 +215,7 @@ namespace ConfOrm.NH
 				}
 				else
 				{
-					propertiesContainer.Property(property);
+					propertiesContainer.Property(property, x => { });
 				}
 			}
 		}
@@ -409,7 +409,7 @@ namespace ConfOrm.NH
 					}
 					else
 					{
-						propertiesContainer.Property(property);
+						propertiesContainer.Property(property, x => { });
 					}
 				}
 			}

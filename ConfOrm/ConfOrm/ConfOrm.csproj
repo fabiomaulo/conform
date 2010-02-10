@@ -60,6 +60,7 @@
     <Compile Include="Mappers\ICollectionPropertiesMapper.cs" />
     <Compile Include="Mappers\IComponentElementMapper.cs" />
     <Compile Include="Mappers\IComponentMapper.cs" />
+    <Compile Include="Mappers\IEntityPropertyMapper.cs" />
     <Compile Include="Mappers\IGenerator.cs" />
     <Compile Include="Mappers\IGeneratorMapper.cs" />
     <Compile Include="Mappers\IIdMapper.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Mappers\IOneToOneMapper.cs" />
     <Compile Include="IPersistentIdStrategy.cs" />
     <Compile Include="Mappers\IPropertyContainerMapper.cs" />
+    <Compile Include="Mappers\IPropertyMapper.cs" />
     <Compile Include="Mappers\ISubclassMapper.cs" />
     <Compile Include="NH\CascadeConverter.cs" />
     <Compile Include="NH\ComponentElementMapper.cs" />

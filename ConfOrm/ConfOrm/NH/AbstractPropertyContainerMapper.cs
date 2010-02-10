@@ -38,7 +38,7 @@ namespace ConfOrm.NH
 
 		#region Implementation of IPropertyContainerMapper
 
-		public void Property(MemberInfo property)
+		public void Property(MemberInfo property, Action<IPropertyMapper> mapping)
 		{
 			if (!property.DeclaringType.IsAssignableFrom(container))
 			{
