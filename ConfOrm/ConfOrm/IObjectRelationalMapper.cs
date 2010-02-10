@@ -1,10 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace ConfOrm
 {
 	public interface IObjectRelationalMapper
 	{
+		void TablePerClass(IEnumerable<Type> baseEntities);
+		void TablePerClassHierarchy(IEnumerable<Type> baseEntities);
+		void TablePerConcreteClass(IEnumerable<Type> baseEntities);
+
 		void TablePerClassHierarchy<TBaseEntity>() where TBaseEntity : class;
 		void TablePerClass<TBaseEntity>() where TBaseEntity : class;
 		void TablePerConcreteClass<TBaseEntity>() where TBaseEntity : class;

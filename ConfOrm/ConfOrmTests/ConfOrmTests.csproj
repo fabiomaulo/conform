@@ -126,6 +126,7 @@
     <Compile Include="ObjectRelationalMapperTests\ListProperties.cs" />
     <Compile Include="ObjectRelationalMapperTests\ManyToManyRelationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\ManyToOneRelationTest.cs" />
+    <Compile Include="ObjectRelationalMapperTests\MultipleRegistrationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\OneToOneRelationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\PersistentIdTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\PoidStrategyTest.cs" />

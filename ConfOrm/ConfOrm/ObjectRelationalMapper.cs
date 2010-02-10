@@ -65,9 +65,38 @@ namespace ConfOrm
 
 		#region Implementation of IObjectRelationalMapper
 
+		public void TablePerClass(IEnumerable<Type> baseEntities)
+		{
+			foreach (var baseEntity in baseEntities)
+			{
+				RegisterTablePerClass(baseEntity);
+			}
+		}
+
+		public void TablePerClassHierarchy(IEnumerable<Type> baseEntities)
+		{
+			foreach (var baseEntity in baseEntities)
+			{
+				RegisterTablePerClassHierarchy(baseEntity);
+			}
+		}
+
+		public void TablePerConcreteClass(IEnumerable<Type> baseEntities)
+		{
+			foreach (var baseEntity in baseEntities)
+			{
+				RegisterTablePerConcreteClass(baseEntity);
+			}
+		}
+
 		public void TablePerClassHierarchy<TBaseEntity>() where TBaseEntity : class
 		{
 			var type = typeof(TBaseEntity);
+			RegisterTablePerClassHierarchy(type);
+		}
+
+		private void RegisterTablePerClassHierarchy(Type type)
+		{
 			if (components.Contains(type))
 			{
 				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
@@ -79,6 +108,11 @@ namespace ConfOrm
 		public void TablePerClass<TBaseEntity>() where TBaseEntity : class
 		{
 			var type = typeof (TBaseEntity);
+			RegisterTablePerClass(type);
+		}
+
+		private void RegisterTablePerClass(Type type)
+		{
 			if (components.Contains(type))
 			{
 				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
@@ -90,6 +124,11 @@ namespace ConfOrm
 		public void TablePerConcreteClass<TBaseEntity>() where TBaseEntity : class
 		{
 			var type = typeof(TBaseEntity);
+			RegisterTablePerConcreteClass(type);
+		}
+
+		private void RegisterTablePerConcreteClass(Type type)
+		{
 			if (components.Contains(type))
 			{
 				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
