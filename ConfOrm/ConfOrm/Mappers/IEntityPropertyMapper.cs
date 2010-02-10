@@ -1,4 +1,4 @@
-using NHibernate.Properties;
+using System;
 
 namespace ConfOrm.Mappers
 {
@@ -9,9 +9,10 @@ namespace ConfOrm.Mappers
 		ReadOnly,
 		None
 	}
+
 	public interface IEntityPropertyMapper
 	{
 		void Access(Accessor accessor);
-		void Access<TAccessor>() where TAccessor : IPropertyAccessor;
+		void Access(Type accessorType);
 	}
 }
