@@ -4,7 +4,7 @@ using SharpTestsEx;
 
 namespace ConfOrmTests.ObjectRelationalMapperTests
 {
-	public class ReadOnlyPropAreNotPersistent
+	public class ReadOnlyProperties
 	{
 		public class MyEntity
 		{
@@ -22,6 +22,14 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		{
 			var orm = new ObjectRelationalMapper();
 			orm.IsPersistentProperty(typeof (MyEntity).GetProperty("ReadOnly")).Should().Be.False();
+		}
+
+		[Test]
+		public void WhenExplicitDeclaredPersistentThenPersistent()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.PersistentProperty<MyEntity>(me => me.ReadOnly);
+			orm.IsPersistentProperty(typeof(MyEntity).GetProperty("ReadOnly")).Should().Be.True();
 		}
 	}
 }

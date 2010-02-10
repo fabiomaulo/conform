@@ -26,6 +26,7 @@ namespace ConfOrm
 		private readonly HashSet<MemberInfo> dictionaries = new HashSet<MemberInfo>();
 		private readonly HashSet<Type> components = new HashSet<Type>();
 		private readonly Dictionary<Relation, Cascade> cascade = new Dictionary<Relation, Cascade>();
+		private readonly HashSet<MemberInfo> persistentProperty = new HashSet<MemberInfo>();
 
 		#endregion
 
@@ -205,6 +206,12 @@ namespace ConfOrm
 			cascade.Add(new RelationOn(typeof(TFromEntity), member, typeof(TToEntity)), cascadeOptions);
 		}
 
+		public void PersistentProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
+			persistentProperty.Add(member);
+		}
+
 		#endregion
 
 		#region Implementation of IDomainInspector
@@ -324,7 +331,7 @@ namespace ConfOrm
 
 		public bool IsPersistentProperty(MemberInfo role)
 		{
-			return !persistentPropertyExclusionPatterns.Match(role);
+			return !persistentPropertyExclusionPatterns.Match(role) || persistentProperty.Contains(role);
 		}
 
 		public StateAccessStrategy PersistentPropertyAccessStrategy(MemberInfo role)
