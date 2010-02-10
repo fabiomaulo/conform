@@ -249,8 +249,7 @@ namespace ConfOrm.NH
 						throw new ArgumentOutOfRangeException();
 				}
 			}
-			var hasPublicSetter = property.CanWrite;
-			if(!hasPublicSetter)
+			if (!property.CanWrite)
 			{
 				return Accessor.NoSetter;
 			}
