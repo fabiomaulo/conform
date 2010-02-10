@@ -14,13 +14,7 @@ namespace ConfOrm.Patterns
 			{
 				return false;
 			}
-			MethodInfo[] accessors = property.GetAccessors();
-			if (accessors == null)
-			{
-				return false;
-			}
-			if (accessors.FirstOrDefault(x => x.Name.StartsWith("set_")) == null
-					&& accessors.FirstOrDefault(x => x.Name.StartsWith("get_")) != null)
+			if (!property.CanWrite && property.CanRead)
 			{
 				return !PropertyToFieldPatterns.Defaults.Any(p=> p.Match(property));
 			}
