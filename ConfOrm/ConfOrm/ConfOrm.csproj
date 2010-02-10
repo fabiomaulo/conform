@@ -93,6 +93,7 @@
     <Compile Include="NH\ListMapper.cs" />
     <Compile Include="NH\Mapper.cs" />
     <Compile Include="NH\OneToOneMapper.cs" />
+    <Compile Include="NH\PropertyMapper.cs" />
     <Compile Include="NH\SetMapper.cs" />
     <Compile Include="NH\SubclassMapper.cs" />
     <Compile Include="NH\TypeNameUtil.cs" />

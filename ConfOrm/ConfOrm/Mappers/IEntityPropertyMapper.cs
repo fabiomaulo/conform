@@ -6,6 +6,7 @@ namespace ConfOrm.Mappers
 	{
 		Property,
 		Field,
+		NoSetter,
 		ReadOnly,
 		None
 	}
