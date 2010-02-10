@@ -97,12 +97,17 @@ namespace ConfOrm
 
 		private void RegisterTablePerClassHierarchy(Type type)
 		{
+			PreventComponentAsEntity(type);
+			rootEntities.Add(type);
+			tablePerClassHierarchyEntities.Add(type);
+		}
+
+		private void PreventComponentAsEntity(Type type)
+		{
 			if (components.Contains(type))
 			{
 				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
 			}
-			rootEntities.Add(type);
-			tablePerClassHierarchyEntities.Add(type);
 		}
 
 		public void TablePerClass<TBaseEntity>() where TBaseEntity : class
@@ -113,10 +118,7 @@ namespace ConfOrm
 
 		private void RegisterTablePerClass(Type type)
 		{
-			if (components.Contains(type))
-			{
-				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
-			}
+			PreventComponentAsEntity(type);
 			rootEntities.Add(type);
 			tablePerClassEntities.Add(type);
 		}
@@ -129,10 +131,7 @@ namespace ConfOrm
 
 		private void RegisterTablePerConcreteClass(Type type)
 		{
-			if (components.Contains(type))
-			{
-				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
-			}
+			PreventComponentAsEntity(type);
 			rootEntities.Add(type);
 			tablePerConcreteClassEntities.Add(type);
 		}
