@@ -327,6 +327,11 @@ namespace ConfOrm
 			return !persistentPropertyExclusionPatterns.Match(role);
 		}
 
+		public StateAccessStrategy PersistentPropertyAccessStrategy(MemberInfo role)
+		{
+			return StateAccessStrategy.Property;
+		}
+
 		public IDbColumnSpecification[] GetPersistentSpecification(MemberInfo role)
 		{
 			return new IDbColumnSpecification[0];

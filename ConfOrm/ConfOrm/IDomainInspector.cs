@@ -25,6 +25,7 @@ namespace ConfOrm
 		IPersistentIdStrategy GetPersistentIdStrategy(MemberInfo member);
 
 		bool IsPersistentProperty(MemberInfo role);
+		StateAccessStrategy PersistentPropertyAccessStrategy(MemberInfo role);
 		IDbColumnSpecification[] GetPersistentSpecification(MemberInfo role);
 
 		bool IsSet(MemberInfo role);

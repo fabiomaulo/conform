@@ -215,9 +215,26 @@ namespace ConfOrm.NH
 				}
 				else
 				{
-					propertiesContainer.Property(property, x => { });
+					propertiesContainer.Property(property, x =>
+						{
+							Accessor accessor = GetAccessor(property);
+							if(accessor != Accessor.Property)
+							{
+								x.Access(accessor);
+							}
+						});
 				}
 			}
+		}
+
+		private Accessor GetAccessor(PropertyInfo property)
+		{
+			var hasPublicSetter = property.GetSetMethod() != null;
+			if(!hasPublicSetter)
+			{
+				return Accessor.NoSetter;
+			}
+			return Accessor.Property;
 		}
 
 		private Type GetCollectionElementTypeOrThrow(Type type, PropertyInfo property, Type propertyType)

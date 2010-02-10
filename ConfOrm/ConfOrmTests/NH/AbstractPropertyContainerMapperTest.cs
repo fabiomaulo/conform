@@ -47,6 +47,17 @@ namespace ConfOrmTests.NH
 		}
 
 		[Test]
+		public void CallPropertyMapper()
+		{
+			var properties = new List<object>();
+			var map = new StubPropertyContainerMapper<EntitySimple>(properties);
+			var called = false;
+			map.Property(typeof(EntitySimple).GetProperty("Name"), x => called = true );
+
+			called.Should().Be.True();
+		}
+
+		[Test]
 		public void CantAddPropertyOfNotInheritedType()
 		{
 			var map = new StubPropertyContainerMapper<OtherSimple>(new List<object>());

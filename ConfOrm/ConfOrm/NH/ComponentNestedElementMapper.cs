@@ -33,6 +33,7 @@ namespace ConfOrm.NH
 		public void Property(MemberInfo property, Action<IPropertyMapper> mapping)
 		{
 			var hbmProperty = new HbmProperty { name = property.Name };
+			mapping(new PropertyMapper(property, hbmProperty));
 			AddProperty(hbmProperty);
 		}
 

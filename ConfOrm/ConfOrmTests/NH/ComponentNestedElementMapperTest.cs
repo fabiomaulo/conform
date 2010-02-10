@@ -50,6 +50,17 @@ namespace ConfOrmTests.NH
 		}
 
 		[Test]
+		public void CallPropertyMapper()
+		{
+			var mapdoc = new HbmMapping();
+			var component = new HbmNestedCompositeElement();
+			var mapper = new ComponentNestedElementMapper(typeof(Address), mapdoc, component);
+			var called = false;
+			mapper.Property(typeof(Address).GetProperty("Street"), x => called = true);
+			called.Should().Be.True();
+		}
+
+		[Test]
 		public void CanMapManyToOne()
 		{
 			var mapdoc = new HbmMapping();
