@@ -122,6 +122,7 @@
     <Compile Include="Patterns\PropertyToFieldPatterns.cs" />
     <Compile Include="Patterns\PropertyToFieldUnderscoreCamelCasePattern.cs" />
     <Compile Include="Patterns\PropertyToFieldUnderscorePascalCasePattern.cs" />
+    <Compile Include="Patterns\ReadOnlyPropertyPattern.cs" />
     <Compile Include="Patterns\SequencePoidPattern.cs" />
     <Compile Include="Patterns\SetCollectionPattern.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
