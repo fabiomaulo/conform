@@ -139,7 +139,7 @@ namespace ConfOrm.NH
 		{
 			foreach (var property in propertiesToMap)
 			{
-				var member = property;
+				MemberInfo member = property;
 				var propertyType = property.GetPropertyOrFieldType();
 				if(domainInspector.IsManyToOne(propertiesContainerType, propertyType))
 				{
@@ -215,12 +215,16 @@ namespace ConfOrm.NH
 				}
 				else
 				{
-					propertiesContainer.Property(property, x =>
+					propertiesContainer.Property(member, x =>
 						{
-							Accessor accessor = GetAccessor(property);
-							if(accessor != Accessor.Property)
+							var propertyInfo = member as PropertyInfo;
+							if (propertyInfo != null)
 							{
-								x.Access(accessor);
+								Accessor accessor = GetAccessor(propertyInfo);
+								if (accessor != Accessor.Property)
+								{
+									x.Access(accessor);
+								}
 							}
 						});
 				}
