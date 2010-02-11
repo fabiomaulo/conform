@@ -26,7 +26,6 @@ namespace ConfOrm
 
 		bool IsPersistentProperty(MemberInfo role);
 		StateAccessStrategy PersistentPropertyAccessStrategy(MemberInfo role);
-		IDbColumnSpecification[] GetPersistentSpecification(MemberInfo role);
 
 		bool IsSet(MemberInfo role);
 		bool IsBag(MemberInfo role);

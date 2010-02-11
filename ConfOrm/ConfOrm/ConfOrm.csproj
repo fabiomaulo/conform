@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="Cascade.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="IDbColumnSpecification.cs" />
     <Compile Include="IDomainInspector.cs" />
     <Compile Include="IObjectRelationalMapper.cs" />
     <Compile Include="IPattern.cs" />

@@ -347,11 +347,6 @@ namespace ConfOrm
 			return propertyAccessorPatterns.ApplyFirstMatch(role);
 		}
 
-		public IDbColumnSpecification[] GetPersistentSpecification(MemberInfo role)
-		{
-			return new IDbColumnSpecification[0];
-		}
-
 		public bool IsSet(MemberInfo role)
 		{
 			return sets.Contains(role) || setPatterns.Match(role); 
