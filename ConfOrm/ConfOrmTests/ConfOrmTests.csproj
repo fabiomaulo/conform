@@ -133,6 +133,7 @@
     <Compile Include="ObjectRelationalMapperTests\OneToOneRelationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\PersistentIdTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\PoidStrategyTest.cs" />
+    <Compile Include="ObjectRelationalMapperTests\PropertyAccessorsTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\ReadOnlyProperties.cs" />
     <Compile Include="ObjectRelationalMapperTests\RegisteringDerivedTablePerClass.cs" />
     <Compile Include="ObjectRelationalMapperTests\RegisteringTablePerClass.cs" />

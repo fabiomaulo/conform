@@ -42,6 +42,8 @@ namespace ConfOrm
 		private readonly List<IPatternApplier<Relation, Cascade>> cascadePatterns;
 		private readonly List<IPatternApplier<MemberInfo, IPersistentIdStrategy>> poidStrategyPatterns;
 		private readonly List<IPattern<MemberInfo>> persistentPropertyExclusionPatterns;
+		private readonly List<IPatternApplier<MemberInfo, StateAccessStrategy>> propertyAccessorPatterns;
+
 		#endregion
 
 		public ObjectRelationalMapper()
@@ -57,6 +59,12 @@ namespace ConfOrm
 			poidStrategyPatterns = new List<IPatternApplier<MemberInfo, IPersistentIdStrategy>>
 			                       	{new HighLowPoidPattern(), new GuidOptimizedPoidPattern()};
 			persistentPropertyExclusionPatterns = new List<IPattern<MemberInfo>> { new ReadOnlyPropertyPattern() };
+			propertyAccessorPatterns = new List<IPatternApplier<MemberInfo, StateAccessStrategy>>
+			                           	{
+			                           		new ReadOnlyPropertyAccessorPattern(),
+																		new NoSetterPropertyToFieldAccessorPattern(),
+																		new PropertyToFieldAccessorPattern()
+			                           	};
 		}
 
 		public ICollection<IPatternApplier<MemberInfo, IPersistentIdStrategy>> PoidStrategies
@@ -336,7 +344,7 @@ namespace ConfOrm
 
 		public StateAccessStrategy PersistentPropertyAccessStrategy(MemberInfo role)
 		{
-			return StateAccessStrategy.Property;
+			return propertyAccessorPatterns.ApplyFirstMatch(role);
 		}
 
 		public IDbColumnSpecification[] GetPersistentSpecification(MemberInfo role)
