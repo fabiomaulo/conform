@@ -115,6 +115,9 @@
     <Compile Include="Patterns\HighLowPoidPattern.cs" />
     <Compile Include="Patterns\IdentityPoidPattern.cs" />
     <Compile Include="Patterns\ListCollectionPattern.cs" />
+    <Compile Include="Patterns\NoSetterPropertyToFieldAccessorPattern.cs" />
+    <Compile Include="Patterns\PropertyToFieldAccessorPattern.cs" />
+    <Compile Include="Patterns\ReadOnlyPropertyAccessorPattern.cs" />
     <Compile Include="Patterns\NativePoidPattern.cs" />
     <Compile Include="Patterns\PoidGuidPattern.cs" />
     <Compile Include="Patterns\PoIdGuidStrategyPattern.cs" />
