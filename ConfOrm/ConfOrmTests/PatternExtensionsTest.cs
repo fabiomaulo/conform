@@ -9,43 +9,43 @@ namespace ConfOrmTests
 	public class PatternExtensionsTest
 	{
 		[Test]
-		public void ApplyFirstMatchInListReverseOrder()
+		public void GetValueFirstMatchInListReverseOrder()
 		{
 			// the user can add IPatternApplier. His IPatternApplier have more priority than defaults.
 			// The first IPatternApplier should be the last to check match.
-			var patterns = new List<IPatternApplier<string, string>>();
-			var firstAddedPattern = new Mock<IPatternApplier<string, string>>();
+			var patterns = new List<IPatternValueGetter<string, string>>();
+			var firstAddedPattern = new Mock<IPatternValueGetter<string, string>>();
 			firstAddedPattern.Setup(p => p.Match(It.IsAny<string>())).Returns(true);
-			var lastAddedPattern = new Mock<IPatternApplier<string, string>>();
+			var lastAddedPattern = new Mock<IPatternValueGetter<string, string>>();
 			lastAddedPattern.Setup(p => p.Match(It.IsAny<string>())).Returns(true);
 			patterns.Add(firstAddedPattern.Object);
 			patterns.Add(lastAddedPattern.Object);
 
-			patterns.ApplyFirstMatch("pp");
+			patterns.GetValueOfFirstMatch("pp");
 
-			firstAddedPattern.Verify(p => p.Apply(It.IsAny<string>()), Times.Never());
-			lastAddedPattern.Verify(p => p.Apply(It.IsAny<string>()), Times.Once());
+			firstAddedPattern.Verify(p => p.Get(It.IsAny<string>()), Times.Never());
+			lastAddedPattern.Verify(p => p.Get(It.IsAny<string>()), Times.Once());
 		}
 
 		[Test]
 		public void WhenNoMatchNothingIsApplied()
 		{
-			var patterns = new List<IPatternApplier<string, string>>();
-			var pattern = new Mock<IPatternApplier<string, string>>();
+			var patterns = new List<IPatternValueGetter<string, string>>();
+			var pattern = new Mock<IPatternValueGetter<string, string>>();
 			patterns.Add(pattern.Object);
 			pattern.Setup(p => p.Match(It.IsAny<string>())).Returns(false);
 			
-			patterns.ApplyFirstMatch("pp");
+			patterns.GetValueOfFirstMatch("pp");
 
-			pattern.Verify(p => p.Apply(It.IsAny<string>()), Times.Never());
+			pattern.Verify(p => p.Get(It.IsAny<string>()), Times.Never());
 		}
 
 		[Test]
 		public void WhenNullNothingHappen()
 		{
-			List<IPatternApplier<string, string>> patterns = null;
+			List<IPatternValueGetter<string, string>> patterns = null;
 
-			ActionAssert.NotThrow(() => patterns.ApplyFirstMatch("pp"));
+			ActionAssert.NotThrow(() => patterns.GetValueOfFirstMatch("pp"));
 		}
 
 		[Test]

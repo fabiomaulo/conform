@@ -60,7 +60,7 @@ namespace ConfOrmTests.Patterns
 		public void ApplyAlwaysReturnCascade()
 		{
 			var pattern = new BidirectionalOneToManyCascadePattern();
-			pattern.Apply(null).Satisfy(c => c.Has(Cascade.All) && c.Has(Cascade.DeleteOrphans));
+			pattern.Get(null).Satisfy(c => c.Has(Cascade.All) && c.Has(Cascade.DeleteOrphans));
 		}
 	}
 }

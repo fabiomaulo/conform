@@ -51,7 +51,7 @@
     <Compile Include="IDomainInspector.cs" />
     <Compile Include="IObjectRelationalMapper.cs" />
     <Compile Include="IPattern.cs" />
-    <Compile Include="IPatternApplier.cs" />
+    <Compile Include="IPatternValueGetter.cs" />
     <Compile Include="Mappers\CollectionLazy.cs" />
     <Compile Include="Mappers\Generators.cs" />
     <Compile Include="Mappers\IClassMapper.cs" />

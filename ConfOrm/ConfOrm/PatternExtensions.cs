@@ -5,17 +5,17 @@ namespace ConfOrm
 {
 	public static class PatternExtensions
 	{
-		public static TResult ApplyFirstMatch<TSubject, TResult>(this IEnumerable<IPatternApplier<TSubject, TResult>> appliers, TSubject subject)
+		public static TResult GetValueOfFirstMatch<TSubject, TResult>(this IEnumerable<IPatternValueGetter<TSubject, TResult>> appliers, TSubject subject)
 		{
 			if (appliers == null)
 			{
 				return default(TResult);
 			}
-			var patternApplier = appliers.FirstApplierOrDefault(subject);
-			return patternApplier != null ? patternApplier.Apply(subject) : default(TResult);
+			var patternApplier = appliers.FirstGetterrOrDefault(subject);
+			return patternApplier != null ? patternApplier.Get(subject) : default(TResult);
 		}
 
-		public static IPatternApplier<TSubject, TResult> FirstApplierOrDefault<TSubject, TResult>(this IEnumerable<IPatternApplier<TSubject, TResult>> appliers, TSubject subject)
+		public static IPatternValueGetter<TSubject, TResult> FirstGetterrOrDefault<TSubject, TResult>(this IEnumerable<IPatternValueGetter<TSubject, TResult>> appliers, TSubject subject)
 		{
 			return appliers.Reverse().FirstOrDefault(a => a.Match(subject));
 		}

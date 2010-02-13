@@ -36,7 +36,7 @@ namespace ConfOrmTests.Patterns
 		public void ApplyNativeGenerator()
 		{
 			var pattern = new NativePoidPattern();
-			pattern.Apply(typeof(TestEntity).GetProperty("Int")).Satisfy(
+			pattern.Get(typeof(TestEntity).GetProperty("Int")).Satisfy(
 				poidi => poidi.Strategy == PoIdStrategy.Native && poidi.Params == null);
 		}
 	}

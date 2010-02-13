@@ -36,7 +36,7 @@ namespace ConfOrmTests.Patterns
 		public void ApplyHasSequenceGeneratorNoParams()
 		{
 			var pattern = new SequencePoidPattern();
-			pattern.Apply(typeof(TestEntity).GetProperty("Int")).Satisfy(
+			pattern.Get(typeof(TestEntity).GetProperty("Int")).Satisfy(
 				poidi => poidi.Strategy == PoIdStrategy.Sequence && poidi.Params == null);
 		}
 
@@ -44,7 +44,7 @@ namespace ConfOrmTests.Patterns
 		public void ApplyHasSequenceGeneratorParams()
 		{
 			var pattern = new SequencePoidPattern(new { sequence = "mySequence" });
-			pattern.Apply(typeof(TestEntity).GetProperty("Int")).Satisfy(
+			pattern.Get(typeof(TestEntity).GetProperty("Int")).Satisfy(
 				poidi => poidi.Strategy == PoIdStrategy.Sequence && poidi.Params != null);
 		}
 	}

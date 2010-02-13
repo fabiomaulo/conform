@@ -2,7 +2,7 @@ using System.Reflection;
 
 namespace ConfOrm.Patterns
 {
-	public class HighLowPoidPattern : PoidIntPattern, IPatternApplier<MemberInfo, IPersistentIdStrategy>
+	public class HighLowPoidPattern : PoidIntPattern, IPatternValueGetter<MemberInfo, IPersistentIdStrategy>
 	{
 		private readonly object parameters;
 		public HighLowPoidPattern() {}
@@ -13,7 +13,7 @@ namespace ConfOrm.Patterns
 
 		#region Implementation of IPatternApplier<MemberInfo,IPersistentIdStrategy>
 
-		public IPersistentIdStrategy Apply(MemberInfo subject)
+		public IPersistentIdStrategy Get(MemberInfo element)
 		{
 			return new HighLowIdStrategy {Params = parameters};
 		}

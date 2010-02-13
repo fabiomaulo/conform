@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace ConfOrm.Patterns
 {
-	public class NoSetterPropertyToFieldAccessorPattern : IPatternApplier<MemberInfo, StateAccessStrategy>
+	public class NoSetterPropertyToFieldAccessorPattern : IPatternValueGetter<MemberInfo, StateAccessStrategy>
 	{
 		#region Implementation of IPattern<MemberInfo>
 
@@ -29,7 +29,7 @@ namespace ConfOrm.Patterns
 
 		#region Implementation of IPatternApplier<MemberInfo,StateAccessStrategy>
 
-		public StateAccessStrategy Apply(MemberInfo subject)
+		public StateAccessStrategy Get(MemberInfo element)
 		{
 			return StateAccessStrategy.FieldOnSet;
 		}

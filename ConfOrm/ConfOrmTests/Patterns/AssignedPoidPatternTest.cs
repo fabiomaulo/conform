@@ -28,7 +28,7 @@ namespace ConfOrmTests.Patterns
 		public void ApplyAlwaysReturnAssigned()
 		{
 			var pattern = new AssignedPoidPattern();
-			pattern.Apply(null).Strategy.Should().Be.EqualTo(PoIdStrategy.Assigned);
+			pattern.Get(null).Strategy.Should().Be.EqualTo(PoIdStrategy.Assigned);
 		}
 	}
 }

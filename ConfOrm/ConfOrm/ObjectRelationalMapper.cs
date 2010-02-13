@@ -39,10 +39,10 @@ namespace ConfOrm
 		private readonly List<IPattern<MemberInfo>> arrayPatterns;
 		private readonly List<IPattern<Type>> componetPatterns;
 		private readonly List<IPattern<MemberInfo>> dictionaryPatterns;
-		private readonly List<IPatternApplier<Relation, Cascade>> cascadePatterns;
-		private readonly List<IPatternApplier<MemberInfo, IPersistentIdStrategy>> poidStrategyPatterns;
+		private readonly List<IPatternValueGetter<Relation, Cascade>> cascadePatterns;
+		private readonly List<IPatternValueGetter<MemberInfo, IPersistentIdStrategy>> poidStrategyPatterns;
 		private readonly List<IPattern<MemberInfo>> persistentPropertyExclusionPatterns;
-		private readonly List<IPatternApplier<MemberInfo, StateAccessStrategy>> propertyAccessorPatterns;
+		private readonly List<IPatternValueGetter<MemberInfo, StateAccessStrategy>> propertyAccessorPatterns;
 
 		#endregion
 
@@ -55,11 +55,11 @@ namespace ConfOrm
 			arrayPatterns = new List<IPattern<MemberInfo>> { new ArrayCollectionPattern() };
 			componetPatterns = new List<IPattern<Type>> { new ComponentPattern() };
 			dictionaryPatterns = new List<IPattern<MemberInfo>> { new DictionaryCollectionPattern() };
-			cascadePatterns = new List<IPatternApplier<Relation, Cascade>> { new BidirectionalOneToManyCascadePattern() };
-			poidStrategyPatterns = new List<IPatternApplier<MemberInfo, IPersistentIdStrategy>>
+			cascadePatterns = new List<IPatternValueGetter<Relation, Cascade>> { new BidirectionalOneToManyCascadePattern() };
+			poidStrategyPatterns = new List<IPatternValueGetter<MemberInfo, IPersistentIdStrategy>>
 			                       	{new HighLowPoidPattern(), new GuidOptimizedPoidPattern()};
 			persistentPropertyExclusionPatterns = new List<IPattern<MemberInfo>> { new ReadOnlyPropertyPattern() };
-			propertyAccessorPatterns = new List<IPatternApplier<MemberInfo, StateAccessStrategy>>
+			propertyAccessorPatterns = new List<IPatternValueGetter<MemberInfo, StateAccessStrategy>>
 			                           	{
 			                           		new ReadOnlyPropertyAccessorPattern(),
 																		new NoSetterPropertyToFieldAccessorPattern(),
@@ -67,7 +67,7 @@ namespace ConfOrm
 			                           	};
 		}
 
-		public ICollection<IPatternApplier<MemberInfo, IPersistentIdStrategy>> PoidStrategies
+		public ICollection<IPatternValueGetter<MemberInfo, IPersistentIdStrategy>> PoidStrategies
 		{
 			get { return poidStrategyPatterns; }
 		}
@@ -324,7 +324,7 @@ namespace ConfOrm
 				return resultByClasses;
 			}
 
-			return cascadePatterns.ApplyFirstMatch(relationOn);
+			return cascadePatterns.GetValueOfFirstMatch(relationOn);
 		}
 
 		public bool IsPersistentId(MemberInfo member)
@@ -334,7 +334,7 @@ namespace ConfOrm
 
 		public IPersistentIdStrategy GetPersistentIdStrategy(MemberInfo member)
 		{
-			return poidStrategyPatterns.ApplyFirstMatch(member);
+			return poidStrategyPatterns.GetValueOfFirstMatch(member);
 		}
 
 		public bool IsPersistentProperty(MemberInfo role)
@@ -344,7 +344,7 @@ namespace ConfOrm
 
 		public StateAccessStrategy PersistentPropertyAccessStrategy(MemberInfo role)
 		{
-			return propertyAccessorPatterns.ApplyFirstMatch(role);
+			return propertyAccessorPatterns.GetValueOfFirstMatch(role);
 		}
 
 		public bool IsSet(MemberInfo role)

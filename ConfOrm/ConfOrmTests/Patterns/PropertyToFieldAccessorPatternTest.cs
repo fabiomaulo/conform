@@ -107,7 +107,7 @@ namespace ConfOrmTests.Patterns
 		public void ApplierAlwaysField()
 		{
 			var pattern = new PropertyToFieldAccessorPattern();
-			pattern.Apply(null).Should().Be(StateAccessStrategy.Field);
+			pattern.Get(null).Should().Be(StateAccessStrategy.Field);
 		}
 	}
 }

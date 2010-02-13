@@ -2,11 +2,11 @@ using System.Reflection;
 
 namespace ConfOrm.Patterns
 {
-	public class GuidPoidPattern: PoidGuidPattern, IPatternApplier<MemberInfo, IPersistentIdStrategy>
+	public class GuidPoidPattern: PoidGuidPattern, IPatternValueGetter<MemberInfo, IPersistentIdStrategy>
 	{
 		#region Implementation of IPatternApplier<MemberInfo,IPersistentIdStrategy>
 
-		public IPersistentIdStrategy Apply(MemberInfo subject)
+		public IPersistentIdStrategy Get(MemberInfo element)
 		{
 			return new GuidIdStrategy();
 		}

@@ -36,7 +36,7 @@ namespace ConfOrmTests.Patterns
 		public void ApplyHasHighLowGeneratorNoParams()
 		{
 			var pattern = new HighLowPoidPattern();
-			pattern.Apply(typeof (TestEntity).GetProperty("Int")).Satisfy(
+			pattern.Get(typeof (TestEntity).GetProperty("Int")).Satisfy(
 				poidi => poidi.Strategy == PoIdStrategy.HighLow && poidi.Params == null);
 		}
 
@@ -44,7 +44,7 @@ namespace ConfOrmTests.Patterns
 		public void ApplyHasHighLowGeneratorParams()
 		{
 			var pattern = new HighLowPoidPattern(new {max_lo = 99});
-			pattern.Apply(typeof(TestEntity).GetProperty("Int")).Satisfy(
+			pattern.Get(typeof(TestEntity).GetProperty("Int")).Satisfy(
 				poidi => poidi.Strategy == PoIdStrategy.HighLow && poidi.Params != null);
 		}
 	}

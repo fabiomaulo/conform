@@ -8,7 +8,7 @@ namespace ConfOrm.Patterns
 	/// <remarks>
 	/// To be used as base class or to be registered as first (last to match) Poid strategy.
 	/// </remarks>
-	public class AssignedPoidPattern : IPatternApplier<MemberInfo, IPersistentIdStrategy>
+	public class AssignedPoidPattern : IPatternValueGetter<MemberInfo, IPersistentIdStrategy>
 	{
 		#region Implementation of IPattern<MemberInfo>
 
@@ -21,7 +21,7 @@ namespace ConfOrm.Patterns
 
 		#region Implementation of IPatternApplier<MemberInfo,IPersistentIdStrategy>
 
-		public IPersistentIdStrategy Apply(MemberInfo subject)
+		public IPersistentIdStrategy Get(MemberInfo element)
 		{
 			return new AssignedIdStrategy();
 		}

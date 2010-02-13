@@ -36,7 +36,7 @@ namespace ConfOrmTests.Patterns
 		public void ApplyIdentityGenerator()
 		{
 			var pattern = new IdentityPoidPattern();
-			pattern.Apply(typeof(TestEntity).GetProperty("Int")).Satisfy(
+			pattern.Get(typeof(TestEntity).GetProperty("Int")).Satisfy(
 				poidi => poidi.Strategy == PoIdStrategy.Identity && poidi.Params == null);
 		}
 	}

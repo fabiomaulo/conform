@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace ConfOrm.Patterns
 {
-	public class BidirectionalOneToManyCascadePattern : BidirectionalOneToManyPattern, IPatternApplier<Relation, Cascade>
+	public class BidirectionalOneToManyCascadePattern : BidirectionalOneToManyPattern, IPatternValueGetter<Relation, Cascade>
 	{
 		public override bool Match(Relation subject)
 		{
@@ -29,7 +29,7 @@ namespace ConfOrm.Patterns
 		}
 		#region Implementation of IPatternApplier<Relation,Cascade>
 
-		public Cascade Apply(Relation subject)
+		public Cascade Get(Relation element)
 		{
 			return Cascade.All | Cascade.DeleteOrphans;
 		}

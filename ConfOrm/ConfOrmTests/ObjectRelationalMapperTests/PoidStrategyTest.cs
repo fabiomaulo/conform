@@ -74,12 +74,12 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		[Test]
 		public void WhenExplicitIdentityForSpecificClassThenApplyOnlyInThatClassOnly()
 		{
-			var customPoidPattern = new Mock<IPatternApplier<MemberInfo, IPersistentIdStrategy>>();
+			var customPoidPattern = new Mock<IPatternValueGetter<MemberInfo, IPersistentIdStrategy>>();
 			var identityResult = new Mock<IPersistentIdStrategy>();
 			identityResult.Setup(r => r.Strategy).Returns(PoIdStrategy.Identity);
 			var specificId = typeof(AnotherWithInt).GetProperty("Id");
 			customPoidPattern.Setup(p => p.Match(It.Is<MemberInfo>(mi => mi == specificId))).Returns(true);
-			customPoidPattern.Setup(p => p.Apply(It.Is<MemberInfo>(mi => mi == specificId))).Returns(identityResult.Object);
+			customPoidPattern.Setup(p => p.Get(It.Is<MemberInfo>(mi => mi == specificId))).Returns(identityResult.Object);
 			var orm = new ObjectRelationalMapper();
 			orm.PoidStrategies.Add(customPoidPattern.Object);
 		

@@ -2,11 +2,11 @@ using System.Reflection;
 
 namespace ConfOrm.Patterns
 {
-	public class ReadOnlyPropertyAccessorPattern : ReadOnlyPropertyPattern, IPatternApplier<MemberInfo, StateAccessStrategy>
+	public class ReadOnlyPropertyAccessorPattern : ReadOnlyPropertyPattern, IPatternValueGetter<MemberInfo, StateAccessStrategy>
 	{
 		#region Implementation of IPatternApplier<MemberInfo,StateAccessStrategy>
 
-		public StateAccessStrategy Apply(MemberInfo subject)
+		public StateAccessStrategy Get(MemberInfo element)
 		{
 			return StateAccessStrategy.ReadOnlyProperty;
 		}
