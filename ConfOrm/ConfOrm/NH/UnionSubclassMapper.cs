@@ -5,7 +5,7 @@ using NHibernate.Cfg.MappingSchema;
 
 namespace ConfOrm.NH
 {
-	public class UnionSubclassMapper : AbstractPropertyContainerMapper, IPropertyContainerMapper
+	public class UnionSubclassMapper : AbstractPropertyContainerMapper, IUnionSubclassMapper
 	{
 		private readonly HbmUnionSubclass classMapping = new HbmUnionSubclass();
 

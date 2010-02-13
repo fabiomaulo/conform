@@ -74,6 +74,7 @@
     <Compile Include="Mappers\IPropertyContainerMapper.cs" />
     <Compile Include="Mappers\IPropertyMapper.cs" />
     <Compile Include="Mappers\ISubclassMapper.cs" />
+    <Compile Include="Mappers\IUnionSubclassMapper.cs" />
     <Compile Include="NH\CascadeConverter.cs" />
     <Compile Include="NH\ComponentElementMapper.cs" />
     <Compile Include="NH\ComponentNestedElementMapper.cs" />
