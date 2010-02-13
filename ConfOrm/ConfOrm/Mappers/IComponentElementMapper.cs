@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace ConfOrm.Mappers
@@ -12,5 +13,18 @@ namespace ConfOrm.Mappers
 		void Component(MemberInfo property, Action<IComponentElementMapper> mapping);
 
 		void ManyToOne(MemberInfo property);
+	}
+
+	public interface IComponentElementMapper<TComponent> where TComponent : class
+	{
+		void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent) where TProperty : class;
+
+		void Property<TProperty>(Expression<Func<TComponent, TProperty>> property, Action<IPropertyMapper> mapping);
+
+		void Component<TNestedComponent>(Expression<Func<TComponent, TNestedComponent>> property,
+																		 Action<IComponentElementMapper<TNestedComponent>> mapping)
+			where TNestedComponent : class;
+
+		void ManyToOne<TProperty>(Expression<Func<TComponent, TProperty>> property) where TProperty : class;
 	}
 }

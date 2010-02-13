@@ -44,6 +44,13 @@ namespace ConfOrm.NH
 			elementRelationshipAssing(hbm);
 		}
 
+		public void Component<TElement>(Action<IComponentElementMapper<TElement>> mapping) where TElement : class
+		{
+			var hbm = new HbmCompositeElement { @class = collectionElementType.GetShortClassName(mapDoc) };
+			mapping(new ComponentElementMapper<TElement>(mapDoc, hbm));
+			elementRelationshipAssing(hbm);
+		}
+
 		#endregion
 	}
 }

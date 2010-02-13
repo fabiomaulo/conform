@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
@@ -10,7 +11,7 @@ namespace ConfOrm.NH
 	{
 		private readonly HbmCompositeElement component;
 		private readonly Type componentType;
-		private readonly HbmMapping mapDoc;
+		protected readonly HbmMapping mapDoc;
 
 		public ComponentElementMapper(Type componentType, HbmMapping mapDoc, HbmCompositeElement component)
 		{
@@ -64,4 +65,41 @@ namespace ConfOrm.NH
 			component.Items = component.Items == null ? toAdd : component.Items.Concat(toAdd).ToArray();
 		}
 	}
+
+	public class ComponentElementMapper<TComponent> : ComponentElementMapper, IComponentElementMapper<TComponent> where TComponent : class
+	{
+		public ComponentElementMapper(HbmMapping mapDoc, HbmCompositeElement component) : base(typeof(TComponent), mapDoc, component) { }
+
+		#region Implementation of IComponentElementMapper<TComponent>
+
+		public void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent) where TProperty : class
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(parent);
+			Parent(member);
+		}
+
+		public void Property<TProperty>(Expression<Func<TComponent, TProperty>> property, Action<IPropertyMapper> mapping)
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(property);
+			Property(member, mapping);
+		}
+
+		public void Component<TNestedComponent>(Expression<Func<TComponent, TNestedComponent>> property, Action<IComponentElementMapper<TNestedComponent>> mapping) where TNestedComponent : class
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(property);
+			var nestedComponentType = typeof(TNestedComponent);
+			var hbm = new HbmNestedCompositeElement { name = member.Name, @class = nestedComponentType.GetShortClassName(mapDoc) };
+			mapping(new ComponentNestedElementMapper<TNestedComponent>(mapDoc, hbm));
+			AddProperty(hbm);
+		}
+
+		public void ManyToOne<TProperty>(Expression<Func<TComponent, TProperty>> property) where TProperty : class
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(property);
+			ManyToOne(member);
+		}
+
+		#endregion
+	}
+
 }

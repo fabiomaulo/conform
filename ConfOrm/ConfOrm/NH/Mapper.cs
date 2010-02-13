@@ -309,7 +309,7 @@ namespace ConfOrm.NH
 				var parentColumnNameInChild = GetParentColumnNameInChild();
 				if (parentColumnNameInChild != null)
 				{
-					mapped.Inverse = true;
+					mapped.Inverse(true);
 					mapped.Key(k => k.Column(parentColumnNameInChild));
 				}
 				var cascadeToApply = domainInspector.ApplyCascade(ownerType, member, collectionElementType);

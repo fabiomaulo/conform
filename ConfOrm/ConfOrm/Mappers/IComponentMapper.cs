@@ -1,3 +1,5 @@
+using System;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace ConfOrm.Mappers
@@ -6,4 +8,10 @@ namespace ConfOrm.Mappers
 	{
 		void Parent(MemberInfo parent);
 	}
+
+	public interface IComponentMapper<TComponent> : IComponentMapper, IPropertyContainerMapper<TComponent> where TComponent : class
+	{
+		void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent) where TProperty : class;
+	}
+
 }

@@ -28,9 +28,9 @@ namespace ConfOrmTests.NH
 			var mapdoc = new HbmMapping();
 			var hbm = new HbmMap();
 			var mapper = new MapMapper(typeof(Animal), typeof(string), typeof(Animal), hbm, mapdoc);
-			mapper.Inverse = true;
+			mapper.Inverse(true);
 			hbm.Inverse.Should().Be.True();
-			mapper.Inverse = false;
+			mapper.Inverse(false);
 			hbm.Inverse.Should().Be.False();
 		}
 
@@ -40,9 +40,9 @@ namespace ConfOrmTests.NH
 			var mapdoc = new HbmMapping();
 			var hbm = new HbmMap();
 			var mapper = new MapMapper(typeof(Animal), typeof(string), typeof(Animal), hbm, mapdoc);
-			mapper.Mutable = true;
+			mapper.Mutable(true);
 			hbm.Mutable.Should().Be.True();
-			mapper.Mutable = false;
+			mapper.Mutable(false);
 			hbm.Mutable.Should().Be.False();
 		}
 
@@ -52,7 +52,7 @@ namespace ConfOrmTests.NH
 			var mapdoc = new HbmMapping();
 			var hbm = new HbmMap();
 			var mapper = new MapMapper(typeof(Animal), typeof(string), typeof(Animal), hbm, mapdoc);
-			mapper.Where = "c > 10";
+			mapper.Where("c > 10");
 			hbm.Where.Should().Be.EqualTo("c > 10");
 		}
 
@@ -62,7 +62,7 @@ namespace ConfOrmTests.NH
 			var mapdoc = new HbmMapping();
 			var hbm = new HbmMap();
 			var mapper = new MapMapper(typeof(Animal), typeof(string), typeof(Animal), hbm, mapdoc);
-			mapper.BatchSize = 10;
+			mapper.BatchSize(10);
 			hbm.BatchSize.Should().Be.EqualTo(10);
 		}
 
@@ -72,11 +72,11 @@ namespace ConfOrmTests.NH
 			var mapdoc = new HbmMapping();
 			var hbm = new HbmMap();
 			var mapper = new MapMapper(typeof(Animal), typeof(string), typeof(Animal), hbm, mapdoc);
-			mapper.Lazy = CollectionLazy.Extra;
+			mapper.Lazy(CollectionLazy.Extra);
 			hbm.Lazy.Should().Be.EqualTo(HbmCollectionLazy.Extra);
-			mapper.Lazy = CollectionLazy.NoLazy;
+			mapper.Lazy(CollectionLazy.NoLazy);
 			hbm.Lazy.Should().Be.EqualTo(HbmCollectionLazy.False);
-			mapper.Lazy = CollectionLazy.Lazy;
+			mapper.Lazy(CollectionLazy.Lazy);
 			hbm.Lazy.Should().Be.EqualTo(HbmCollectionLazy.True);
 		}
 
