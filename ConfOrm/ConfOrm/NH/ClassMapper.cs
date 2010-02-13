@@ -21,15 +21,18 @@ namespace ConfOrm.NH
 				classMapping.@abstract = true;
 				classMapping.abstractSpecified = true;
 			}
-			var idType = GetMemberType(idProperty);
-			id = new HbmId { name = idProperty.Name, type1 = idType.GetNhTypeName() };
-			classMapping.Item = id;
+			if (idProperty != null)
+			{
+				var idType = GetMemberType(idProperty);
+				id = new HbmId {name = idProperty.Name, type1 = idType.GetNhTypeName()};
+				classMapping.Item = id;
+			}
+			else
+			{
+				id = new HbmId();
+				classMapping.Item = id;				
+			}
 			mapDoc.Items = mapDoc.Items == null ? toAdd : mapDoc.Items.Concat(toAdd).ToArray();
-		}
-
-		public HbmId Id
-		{
-			get { return id; }
 		}
 
 		#region Overrides of AbstractPropertyContainerMapper
@@ -47,6 +50,19 @@ namespace ConfOrm.NH
 		#endregion
 
 		#region Implementation of IClassMapper
+
+		public void Id(Action<IIdMapper> idMapper)
+		{
+			idMapper(new IdMapper(id));
+		}
+
+		public void Id(MemberInfo idProperty, Action<IIdMapper> idMapper)
+		{
+			var idType = GetMemberType(idProperty);
+			id.name = idProperty.Name;
+			id.type1 = idType.GetNhTypeName();
+			idMapper(new IdMapper(id));
+		}
 
 		public void Discriminator()
 		{

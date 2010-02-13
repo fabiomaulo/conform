@@ -102,18 +102,20 @@ namespace ConfOrm.NH
 		{
 			var poidPropertyOrField = GetPoidPropertyOrField(type);
 			var classMapper = new ClassMapper(type, mapping, poidPropertyOrField);
-			var idMapper = new IdMapper(classMapper.Id);
-			var persistentIdStrategy = domainInspector.GetPersistentIdStrategy(poidPropertyOrField);
-			if(persistentIdStrategy != null)
-			{
-				idMapper.Generator(GetGenerator(persistentIdStrategy.Strategy), gm =>
+			classMapper.Id(idMapper =>
+				{
+					var persistentIdStrategy = domainInspector.GetPersistentIdStrategy(poidPropertyOrField);
+					if (persistentIdStrategy != null)
 					{
-						if(persistentIdStrategy.Params != null)
+						idMapper.Generator(GetGenerator(persistentIdStrategy.Strategy), gm =>
 						{
-							gm.Params(persistentIdStrategy.Params);
-						}
-					});
-			}
+							if (persistentIdStrategy.Params != null)
+							{
+								gm.Params(persistentIdStrategy.Params);
+							}
+						});
+					}
+				});
 			if (domainInspector.IsTablePerClassHierarchy(type))
 			{
 				classMapper.Discriminator();
