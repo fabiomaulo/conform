@@ -4,4 +4,8 @@ namespace ConfOrm.Mappers
 	{
 		
 	}
+
+	public interface IJoinedSubclassMapper<TEntity> : IJoinedSubclassMapper, IPropertyContainerMapper<TEntity> where TEntity : class
+	{
+	}
 }
