@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace ConfOrm.Patterns
 {
-	public class PropertyToFieldAccessorPattern : IPatternValueGetter<MemberInfo, StateAccessStrategy>
+	public class PropertyToFieldPattern : IPattern<MemberInfo>
 	{
 		#region Implementation of IPattern<MemberInfo>
 
@@ -22,15 +22,6 @@ namespace ConfOrm.Patterns
 			}
 
 			return false;
-		}
-
-		#endregion
-
-		#region Implementation of IPatternApplier<MemberInfo,StateAccessStrategy>
-
-		public StateAccessStrategy Get(MemberInfo element)
-		{
-			return StateAccessStrategy.Field;
 		}
 
 		#endregion

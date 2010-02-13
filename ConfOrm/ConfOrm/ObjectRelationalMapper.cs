@@ -42,7 +42,6 @@ namespace ConfOrm
 		private readonly List<IPatternValueGetter<Relation, Cascade>> cascadePatterns;
 		private readonly List<IPatternValueGetter<MemberInfo, IPersistentIdStrategy>> poidStrategyPatterns;
 		private readonly List<IPattern<MemberInfo>> persistentPropertyExclusionPatterns;
-		private readonly List<IPatternValueGetter<MemberInfo, StateAccessStrategy>> propertyAccessorPatterns;
 
 		#endregion
 
@@ -59,12 +58,6 @@ namespace ConfOrm
 			poidStrategyPatterns = new List<IPatternValueGetter<MemberInfo, IPersistentIdStrategy>>
 			                       	{new HighLowPoidPattern(), new GuidOptimizedPoidPattern()};
 			persistentPropertyExclusionPatterns = new List<IPattern<MemberInfo>> { new ReadOnlyPropertyPattern() };
-			propertyAccessorPatterns = new List<IPatternValueGetter<MemberInfo, StateAccessStrategy>>
-			                           	{
-			                           		new ReadOnlyPropertyAccessorPattern(),
-																		new NoSetterPropertyToFieldAccessorPattern(),
-																		new PropertyToFieldAccessorPattern()
-			                           	};
 		}
 
 		public ICollection<IPatternValueGetter<MemberInfo, IPersistentIdStrategy>> PoidStrategies
@@ -340,11 +333,6 @@ namespace ConfOrm
 		public bool IsPersistentProperty(MemberInfo role)
 		{
 			return !persistentPropertyExclusionPatterns.Match(role) || persistentProperty.Contains(role);
-		}
-
-		public StateAccessStrategy PersistentPropertyAccessStrategy(MemberInfo role)
-		{
-			return propertyAccessorPatterns.GetValueOfFirstMatch(role);
 		}
 
 		public bool IsSet(MemberInfo role)

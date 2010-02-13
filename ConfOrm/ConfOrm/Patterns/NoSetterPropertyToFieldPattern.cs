@@ -1,10 +1,9 @@
-using System;
 using System.Linq;
 using System.Reflection;
 
 namespace ConfOrm.Patterns
 {
-	public class NoSetterPropertyToFieldAccessorPattern : IPatternValueGetter<MemberInfo, StateAccessStrategy>
+	public class NoSetterPropertyToFieldPattern : IPattern<MemberInfo>
 	{
 		#region Implementation of IPattern<MemberInfo>
 
@@ -23,15 +22,6 @@ namespace ConfOrm.Patterns
 			}
 
 			return false;
-		}
-
-		#endregion
-
-		#region Implementation of IPatternApplier<MemberInfo,StateAccessStrategy>
-
-		public StateAccessStrategy Get(MemberInfo element)
-		{
-			return StateAccessStrategy.FieldOnSet;
 		}
 
 		#endregion

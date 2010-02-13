@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using ConfOrm.Mappers;
+using ConfOrm.Patterns;
 using NHibernate.Cfg.MappingSchema;
 
 namespace ConfOrm.NH
@@ -11,6 +13,8 @@ namespace ConfOrm.NH
 	{
 		internal const BindingFlags PropertiesBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
 		private readonly IDomainInspector domainInspector;
+		private readonly List<IPatternApplier<MemberInfo, IPropertyMapper>> propertyPatternsAppliers;
+		private readonly Dictionary<MemberInfo, Action<IPropertyMapper>> propertyCustomizer = new Dictionary<MemberInfo, Action<IPropertyMapper>>();
 
 		public Mapper(IDomainInspector domainInspector)
 		{
@@ -19,6 +23,19 @@ namespace ConfOrm.NH
 				throw new ArgumentNullException("domainInspector");
 			}
 			this.domainInspector = domainInspector;
+
+			propertyPatternsAppliers = new List<IPatternApplier<MemberInfo, IPropertyMapper>>
+			                           	{
+			                           		new ReadOnlyPropertyAccessorApplier(),
+			                           		new NoSetterPropertyToFieldAccessorApplier(),
+			                           		new PropertyToFieldAccessorApplier()
+			                           	};
+		}
+
+		public void Property<TEntity>(Expression<Func<TEntity, object>> propertyGetter, Action<IPropertyMapper> mapper)
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
+			propertyCustomizer.Add(member, mapper);
 		}
 
 		public HbmMapping CompileMappingFor(IEnumerable<Type> types)
@@ -216,44 +233,17 @@ namespace ConfOrm.NH
 				}
 				else
 				{
-					propertiesContainer.Property(member, x =>
+					propertiesContainer.Property(member, propertyMapper =>
 						{
-							var propertyInfo = member as PropertyInfo;
-							if (propertyInfo != null)
+							propertyPatternsAppliers.ApplyAllMatchs(member, propertyMapper);
+							Action<IPropertyMapper> actions;
+							if(propertyCustomizer.TryGetValue(member, out actions))
 							{
-								Accessor accessor = GetAccessor(propertyInfo);
-								if (accessor != Accessor.Property)
-								{
-									x.Access(accessor);
-								}
+								actions(propertyMapper);
 							}
 						});
 				}
 			}
-		}
-
-		private Accessor GetAccessor(PropertyInfo property)
-		{
-			var persistentPropertyAccessStrategy = domainInspector.PersistentPropertyAccessStrategy(property);
-			if(persistentPropertyAccessStrategy != StateAccessStrategy.Property)
-			{
-				switch (persistentPropertyAccessStrategy)
-				{
-					case StateAccessStrategy.Field:
-						return Accessor.Field;
-					case StateAccessStrategy.FieldOnSet:
-						return Accessor.NoSetter;
-					case StateAccessStrategy.ReadOnlyProperty:
-						return Accessor.ReadOnly;
-					default:
-						throw new ArgumentOutOfRangeException();
-				}
-			}
-			if (!property.CanWrite)
-			{
-				return Accessor.NoSetter;
-			}
-			return Accessor.Property;
 		}
 
 		private Type GetCollectionElementTypeOrThrow(Type type, PropertyInfo property, Type propertyType)

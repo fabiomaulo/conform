@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Reflection;
-using ConfOrm;
+using ConfOrm.Mappers;
 using ConfOrm.Patterns;
+using Moq;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -49,7 +50,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void WhenFieldNoMatch()
 		{
-			var pattern = new PropertyToFieldAccessorPattern();
+			var pattern = new PropertyToFieldPattern();
 			var member = typeof (MyClass).GetField("aField",
 			                                       BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
 			pattern.Match(member).Should().Be.False();
@@ -58,7 +59,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void WhenAutoPropertyNoMatch()
 		{
-			var pattern = new PropertyToFieldAccessorPattern();
+			var pattern = new PropertyToFieldPattern();
 			var member = typeof(MyClass).GetProperty("AProp");
 			pattern.Match(member).Should().Be.False();
 		}
@@ -66,7 +67,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void WhenPropertyWithSameBackFieldNoMatch()
 		{
-			var pattern = new PropertyToFieldAccessorPattern();
+			var pattern = new PropertyToFieldPattern();
 			var member = typeof(MyClass).GetProperty("SameTypeOfBackField");
 			pattern.Match(member).Should().Be.False();
 		}
@@ -74,7 +75,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void WhenReadOnlyPropertyWithSameBackFieldNoMatch()
 		{
-			var pattern = new PropertyToFieldAccessorPattern();
+			var pattern = new PropertyToFieldPattern();
 			var member = typeof(MyClass).GetProperty("ReadOnlyWithSameBackField");
 			pattern.Match(member).Should().Be.False();
 		}
@@ -82,7 +83,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void WhenPropertyWithoutFieldNoMatch()
 		{
-			var pattern = new PropertyToFieldAccessorPattern();
+			var pattern = new PropertyToFieldPattern();
 			var member = typeof(MyClass).GetProperty("PropertyWithoutField");
 			pattern.Match(member).Should().Be.False();
 		}
@@ -90,7 +91,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void WhenPropertyWithDifferentBackFieldMatch()
 		{
-			var pattern = new PropertyToFieldAccessorPattern();
+			var pattern = new PropertyToFieldPattern();
 			var member = typeof(MyClass).GetProperty("WithDifferentBackField");
 			pattern.Match(member).Should().Be.True();
 		}
@@ -98,7 +99,7 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void WhenSetOnlyPropertyNoMatch()
 		{
-			var pattern = new PropertyToFieldAccessorPattern();
+			var pattern = new PropertyToFieldPattern();
 			var member = typeof(MyClass).GetProperty("SetOnlyProperty");
 			pattern.Match(member).Should().Be.False();
 		}
@@ -106,8 +107,10 @@ namespace ConfOrmTests.Patterns
 		[Test]
 		public void ApplierAlwaysField()
 		{
-			var pattern = new PropertyToFieldAccessorPattern();
-			pattern.Get(null).Should().Be(StateAccessStrategy.Field);
+			var mapper = new Mock<IPropertyMapper>();
+			var pattern = new PropertyToFieldAccessorApplier();
+			pattern.Apply(null, mapper.Object);
+			mapper.Verify(x => x.Access(It.Is<Accessor>(a => a == Accessor.Field)));
 		}
 	}
 }
