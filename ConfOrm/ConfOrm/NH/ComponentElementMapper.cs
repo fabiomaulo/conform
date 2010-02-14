@@ -47,9 +47,10 @@ namespace ConfOrm.NH
 			AddProperty(hbm);
 		}
 
-		public void ManyToOne(MemberInfo property)
+		public void ManyToOne(MemberInfo property, Action<IManyToOneMapper> mapping)
 		{
 			var hbm = new HbmManyToOne { name = property.Name };
+			mapping(new ManyToOneMapper(hbm));
 			AddProperty(hbm);
 		}
 
@@ -93,10 +94,10 @@ namespace ConfOrm.NH
 			AddProperty(hbm);
 		}
 
-		public void ManyToOne<TProperty>(Expression<Func<TComponent, TProperty>> property) where TProperty : class
+		public void ManyToOne<TProperty>(Expression<Func<TComponent, TProperty>> property, Action<IManyToOneMapper> mapping) where TProperty : class
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(property);
-			ManyToOne(member);
+			ManyToOne(member, mapping);
 		}
 
 		#endregion

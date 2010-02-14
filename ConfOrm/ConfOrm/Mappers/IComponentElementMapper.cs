@@ -12,7 +12,7 @@ namespace ConfOrm.Mappers
 
 		void Component(MemberInfo property, Action<IComponentElementMapper> mapping);
 
-		void ManyToOne(MemberInfo property);
+		void ManyToOne(MemberInfo property, Action<IManyToOneMapper> mapping);
 	}
 
 	public interface IComponentElementMapper<TComponent> where TComponent : class
@@ -25,6 +25,6 @@ namespace ConfOrm.Mappers
 																		 Action<IComponentElementMapper<TNestedComponent>> mapping)
 			where TNestedComponent : class;
 
-		void ManyToOne<TProperty>(Expression<Func<TComponent, TProperty>> property) where TProperty : class;
+		void ManyToOne<TProperty>(Expression<Func<TComponent, TProperty>> property, Action<IManyToOneMapper> mapping) where TProperty : class;
 	}
 }

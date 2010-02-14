@@ -396,12 +396,14 @@ namespace ConfOrm.NH
 			private readonly Type ownerType;
 			private readonly Type componentType;
 			private readonly IDomainInspector domainInspector;
+			private readonly ICustomizersHolder customizersHolder;
 
-			public ComponentRelationMapper(Type ownerType, Type componentType, IDomainInspector domainInspector)
+			public ComponentRelationMapper(Type ownerType, Type componentType, IDomainInspector domainInspector, ICustomizersHolder customizersHolder)
 			{
 				this.ownerType = ownerType;
 				this.componentType = componentType;
 				this.domainInspector = domainInspector;
+				this.customizersHolder = customizersHolder;
 			}
 
 			#region Implementation of ICollectionElementRelationMapper
@@ -438,10 +440,14 @@ namespace ConfOrm.NH
 			{
 				foreach (var property in persistentProperties)
 				{
+					var member = property;
 					var propertyType = property.GetPropertyOrFieldType();
 					if (domainInspector.IsManyToOne(type, propertyType))
 					{
-						propertiesContainer.ManyToOne(property);
+						propertiesContainer.ManyToOne(property, manyToOneMapper =>
+							{
+								InvokeCustomizer(customizersHolder.ManyToOneCustomizers, member, manyToOneMapper);
+							});
 					}
 					else if (domainInspector.IsComponent(propertyType))
 					{
@@ -462,8 +468,20 @@ namespace ConfOrm.NH
 					}
 					else
 					{
-						propertiesContainer.Property(property, x => { });
+						propertiesContainer.Property(property, propertyMapper =>
+							{
+								InvokeCustomizer(customizersHolder.PropertyCustomizers, member, propertyMapper);
+							});
 					}
+				}
+			}
+
+			private void InvokeCustomizer<TSubject>(IDictionary<MemberInfo, Action<TSubject>> customizers, MemberInfo member, TSubject customizable)
+			{
+				Action<TSubject> action;
+				if (customizers.TryGetValue(member, out action))
+				{
+					action(customizable);
 				}
 			}
 		}
@@ -481,7 +499,7 @@ namespace ConfOrm.NH
 			}
 			else if (domainInspector.IsComponent(collectionElementType))
 			{
-				return new ComponentRelationMapper(ownerType, collectionElementType, domainInspector);
+				return new ComponentRelationMapper(ownerType, collectionElementType, domainInspector, this);
 			}
 			return new ElementRelationMapper();
 		}
