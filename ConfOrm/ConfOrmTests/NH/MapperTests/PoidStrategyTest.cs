@@ -45,6 +45,111 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
 			return orm;
 		}
+
+		[Test]
+		public void MapGeneratorUsingHighLow()
+		{
+			Mock<IDomainInspector> orm = GetBaseMock<EntityInt>();
+
+			IPersistentIdStrategy idStrategy = new PoidStrategyStub { Strategy = PoIdStrategy.HighLow };
+			orm.Setup(m => m.GetPersistentIdStrategy(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(idStrategy);
+
+			var mapper = new Mapper(orm.Object);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(EntityInt) });
+
+			HbmClass rc = mapping.RootClasses.Single();
+			rc.Id.generator.@class.Should().Be.EqualTo("hilo");
+		}
+
+		[Test]
+		public void MapGeneratorUsingGuid()
+		{
+			Mock<IDomainInspector> orm = GetBaseMock<EntityInt>();
+
+			IPersistentIdStrategy idStrategy = new PoidStrategyStub { Strategy = PoIdStrategy.Guid };
+			orm.Setup(m => m.GetPersistentIdStrategy(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(idStrategy);
+
+			var mapper = new Mapper(orm.Object);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(EntityInt) });
+
+			HbmClass rc = mapping.RootClasses.Single();
+			rc.Id.generator.@class.Should().Be.EqualTo("guid");
+		}
+
+		[Test]
+		public void MapGeneratorUsingGuidComb()
+		{
+			Mock<IDomainInspector> orm = GetBaseMock<EntityInt>();
+
+			IPersistentIdStrategy idStrategy = new PoidStrategyStub { Strategy = PoIdStrategy.GuidOptimized };
+			orm.Setup(m => m.GetPersistentIdStrategy(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(idStrategy);
+
+			var mapper = new Mapper(orm.Object);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(EntityInt) });
+
+			HbmClass rc = mapping.RootClasses.Single();
+			rc.Id.generator.@class.Should().Be.EqualTo("guid.comb");
+		}
+
+		[Test]
+		public void MapGeneratorUsingSequence()
+		{
+			Mock<IDomainInspector> orm = GetBaseMock<EntityInt>();
+
+			IPersistentIdStrategy idStrategy = new PoidStrategyStub { Strategy = PoIdStrategy.Sequence };
+			orm.Setup(m => m.GetPersistentIdStrategy(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(idStrategy);
+
+			var mapper = new Mapper(orm.Object);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(EntityInt) });
+
+			HbmClass rc = mapping.RootClasses.Single();
+			rc.Id.generator.@class.Should().Be.EqualTo("sequence");
+		}
+
+		[Test]
+		public void MapGeneratorUsingIdentity()
+		{
+			Mock<IDomainInspector> orm = GetBaseMock<EntityInt>();
+
+			IPersistentIdStrategy idStrategy = new PoidStrategyStub { Strategy = PoIdStrategy.Identity };
+			orm.Setup(m => m.GetPersistentIdStrategy(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(idStrategy);
+
+			var mapper = new Mapper(orm.Object);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(EntityInt) });
+
+			HbmClass rc = mapping.RootClasses.Single();
+			rc.Id.generator.@class.Should().Be.EqualTo("identity");
+		}
+
+		[Test]
+		public void MapGeneratorUsingNative()
+		{
+			Mock<IDomainInspector> orm = GetBaseMock<EntityInt>();
+
+			IPersistentIdStrategy idStrategy = new PoidStrategyStub { Strategy = PoIdStrategy.Native };
+			orm.Setup(m => m.GetPersistentIdStrategy(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(idStrategy);
+
+			var mapper = new Mapper(orm.Object);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(EntityInt) });
+
+			HbmClass rc = mapping.RootClasses.Single();
+			rc.Id.generator.@class.Should().Be.EqualTo("native");
+		}
+
+		[Test]
+		public void MapGeneratorUsingAssigned()
+		{
+			Mock<IDomainInspector> orm = GetBaseMock<EntityInt>();
+
+			IPersistentIdStrategy idStrategy = new PoidStrategyStub { Strategy = PoIdStrategy.Assigned };
+			orm.Setup(m => m.GetPersistentIdStrategy(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(idStrategy);
+
+			var mapper = new Mapper(orm.Object);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(EntityInt) });
+
+			HbmClass rc = mapping.RootClasses.Single();
+			rc.Id.generator.Should().Be.Null();
+		}
 	}
 
 	public class PoidStrategyStub : IPersistentIdStrategy

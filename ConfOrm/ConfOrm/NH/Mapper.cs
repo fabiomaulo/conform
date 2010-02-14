@@ -107,7 +107,7 @@ namespace ConfOrm.NH
 			classMapper.Id(idMapper =>
 				{
 					var persistentIdStrategy = domainInspector.GetPersistentIdStrategy(poidPropertyOrField);
-					if (persistentIdStrategy != null)
+					if (persistentIdStrategy != null && persistentIdStrategy.Strategy != PoIdStrategy.Assigned)
 					{
 						idMapper.Generator(GetGenerator(persistentIdStrategy.Strategy), gm =>
 						{
@@ -132,13 +132,13 @@ namespace ConfOrm.NH
 				case PoIdStrategy.HighLow:
 					return Generators.HighLow;
 				case PoIdStrategy.Sequence:
-					return Generators.Native;
+					return Generators.Sequence;
 				case PoIdStrategy.Guid:
-					return Generators.Native;
+					return Generators.Guid;
 				case PoIdStrategy.GuidOptimized:
-					return Generators.Native;
+					return Generators.GuidComb;
 				case PoIdStrategy.Identity:
-					return Generators.Native;
+					return Generators.Identity;
 				case PoIdStrategy.Native:
 					return Generators.Native;
 				default:

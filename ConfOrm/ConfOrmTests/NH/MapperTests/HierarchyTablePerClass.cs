@@ -79,7 +79,6 @@ namespace ConfOrmTests.NH.MapperTests
 			mapping.RootClasses.Should().Have.Count.EqualTo(1);
 			HbmClass rc = mapping.RootClasses.Single();
 			rc.Id.Should().Not.Be.Null();
-			rc.Id.generator.Should().Not.Be.Null();
 			rc.Properties.Should().Have.Count.EqualTo(1);
 			rc.Properties.First().Name.Should().Be.EqualTo("Name");
 		}
@@ -91,6 +90,10 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.TablePerClass<EntitySimple>();
 			HbmMapping mapping = GetMapping(orm);
 			VerifyEntitySimpleMapping(mapping);
+
+			HbmClass rc = mapping.RootClasses.Single();
+			rc.Id.generator.Should("The ORM should assign a default generator").Not.Be.Null();
+
 			VerifyHinheritedMapping(mapping);
 		}
 	}

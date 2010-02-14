@@ -11,7 +11,6 @@ namespace ConfOrm.NH
 		public IdMapper(HbmId hbmId)
 		{
 			this.hbmId = hbmId;
-			Generator(Generators.Native);
 		}
 
 		#region Implementation of IIdMapper
@@ -30,6 +29,18 @@ namespace ConfOrm.NH
 					break;
 				case Generators.HighLow:
 					new HighLowGenerator(hbmId);
+					break;
+				case Generators.Guid:
+					new GuidGenerator(hbmId);
+					break;
+				case Generators.GuidComb:
+					new GuidCombGenerator(hbmId);
+					break;
+				case Generators.Sequence:
+					new SequenceGenerator(hbmId);
+					break;
+				case Generators.Identity:
+					new IdentityGenerator(hbmId);
 					break;
 				default:
 					throw new ArgumentOutOfRangeException("generator");
