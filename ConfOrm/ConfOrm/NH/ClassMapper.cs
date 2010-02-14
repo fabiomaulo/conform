@@ -8,12 +8,12 @@ namespace ConfOrm.NH
 {
 	public class ClassMapper: AbstractPropertyContainerMapper, IClassMapper
 	{
-		private readonly HbmClass classMapping = new HbmClass();
-		private readonly HbmId id;
+		private readonly HbmClass classMapping;
 
 		public ClassMapper(Type rootClass, HbmMapping mapDoc, MemberInfo idProperty)
 			: base(rootClass, mapDoc)
 		{
+			classMapping = new HbmClass();
 			var toAdd = new[] { classMapping };
 			classMapping.name = rootClass.GetShortClassName(mapDoc);
 			if(rootClass.IsAbstract)
@@ -24,13 +24,11 @@ namespace ConfOrm.NH
 			if (idProperty != null)
 			{
 				var idType = GetMemberType(idProperty);
-				id = new HbmId {name = idProperty.Name, type1 = idType.GetNhTypeName()};
-				classMapping.Item = id;
+				classMapping.Item = new HbmId {name = idProperty.Name, type1 = idType.GetNhTypeName()};
 			}
 			else
 			{
-				id = new HbmId();
-				classMapping.Item = id;				
+				classMapping.Item = new HbmId();				
 			}
 			mapDoc.Items = mapDoc.Items == null ? toAdd : mapDoc.Items.Concat(toAdd).ToArray();
 		}
@@ -53,12 +51,13 @@ namespace ConfOrm.NH
 
 		public void Id(Action<IIdMapper> idMapper)
 		{
-			idMapper(new IdMapper(id));
+			idMapper(new IdMapper((HbmId)classMapping.Item));
 		}
 
 		public void Id(MemberInfo idProperty, Action<IIdMapper> idMapper)
 		{
 			var idType = GetMemberType(idProperty);
+			var id = (HbmId)classMapping.Item;
 			id.name = idProperty.Name;
 			id.type1 = idType.GetNhTypeName();
 			idMapper(new IdMapper(id));
@@ -66,7 +65,10 @@ namespace ConfOrm.NH
 
 		public void Discriminator()
 		{
-			classMapping.discriminator = new HbmDiscriminator();
+			if (classMapping.discriminator == null)
+			{
+				classMapping.discriminator = new HbmDiscriminator();
+			}
 		}
 
 		#endregion

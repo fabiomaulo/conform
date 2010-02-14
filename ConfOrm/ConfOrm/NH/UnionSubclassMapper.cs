@@ -7,11 +7,12 @@ namespace ConfOrm.NH
 {
 	public class UnionSubclassMapper : AbstractPropertyContainerMapper, IUnionSubclassMapper
 	{
-		private readonly HbmUnionSubclass classMapping = new HbmUnionSubclass();
+		private readonly HbmUnionSubclass classMapping;
 
 		public UnionSubclassMapper(Type subClass, HbmMapping mapDoc)
 			: base(subClass, mapDoc)
 		{
+			classMapping = new HbmUnionSubclass();
 			var toAdd = new[] { classMapping };
 			classMapping.name = subClass.GetShortClassName(mapDoc);
 			classMapping.extends = subClass.BaseType.GetShortClassName(mapDoc);
