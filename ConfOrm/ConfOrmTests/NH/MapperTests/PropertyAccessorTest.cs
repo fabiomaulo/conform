@@ -86,7 +86,7 @@ namespace ConfOrmTests.NH.MapperTests
 		public void WhenExplicitFieldAccessThenUseAccessField()
 		{
 			var mapper = MyClassScenario();
-			mapper.Property<MyClass>(mc => mc.ReadOnlyWithField, pm => pm.Access(Accessor.Field));
+			mapper.Customize<MyClass>(cm=> cm.Property(mc => mc.ReadOnlyWithField, pm => pm.Access(Accessor.Field)));
 			var mapping = mapper.CompileMappingFor(new[] { typeof(MyClass) });
 
 			HbmClass rc = mapping.RootClasses.Single();
@@ -97,7 +97,7 @@ namespace ConfOrmTests.NH.MapperTests
 		public void WhenExplicitReadOnlyAccessThenUseAccessReadOnly()
 		{
 			var mapper = MyClassScenario();
-			mapper.Property<MyClass>(mc => mc.ReadOnlyWithField, pm => pm.Access(Accessor.ReadOnly));
+			mapper.Customize<MyClass>(cm => cm.Property(mc => mc.ReadOnlyWithField, pm => pm.Access(Accessor.ReadOnly)));
 			var mapping = mapper.CompileMappingFor(new[] { typeof(MyClass) });
 
 			HbmClass rc = mapping.RootClasses.Single();

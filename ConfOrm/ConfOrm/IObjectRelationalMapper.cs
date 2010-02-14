@@ -23,7 +23,6 @@ namespace ConfOrm
 		void Array<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 		void Dictionary<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 		void Cascade<TFromEntity, TToEntity>(Cascade cascadeOptions);
-		void Cascade<TFromEntity, TToEntity>(Expression<Func<TFromEntity, object>> propertyGetter, Cascade cascadeOptions);
 		void PersistentProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 	}
 }

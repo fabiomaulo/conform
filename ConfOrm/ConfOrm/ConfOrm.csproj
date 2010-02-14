@@ -80,6 +80,8 @@
     <Compile Include="NH\ComponentNestedElementMapper.cs" />
     <Compile Include="NH\GeneratorMapper.cs" />
     <Compile Include="NH\GeneratorsMappers.cs" />
+    <Compile Include="NH\ICustomizersHolder.cs" />
+    <Compile Include="NH\IPersistentClassCustomizer.cs" />
     <Compile Include="NH\ManyToOneMapper.cs" />
     <Compile Include="NH\MapMapper.cs" />
     <Compile Include="MappingException.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="NH\ListMapper.cs" />
     <Compile Include="NH\Mapper.cs" />
     <Compile Include="NH\OneToOneMapper.cs" />
+    <Compile Include="NH\PersistentClassCustomizer.cs" />
     <Compile Include="NH\PropertyMapper.cs" />
     <Compile Include="NH\SetMapper.cs" />
     <Compile Include="NH\SubclassMapper.cs" />

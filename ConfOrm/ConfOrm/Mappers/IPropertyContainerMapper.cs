@@ -38,16 +38,16 @@ namespace ConfOrm.Mappers
 		void OneToOne<TProperty>(Expression<Func<TEntity, TProperty>> property, Action<IOneToOneMapper> mapping) where TProperty : class;
 
 		void Set<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
-											 Action<ICollectionPropertiesMapper<TEntity, TElement>> collectionMapping,
+											 Action<ICollectionPropertiesMapper<TElement>> collectionMapping,
 											 Action<ICollectionElementRelation> mapping);
 		void Bag<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
-											 Action<ICollectionPropertiesMapper<TEntity, TElement>> collectionMapping,
+											 Action<ICollectionPropertiesMapper<TElement>> collectionMapping,
 											 Action<ICollectionElementRelation> mapping);
 		void List<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
-											 Action<ICollectionPropertiesMapper<TEntity, TElement>> collectionMapping,
+											 Action<ICollectionPropertiesMapper<TElement>> collectionMapping,
 											 Action<ICollectionElementRelation> mapping);
 		void Map<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
-											 Action<ICollectionPropertiesMapper<TEntity, TElement>> collectionMapping,
+											 Action<ICollectionPropertiesMapper<TElement>> collectionMapping,
 											 Action<ICollectionElementRelation> mapping);
 	}
 }

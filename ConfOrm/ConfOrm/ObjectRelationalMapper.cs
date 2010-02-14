@@ -201,12 +201,6 @@ namespace ConfOrm
 			cascade.Add(new Relation(typeof(TFromEntity), typeof(TToEntity)), cascadeOptions);
 		}
 
-		public void Cascade<TFromEntity, TToEntity>(Expression<Func<TFromEntity, object>> propertyGetter, Cascade cascadeOptions)
-		{
-			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
-			cascade.Add(new RelationOn(typeof(TFromEntity), member, typeof(TToEntity)), cascadeOptions);
-		}
-
 		public void PersistentProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
@@ -301,13 +295,7 @@ namespace ConfOrm
 
 		public Cascade ApplyCascade(Type from, MemberInfo on, Type to)
 		{
-			Cascade resultOnProperty;
 			var relationOn = new RelationOn(from, on, to);
-			if(cascade.TryGetValue(relationOn, out resultOnProperty))
-			{
-				// Has Explicit Cascade On Property
-				return resultOnProperty;
-			}
 
 			Cascade resultByClasses;
 			var relation = new Relation(from, to);

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using ConfOrm.Mappers;
 using ConfOrm.Patterns;
@@ -9,12 +8,15 @@ using NHibernate.Cfg.MappingSchema;
 
 namespace ConfOrm.NH
 {
-	public class Mapper
+	public class Mapper : ICustomizersHolder
 	{
 		internal const BindingFlags PropertiesBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
 		private readonly IDomainInspector domainInspector;
 		private readonly List<IPatternApplier<MemberInfo, IPropertyMapper>> propertyPatternsAppliers;
-		private readonly Dictionary<MemberInfo, Action<IPropertyMapper>> propertyCustomizer = new Dictionary<MemberInfo, Action<IPropertyMapper>>();
+		private readonly Dictionary<MemberInfo, Action<IPropertyMapper>> propertyCustomizers = new Dictionary<MemberInfo, Action<IPropertyMapper>>();
+		private readonly Dictionary<MemberInfo, Action<IManyToOneMapper>> manyToOneCustomizers = new Dictionary<MemberInfo, Action<IManyToOneMapper>>();
+		private readonly Dictionary<MemberInfo, Action<IOneToOneMapper>> oneToOneCustomizers = new Dictionary<MemberInfo, Action<IOneToOneMapper>>();
+		private readonly Dictionary<MemberInfo, Action<ICollectionPropertiesMapper>> collectionCustomizers = new Dictionary<MemberInfo, Action<ICollectionPropertiesMapper>>();
 
 		public Mapper(IDomainInspector domainInspector)
 		{
@@ -32,10 +34,10 @@ namespace ConfOrm.NH
 			                           	};
 		}
 
-		public void Property<TEntity>(Expression<Func<TEntity, object>> propertyGetter, Action<IPropertyMapper> mapper)
+		public void Customize<TPersistent>(Action<IPersistentClassCustomizer<TPersistent>> customizeAction ) where TPersistent: class
 		{
-			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
-			propertyCustomizer.Add(member, mapper);
+			var customizer = new PersistentClassCustomizer<TPersistent>(this);
+			customizeAction(customizer);
 		}
 
 		public HbmMapping CompileMappingFor(IEnumerable<Type> types)
@@ -163,12 +165,17 @@ namespace ConfOrm.NH
 				var propertyType = property.GetPropertyOrFieldType();
 				if(domainInspector.IsManyToOne(propertiesContainerType, propertyType))
 				{
-					propertiesContainer.ManyToOne(property, x =>
+					propertiesContainer.ManyToOne(property, manyToOneMapper =>
 						{
 							var cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
 							if(cascade != Cascade.None)
 							{
-								x.Cascade(cascade);
+								manyToOneMapper.Cascade(cascade);
+							}
+							Action<IManyToOneMapper> actions;
+							if (manyToOneCustomizers.TryGetValue(member, out actions))
+							{
+								actions(manyToOneMapper);
 							}
 						});
 				}
@@ -239,7 +246,7 @@ namespace ConfOrm.NH
 						{
 							propertyPatternsAppliers.ApplyAllMatchs(member, propertyMapper);
 							Action<IPropertyMapper> actions;
-							if(propertyCustomizer.TryGetValue(member, out actions))
+							if(propertyCustomizers.TryGetValue(member, out actions))
 							{
 								actions(propertyMapper);
 							}
@@ -485,5 +492,29 @@ namespace ConfOrm.NH
 				yield return mapping;
 			}
 		}
+
+		#region Implementation of ICustomizersHolder
+
+		public IDictionary<MemberInfo, Action<IPropertyMapper>> PropertyCustomizers
+		{
+			get { return propertyCustomizers; }
+		}
+
+		public IDictionary<MemberInfo, Action<IManyToOneMapper>> ManyToOneCustomizers
+		{
+			get { return manyToOneCustomizers; }
+		}
+
+		public IDictionary<MemberInfo, Action<IOneToOneMapper>> OneToOneCustomizers
+		{
+			get { return oneToOneCustomizers; }
+		}
+
+		public IDictionary<MemberInfo, Action<ICollectionPropertiesMapper>> CollectionCustomizers
+		{
+			get { return collectionCustomizers; }
+		}
+
+		#endregion
 	}
 }

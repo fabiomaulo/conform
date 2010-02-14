@@ -17,7 +17,7 @@ namespace ConfOrm.Mappers
 		void Cascade(Cascade cascadeStyle);
 	}
 
-	public interface ICollectionPropertiesMapper<TEntity, TElement> : ICollectionPropertiesMapper where TEntity : class
+	public interface ICollectionPropertiesMapper<TElement> : ICollectionPropertiesMapper
 	{
 		void OrderBy<TProperty>(Expression<Func<TElement, TProperty>> property);
 	}

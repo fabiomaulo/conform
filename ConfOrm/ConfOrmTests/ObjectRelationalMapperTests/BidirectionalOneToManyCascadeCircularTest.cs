@@ -35,15 +35,6 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		}
 
 		[Test]
-		public void WhenExplicitRequiredApplyCascadeOnParent()
-		{
-			var orm = new ObjectRelationalMapper();
-			orm.TablePerClass<Node>();
-			orm.Cascade<Node, Node>(n => n.Parent, Cascade.Persist);
-			orm.ApplyCascade(typeof(Node), parentProperty, typeof(Node)).Should().Be.EqualTo(Cascade.Persist);
-		}
-
-		[Test]
 		public void WhenExplicitRequiredByClassApplyCascade()
 		{
 			var orm = new ObjectRelationalMapper();
