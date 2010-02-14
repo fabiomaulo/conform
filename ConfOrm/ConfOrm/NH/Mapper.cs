@@ -172,29 +172,30 @@ namespace ConfOrm.NH
 							{
 								manyToOneMapper.Cascade(cascade);
 							}
-							Action<IManyToOneMapper> actions;
-							if (manyToOneCustomizers.TryGetValue(member, out actions))
-							{
-								actions(manyToOneMapper);
-							}
+							InvokeCustomizer(manyToOneCustomizers, member, manyToOneMapper);
 						});
 				}
 				else if (domainInspector.IsOneToOne(propertiesContainerType, propertyType))
 				{
-					propertiesContainer.OneToOne(property, x =>
+					propertiesContainer.OneToOne(property, oneToOneMapper =>
 						{
 							var cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
 							if (cascade != Cascade.None)
 							{
-								x.Cascade(cascade);
+								oneToOneMapper.Cascade(cascade);
 							}
+							InvokeCustomizer(oneToOneCustomizers, member, oneToOneMapper);
 						});
 				}
 				else if (domainInspector.IsSet(property))
 				{
 					Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, property, propertyType);
 					var cert = DetermineCollectionElementRelationType(property, collectionElementType);
-					propertiesContainer.Set(property, cert.MapCollectionProperties, cert.Map);
+					propertiesContainer.Set(property, collectionPropertiesMapper=>
+						{
+							cert.MapCollectionProperties(collectionPropertiesMapper);
+							InvokeCustomizer(collectionCustomizers, member, collectionPropertiesMapper);
+						}, cert.Map);
 				}
 				else if (domainInspector.IsDictionary(property))
 				{
@@ -207,7 +208,11 @@ namespace ConfOrm.NH
 					Type dictionaryValueType = propertyType.DetermineDictionaryValueType();
 					// TODO : determine RelationType for Key
 					var cert = DetermineCollectionElementRelationType(property, dictionaryValueType);
-					propertiesContainer.Map(property, cert.MapCollectionProperties, cert.Map);
+					propertiesContainer.Map(property, collectionPropertiesMapper =>
+						{
+							cert.MapCollectionProperties(collectionPropertiesMapper);
+							InvokeCustomizer(collectionCustomizers, member, collectionPropertiesMapper);
+						}, cert.Map);
 				}
 				else if (domainInspector.IsArray(property))
 				{
@@ -216,13 +221,21 @@ namespace ConfOrm.NH
 				{
 					Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, property, propertyType);
 					var cert = DetermineCollectionElementRelationType(property, collectionElementType);
-					propertiesContainer.List(property, cert.MapCollectionProperties, cert.Map);
+					propertiesContainer.List(property, collectionPropertiesMapper =>
+					{
+						cert.MapCollectionProperties(collectionPropertiesMapper);
+						InvokeCustomizer(collectionCustomizers, member, collectionPropertiesMapper);
+					}, cert.Map);
 				}
 				else if (domainInspector.IsBag(property))
 				{
 					Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, property, propertyType);
 					var cert = DetermineCollectionElementRelationType(property, collectionElementType);
-					propertiesContainer.Bag(property, cert.MapCollectionProperties, cert.Map);
+					propertiesContainer.Bag(property, collectionPropertiesMapper =>
+					{
+						cert.MapCollectionProperties(collectionPropertiesMapper);
+						InvokeCustomizer(collectionCustomizers, member, collectionPropertiesMapper);
+					}, cert.Map);
 				}
 				else if (domainInspector.IsComponent(propertyType))
 				{
@@ -245,13 +258,18 @@ namespace ConfOrm.NH
 					propertiesContainer.Property(member, propertyMapper =>
 						{
 							propertyPatternsAppliers.ApplyAllMatchs(member, propertyMapper);
-							Action<IPropertyMapper> actions;
-							if(propertyCustomizers.TryGetValue(member, out actions))
-							{
-								actions(propertyMapper);
-							}
+							InvokeCustomizer(propertyCustomizers, member, propertyMapper);
 						});
 				}
+			}
+		}
+
+		private void InvokeCustomizer<TSubject>(IDictionary<MemberInfo, Action<TSubject>> customizers, MemberInfo member, TSubject customizable)
+		{
+			Action<TSubject> action;
+			if (customizers.TryGetValue(member, out action))
+			{
+				action(customizable);
 			}
 		}
 
