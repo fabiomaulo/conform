@@ -27,6 +27,7 @@ namespace ConfOrm
 		private readonly HashSet<Type> components = new HashSet<Type>();
 		private readonly Dictionary<Relation, Cascade> cascade = new Dictionary<Relation, Cascade>();
 		private readonly HashSet<MemberInfo> persistentProperty = new HashSet<MemberInfo>();
+		private readonly HashSet<Type> complex = new HashSet<Type>();
 
 		#endregion
 
@@ -148,6 +149,12 @@ namespace ConfOrm
 			components.Add(type);
 		}
 
+		public void Complex<TComplex>()
+		{
+			var type = typeof(TComplex);
+			complex.Add(type);
+		}
+
 		public void ManyToMany<TLeftEntity, TRigthEntity>()
 		{
 			manyToManyRelation.Add(new Relation(typeof(TLeftEntity), typeof(TRigthEntity)));
@@ -218,12 +225,12 @@ namespace ConfOrm
 
 		public bool IsComponent(Type type)
 		{
-			return components.Contains(type) || (componetPatterns.Match(type) && !IsEntity(type));
+			return (components.Contains(type) || (componetPatterns.Match(type) && !IsEntity(type))) && !complex.Contains(type);
 		}
 
 		public bool IsComplex(Type type)
 		{
-			return false;
+			return complex.Contains(type);
 		}
 
 		public bool IsEntity(Type type)

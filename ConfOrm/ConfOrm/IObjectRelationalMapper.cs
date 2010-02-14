@@ -14,6 +14,7 @@ namespace ConfOrm
 		void TablePerClass<TBaseEntity>() where TBaseEntity : class;
 		void TablePerConcreteClass<TBaseEntity>() where TBaseEntity : class;
 		void Component<TComponent>();
+		void Complex<TComplex>();
 		void ManyToMany<TLeftEntity, TRigthEntity>();
 		void ManyToOne<TLeftEntity, TRigthEntity>();
 		void OneToOne<TLeftEntity, TRigthEntity>();
