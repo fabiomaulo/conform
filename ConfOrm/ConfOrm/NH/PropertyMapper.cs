@@ -5,6 +5,8 @@ using System.Reflection;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Properties;
+using NHibernate.Type;
+using NHibernate.UserTypes;
 
 namespace ConfOrm.NH
 {
@@ -112,5 +114,47 @@ namespace ConfOrm.NH
 			return pair.Key;
 		}
 
+		#region Implementation of IPropertyMapper
+
+		public void Type(IType persistentType)
+		{
+			if (persistentType != null)
+			{
+				propertyMapping.type1 = persistentType.Name;
+				propertyMapping.type = null;
+			}
+		}
+
+		public void Type<TPersistentType>() where TPersistentType : IUserType
+		{
+			propertyMapping.type1 = typeof (TPersistentType).AssemblyQualifiedName;
+			propertyMapping.type = null;
+		}
+
+		public void Type<TPersistentType>(object parameters) where TPersistentType : IUserType
+		{
+			if (parameters != null)
+			{
+				propertyMapping.type1 = null;
+				var hbmType = new HbmType
+				              	{
+				              		name = typeof (TPersistentType).AssemblyQualifiedName,
+				              		param = (from pi in parameters.GetType().GetProperties()
+				              		         let pname = pi.Name
+				              		         let pvalue = pi.GetValue(parameters, null)
+				              		         select
+				              		         	new HbmParam
+				              		         		{name = pname, Text = new[] {ReferenceEquals(pvalue, null) ? "null" : pvalue.ToString()}})
+				              			.ToArray()
+				              	};
+				propertyMapping.type = hbmType;
+			}
+			else
+			{
+				Type<TPersistentType>();
+			}
+		}
+
+		#endregion
 	}
 }

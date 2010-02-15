@@ -1,9 +1,14 @@
 using System;
+using System.Linq;
+using System.Data;
 using System.Reflection;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
+using NHibernate;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Properties;
+using NHibernate.SqlTypes;
+using NHibernate.UserTypes;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -146,5 +151,117 @@ namespace ConfOrmTests.NH
 			ActionAssert.NotThrow(() => mapper.Access(typeof(FieldAccessor)));
 			mapping.Access.Should().Be.EqualTo(typeof(FieldAccessor).AssemblyQualifiedName);
 		}
+
+		[Test]
+		public void WhenSetTypeByITypeThenSetTypeName()
+		{
+			var member = typeof(MyClass).GetProperty("ReadOnly");
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+			mapper.Type(NHibernateUtil.String);
+
+			mapping.Type.name.Should().Be.EqualTo("String");
+		}
+
+		[Test]
+		public void WhenSetTypeByIUserTypeThenSetTypeName()
+		{
+			var member = typeof(MyClass).GetProperty("ReadOnly");
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+			mapper.Type<MyType>();
+
+			mapping.Type.name.Should().Contain("MyType");
+			mapping.type.Should().Be.Null();
+		}
+
+		[Test]
+		public void WhenSetTypeByIUserTypeWithParamsThenSetType()
+		{
+			var member = typeof(MyClass).GetProperty("ReadOnly");
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+			mapper.Type<MyType>(new { Param1="a", Param2=12 });
+
+			mapping.type1.Should().Be.Null();
+			mapping.Type.name.Should().Contain("MyType");
+			mapping.Type.param.Should().Have.Count.EqualTo(2);
+			mapping.Type.param.Select(p => p.name).Should().Have.SameValuesAs("Param1","Param2");
+			mapping.Type.param.Select(p => p.GetText()).Should().Have.SameValuesAs("a", "12");
+		}
+
+		[Test]
+		public void WhenSetTypeByIUserTypeWithNullParamsThenSetTypeName()
+		{
+			var member = typeof(MyClass).GetProperty("ReadOnly");
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+			mapper.Type<MyType>(null);
+
+			mapping.Type.name.Should().Contain("MyType");
+			mapping.type.Should().Be.Null();
+		}
+	}
+
+	public class MyType: IUserType
+	{
+		#region Implementation of IUserType
+
+		public bool Equals(object x, object y)
+		{
+			throw new NotImplementedException();
+		}
+
+		public int GetHashCode(object x)
+		{
+			throw new NotImplementedException();
+		}
+
+		public object NullSafeGet(IDataReader rs, string[] names, object owner)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void NullSafeSet(IDbCommand cmd, object value, int index)
+		{
+			throw new NotImplementedException();
+		}
+
+		public object DeepCopy(object value)
+		{
+			throw new NotImplementedException();
+		}
+
+		public object Replace(object original, object target, object owner)
+		{
+			throw new NotImplementedException();
+		}
+
+		public object Assemble(object cached, object owner)
+		{
+			throw new NotImplementedException();
+		}
+
+		public object Disassemble(object value)
+		{
+			throw new NotImplementedException();
+		}
+
+		public SqlType[] SqlTypes
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		public Type ReturnedType
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		public bool IsMutable
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		#endregion
 	}
 }
