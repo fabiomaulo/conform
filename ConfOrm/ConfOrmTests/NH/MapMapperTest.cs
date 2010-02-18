@@ -135,5 +135,25 @@ namespace ConfOrmTests.NH
 			mapper.MapKeyManyToMany(x => mkmmCalled = true);
 			mkmmCalled.Should().Be.True();
 		}
+
+		[Test]
+		public void SetCollectionTypeByGenericType()
+		{
+			var mapdoc = new HbmMapping();
+			var hbm = new HbmMap();
+			var mapper = new MapMapper(typeof(Animal), typeof(Animal), typeof(string), hbm, mapdoc);
+			mapper.Type<FakeUserCollectionType>();
+			hbm.CollectionType.Should().Contain("FakeUserCollectionType");
+		}
+
+		[Test]
+		public void SetCollectionTypeByType()
+		{
+			var mapdoc = new HbmMapping();
+			var hbm = new HbmMap();
+			var mapper = new MapMapper(typeof(Animal), typeof(Animal), typeof(string), hbm, mapdoc);
+			mapper.Type(typeof(FakeUserCollectionType));
+			hbm.CollectionType.Should().Contain("FakeUserCollectionType");
+		}
 	}
 }

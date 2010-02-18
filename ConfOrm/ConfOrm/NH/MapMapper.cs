@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.UserTypes;
 
 namespace ConfOrm.NH
 {
@@ -118,9 +119,35 @@ namespace ConfOrm.NH
 			mapping.sort = "natural";
 		}
 
+		public void Sort<TComparer>()
+		{
+			
+		}
+
 		public void Cascade(Cascade cascadeStyle)
 		{
 			mapping.cascade = cascadeStyle.ToCascadeString();
+		}
+
+		public void Type<TCollection>() where TCollection : IUserCollectionType
+		{
+			mapping.collectiontype = typeof(TCollection).AssemblyQualifiedName;
+		}
+
+		public void Type(Type collectionType)
+		{
+			if (collectionType == null)
+			{
+				throw new ArgumentNullException("collectionType");
+			}
+			if (!typeof(IUserCollectionType).IsAssignableFrom(collectionType))
+			{
+				throw new ArgumentOutOfRangeException("collectionType",
+																							string.Format(
+																														"The collection type should be an implementation of IUserCollectionType.({0})",
+																														collectionType));
+			}
+			mapping.collectiontype = collectionType.AssemblyQualifiedName;
 		}
 
 		public void MapKeyManyToMany(Action<IMapKeyManyToManyMapper> mapKeyMapping)

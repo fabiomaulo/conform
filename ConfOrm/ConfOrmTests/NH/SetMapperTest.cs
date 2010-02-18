@@ -1,3 +1,4 @@
+using System;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
@@ -85,5 +86,34 @@ namespace ConfOrmTests.NH
 			hbm.Key.Should().Not.Be.Null();
 			kmCalled.Should().Be.True();
 		}
+
+
+		[Test]
+		public void SetCollectionTypeByWrongTypeShouldThrow()
+		{
+			var hbm = new HbmSet();
+			var mapper = new SetMapper(typeof(Animal), typeof(Animal), hbm);
+			ActionAssert.Throws<ArgumentNullException>(() => mapper.Type(null));
+			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.Type(typeof(object)));
+		}
+
+		[Test]
+		public void SetCollectionTypeByGenericType()
+		{
+			var hbm = new HbmSet();
+			var mapper = new SetMapper(typeof(Animal), typeof(Animal), hbm);
+			mapper.Type<FakeUserCollectionType>();
+			hbm.CollectionType.Should().Contain("FakeUserCollectionType");
+		}
+
+		[Test]
+		public void SetCollectionTypeByType()
+		{
+			var hbm = new HbmSet();
+			var mapper = new SetMapper(typeof(Animal), typeof(Animal), hbm);
+			mapper.Type(typeof(FakeUserCollectionType));
+			hbm.CollectionType.Should().Contain("FakeUserCollectionType");
+		}
+
 	}
 }

@@ -201,6 +201,16 @@ namespace ConfOrmTests.NH
 			mapping.Type.name.Should().Contain("MyType");
 			mapping.type.Should().Be.Null();
 		}
+
+		[Test]
+		public void WhenSetInvalidTypeThenThrow()
+		{
+			var member = typeof(MyClass).GetProperty("ReadOnly");
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+			ActionAssert.Throws<ArgumentOutOfRangeException>(()=> mapper.Type(typeof(object), null));
+			ActionAssert.Throws<ArgumentNullException>(() => mapper.Type(null, null));
+		}
 	}
 
 	public class MyType: IUserType

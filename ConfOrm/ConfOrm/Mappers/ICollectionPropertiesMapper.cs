@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using NHibernate.UserTypes;
 
 namespace ConfOrm.Mappers
 {
@@ -14,7 +15,11 @@ namespace ConfOrm.Mappers
 		void Key(Action<IKeyMapper> keyMapping);
 		void OrderBy(MemberInfo property);
 		void Sort();
+		void Sort<TComparer>();
 		void Cascade(Cascade cascadeStyle);
+		//void Type(string namedCollectionType); // TODO: figure out a way to avoid string for embedded namedCollectionType
+		void Type<TCollection>() where TCollection: IUserCollectionType;
+		void Type(Type collectionType);
 	}
 
 	public interface ICollectionPropertiesMapper<TElement> : ICollectionPropertiesMapper

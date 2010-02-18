@@ -127,31 +127,43 @@ namespace ConfOrm.NH
 
 		public void Type<TPersistentType>() where TPersistentType : IUserType
 		{
-			propertyMapping.type1 = typeof (TPersistentType).AssemblyQualifiedName;
-			propertyMapping.type = null;
+			Type(typeof (TPersistentType), null);
 		}
 
 		public void Type<TPersistentType>(object parameters) where TPersistentType : IUserType
 		{
+			Type(typeof(TPersistentType), parameters);
+		}
+
+		public void Type(Type persistentType, object parameters)
+		{
+			if (persistentType == null)
+			{
+				throw new ArgumentNullException("persistentType");
+			}
+			if (!typeof(IUserType).IsAssignableFrom(persistentType))
+			{
+				throw new ArgumentOutOfRangeException("persistentType", "Expected type implementing IUserType");
+			}
 			if (parameters != null)
 			{
 				propertyMapping.type1 = null;
 				var hbmType = new HbmType
-				              	{
-				              		name = typeof (TPersistentType).AssemblyQualifiedName,
-				              		param = (from pi in parameters.GetType().GetProperties()
-				              		         let pname = pi.Name
-				              		         let pvalue = pi.GetValue(parameters, null)
-				              		         select
-				              		         	new HbmParam
-				              		         		{name = pname, Text = new[] {ReferenceEquals(pvalue, null) ? "null" : pvalue.ToString()}})
-				              			.ToArray()
-				              	};
+				{
+					name = persistentType.AssemblyQualifiedName,
+					param = (from pi in parameters.GetType().GetProperties()
+									 let pname = pi.Name
+									 let pvalue = pi.GetValue(parameters, null)
+									 select
+										new HbmParam { name = pname, Text = new[] { ReferenceEquals(pvalue, null) ? "null" : pvalue.ToString() } })
+						.ToArray()
+				};
 				propertyMapping.type = hbmType;
 			}
 			else
 			{
-				Type<TPersistentType>();
+				propertyMapping.type1 = persistentType.AssemblyQualifiedName;
+				propertyMapping.type = null;
 			}
 		}
 

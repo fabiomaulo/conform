@@ -84,5 +84,22 @@ namespace ConfOrmTests.NH
 			hbm.Key.Should().Not.Be.Null();
 			kmCalled.Should().Be.True();
 		}
+		[Test]
+		public void SetCollectionTypeByGenericType()
+		{
+			var hbm = new HbmList();
+			var mapper = new ListMapper(typeof(Animal), typeof(Animal), hbm);
+			mapper.Type<FakeUserCollectionType>();
+			hbm.CollectionType.Should().Contain("FakeUserCollectionType");
+		}
+
+		[Test]
+		public void SetCollectionTypeByType()
+		{
+			var hbm = new HbmList();
+			var mapper = new ListMapper(typeof(Animal), typeof(Animal), hbm);
+			mapper.Type(typeof(FakeUserCollectionType));
+			hbm.CollectionType.Should().Contain("FakeUserCollectionType");
+		}
 	}
 }
