@@ -13,6 +13,7 @@ namespace ConfOrm.NH
 		internal const BindingFlags PropertiesBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
 		private readonly IDomainInspector domainInspector;
 		private readonly List<IPatternApplier<MemberInfo, IPropertyMapper>> propertyPatternsAppliers;
+		private readonly List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> collectionPatternsAppliers;
 		private readonly Dictionary<MemberInfo, Action<IPropertyMapper>> propertyCustomizers = new Dictionary<MemberInfo, Action<IPropertyMapper>>();
 		private readonly Dictionary<MemberInfo, Action<IManyToOneMapper>> manyToOneCustomizers = new Dictionary<MemberInfo, Action<IManyToOneMapper>>();
 		private readonly Dictionary<MemberInfo, Action<IOneToOneMapper>> oneToOneCustomizers = new Dictionary<MemberInfo, Action<IOneToOneMapper>>();
@@ -32,6 +33,7 @@ namespace ConfOrm.NH
 			                           		new NoSetterPropertyToFieldAccessorApplier(),
 			                           		new PropertyToFieldAccessorApplier()
 			                           	};
+			collectionPatternsAppliers = new List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>>();
 		}
 
 		public void Customize<TPersistent>(Action<IPersistentClassCustomizer<TPersistent>> customizeAction ) where TPersistent: class
@@ -45,9 +47,19 @@ namespace ConfOrm.NH
 			get { return propertyPatternsAppliers; }
 		}
 
+		public List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> CollectionPatternsAppliers
+		{
+			get { return collectionPatternsAppliers; }
+		}
+
 		public void AddPropertyPattern(Predicate<MemberInfo> matcher, Action<IPropertyMapper> applier)
 		{
 			propertyPatternsAppliers.Add(new DelegatedPropertyApplier(matcher, applier));
+		}
+
+		public void AddCollectionPattern(Predicate<MemberInfo> matcher, Action<ICollectionPropertiesMapper> applier)
+		{
+			collectionPatternsAppliers.Add(new DelegatedCollectionApplier(matcher, applier));
 		}
 
 		public HbmMapping CompileMappingFor(IEnumerable<Type> types)
@@ -204,6 +216,7 @@ namespace ConfOrm.NH
 					propertiesContainer.Set(property, collectionPropertiesMapper=>
 						{
 							cert.MapCollectionProperties(collectionPropertiesMapper);
+							collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
 							InvokeCustomizer(collectionCustomizers, member, collectionPropertiesMapper);
 						}, cert.Map);
 				}
@@ -220,6 +233,7 @@ namespace ConfOrm.NH
 					propertiesContainer.Map(property, collectionPropertiesMapper =>
 						{
 							cert.MapCollectionProperties(collectionPropertiesMapper);
+							collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
 							InvokeCustomizer(collectionCustomizers, member, collectionPropertiesMapper);
 						}, cert.Map);
 				}
@@ -233,6 +247,7 @@ namespace ConfOrm.NH
 					propertiesContainer.List(property, collectionPropertiesMapper =>
 					{
 						cert.MapCollectionProperties(collectionPropertiesMapper);
+						collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
 						InvokeCustomizer(collectionCustomizers, member, collectionPropertiesMapper);
 					}, cert.Map);
 				}
@@ -243,6 +258,7 @@ namespace ConfOrm.NH
 					propertiesContainer.Bag(property, collectionPropertiesMapper =>
 					{
 						cert.MapCollectionProperties(collectionPropertiesMapper);
+						collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
 						InvokeCustomizer(collectionCustomizers, member, collectionPropertiesMapper);
 					}, cert.Map);
 				}

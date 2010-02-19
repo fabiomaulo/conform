@@ -113,6 +113,7 @@
     <Compile Include="Patterns\BidirectionalOneToManyCascadePattern.cs" />
     <Compile Include="Patterns\BidirectionalRelationPattern.cs" />
     <Compile Include="Patterns\ComponentPattern.cs" />
+    <Compile Include="Patterns\DelegatedCollectionApplier.cs" />
     <Compile Include="Patterns\DelegatedPropertyApplier.cs" />
     <Compile Include="Patterns\DictionaryCollectionPattern.cs" />
     <Compile Include="Patterns\GuidOptimizedPoidPattern.cs" />
