@@ -54,6 +54,7 @@
     <Compile Include="IPatternApplier.cs" />
     <Compile Include="IPatternValueGetter.cs" />
     <Compile Include="Mappers\CollectionLazy.cs" />
+    <Compile Include="NH\EntityPropertyMapper.cs" />
     <Compile Include="NH\Generators.cs" />
     <Compile Include="Mappers\IClassMapper.cs" />
     <Compile Include="Mappers\ICollectionElementRelation.cs" />
