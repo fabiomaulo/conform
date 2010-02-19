@@ -54,7 +54,7 @@
     <Compile Include="IPatternApplier.cs" />
     <Compile Include="IPatternValueGetter.cs" />
     <Compile Include="Mappers\CollectionLazy.cs" />
-    <Compile Include="Mappers\Generators.cs" />
+    <Compile Include="NH\Generators.cs" />
     <Compile Include="Mappers\IClassMapper.cs" />
     <Compile Include="Mappers\ICollectionElementRelation.cs" />
     <Compile Include="Mappers\ICollectionPropertiesMapper.cs" />
@@ -62,6 +62,7 @@
     <Compile Include="Mappers\IComponentMapper.cs" />
     <Compile Include="Mappers\IEntityPropertyMapper.cs" />
     <Compile Include="Mappers\IGenerator.cs" />
+    <Compile Include="Mappers\IGeneratorDef.cs" />
     <Compile Include="Mappers\IGeneratorMapper.cs" />
     <Compile Include="Mappers\IIdMapper.cs" />
     <Compile Include="Mappers\IJoinedSubclassMapper.cs" />
@@ -79,7 +80,6 @@
     <Compile Include="NH\ComponentElementMapper.cs" />
     <Compile Include="NH\ComponentNestedElementMapper.cs" />
     <Compile Include="NH\GeneratorMapper.cs" />
-    <Compile Include="NH\GeneratorsMappers.cs" />
     <Compile Include="NH\ICustomizersHolder.cs" />
     <Compile Include="NH\IPersistentClassCustomizer.cs" />
     <Compile Include="NH\ManyToOneMapper.cs" />

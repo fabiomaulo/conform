@@ -125,7 +125,7 @@ namespace ConfOrm.NH
 			MapProperties(type, classMapper);
 		}
 
-		private Generators GetGenerator(PoIdStrategy strategy)
+		private IGeneratorDef GetGenerator(PoIdStrategy strategy)
 		{
 			switch (strategy)
 			{

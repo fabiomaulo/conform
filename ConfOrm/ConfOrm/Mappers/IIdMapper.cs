@@ -4,7 +4,7 @@ namespace ConfOrm.Mappers
 {
 	public interface IIdMapper
 	{
-		void Generator(Generators generator);
-		void Generator(Generators generator, Action<IGeneratorMapper> generatorMapping);
+		void Generator(IGeneratorDef generator);
+		void Generator(IGeneratorDef generator, Action<IGeneratorMapper> generatorMapping);
 	}
 }
