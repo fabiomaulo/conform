@@ -4,11 +4,15 @@ using System.Reflection;
 
 namespace ConfOrm.Mappers
 {
-	public interface IClassMapper : IPropertyContainerMapper
+	public interface IClassAttributesMapper
 	{
 		void Id(Action<IIdMapper> idMapper);
 		void Id(MemberInfo idProperty, Action<IIdMapper> idMapper);
-		void Discriminator();
+		void Discriminator();		
+	}
+
+	public interface IClassMapper : IClassAttributesMapper, IPropertyContainerMapper
+	{
 	}
 
 	public interface IClassMapper<TEntity> : IClassMapper, IPropertyContainerMapper<TEntity> where TEntity : class

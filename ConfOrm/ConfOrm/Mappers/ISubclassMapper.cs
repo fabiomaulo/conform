@@ -1,6 +1,10 @@
 namespace ConfOrm.Mappers
 {
-	public interface ISubclassMapper : IPropertyContainerMapper
+	public interface ISubclassAttributesMapper
+	{
+		
+	}
+	public interface ISubclassMapper : ISubclassAttributesMapper, IPropertyContainerMapper
 	{
 		
 	}
