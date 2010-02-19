@@ -46,7 +46,7 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
 
 			var mapper = new Mapper(orm.Object);
-			mapper.AddPropertyPattern(mi => mi.Name.StartsWith("Date") || mi.Name.EndsWith("Date"),
+			mapper.AddPropertyPattern(mi => mi.GetPropertyOrFieldType() == typeof(DateTime) && (mi.Name.StartsWith("Date") || mi.Name.EndsWith("Date")),
 			                          pm => pm.Type(NHibernateUtil.Date));
 			var mapping = mapper.CompileMappingFor(new[] {typeof (MyClass)});
 
