@@ -206,7 +206,6 @@ namespace ConfOrm.NH
 						                                              property.Name, propertiesContainerType));
 					}
 					Type dictionaryValueType = propertyType.DetermineDictionaryValueType();
-					// TODO : determine RelationType for Key
 					var cert = DetermineCollectionElementRelationType(property, dictionaryValueType);
 					propertiesContainer.Map(property, collectionPropertiesMapper =>
 						{
