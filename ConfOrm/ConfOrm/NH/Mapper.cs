@@ -40,6 +40,16 @@ namespace ConfOrm.NH
 			customizeAction(customizer);
 		}
 
+		public ICollection<IPatternApplier<MemberInfo, IPropertyMapper>> PropertyPatternsAppliers
+		{
+			get { return propertyPatternsAppliers; }
+		}
+
+		public void AddPropertyPattern(Predicate<MemberInfo> matcher, Action<IPropertyMapper> applier)
+		{
+			propertyPatternsAppliers.Add(new DelegatedPropertyApplier(matcher, applier));
+		}
+
 		public HbmMapping CompileMappingFor(IEnumerable<Type> types)
 		{
 			if (types == null)

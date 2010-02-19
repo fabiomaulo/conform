@@ -90,6 +90,7 @@
     <Compile Include="NH\MapperTests\ComponentWithParentTest.cs" />
     <Compile Include="NH\MapperTests\CustomizerCallingOnCompositeElementTest.cs" />
     <Compile Include="NH\MapperTests\CustomizerCallingTest.cs" />
+    <Compile Include="NH\MapperTests\CustomPropertyPatternApplierTest.cs" />
     <Compile Include="NH\MapperTests\DefaultAssemblyAndNamespaceTest.cs" />
     <Compile Include="NH\MapperTests\DictionaryKeyManyToMany.cs" />
     <Compile Include="NH\MapperTests\DictionaryOfComponents.cs" />
