@@ -59,6 +59,16 @@ namespace ConfOrmTests.NH
 		}
 
 		[Test]
+		public void WhenNoMemberThenCantChangeAccessor()
+		{
+			var mapping = new HbmProperty();
+
+			var mapper = new PropertyMapper(null, mapping);
+			mapper.Access(Accessor.Field);
+			mapping.Access.Should().Be.EqualTo("none");
+		}
+
+		[Test]
 		public void WhenMapFieldAutoAssignAccessField()
 		{
 			var member = typeof (MyClass).GetField("aField", BindingFlags.Instance | BindingFlags.NonPublic);

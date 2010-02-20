@@ -10,9 +10,15 @@ namespace ConfOrm.NH
 {
 	public class PropertyMapper: IPropertyMapper
 	{
+		private class NoMemberPropertyMapper : IEntityPropertyMapper
+		{
+			public void Access(Accessor accessor) {}
+
+			public void Access(Type accessorType) {}
+		}
 		private readonly MemberInfo member;
 		private readonly HbmProperty propertyMapping;
-		private readonly EntityPropertyMapper entityPropertyMapper;
+		private readonly IEntityPropertyMapper entityPropertyMapper;
 
 		public PropertyMapper(MemberInfo member, HbmProperty propertyMapping)
 		{
@@ -30,7 +36,14 @@ namespace ConfOrm.NH
 			{
 				this.propertyMapping.access = "field";
 			}
-			entityPropertyMapper = new EntityPropertyMapper(member, x => propertyMapping.access = x);
+			if (member == null)
+			{
+				entityPropertyMapper = new NoMemberPropertyMapper();
+			}
+			else
+			{
+				entityPropertyMapper = new EntityPropertyMapper(member.DeclaringType, member.Name, x => propertyMapping.access = x);
+			}
 		}
 
 		#region Implementation of IEntityPropertyMapper

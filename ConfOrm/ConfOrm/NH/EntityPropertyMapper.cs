@@ -9,6 +9,8 @@ namespace ConfOrm.NH
 {
 	public class EntityPropertyMapper : IEntityPropertyMapper
 	{
+		public string PropertyName { get; set; }
+
 		private const BindingFlags FiledBindingFlag =
 			BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy;
 
@@ -23,12 +25,19 @@ namespace ConfOrm.NH
 					{"pascalcase-m-underscore", new PascalCaseMUnderscoreStrategy()},
 				};
 
-		private readonly MemberInfo member;
+		private readonly Type declaringType;
+		private readonly string propertyName;
 		private readonly Action<string> setAccessor;
 
-		public EntityPropertyMapper(MemberInfo member, Action<string> accesorValueSetter)
+		public EntityPropertyMapper(Type declaringType, string propertyName, Action<string> accesorValueSetter)
 		{
-			this.member = member;
+			PropertyName = propertyName;
+			if (declaringType == null)
+			{
+				throw new ArgumentNullException("declaringType");
+			}
+			this.declaringType = declaringType;
+			this.propertyName = propertyName;
 			setAccessor = accesorValueSetter;
 		}
 
@@ -61,7 +70,7 @@ namespace ConfOrm.NH
 					else
 					{
 						throw new ArgumentOutOfRangeException("accessor",
-						                                      "The property name " + member.Name
+						                                      "The property name " + propertyName
 						                                      + " does not match with any supported field naming strategies.");
 					}
 					break;
@@ -99,7 +108,7 @@ namespace ConfOrm.NH
 			KeyValuePair<string, IFieldNamingStrategy> pair =
 				fieldNamningStrategies.FirstOrDefault(
 				                                     	p =>
-				                                     	member.DeclaringType.GetField(p.Value.GetFieldName(member.Name),
+				                                     	declaringType.GetField(p.Value.GetFieldName(propertyName),
 				                                     	                              FiledBindingFlag) != null);
 			return pair.Key;
 		}
