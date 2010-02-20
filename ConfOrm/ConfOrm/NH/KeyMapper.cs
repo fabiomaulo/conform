@@ -25,6 +25,19 @@ namespace ConfOrm.NH
 			mapping.column1 = columnName;
 		}
 
+		public void OnDelete(OnDeleteAction deleteAction)
+		{
+			switch (deleteAction)
+			{
+				case OnDeleteAction.NoAction:
+					mapping.ondelete = HbmOndelete.Noaction;
+					break;
+				case OnDeleteAction.Cascade:
+					mapping.ondelete = HbmOndelete.Cascade;
+					break;
+			}
+		}
+
 		#endregion
 	}
 }

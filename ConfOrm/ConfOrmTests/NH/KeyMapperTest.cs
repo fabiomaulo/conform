@@ -1,4 +1,5 @@
 using System.Linq;
+using ConfOrm.Mappers;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
@@ -29,6 +30,17 @@ namespace ConfOrmTests.NH
 			var km = new KeyMapper(typeof(Animal), hbm);
 			km.Column("blha");
 			hbm.Columns.First().name.Should().Be.EqualTo("blha");
+		}
+
+		[Test]
+		public void AssignOnDeleteAction()
+		{
+			var hbm = new HbmKey();
+			var km = new KeyMapper(typeof(Animal), hbm);
+			km.OnDelete(OnDeleteAction.Cascade);
+			hbm.ondelete.Should().Be.EqualTo(HbmOndelete.Cascade);
+			km.OnDelete(OnDeleteAction.NoAction);
+			hbm.ondelete.Should().Be.EqualTo(HbmOndelete.Noaction);
 		}
 	}
 }

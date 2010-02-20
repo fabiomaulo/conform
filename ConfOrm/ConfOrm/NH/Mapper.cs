@@ -37,7 +37,8 @@ namespace ConfOrm.NH
 			                             	{
 			                             		new ReadOnlyCollectionPropertyAccessorApplier(),
 			                             		new NoSetterCollectionPropertyToFieldAccessorApplier(),
-			                             		new CollectionPropertyToFieldAccessorApplier()
+			                             		new CollectionPropertyToFieldAccessorApplier(),
+			                             		new BidirectionalOneToManyApplier(),
 			                             	};
 		}
 
@@ -364,7 +365,6 @@ namespace ConfOrm.NH
 				var parentColumnNameInChild = GetParentColumnNameInChild();
 				if (parentColumnNameInChild != null)
 				{
-					mapped.Inverse(true);
 					mapped.Key(k => k.Column(parentColumnNameInChild));
 				}
 				var cascadeToApply = domainInspector.ApplyCascade(ownerType, member, collectionElementType);

@@ -110,6 +110,7 @@
     <Compile Include="Patterns\ArrayCollectionPattern.cs" />
     <Compile Include="Patterns\AssignedPoidPattern.cs" />
     <Compile Include="Patterns\BagCollectionPattern.cs" />
+    <Compile Include="Patterns\BidirectionalOneToManyApplier.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyPattern.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyCascadePattern.cs" />
     <Compile Include="Patterns\BidirectionalRelationPattern.cs" />
