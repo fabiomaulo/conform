@@ -11,7 +11,7 @@ namespace ConfOrm.NH
 	{
 		public string PropertyName { get; set; }
 
-		private const BindingFlags FiledBindingFlag =
+		private const BindingFlags FieldBindingFlag =
 			BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy;
 
 		private readonly Dictionary<string, IFieldNamingStrategy> fieldNamningStrategies =
@@ -28,6 +28,7 @@ namespace ConfOrm.NH
 		private readonly Type declaringType;
 		private readonly string propertyName;
 		private readonly Action<string> setAccessor;
+		private readonly bool canChangeAccessor = true;
 
 		public EntityPropertyMapper(Type declaringType, string propertyName, Action<string> accesorValueSetter)
 		{
@@ -35,6 +36,21 @@ namespace ConfOrm.NH
 			if (declaringType == null)
 			{
 				throw new ArgumentNullException("declaringType");
+			}
+			MemberInfo member= null;
+			if (propertyName != null)
+			{
+				member = declaringType.GetMember(propertyName, FieldBindingFlag).FirstOrDefault();
+			}
+			if (member == null)
+			{
+				accesorValueSetter("none");
+				canChangeAccessor = false;
+			}
+			else if ((member as FieldInfo) != null)
+			{
+				accesorValueSetter("field");
+				canChangeAccessor = false;
 			}
 			this.declaringType = declaringType;
 			this.propertyName = propertyName;
@@ -45,6 +61,10 @@ namespace ConfOrm.NH
 
 		public void Access(Accessor accessor)
 		{
+			if(!canChangeAccessor)
+			{
+				return;
+			}
 			switch (accessor)
 			{
 				case Accessor.Property:
@@ -87,6 +107,10 @@ namespace ConfOrm.NH
 
 		public void Access(Type accessorType)
 		{
+			if (!canChangeAccessor)
+			{
+				return;
+			}
 			if (accessorType == null)
 			{
 				throw new ArgumentNullException("accessorType");
@@ -109,7 +133,7 @@ namespace ConfOrm.NH
 				fieldNamningStrategies.FirstOrDefault(
 				                                     	p =>
 				                                     	declaringType.GetField(p.Value.GetFieldName(propertyName),
-				                                     	                              FiledBindingFlag) != null);
+				                                     	                              FieldBindingFlag) != null);
 			return pair.Key;
 		}
 	}

@@ -32,10 +32,6 @@ namespace ConfOrm.NH
 			{
 				this.propertyMapping.access = "none";				
 			}
-			else if ((member as FieldInfo) != null)
-			{
-				this.propertyMapping.access = "field";
-			}
 			if (member == null)
 			{
 				entityPropertyMapper = new NoMemberPropertyMapper();
