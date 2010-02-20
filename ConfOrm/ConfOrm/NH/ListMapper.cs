@@ -10,6 +10,7 @@ namespace ConfOrm.NH
 	{
 		private readonly KeyMapper keyMapper;
 		private readonly HbmList mapping;
+		private readonly IEntityPropertyMapper entityPropertyMapper;
 
 		public ListMapper(Type ownerType, Type elementType, HbmList mapping)
 		{
@@ -34,6 +35,7 @@ namespace ConfOrm.NH
 			}
 			keyMapper = new KeyMapper(ownerType, mapping.Key);
 			mapping.Item = new HbmListIndex();
+			entityPropertyMapper = new EntityPropertyMapper(ownerType, mapping.Name, x => mapping.access = x);
 		}
 
 		public Type OwnerType { get; private set; }
@@ -126,6 +128,20 @@ namespace ConfOrm.NH
 			}
 			mapping.collectiontype = collectionType.AssemblyQualifiedName;
 		}
+		#endregion
+
+		#region Implementation of IEntityPropertyMapper
+
+		public void Access(Accessor accessor)
+		{
+			entityPropertyMapper.Access(accessor);
+		}
+
+		public void Access(Type accessorType)
+		{
+			entityPropertyMapper.Access(accessorType);
+		}
+
 		#endregion
 	}
 }

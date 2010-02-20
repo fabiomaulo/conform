@@ -10,6 +10,7 @@ namespace ConfOrm.NH
 	{
 		private readonly KeyMapper keyMapper;
 		private readonly HbmBag mapping;
+		private readonly IEntityPropertyMapper entityPropertyMapper;
 
 		public BagMapper(Type ownerType, Type elementType, HbmBag mapping)
 		{
@@ -33,6 +34,7 @@ namespace ConfOrm.NH
 				mapping.key = new HbmKey();
 			}
 			keyMapper = new KeyMapper(ownerType, mapping.Key);
+			entityPropertyMapper = new EntityPropertyMapper(ownerType, mapping.Name, x => mapping.access = x);
 		}
 
 		public Type OwnerType { get; private set; }
@@ -124,6 +126,20 @@ namespace ConfOrm.NH
 				                                                   	collectionType));
 			}
 			mapping.collectiontype = collectionType.AssemblyQualifiedName;
+		}
+
+		#endregion
+
+		#region Implementation of IEntityPropertyMapper
+
+		public void Access(Accessor accessor)
+		{
+			entityPropertyMapper.Access(accessor);
+		}
+
+		public void Access(Type accessorType)
+		{
+			entityPropertyMapper.Access(accessorType);
 		}
 
 		#endregion

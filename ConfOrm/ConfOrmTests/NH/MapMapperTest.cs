@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
@@ -11,6 +12,11 @@ namespace ConfOrmTests.NH
 		private class Animal
 		{
 			public int Id { get; set; }
+			private IDictionary<string, Animal> children;
+			public IDictionary<string, Animal> Children
+			{
+				get { return children; }
+			}
 		}
 
 		[Test]
@@ -154,6 +160,17 @@ namespace ConfOrmTests.NH
 			var mapper = new MapMapper(typeof(Animal), typeof(Animal), typeof(string), hbm, mapdoc);
 			mapper.Type(typeof(FakeUserCollectionType));
 			hbm.CollectionType.Should().Contain("FakeUserCollectionType");
+		}
+
+		[Test]
+		public void CanChangeAccessor()
+		{
+			var mapdoc = new HbmMapping();
+			var hbm = new HbmMap { name = "Children" };
+			var mapper = new MapMapper(typeof(Animal), typeof(Animal), typeof(string), hbm, mapdoc);
+			mapper.Access(Accessor.Field);
+
+			hbm.Access.Should().Not.Be.Null();
 		}
 	}
 }

@@ -11,6 +11,7 @@ namespace ConfOrm.NH
 		private readonly KeyMapper keyMapper;
 		private readonly HbmMap mapping;
 		private readonly HbmMapping mapDoc;
+		private readonly IEntityPropertyMapper entityPropertyMapper;
 
 		public MapMapper(Type ownerType, Type keyType, Type valueType, HbmMap mapping, HbmMapping mapDoc)
 		{
@@ -49,6 +50,7 @@ namespace ConfOrm.NH
 			{
 				mapping.Item = new HbmMapKeyManyToMany { @class = KeyType.GetShortClassName(mapDoc) };
 			}
+			entityPropertyMapper = new EntityPropertyMapper(ownerType, mapping.Name, x => mapping.access = x);
 		}
 
 		public Type OwnerType { get; private set; }
@@ -158,6 +160,20 @@ namespace ConfOrm.NH
 				mapping.Item = new HbmMapKeyManyToMany {@class = KeyType.GetShortClassName(mapDoc)};
 			}
 			mapKeyMapping(null);
+		}
+
+		#endregion
+
+		#region Implementation of IEntityPropertyMapper
+
+		public void Access(Accessor accessor)
+		{
+			entityPropertyMapper.Access(accessor);
+		}
+
+		public void Access(Type accessorType)
+		{
+			entityPropertyMapper.Access(accessorType);
 		}
 
 		#endregion
