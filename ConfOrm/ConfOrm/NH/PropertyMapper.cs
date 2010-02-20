@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ConfOrm.Mappers;
@@ -107,6 +108,77 @@ namespace ConfOrm.NH
 				propertyMapping.type1 = persistentType.AssemblyQualifiedName;
 				propertyMapping.type = null;
 			}
+		}
+
+		public void Column(Action<IColumnMapper> columnMapper)
+		{
+			if (propertyMapping.Columns.Count() > 1)
+			{
+				throw new MappingException("Multi-columns property can't be mapped through singlr-column API.");
+			}
+			HbmColumn hbm = propertyMapping.Columns.SingleOrDefault();
+			hbm = hbm
+			      ??
+			      new HbmColumn
+			      	{
+			      		name = propertyMapping.column,
+			      		length = propertyMapping.length,
+			      		scale = propertyMapping.scale,
+			      		precision = propertyMapping.precision,
+			      		notnull = propertyMapping.notnull,
+			      		notnullSpecified = propertyMapping.notnullSpecified,
+			      		unique = propertyMapping.unique,
+			      		uniqueSpecified = propertyMapping.unique,
+			      		uniquekey = propertyMapping.uniquekey,
+			      		index = propertyMapping.index
+			      	};
+			var defaultColumnName = member.Name;
+			columnMapper(new ColumnMapper(hbm, member != null ? defaultColumnName : "unnamedcolumn"));
+			if (hbm.sqltype != null || hbm.@default != null || hbm.check != null)
+			{
+				propertyMapping.Items = new[] {hbm};
+				ResetColumnPlainValues();
+			}
+			else
+			{
+				propertyMapping.column = defaultColumnName == null || !defaultColumnName.Equals(hbm.name) ? hbm.name : (string) null;
+				propertyMapping.length = hbm.length;
+				propertyMapping.precision = hbm.precision;
+				propertyMapping.scale = hbm.scale;
+				propertyMapping.notnull = hbm.notnull;
+				propertyMapping.notnullSpecified = hbm.notnullSpecified;
+				propertyMapping.unique = hbm.unique;
+				propertyMapping.uniquekey = hbm.uniquekey;
+				propertyMapping.index = hbm.index;
+			}
+		}
+
+		private void ResetColumnPlainValues()
+		{
+			propertyMapping.column = null;
+			propertyMapping.length = null;
+			propertyMapping.precision = null;
+			propertyMapping.scale = null;
+			propertyMapping.notnull = false;
+			propertyMapping.notnullSpecified = false;
+			propertyMapping.unique = false;
+			propertyMapping.uniquekey = null;
+			propertyMapping.index = null;
+		}
+
+		public void Columns(params Action<IColumnMapper>[] columnMapper)
+		{
+			ResetColumnPlainValues();
+			int i = 1;
+			var columns = new List<HbmColumn>(columnMapper.Length);
+			foreach (var action in columnMapper)
+			{
+				var hbm = new HbmColumn();
+				var defaultColumnName = (member != null ? member.Name : "unnamedcolumn") + i++;
+				action(new ColumnMapper(hbm, defaultColumnName));
+				columns.Add(hbm);
+			}
+			propertyMapping.Items = columns.ToArray();
 		}
 
 		#endregion

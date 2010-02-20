@@ -221,6 +221,115 @@ namespace ConfOrmTests.NH
 			ActionAssert.Throws<ArgumentOutOfRangeException>(()=> mapper.Type(typeof(object), null));
 			ActionAssert.Throws<ArgumentNullException>(() => mapper.Type(null, null));
 		}
+
+		[Test]
+		public void WhenSetDifferentColumnNameThenSetTheName()
+		{
+			var member = typeof(MyClass).GetProperty("Autoproperty");
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+			mapper.Column(cm => cm.Name("pepe"));
+
+			mapping.Columns.Should().Have.Count.EqualTo(1);
+			mapping.Columns.Single().name.Should().Be("pepe");
+		}
+
+		[Test]
+		public void WhenSetDefaultColumnNameThenDoesNotSetTheName()
+		{
+			var member = typeof(MyClass).GetProperty("Autoproperty");
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+			mapper.Column(cm => { cm.Name("Autoproperty"); cm.Length(50); });
+			mapping.column.Should().Be.Null();
+			mapping.length.Should().Be("50");
+			mapping.Columns.Should().Be.Empty();
+		}
+
+		[Test]
+		public void WhenSetBasicColumnValuesThenSetPlainValues()
+		{
+			var member = typeof(MyClass).GetProperty("Autoproperty");
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+			mapper.Column(cm => { cm.Length(50);
+			                    	cm.NotNullable(true); });
+			mapping.Items.Should().Be.Null();
+			mapping.length.Should().Be("50");
+			mapping.notnull.Should().Be(true);
+			mapping.notnullSpecified.Should().Be(true);
+		}
+
+		[Test]
+		public void WhenSetColumnValuesThenAddColumnTag()
+		{
+			var member = typeof(MyClass).GetProperty("Autoproperty");
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+			mapper.Column(cm =>
+			{
+				cm.SqlType("VARCHAR(50)");
+				cm.NotNullable(true);
+			});
+			mapping.Items.Should().Not.Be.Null();
+			mapping.Columns.Should().Have.Count.EqualTo(1);
+		}
+
+		[Test]
+		public void WhenSetBasicColumnValuesMoreThanOnesThenMergeColumn()
+		{
+			var member = typeof(MyClass).GetProperty("Autoproperty");
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+			mapper.Column(cm => cm.Length(50));
+			mapper.Column(cm => cm.NotNullable(true));
+
+			mapping.Items.Should().Be.Null();
+			mapping.length.Should().Be("50");
+			mapping.notnull.Should().Be(true);
+			mapping.notnullSpecified.Should().Be(true);
+
+		}
+
+		[Test]
+		public void WhenSetMultiColumnsValuesThenAddColumns()
+		{
+			var member = typeof(MyClass).GetProperty("ReadOnly");
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+			mapper.Type<MyType>();
+			mapper.Columns(cm =>
+				{
+					cm.Name("column1");
+					cm.Length(50);
+				}, cm =>
+					{
+						cm.Name("column2");
+						cm.SqlType("VARCHAR(10)");
+					});
+			mapping.Columns.Should().Have.Count.EqualTo(2);
+		}
+
+		[Test]
+		public void WhenSetMultiColumnsValuesThenAutoassignColumnNames()
+		{
+			var member = typeof(MyClass).GetProperty("ReadOnly");
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+			mapper.Columns(cm => cm.Length(50), cm => cm.SqlType("VARCHAR(10)"));
+			mapping.Columns.Should().Have.Count.EqualTo(2);
+			mapping.Columns.All(cm => cm.name.Satisfy(n=> !string.IsNullOrEmpty(n)));
+		}
+
+		[Test]
+		public void AfterSetMultiColumnsCantSetSimpleColumn()
+		{
+			var member = typeof(MyClass).GetProperty("ReadOnly");
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+			mapper.Columns(cm => cm.Length(50), cm => cm.SqlType("VARCHAR(10)"));
+			ActionAssert.Throws<ConfOrm.MappingException>(() => mapper.Column(cm => cm.Length(50)));
+		}
 	}
 
 	public class MyType: IUserType
