@@ -113,6 +113,7 @@
     <Compile Include="Patterns\BidirectionalOneToManyPattern.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyCascadePattern.cs" />
     <Compile Include="Patterns\BidirectionalRelationPattern.cs" />
+    <Compile Include="Patterns\CollectionPropertyToFieldAccessorApplier.cs" />
     <Compile Include="Patterns\ComponentPattern.cs" />
     <Compile Include="Patterns\DelegatedCollectionApplier.cs" />
     <Compile Include="Patterns\DelegatedPropertyApplier.cs" />
@@ -122,10 +123,12 @@
     <Compile Include="Patterns\HighLowPoidPattern.cs" />
     <Compile Include="Patterns\IdentityPoidPattern.cs" />
     <Compile Include="Patterns\ListCollectionPattern.cs" />
+    <Compile Include="Patterns\NoSetterCollectionPropertyToFieldAccessorApplier.cs" />
     <Compile Include="Patterns\NoSetterPropertyToFieldAccessorApplier.cs" />
     <Compile Include="Patterns\NoSetterPropertyToFieldPattern.cs" />
     <Compile Include="Patterns\PropertyToFieldAccessorApplier.cs" />
     <Compile Include="Patterns\PropertyToFieldPattern.cs" />
+    <Compile Include="Patterns\ReadOnlyCollectionPropertyAccessorApplier.cs" />
     <Compile Include="Patterns\ReadOnlyPropertyAccessorApplier.cs" />
     <Compile Include="Patterns\NativePoidPattern.cs" />
     <Compile Include="Patterns\PoidGuidPattern.cs" />

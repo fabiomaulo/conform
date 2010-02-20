@@ -33,7 +33,12 @@ namespace ConfOrm.NH
 			                           		new NoSetterPropertyToFieldAccessorApplier(),
 			                           		new PropertyToFieldAccessorApplier()
 			                           	};
-			collectionPatternsAppliers = new List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>>();
+			collectionPatternsAppliers = new List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>>
+			                             	{
+			                             		new ReadOnlyCollectionPropertyAccessorApplier(),
+			                             		new NoSetterCollectionPropertyToFieldAccessorApplier(),
+			                             		new CollectionPropertyToFieldAccessorApplier()
+			                             	};
 		}
 
 		public void Customize<TPersistent>(Action<IPersistentClassCustomizer<TPersistent>> customizeAction ) where TPersistent: class
