@@ -141,7 +141,7 @@ namespace ConfOrm.NH
 			}
 			else
 			{
-				propertyMapping.column = defaultColumnName == null || !defaultColumnName.Equals(hbm.name) ? hbm.name : (string) null;
+				propertyMapping.column = defaultColumnName == null || !defaultColumnName.Equals(hbm.name) ? hbm.name : null;
 				propertyMapping.length = hbm.length;
 				propertyMapping.precision = hbm.precision;
 				propertyMapping.scale = hbm.scale;
