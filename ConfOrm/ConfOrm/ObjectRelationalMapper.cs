@@ -290,9 +290,13 @@ namespace ConfOrm
 
 		public bool IsOneToMany(Type from, Type to)
 		{
+			if(IsEntity(to) && oneToManyRelation.Contains(new Relation(from, to)))
+			{
+				return true;
+			}
 			var areEntities = IsEntity(from) && IsEntity(to);
-			return (areEntities && oneToManyRelation.Contains(new Relation(from, to)))
-			       || (areEntities && !IsOneToOne(from, to) && !manyToManyRelation.Contains(new Relation(from, to)));
+			var isFromComponentToEntity = IsComponent(from) && IsEntity(to);
+			return (areEntities || isFromComponentToEntity) && !IsOneToOne(from, to) && !manyToManyRelation.Contains(new Relation(from, to));
 		}
 
 		public bool IsHeterogeneousAssociations(MemberInfo member)
