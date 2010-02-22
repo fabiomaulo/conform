@@ -39,6 +39,7 @@ namespace ConfOrm.NH
 			                             		new NoSetterCollectionPropertyToFieldAccessorApplier(),
 			                             		new CollectionPropertyToFieldAccessorApplier(),
 			                             		new BidirectionalOneToManyApplier(),
+			                             		new BidirectionalOneToManyOnDeleteConstraintApplier(),
 			                             	};
 		}
 
