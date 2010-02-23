@@ -6,6 +6,8 @@ namespace ConfOrm.Patterns
 {
 	public class BidirectionalOneToManyApplier : BidirectionalOneToManyPattern, IPatternApplier<MemberInfo, ICollectionPropertiesMapper>
 	{
+		public BidirectionalOneToManyApplier(IDomainInspector domainInspector) : base(domainInspector) {}
+
 		#region Implementation of IPattern<MemberInfo>
 
 		public bool Match(MemberInfo subject)

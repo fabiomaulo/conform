@@ -5,6 +5,8 @@ namespace ConfOrm.Patterns
 {
 	public class BidirectionalOneToManyCascadePattern : BidirectionalOneToManyPattern, IPatternValueGetter<Relation, Cascade>
 	{
+		public BidirectionalOneToManyCascadePattern(IDomainInspector domainInspector) : base(domainInspector) {}
+
 		public override bool Match(Relation subject)
 		{
 			if (subject == null)

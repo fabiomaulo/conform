@@ -7,8 +7,15 @@ namespace ConfOrm.Patterns
 {
 	public class BidirectionalOneToManyPattern : IPattern<Relation>
 	{
+		private readonly IDomainInspector domainInspector;
+
 		private const BindingFlags PublicPropertiesOfClassHierarchy =
 			BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
+
+		public BidirectionalOneToManyPattern(IDomainInspector domainInspector)
+		{
+			this.domainInspector = domainInspector;
+		}
 
 		#region Implementation of IPattern<Relation>
 
@@ -21,6 +28,15 @@ namespace ConfOrm.Patterns
 			}
 			Type one = subject.From;
 			Type many = subject.To;
+			if (many.IsGenericType && typeof(KeyValuePair<,>) == many.GetGenericTypeDefinition())
+			{
+				var dictionaryGenericArguments = many.GetGenericArguments();
+				many = dictionaryGenericArguments[1];
+			}
+			if (domainInspector.IsManyToMany(one, many))
+			{
+				return false;
+			}
 
 			return HasCollectionOf(one, many) && HasPropertyOf(many, one);
 		}
@@ -46,6 +62,15 @@ namespace ConfOrm.Patterns
 						if (genericArgument.IsAssignableFrom(many))
 						{
 							return true;
+						}
+						if (genericArgument.IsGenericType && typeof(KeyValuePair<,>) == genericArgument.GetGenericTypeDefinition())
+						{
+							var dictionaryGenericArguments = genericArgument.GetGenericArguments();
+							var valueType = dictionaryGenericArguments[1];
+							if (valueType.IsAssignableFrom(many))
+							{
+								return true;
+							}
 						}
 					}
 				}

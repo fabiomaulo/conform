@@ -51,11 +51,11 @@ namespace ConfOrm
 			poidPatterns = new List<IPattern<MemberInfo>> {new PoIdPattern()};
 			setPatterns = new List<IPattern<MemberInfo>> { new SetCollectionPattern() };
 			bagPatterns = new List<IPattern<MemberInfo>> { new BagCollectionPattern() };
-			listPatterns = new List<IPattern<MemberInfo>> { new ListCollectionPattern() };
+			listPatterns = new List<IPattern<MemberInfo>> { new ListCollectionPattern(this) };
 			arrayPatterns = new List<IPattern<MemberInfo>> { new ArrayCollectionPattern() };
 			componetPatterns = new List<IPattern<Type>> { new ComponentPattern() };
 			dictionaryPatterns = new List<IPattern<MemberInfo>> { new DictionaryCollectionPattern() };
-			cascadePatterns = new List<IPatternValueGetter<Relation, Cascade>> { new BidirectionalOneToManyCascadePattern() };
+			cascadePatterns = new List<IPatternValueGetter<Relation, Cascade>> { new BidirectionalOneToManyCascadePattern(this) };
 			poidStrategyPatterns = new List<IPatternValueGetter<MemberInfo, IPersistentIdStrategy>>
 			                       	{new HighLowPoidPattern(), new GuidOptimizedPoidPattern()};
 			persistentPropertyExclusionPatterns = new List<IPattern<MemberInfo>> { new ReadOnlyPropertyPattern() };

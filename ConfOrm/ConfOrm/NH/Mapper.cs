@@ -38,8 +38,8 @@ namespace ConfOrm.NH
 			                             		new ReadOnlyCollectionPropertyAccessorApplier(),
 			                             		new NoSetterCollectionPropertyToFieldAccessorApplier(),
 			                             		new CollectionPropertyToFieldAccessorApplier(),
-			                             		new BidirectionalOneToManyApplier(),
-			                             		new BidirectionalOneToManyOnDeleteConstraintApplier(),
+			                             		new BidirectionalOneToManyApplier(domainInspector),
+			                             		new BidirectionalOneToManyOnDeleteConstraintApplier(domainInspector),
 			                             	};
 		}
 

@@ -6,11 +6,13 @@ namespace ConfOrm.Patterns
 {
 	public class BidirectionalOneToManyOnDeleteConstraintApplier : BidirectionalOneToManyPattern, IPatternApplier<MemberInfo, ICollectionPropertiesMapper>
 	{
-		// TODO : should check that is a real one-to-many and avoid many-to-many (it need IDomainInspector injection)
+		public BidirectionalOneToManyOnDeleteConstraintApplier(IDomainInspector domainInspector) : base(domainInspector) {}
+
 		public bool Match(MemberInfo subject)
 		{
 			var propertyType = subject.GetPropertyOrFieldType();
 			Type many = propertyType.DetermineCollectionElementType();
+			
 			Type one = subject.DeclaringType;
 			if (many == null)
 			{
@@ -20,7 +22,7 @@ namespace ConfOrm.Patterns
 			{
 				// Circular references
 				return false;
-			} 
+			}
 			return base.Match(new Relation(one, many));
 		}
 
