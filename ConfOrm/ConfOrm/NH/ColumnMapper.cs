@@ -24,7 +24,10 @@ namespace ConfOrm.NH
 				throw new ArgumentNullException("memberName","The column name should be a valid not empty name.");
 			}
 			this.mapping = mapping;
-			mapping.name = memberName;
+			if (string.IsNullOrEmpty(mapping.name))
+			{
+				mapping.name = memberName;
+			}
 		}
 
 		#region Implementation of IColumnMapper

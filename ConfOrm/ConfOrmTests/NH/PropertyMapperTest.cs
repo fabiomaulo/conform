@@ -288,7 +288,6 @@ namespace ConfOrmTests.NH
 			mapping.length.Should().Be("50");
 			mapping.notnull.Should().Be(true);
 			mapping.notnullSpecified.Should().Be(true);
-
 		}
 
 		[Test]
@@ -329,6 +328,32 @@ namespace ConfOrmTests.NH
 			var mapper = new PropertyMapper(member, mapping);
 			mapper.Columns(cm => cm.Length(50), cm => cm.SqlType("VARCHAR(10)"));
 			ActionAssert.Throws<ConfOrm.MappingException>(() => mapper.Column(cm => cm.Length(50)));
+		}
+
+		[Test]
+		public void WhenSetBasicColumnValuesThroughShortCutThenMergeColumn()
+		{
+			var member = typeof(MyClass).GetProperty("Autoproperty");
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+			mapper.Column("pizza");
+			mapper.Length(50);
+			mapper.Precision(10);
+			mapper.Scale(2);
+			mapper.NotNullable(true);
+			mapper.Unique(true);
+			mapper.UniqueKey("AA");
+			mapper.Index("II");
+
+			mapping.Items.Should().Be.Null();
+			mapping.column.Should().Be("pizza");
+			mapping.length.Should().Be("50");
+			mapping.precision.Should().Be("10");
+			mapping.scale.Should().Be("2");
+			mapping.notnull.Should().Be(true);
+			mapping.unique.Should().Be(true);
+			mapping.uniquekey.Should().Be("AA");
+			mapping.index.Should().Be("II");
 		}
 	}
 

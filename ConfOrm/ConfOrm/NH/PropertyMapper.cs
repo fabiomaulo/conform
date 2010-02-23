@@ -181,6 +181,46 @@ namespace ConfOrm.NH
 			propertyMapping.Items = columns.ToArray();
 		}
 
+		public void Column(string name)
+		{
+			Column(x => x.Name(name));
+		}
+
+		public void Length(int length)
+		{
+			Column(x => x.Length(length));
+		}
+
+		public void Precision(short precision)
+		{
+			Column(x => x.Precision(precision));
+		}
+
+		public void Scale(short scale)
+		{
+			Column(x => x.Scale(scale));
+		}
+
+		public void NotNullable(bool notnull)
+		{
+			Column(x => x.NotNullable(notnull));
+		}
+
+		public void Unique(bool unique)
+		{
+			Column(x => x.Unique(unique));
+		}
+
+		public void UniqueKey(string uniquekeyName)
+		{
+			Column(x => x.UniqueKey(uniquekeyName));
+		}
+
+		public void Index(string indexName)
+		{
+			Column(x => x.Index(indexName));
+		}
+
 		#endregion
 	}
 }
