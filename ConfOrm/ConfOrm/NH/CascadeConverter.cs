@@ -7,7 +7,7 @@ namespace ConfOrm.NH
 	{
 		public static string ToCascadeString(this Cascade source)
 		{
-			return string.Join(",", source.CascadeDefinitions().ToArray());
+			return source == Cascade.None ? null : string.Join(",", source.CascadeDefinitions().ToArray());
 		}
 
 		private static IEnumerable<string> CascadeDefinitions(this Cascade source)

@@ -330,10 +330,7 @@ namespace ConfOrm.NH
 			propertiesContainer.OneToOne(member, oneToOneMapper =>
 				{
 					Cascade cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
-					if (cascade != Cascade.None)
-					{
-						oneToOneMapper.Cascade(cascade);
-					}
+					oneToOneMapper.Cascade(cascade);
 					customizerHolder.InvokeCustomizers(member, oneToOneMapper);
 				});
 		}
@@ -344,10 +341,7 @@ namespace ConfOrm.NH
 			propertiesContainer.ManyToOne(member, manyToOneMapper =>
 				{
 					Cascade cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
-					if (cascade != Cascade.None)
-					{
-						manyToOneMapper.Cascade(cascade);
-					}
+					manyToOneMapper.Cascade(cascade);
 					customizerHolder.InvokeCustomizers(member, manyToOneMapper);
 				});
 		}
@@ -416,10 +410,7 @@ namespace ConfOrm.NH
 					mapped.Key(k => k.Column(parentColumnNameInChild));
 				}
 				var cascadeToApply = domainInspector.ApplyCascade(ownerType, member, collectionElementType);
-				if(cascadeToApply != Cascade.None)
-				{
-					mapped.Cascade(cascadeToApply);
-				}
+				mapped.Cascade(cascadeToApply);
 			}
 
 			private string GetParentColumnNameInChild()
@@ -460,10 +451,7 @@ namespace ConfOrm.NH
 			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)
 			{
 				var cascadeToApply = domainInspector.ApplyCascade(ownerType, member, collectionElementType);
-				if (cascadeToApply != Cascade.None)
-				{
-					mapped.Cascade(cascadeToApply);
-				}
+				mapped.Cascade(cascadeToApply);
 			}
 
 			#endregion
