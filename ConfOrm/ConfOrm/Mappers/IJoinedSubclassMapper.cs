@@ -1,11 +1,21 @@
 namespace ConfOrm.Mappers
 {
-	public interface IJoinedSubclassMapper : IPropertyContainerMapper
+	public interface IJoinedSubclassAttributesMapper
+	{
+
+	}
+	public interface IJoinedSubclassMapper : IJoinedSubclassAttributesMapper,IPropertyContainerMapper
 	{
 		
 	}
 
-	public interface IJoinedSubclassMapper<TEntity> : IJoinedSubclassMapper, IPropertyContainerMapper<TEntity> where TEntity : class
+	public interface IJoinedSubclassAttributesMapper<TEntity> where TEntity : class
+	{
+
+	}
+
+	public interface IJoinedSubclassMapper<TEntity> : IJoinedSubclassAttributesMapper<TEntity>, IPropertyContainerMapper<TEntity> where TEntity : class
 	{
 	}
+
 }

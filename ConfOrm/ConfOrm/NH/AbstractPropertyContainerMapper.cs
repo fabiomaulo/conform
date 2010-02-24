@@ -70,7 +70,7 @@ namespace ConfOrm.NH
 			AddProperty(hbm);
 		}
 
-		public void Set(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
+		public void Set(MemberInfo property, Action<ISetPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
 		{
 			var hbm = new HbmSet { name = property.Name };
 			var propertyType = property.GetPropertyOrFieldType();
@@ -80,7 +80,7 @@ namespace ConfOrm.NH
 			AddProperty(hbm);
 		}
 
-		public void Bag(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
+		public void Bag(MemberInfo property, Action<IBagPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
 		{
 			var hbm = new HbmBag { name = property.Name };
 			var propertyType = property.GetPropertyOrFieldType();
@@ -90,7 +90,7 @@ namespace ConfOrm.NH
 			AddProperty(hbm);
 		}
 
-		public void List(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
+		public void List(MemberInfo property, Action<IListPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
 		{
 			var hbm = new HbmList { name = property.Name };
 			var propertyType = property.GetPropertyOrFieldType();
@@ -100,7 +100,7 @@ namespace ConfOrm.NH
 			AddProperty(hbm);
 		}
 
-		public void Map(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
+		public void Map(MemberInfo property, Action<IMapPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
 		{
 			var hbm = new HbmMap { name = property.Name };
 			var propertyType = property.GetPropertyOrFieldType();

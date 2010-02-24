@@ -1,11 +1,21 @@
 namespace ConfOrm.Mappers
 {
-	public interface IUnionSubclassMapper : IPropertyContainerMapper
+	public interface IUnionSubclassAttributesMapper
 	{
-		
+
+	}
+	public interface IUnionSubclassMapper : IUnionSubclassAttributesMapper, IPropertyContainerMapper
+	{
+
 	}
 
-	public interface IUnionSubclassMapper<TEntity> : IUnionSubclassMapper, IPropertyContainerMapper<TEntity> where TEntity : class
+	public interface IUnionSubclassAttributesMapper<TEntity> where TEntity : class
+	{
+
+	}
+
+	public interface IUnionSubclassMapper<TEntity> : IUnionSubclassAttributesMapper<TEntity>, IPropertyContainerMapper<TEntity> where TEntity : class
 	{
 	}
+
 }

@@ -67,5 +67,26 @@ namespace ConfOrmTests.NH
 			new IdMapper(hbmId).Generator(Generators.Identity);
 			hbmId.generator.@class.Should().Be.EqualTo("identity");
 		}
+
+		private class MyClass
+		{
+			public int Id { get; set; }
+			public Related OneToOne { get; set; }
+		}
+
+		private class Related
+		{
+			public int Id { get; set; }			
+		}
+
+		[Test]
+		public void CanSetGeneratorForeign()
+		{
+			var hbmId = new HbmId();
+			new IdMapper(hbmId).Generator(Generators.Foreign<MyClass>(mc => mc.OneToOne));
+			hbmId.generator.@class.Should().Be.EqualTo("foreign");
+			hbmId.generator.param.Should().Not.Be.Null().And.Have.Count.EqualTo(1);
+			hbmId.generator.param.Single().Satisfy(p => p.name == "property" && p.GetText() == "OneToOne");
+		}
 	}
 }

@@ -9,7 +9,7 @@ namespace ConfOrm.Mappers
 		void Parent(MemberInfo parent);
 	}
 
-	public interface IComponentMapper<TComponent> : IComponentMapper, IPropertyContainerMapper<TComponent> where TComponent : class
+	public interface IComponentMapper<TComponent> : IPropertyContainerMapper<TComponent> where TComponent : class
 	{
 		void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent) where TProperty : class;
 	}

@@ -77,5 +77,23 @@ namespace ConfOrmTests.NH.MapperTests
 			var subNodes = (HbmBag)rc.Properties.Single(p => p.Name == "Subnodes");
 			subNodes.cascade.Should().Contain("all").And.Contain("delete-orphan");
 		}
+
+		[Test]
+		public void WhenExplicitRequiredThroughClassCustomizerApplyCascadeOnParent()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Node>();
+
+			var mapper = new Mapper(orm);
+			mapper.Class<Node>(node => node.ManyToOne(n => n.Parent, m => m.Cascade(Cascade.Persist)));
+
+			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(Node) });
+
+			HbmClass rc = mapping.RootClasses.Single();
+			var parent = (HbmManyToOne)rc.Properties.Single(p => p.Name == "Parent");
+			parent.cascade.Should().Contain("persist");
+			var subNodes = (HbmBag)rc.Properties.Single(p => p.Name == "Subnodes");
+			subNodes.cascade.Should().Contain("all").And.Contain("delete-orphan");
+		}
 	}
 }

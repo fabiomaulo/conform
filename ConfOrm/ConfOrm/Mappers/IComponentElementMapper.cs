@@ -15,7 +15,7 @@ namespace ConfOrm.Mappers
 		void ManyToOne(MemberInfo property, Action<IManyToOneMapper> mapping);
 	}
 
-	public interface IComponentElementMapper<TComponent> where TComponent : class
+	public interface IComponentElementMapper<TComponent>
 	{
 		void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent) where TProperty : class;
 

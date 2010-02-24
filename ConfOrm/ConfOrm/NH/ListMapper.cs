@@ -6,7 +6,7 @@ using NHibernate.UserTypes;
 
 namespace ConfOrm.NH
 {
-	public class ListMapper : ICollectionPropertiesMapper
+	public class ListMapper : IListPropertiesMapper
 	{
 		private readonly KeyMapper keyMapper;
 		private readonly HbmList mapping;

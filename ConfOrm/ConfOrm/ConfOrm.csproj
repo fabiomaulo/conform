@@ -54,8 +54,14 @@
     <Compile Include="IPatternApplier.cs" />
     <Compile Include="IPatternValueGetter.cs" />
     <Compile Include="Mappers\CollectionLazy.cs" />
+    <Compile Include="Mappers\IBagPropertiesMapper.cs" />
     <Compile Include="Mappers\IColumnMapper.cs" />
+    <Compile Include="Mappers\IEntityAttributesMapper.cs" />
+    <Compile Include="Mappers\IListPropertiesMapper.cs" />
+    <Compile Include="Mappers\ISetPropertiesMapper.cs" />
+    <Compile Include="NH\ClassCustomizer.cs" />
     <Compile Include="NH\ColumnMapper.cs" />
+    <Compile Include="NH\ComponentCustomizer.cs" />
     <Compile Include="NH\EntityPropertyMapper.cs" />
     <Compile Include="NH\Generators.cs" />
     <Compile Include="Mappers\IClassMapper.cs" />
@@ -100,6 +106,7 @@
     <Compile Include="NH\Mapper.cs" />
     <Compile Include="NH\OneToOneMapper.cs" />
     <Compile Include="NH\PersistentClassCustomizer.cs" />
+    <Compile Include="NH\PropertyContainerCustomizer.cs" />
     <Compile Include="NH\PropertyMapper.cs" />
     <Compile Include="NH\SetMapper.cs" />
     <Compile Include="NH\SubclassMapper.cs" />

@@ -1,3 +1,6 @@
+using System;
+using System.Linq.Expressions;
+using System.Reflection;
 using ConfOrm.Mappers;
 
 namespace ConfOrm.NH
@@ -20,6 +23,38 @@ namespace ConfOrm.NH
 		public static IGeneratorDef GuidComb { get; private set; }
 		public static IGeneratorDef Sequence { get; private set; }
 		public static IGeneratorDef Identity { get; private set; }
+		public static IGeneratorDef Foreign<TEntity>(Expression<Func<TEntity, object>> property)
+		{
+			return new ForeignGeneratorDef(TypeExtensions.DecodeMemberAccessExpression(property));
+		}
+	}
+
+	public class ForeignGeneratorDef : IGeneratorDef
+	{
+		private readonly object param;
+
+		public ForeignGeneratorDef(MemberInfo foreignProperty)
+		{
+			if (foreignProperty == null)
+			{
+				throw new ArgumentNullException("foreignProperty");
+			}
+			param = new {property = foreignProperty.Name}; 
+		}
+
+		#region Implementation of IGeneratorDef
+
+		public string Class
+		{
+			get { return "foreign"; }
+		}
+
+		public object Params
+		{
+			get { return param; }
+		}
+
+		#endregion
 	}
 
 	public class NativeGeneratorDef: IGeneratorDef

@@ -111,6 +111,7 @@
     <Compile Include="NH\MapperTests\OneToManyOnDeleteConstraintWhenCyclicTest.cs" />
     <Compile Include="NH\MapperTests\PrivatePropertiesTest.cs" />
     <Compile Include="NH\MapperTests\PropertyAccessorTest.cs" />
+    <Compile Include="NH\MapperTests\RootClassCustomizerCallingTest.cs" />
     <Compile Include="NH\OneToOneMapperTest.cs" />
     <Compile Include="NH\PropertyMapperTest.cs" />
     <Compile Include="NH\SubclassMapperTest.cs" />

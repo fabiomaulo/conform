@@ -71,6 +71,64 @@ namespace ConfOrm.NH
 			}
 		}
 
+		public void DiscriminatorValue(object value)
+		{
+			classMapping.discriminatorvalue = value != null ? value.ToString() : "null";
+		}
+
+		#endregion
+
+		#region Implementation of IEntityAttributesMapper
+
+		public void EntityName(string value)
+		{
+			classMapping.entityname = value;
+		}
+
+		public void Proxy(Type proxy)
+		{
+			if (!Container.IsAssignableFrom(proxy) && !proxy.IsAssignableFrom(Container))
+			{
+				throw new MappingException("Not compatible proxy for " + Container);
+			}
+			classMapping.proxy = proxy.GetShortClassName(MapDoc);
+		}
+
+		public void Lazy(bool value)
+		{
+			classMapping.lazy = value;
+			classMapping.lazySpecified = !value;
+		}
+
+		public void DynamicUpdate(bool value)
+		{
+			classMapping.dynamicupdate = value;
+		}
+
+		public void DynamicInsert(bool value)
+		{
+			classMapping.dynamicinsert = value;
+		}
+
+		public void BatchSize(int value)
+		{
+			if (value > 0)
+			{
+				classMapping.batchsize = value;
+				classMapping.batchsizeSpecified = true;
+			}
+			else
+			{
+				classMapping.batchsize = 0;
+				classMapping.batchsizeSpecified = false;
+			}
+		}
+
+		public void SelectBeforeUpdate(bool value)
+		{
+			classMapping.selectbeforeupdate = value;
+		}
+
 		#endregion
 	}
 }

@@ -6,7 +6,7 @@ using NHibernate.UserTypes;
 
 namespace ConfOrm.NH
 {
-	public class BagMapper : ICollectionPropertiesMapper
+	public class BagMapper : IBagPropertiesMapper
 	{
 		private readonly KeyMapper keyMapper;
 		private readonly HbmBag mapping;

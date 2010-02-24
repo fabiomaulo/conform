@@ -19,27 +19,26 @@ namespace ConfOrm.NH
 		public void Property<TProperty>(Expression<Func<TPersistent, TProperty>> property, Action<IPropertyMapper> mapping)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(property);
-			customizersHolder.PropertyCustomizers[member] = mapping;
+			customizersHolder.AddCustomizer(member,mapping);
 		}
 
 		public void ManyToOne<TProperty>(Expression<Func<TPersistent, TProperty>> property, Action<IManyToOneMapper> mapping) where TProperty : class
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(property);
-			customizersHolder.ManyToOneCustomizers[member] = mapping;
+			customizersHolder.AddCustomizer(member,mapping);
 			
 		}
 
 		public void OneToOne<TProperty>(Expression<Func<TPersistent, TProperty>> property, Action<IOneToOneMapper> mapping) where TProperty : class
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(property);
-			customizersHolder.OneToOneCustomizers[member] = mapping;
-			
+			customizersHolder.AddCustomizer(member,mapping);
 		}
 
 		public void Collection<TElement>(Expression<Func<TPersistent, IEnumerable<TElement>>> property, Action<ICollectionPropertiesMapper> mapping)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(property);
-			customizersHolder.CollectionCustomizers[member] = mapping;			
+			customizersHolder.AddCustomizer(member, mapping);
 		}
 
 		#endregion

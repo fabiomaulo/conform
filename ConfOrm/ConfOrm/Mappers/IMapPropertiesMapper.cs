@@ -6,4 +6,9 @@ namespace ConfOrm.Mappers
 	{
 		void MapKeyManyToMany(Action<IMapKeyManyToManyMapper> mapKeyMapping);
 	}
+
+	public interface IMapPropertiesMapper<TKey, TElement> : ICollectionPropertiesMapper<TElement>
+	{
+		void MapKeyManyToMany(Action<IMapKeyManyToManyMapper> mapKeyMapping);
+	}
 }

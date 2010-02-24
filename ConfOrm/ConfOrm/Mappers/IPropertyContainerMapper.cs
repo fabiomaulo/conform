@@ -14,20 +14,20 @@ namespace ConfOrm.Mappers
 		void ManyToOne(MemberInfo property, Action<IManyToOneMapper> mapping);
 		void OneToOne(MemberInfo property, Action<IOneToOneMapper> mapping);
 
-		void Set(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping,
+		void Set(MemberInfo property, Action<ISetPropertiesMapper> collectionMapping,
 		         Action<ICollectionElementRelation> mapping);
 
-		void Bag(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping,
+		void Bag(MemberInfo property, Action<IBagPropertiesMapper> collectionMapping,
 		                   Action<ICollectionElementRelation> mapping);
 
-		void List(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping,
+		void List(MemberInfo property, Action<IListPropertiesMapper> collectionMapping,
 		                    Action<ICollectionElementRelation> mapping);
 
-		void Map(MemberInfo property, Action<ICollectionPropertiesMapper> collectionMapping,
+		void Map(MemberInfo property, Action<IMapPropertiesMapper> collectionMapping,
 		                         Action<ICollectionElementRelation> mapping);
 	}
 
-	public interface IPropertyContainerMapper<TEntity> : IPropertyContainerMapper where TEntity : class
+	public interface IPropertyContainerMapper<TEntity>
 	{
 		void Property<TProperty>(Expression<Func<TEntity, TProperty>> property, Action<IPropertyMapper> mapping);
 
@@ -38,16 +38,16 @@ namespace ConfOrm.Mappers
 		void OneToOne<TProperty>(Expression<Func<TEntity, TProperty>> property, Action<IOneToOneMapper> mapping) where TProperty : class;
 
 		void Set<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
-											 Action<ICollectionPropertiesMapper<TElement>> collectionMapping,
-											 Action<ICollectionElementRelation> mapping);
+											 Action<ISetPropertiesMapper> collectionMapping,
+											 Action<ICollectionElementRelation<TElement>> mapping);
 		void Bag<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
-											 Action<ICollectionPropertiesMapper<TElement>> collectionMapping,
-											 Action<ICollectionElementRelation> mapping);
+											 Action<IBagPropertiesMapper> collectionMapping,
+											 Action<ICollectionElementRelation<TElement>> mapping);
 		void List<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
-											 Action<ICollectionPropertiesMapper<TElement>> collectionMapping,
-											 Action<ICollectionElementRelation> mapping);
-		void Map<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
-											 Action<ICollectionPropertiesMapper<TElement>> collectionMapping,
-											 Action<ICollectionElementRelation> mapping);
+											 Action<IListPropertiesMapper> collectionMapping,
+											 Action<ICollectionElementRelation<TElement>> mapping);
+		void Map<TKey, TElement>(Expression<Func<TEntity, IDictionary<TKey, TElement>>> property,
+											 Action<IMapPropertiesMapper> collectionMapping,
+											 Action<ICollectionElementRelation<TElement>> mapping);
 	}
 }
