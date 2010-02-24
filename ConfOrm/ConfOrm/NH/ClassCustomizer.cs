@@ -58,5 +58,29 @@ namespace ConfOrm.NH
 		}
 
 		#endregion
+
+		#region Implementation of IEntitySqlsMapper
+
+		public void Loader(string namedQueryReference)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.Loader(namedQueryReference));
+		}
+
+		public void SqlInsert(string sql)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.SqlInsert(sql));
+		}
+
+		public void SqlUpdate(string sql)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.SqlUpdate(sql));
+		}
+
+		public void SqlDelete(string sql)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.SqlDelete(sql));
+		}
+
+		#endregion
 	}
 }

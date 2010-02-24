@@ -57,6 +57,7 @@
     <Compile Include="Mappers\IBagPropertiesMapper.cs" />
     <Compile Include="Mappers\IColumnMapper.cs" />
     <Compile Include="Mappers\IEntityAttributesMapper.cs" />
+    <Compile Include="Mappers\IEntitySqlsMapper.cs" />
     <Compile Include="Mappers\IListPropertiesMapper.cs" />
     <Compile Include="Mappers\ISetPropertiesMapper.cs" />
     <Compile Include="NH\ClassCustomizer.cs" />

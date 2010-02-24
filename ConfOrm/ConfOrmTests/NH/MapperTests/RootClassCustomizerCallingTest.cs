@@ -103,5 +103,27 @@ namespace ConfOrmTests.NH.MapperTests
 			hbmClass.DynamicUpdate.Should().Be(true);
 			hbmClass.SelectBeforeUpdate.Should().Be(true);
 		}
+
+		[Test]
+		public void SetCustomQueries()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+
+			var mapper = new Mapper(orm.Object);
+			mapper.Class<MyClass>(x =>
+			{
+				x.Loader("organization");
+				x.SqlInsert("INSERT INTO ORGANIZATION (NAME, ORGID) VALUES ( UPPER(?), ? )");
+				x.SqlUpdate("UPDATE ORGANIZATION SET NAME=UPPER(?) WHERE ORGID=?");
+				x.SqlDelete("DELETE FROM ORGANIZATION WHERE ORGID=?");
+			});
+
+			var mappings = mapper.CompileMappingFor(new[] { typeof(MyClass) });
+			var hbmClass = mappings.RootClasses.Single();
+			hbmClass.SqlLoader.Satisfy(l => l != null && l.queryref == "organization");
+			hbmClass.SqlInsert.Satisfy(l => l != null && l.Text[0] == "INSERT INTO ORGANIZATION (NAME, ORGID) VALUES ( UPPER(?), ? )");
+			hbmClass.SqlUpdate.Satisfy(l => l != null && l.Text[0] == "UPDATE ORGANIZATION SET NAME=UPPER(?) WHERE ORGID=?");
+			hbmClass.SqlDelete.Satisfy(l => l != null && l.Text[0] == "DELETE FROM ORGANIZATION WHERE ORGID=?");
+		}
 	}
 }

@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace ConfOrm.Mappers
 {
-	public interface IClassAttributesMapper : IEntityAttributesMapper
+	public interface IClassAttributesMapper : IEntityAttributesMapper, IEntitySqlsMapper
 	{
 		void Id(Action<IIdMapper> idMapper);
 		void Id(MemberInfo idProperty, Action<IIdMapper> idMapper);
@@ -16,7 +16,7 @@ namespace ConfOrm.Mappers
 	{
 	}
 
-	public interface IClassAttributesMapper<TEntity> : IEntityAttributesMapper where TEntity : class
+	public interface IClassAttributesMapper<TEntity> : IEntityAttributesMapper, IEntitySqlsMapper where TEntity : class
 	{
 		void Id<TProperty>(Expression<Func<TEntity, TProperty>> idProperty, Action<IIdMapper> idMapper);
 	}

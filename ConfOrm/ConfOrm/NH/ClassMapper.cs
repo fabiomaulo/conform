@@ -130,5 +130,45 @@ namespace ConfOrm.NH
 		}
 
 		#endregion
+
+		#region Implementation of IEntitySqlsMapper
+
+		public void Loader(string namedQueryReference)
+		{
+			if(classMapping.SqlLoader == null)
+			{
+				classMapping.loader = new HbmLoader();
+			}
+			classMapping.loader.queryref = namedQueryReference;
+		}
+
+		public void SqlInsert(string sql)
+		{
+			if (classMapping.SqlInsert == null)
+			{
+				classMapping.sqlinsert = new HbmCustomSQL();
+			}
+			classMapping.sqlinsert.Text = new[] { sql };
+		}
+
+		public void SqlUpdate(string sql)
+		{
+			if (classMapping.SqlUpdate == null)
+			{
+				classMapping.sqlupdate = new HbmCustomSQL();
+			}
+			classMapping.sqlupdate.Text = new[] { sql };
+		}
+
+		public void SqlDelete(string sql)
+		{
+			if (classMapping.SqlDelete == null)
+			{
+				classMapping.sqldelete = new HbmCustomSQL();
+			}
+			classMapping.sqldelete.Text = new[] { sql };
+		}
+
+		#endregion
 	}
 }
