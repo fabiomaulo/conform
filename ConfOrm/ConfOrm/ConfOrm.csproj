@@ -62,6 +62,7 @@
     <Compile Include="NH\ClassCustomizer.cs" />
     <Compile Include="NH\ColumnMapper.cs" />
     <Compile Include="NH\ComponentCustomizer.cs" />
+    <Compile Include="NH\CustomizersHolder.cs" />
     <Compile Include="NH\EntityPropertyMapper.cs" />
     <Compile Include="NH\Generators.cs" />
     <Compile Include="Mappers\IClassMapper.cs" />
