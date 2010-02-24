@@ -196,117 +196,163 @@ namespace ConfOrm.NH
 			return properties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p));
 		}
 
-		private void MapProperties(Type propertiesContainerType, IEnumerable<PropertyInfo> propertiesToMap, IPropertyContainerMapper propertiesContainer)
+		private void MapProperties(Type propertiesContainerType, IEnumerable<PropertyInfo> propertiesToMap,
+		                           IPropertyContainerMapper propertiesContainer)
 		{
-			foreach (var property in propertiesToMap)
+			foreach (PropertyInfo property in propertiesToMap)
 			{
 				MemberInfo member = property;
-				var propertyType = property.GetPropertyOrFieldType();
-				if(domainInspector.IsManyToOne(propertiesContainerType, propertyType))
+				Type propertyType = property.GetPropertyOrFieldType();
+				if (domainInspector.IsManyToOne(propertiesContainerType, propertyType))
 				{
-					propertiesContainer.ManyToOne(property, manyToOneMapper =>
-						{
-							var cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
-							if(cascade != Cascade.None)
-							{
-								manyToOneMapper.Cascade(cascade);
-							}
-							customizerHolder.InvokeCustomizers(member, manyToOneMapper);
-						});
+					MapManyToOne(member, propertyType, propertiesContainer, propertiesContainerType);
 				}
 				else if (domainInspector.IsOneToOne(propertiesContainerType, propertyType))
 				{
-					propertiesContainer.OneToOne(property, oneToOneMapper =>
-						{
-							var cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
-							if (cascade != Cascade.None)
-							{
-								oneToOneMapper.Cascade(cascade);
-							}
-							customizerHolder.InvokeCustomizers(member, oneToOneMapper);
-						});
+					MapOneToOne(member, propertyType, propertiesContainer, propertiesContainerType);
 				}
 				else if (domainInspector.IsSet(property))
 				{
-					Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, property, propertyType);
-					var cert = DetermineCollectionElementRelationType(property, collectionElementType);
-					propertiesContainer.Set(property, collectionPropertiesMapper=>
-						{
-							cert.MapCollectionProperties(collectionPropertiesMapper);
-							collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
-							customizerHolder.InvokeCustomizers(member, collectionPropertiesMapper);
-						}, cert.Map);
+					MapSet(member, propertyType, propertiesContainer, propertiesContainerType);
 				}
 				else if (domainInspector.IsDictionary(property))
 				{
-					Type dictionaryKeyType = propertyType.DetermineDictionaryKeyType();
-					if (dictionaryKeyType == null)
-					{
-						throw new NotSupportedException(string.Format("Can't determine collection element relation (property{0} in {1})",
-						                                              property.Name, propertiesContainerType));
-					}
-					Type dictionaryValueType = propertyType.DetermineDictionaryValueType();
-					var cert = DetermineCollectionElementRelationType(property, dictionaryValueType);
-					propertiesContainer.Map(property, collectionPropertiesMapper =>
-						{
-							cert.MapCollectionProperties(collectionPropertiesMapper);
-							collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
-							customizerHolder.InvokeCustomizers(member, collectionPropertiesMapper);
-						}, cert.Map);
+					MapDictionary(member, propertyType, propertiesContainer, propertiesContainerType);
 				}
-				else if (domainInspector.IsArray(property))
-				{
-				}
+				else if (domainInspector.IsArray(property)) {}
 				else if (domainInspector.IsList(property))
 				{
-					Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, property, propertyType);
-					var cert = DetermineCollectionElementRelationType(property, collectionElementType);
-					propertiesContainer.List(property, collectionPropertiesMapper =>
-					{
-						cert.MapCollectionProperties(collectionPropertiesMapper);
-						collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
-						customizerHolder.InvokeCustomizers(member, collectionPropertiesMapper);
-					}, cert.Map);
+					MapList(member, propertyType, propertiesContainer, propertiesContainerType);
 				}
 				else if (domainInspector.IsBag(property))
 				{
-					Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, property, propertyType);
-					var cert = DetermineCollectionElementRelationType(property, collectionElementType);
-					propertiesContainer.Bag(property, collectionPropertiesMapper =>
-					{
-						cert.MapCollectionProperties(collectionPropertiesMapper);
-						collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
-						customizerHolder.InvokeCustomizers(member, collectionPropertiesMapper);
-					}, cert.Map);
+					MapBag(member, propertyType, propertiesContainer, propertiesContainerType);
 				}
 				else if (domainInspector.IsComponent(propertyType))
 				{
-					propertiesContainer.Component(property, x =>
-						{
-							// Note: should, the Parent relation, be managed through DomainInspector ?
-							var componentType = propertyType;
-							var persistentProperties = GetPersistentProperties(componentType);
-							var parentReferenceProperty =
-								persistentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == propertiesContainerType);
-							if (parentReferenceProperty != null)
-							{
-								x.Parent(parentReferenceProperty);
-							}
-							MapProperties(propertyType, persistentProperties.Where(pi => pi != parentReferenceProperty), x);
-						});
+					MapComponent(member, propertyType, propertiesContainer, propertiesContainerType);
 				}
 				else
 				{
-					propertiesContainer.Property(member, propertyMapper =>
-						{
-							propertyPatternsAppliers.ApplyAllMatchs(member, propertyMapper);
-							customizerHolder.InvokeCustomizers(member, propertyMapper);
-						});
+					MapProperty(member, propertiesContainer);
 				}
 			}
 		}
 
-		private Type GetCollectionElementTypeOrThrow(Type type, PropertyInfo property, Type propertyType)
+		private void MapProperty(MemberInfo member, IPropertyContainerMapper propertiesContainer)
+		{
+			propertiesContainer.Property(member, propertyMapper =>
+				{
+					propertyPatternsAppliers.ApplyAllMatchs(member, propertyMapper);
+					customizerHolder.InvokeCustomizers(member, propertyMapper);
+				});
+		}
+
+		private void MapComponent(MemberInfo member, Type propertyType, IPropertyContainerMapper propertiesContainer,
+		                          Type propertiesContainerType)
+		{
+			propertiesContainer.Component(member, x =>
+				{
+					// Note: should, the Parent relation, be managed through DomainInspector ?
+					Type componentType = propertyType;
+					IEnumerable<PropertyInfo> persistentProperties = GetPersistentProperties(componentType);
+					PropertyInfo parentReferenceProperty =
+						persistentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == propertiesContainerType);
+					if (parentReferenceProperty != null)
+					{
+						x.Parent(parentReferenceProperty);
+					}
+					MapProperties(propertyType, persistentProperties.Where(pi => pi != parentReferenceProperty), x);
+				});
+		}
+
+		private void MapBag(MemberInfo member, Type propertyType, IPropertyContainerMapper propertiesContainer,
+		                    Type propertiesContainerType)
+		{
+			Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, member, propertyType);
+			ICollectionElementRelationMapper cert = DetermineCollectionElementRelationType(member, collectionElementType);
+			propertiesContainer.Bag(member, collectionPropertiesMapper =>
+				{
+					cert.MapCollectionProperties(collectionPropertiesMapper);
+					collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
+					customizerHolder.InvokeCustomizers(member, collectionPropertiesMapper);
+				}, cert.Map);
+		}
+
+		private void MapList(MemberInfo member, Type propertyType, IPropertyContainerMapper propertiesContainer,
+		                     Type propertiesContainerType)
+		{
+			Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, member, propertyType);
+			ICollectionElementRelationMapper cert = DetermineCollectionElementRelationType(member, collectionElementType);
+			propertiesContainer.List(member, collectionPropertiesMapper =>
+				{
+					cert.MapCollectionProperties(collectionPropertiesMapper);
+					collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
+					customizerHolder.InvokeCustomizers(member, collectionPropertiesMapper);
+				}, cert.Map);
+		}
+
+		private void MapDictionary(MemberInfo member, Type propertyType, IPropertyContainerMapper propertiesContainer,
+		                           Type propertiesContainerType)
+		{
+			Type dictionaryKeyType = propertyType.DetermineDictionaryKeyType();
+			if (dictionaryKeyType == null)
+			{
+				throw new NotSupportedException(string.Format("Can't determine collection element relation (property{0} in {1})",
+				                                              member.Name, propertiesContainerType));
+			}
+			Type dictionaryValueType = propertyType.DetermineDictionaryValueType();
+			ICollectionElementRelationMapper cert = DetermineCollectionElementRelationType(member, dictionaryValueType);
+			propertiesContainer.Map(member, collectionPropertiesMapper =>
+				{
+					cert.MapCollectionProperties(collectionPropertiesMapper);
+					collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
+					customizerHolder.InvokeCustomizers(member, collectionPropertiesMapper);
+				}, cert.Map);
+		}
+
+		private void MapSet(MemberInfo member, Type propertyType, IPropertyContainerMapper propertiesContainer,
+		                    Type propertiesContainerType)
+		{
+			Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, member, propertyType);
+			ICollectionElementRelationMapper cert = DetermineCollectionElementRelationType(member, collectionElementType);
+			propertiesContainer.Set(member, collectionPropertiesMapper =>
+				{
+					cert.MapCollectionProperties(collectionPropertiesMapper);
+					collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
+					customizerHolder.InvokeCustomizers(member, collectionPropertiesMapper);
+				}, cert.Map);
+		}
+
+		private void MapOneToOne(MemberInfo member, Type propertyType, IPropertyContainerMapper propertiesContainer,
+		                         Type propertiesContainerType)
+		{
+			propertiesContainer.OneToOne(member, oneToOneMapper =>
+				{
+					Cascade cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
+					if (cascade != Cascade.None)
+					{
+						oneToOneMapper.Cascade(cascade);
+					}
+					customizerHolder.InvokeCustomizers(member, oneToOneMapper);
+				});
+		}
+
+		private void MapManyToOne(MemberInfo member, Type propertyType, IPropertyContainerMapper propertiesContainer,
+		                          Type propertiesContainerType)
+		{
+			propertiesContainer.ManyToOne(member, manyToOneMapper =>
+				{
+					Cascade cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
+					if (cascade != Cascade.None)
+					{
+						manyToOneMapper.Cascade(cascade);
+					}
+					customizerHolder.InvokeCustomizers(member, manyToOneMapper);
+				});
+		}
+
+		private Type GetCollectionElementTypeOrThrow(Type type, MemberInfo property, Type propertyType)
 		{
 			Type collectionElementType = propertyType.DetermineCollectionElementType();
 			if (collectionElementType == null)
@@ -551,9 +597,5 @@ namespace ConfOrm.NH
 				yield return mapping;
 			}
 		}
-
-		#region Implementation of ICustomizersHolder
-
-		#endregion
 	}
 }
