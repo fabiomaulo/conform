@@ -125,5 +125,26 @@ namespace ConfOrmTests.NH.MapperTests
 			hbmClass.SqlUpdate.Satisfy(l => l != null && l.Text[0] == "UPDATE ORGANIZATION SET NAME=UPPER(?) WHERE ORGID=?");
 			hbmClass.SqlDelete.Satisfy(l => l != null && l.Text[0] == "DELETE FROM ORGANIZATION WHERE ORGID=?");
 		}
+
+		[Test]
+		public void SetDiscriminatorValue()
+		{
+			var orm = new Mock<IDomainInspector>();
+			orm.Setup(m => m.IsEntity(It.IsAny<Type>())).Returns(true);
+			orm.Setup(m => m.IsRootEntity(It.IsAny<Type>())).Returns(true);
+			orm.Setup(m => m.IsTablePerClassHierarchy(It.IsAny<Type>())).Returns(true);
+			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
+			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
+
+			var mapper = new Mapper(orm.Object);
+			mapper.Class<MyClass>(x =>
+			{
+				x.DiscriminatorValue(123);
+			});
+
+			var mappings = mapper.CompileMappingFor(new[] { typeof(MyClass) });
+			var hbmClass = mappings.RootClasses.Single();
+			hbmClass.discriminatorvalue.Should().Be("123");
+		}
 	}
 }

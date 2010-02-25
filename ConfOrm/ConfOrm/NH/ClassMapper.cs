@@ -73,7 +73,20 @@ namespace ConfOrm.NH
 
 		public void DiscriminatorValue(object value)
 		{
-			classMapping.discriminatorvalue = value != null ? value.ToString() : "null";
+			if (value != null)
+			{
+				classMapping.discriminatorvalue = value.ToString();
+				Discriminator();
+				var valueType = value.GetType();
+				if(valueType != typeof(string))
+				{
+					classMapping.discriminator.type = valueType.GetNhTypeName();
+				}
+			}
+			else
+			{
+				classMapping.discriminatorvalue = "null";
+			}
 		}
 
 		#endregion

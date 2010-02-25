@@ -65,5 +65,16 @@ namespace ConfOrmTests.NH
 			new ClassMapper(rootClass, mapdoc, rootClass.GetProperty("Id"));
 			mapdoc.RootClasses[0].Name.Should().Be.EqualTo("EntitySimple");
 		}
+
+		[Test]
+		public void WhenSetDistriminatorValueOnlySetValueAndType()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
+			rc.DiscriminatorValue(123);
+			mapdoc.RootClasses[0].discriminatorvalue.Should().Be("123");
+			mapdoc.RootClasses[0].discriminator.Should().Not.Be.Null();
+			mapdoc.RootClasses[0].discriminator.type.Should().Contain("Int32");
+		}
 	}
 }

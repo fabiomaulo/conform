@@ -18,6 +18,11 @@ namespace ConfOrm.NH
 			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.Id(member, idMapper));
 		}
 
+		public void DiscriminatorValue(object value)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.DiscriminatorValue(value));
+		}
+
 		#endregion
 
 		#region Implementation of IEntityAttributesMapper
