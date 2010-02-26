@@ -17,10 +17,7 @@ namespace ConfOrm.NH
 			}
 			this.prveiousPath = prveiousPath;
 			this.localMember = localMember;
-			unchecked
-			{
-				hashCode = (localMember.GetHashCode() * 17) ^ (prveiousPath != null ? prveiousPath.GetHashCode() : 41);
-			}
+			hashCode = localMember.GetHashCode() ^ (prveiousPath != null ? prveiousPath.GetHashCode() : 41);
 		}
 
 		public PropertyPath PrveiousPath
