@@ -112,6 +112,9 @@
     <Compile Include="NH\PersistentClassCustomizer.cs" />
     <Compile Include="NH\PropertyContainerCustomizer.cs" />
     <Compile Include="NH\PropertyMapper.cs" />
+    <Compile Include="NH\PropertyPath.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="NH\SetMapper.cs" />
     <Compile Include="NH\SubclassCustomizer.cs" />
     <Compile Include="NH\SubclassMapper.cs" />
