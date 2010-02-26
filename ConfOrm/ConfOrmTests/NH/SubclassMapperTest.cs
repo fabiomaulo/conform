@@ -195,5 +195,21 @@ namespace ConfOrmTests.NH
 			hbmEntity.SqlDelete.Should().Not.Be.Null();
 			hbmEntity.SqlDelete.Text[0].Should().Be("blah");
 		}
+
+		[Test]
+		public void SetDiscriminatorValue()
+		{
+			var subClass = typeof(Inherited);
+			var mapdoc = new HbmMapping();
+			var mapper = new SubclassMapper(subClass, mapdoc);
+			mapper.DiscriminatorValue("blah");
+
+			var hbmEntity = mapdoc.SubClasses[0];
+
+			hbmEntity.DiscriminatorValue.Should().Be("blah");
+
+			mapper.DiscriminatorValue(null);
+			hbmEntity.DiscriminatorValue.Should().Be("null");
+		}
 	}
 }

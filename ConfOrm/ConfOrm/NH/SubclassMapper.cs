@@ -113,6 +113,11 @@ namespace ConfOrm.NH
 			classMapping.sqldelete.Text = new[] { sql };
 		}
 
+		public void DiscriminatorValue(object value)
+		{
+			classMapping.discriminatorvalue = value != null ? value.ToString() : "null";
+		}
+
 		#endregion
 	}
 }
