@@ -2,7 +2,9 @@ namespace ConfOrm.Mappers
 {
 	public interface IUnionSubclassAttributesMapper : IEntityAttributesMapper, IEntitySqlsMapper
 	{
-
+		void Table(string tableName);
+		void Catalog(string catalogName);
+		void Schema(string schemaName);
 	}
 	public interface IUnionSubclassMapper : IUnionSubclassAttributesMapper, IPropertyContainerMapper
 	{
@@ -11,7 +13,9 @@ namespace ConfOrm.Mappers
 
 	public interface IUnionSubclassAttributesMapper<TEntity> : IEntityAttributesMapper, IEntitySqlsMapper where TEntity : class
 	{
-
+		void Table(string tableName);
+		void Catalog(string catalogName);
+		void Schema(string schemaName);
 	}
 
 	public interface IUnionSubclassMapper<TEntity> : IUnionSubclassAttributesMapper<TEntity>, IPropertyContainerMapper<TEntity> where TEntity : class

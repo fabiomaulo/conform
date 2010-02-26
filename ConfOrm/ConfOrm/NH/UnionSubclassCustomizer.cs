@@ -69,5 +69,24 @@ namespace ConfOrm.NH
 		}
 
 		#endregion
+
+		#region Implementation of IUnionSubclassAttributesMapper<TEntity>
+
+		public void Table(string tableName)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IUnionSubclassAttributesMapper m) => m.Table(tableName));
+		}
+
+		public void Catalog(string catalogName)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IUnionSubclassAttributesMapper m) => m.Catalog(catalogName));
+		}
+
+		public void Schema(string schemaName)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IUnionSubclassAttributesMapper m) => m.Schema(schemaName));
+		}
+
+		#endregion
 	}
 }

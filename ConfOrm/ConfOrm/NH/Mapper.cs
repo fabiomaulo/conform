@@ -154,6 +154,7 @@ namespace ConfOrm.NH
 			{
 				var classMapper = new UnionSubclassMapper(type, mapping);
 				propertiesContainer = classMapper;
+				customizerHolder.InvokeCustomizers(type, classMapper);
 			}
 			MapProperties(type, propertiesContainer);
 		}
