@@ -29,37 +29,37 @@ namespace ConfOrm.NH
 
 		public void EntityName(string value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.EntityName(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.EntityName(value));
 		}
 
 		public void Proxy(Type proxy)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.Proxy(proxy));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Proxy(proxy));
 		}
 
 		public void Lazy(bool value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.Lazy(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Lazy(value));
 		}
 
 		public void DynamicUpdate(bool value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.DynamicUpdate(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.DynamicUpdate(value));
 		}
 
 		public void DynamicInsert(bool value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.DynamicInsert(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.DynamicInsert(value));
 		}
 
 		public void BatchSize(int value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.BatchSize(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.BatchSize(value));
 		}
 
 		public void SelectBeforeUpdate(bool value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.SelectBeforeUpdate(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.SelectBeforeUpdate(value));
 		}
 
 		#endregion
@@ -68,22 +68,22 @@ namespace ConfOrm.NH
 
 		public void Loader(string namedQueryReference)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.Loader(namedQueryReference));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Loader(namedQueryReference));
 		}
 
 		public void SqlInsert(string sql)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.SqlInsert(sql));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.SqlInsert(sql));
 		}
 
 		public void SqlUpdate(string sql)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.SqlUpdate(sql));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.SqlUpdate(sql));
 		}
 
 		public void SqlDelete(string sql)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.SqlDelete(sql));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.SqlDelete(sql));
 		}
 
 		#endregion

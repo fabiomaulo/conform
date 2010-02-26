@@ -52,6 +52,10 @@ namespace ConfOrm.NH
 			customizeAction(customizer);
 		}
 
+		public void Subclass<TEntity>(Action<ISubclassMapper<TEntity>> customizeAction) where TEntity : class
+		{
+		}
+
 		public void Customize<TPersistent>(Action<IPersistentClassCustomizer<TPersistent>> customizeAction ) where TPersistent: class
 		{
 			var customizer = new PersistentClassCustomizer<TPersistent>(customizerHolder);

@@ -30,5 +30,89 @@ namespace ConfOrm.NH
 		}
 
 		#endregion
+
+		#region Implementation of IEntityAttributesMapper
+
+		public void EntityName(string value)
+		{
+			classMapping.entityname = value;
+		}
+
+		public void Proxy(Type proxy)
+		{
+			if (!Container.IsAssignableFrom(proxy) && !proxy.IsAssignableFrom(Container))
+			{
+				throw new MappingException("Not compatible proxy for " + Container);
+			}
+			classMapping.proxy = proxy.GetShortClassName(MapDoc);
+		}
+
+		public void Lazy(bool value)
+		{
+			classMapping.lazy = value;
+			classMapping.lazySpecified = !value;
+		}
+
+		public void DynamicUpdate(bool value)
+		{
+			classMapping.dynamicupdate = value;
+		}
+
+		public void DynamicInsert(bool value)
+		{
+			classMapping.dynamicinsert = value;
+		}
+
+		public void BatchSize(int value)
+		{
+			classMapping.batchsize = value > 0 ? value.ToString() : null;
+		}
+
+		public void SelectBeforeUpdate(bool value)
+		{
+			classMapping.selectbeforeupdate = value;
+		}
+
+		#endregion
+
+		#region Implementation of IEntitySqlsMapper
+
+		public void Loader(string namedQueryReference)
+		{
+			if (classMapping.SqlLoader == null)
+			{
+				classMapping.loader = new HbmLoader();
+			}
+			classMapping.loader.queryref = namedQueryReference;
+		}
+
+		public void SqlInsert(string sql)
+		{
+			if (classMapping.SqlInsert == null)
+			{
+				classMapping.sqlinsert = new HbmCustomSQL();
+			}
+			classMapping.sqlinsert.Text = new[] { sql };
+		}
+
+		public void SqlUpdate(string sql)
+		{
+			if (classMapping.SqlUpdate == null)
+			{
+				classMapping.sqlupdate = new HbmCustomSQL();
+			}
+			classMapping.sqlupdate.Text = new[] { sql };
+		}
+
+		public void SqlDelete(string sql)
+		{
+			if (classMapping.SqlDelete == null)
+			{
+				classMapping.sqldelete = new HbmCustomSQL();
+			}
+			classMapping.sqldelete.Text = new[] { sql };
+		}
+
+		#endregion
 	}
 }

@@ -1,6 +1,6 @@
 namespace ConfOrm.Mappers
 {
-	public interface ISubclassAttributesMapper
+	public interface ISubclassAttributesMapper: IEntityAttributesMapper, IEntitySqlsMapper
 	{
 		
 	}
@@ -9,7 +9,7 @@ namespace ConfOrm.Mappers
 		
 	}
 
-	public interface ISubclassAttributesMapper<TEntity> where TEntity : class
+	public interface ISubclassAttributesMapper<TEntity> : IEntityAttributesMapper, IEntitySqlsMapper where TEntity : class
 	{
 
 	}
