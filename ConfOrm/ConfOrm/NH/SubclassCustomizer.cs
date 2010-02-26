@@ -16,37 +16,37 @@ namespace ConfOrm.NH
 
 		public void EntityName(string value)
 		{
-			throw new NotImplementedException();
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.EntityName(value));
 		}
 
 		public void Proxy(Type proxy)
 		{
-			throw new NotImplementedException();
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.Proxy(proxy));
 		}
 
 		public void Lazy(bool value)
 		{
-			throw new NotImplementedException();
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.Lazy(value));
 		}
 
 		public void DynamicUpdate(bool value)
 		{
-			throw new NotImplementedException();
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.DynamicUpdate(value));
 		}
 
 		public void DynamicInsert(bool value)
 		{
-			throw new NotImplementedException();
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.DynamicInsert(value));
 		}
 
 		public void BatchSize(int value)
 		{
-			throw new NotImplementedException();
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.BatchSize(value));
 		}
 
 		public void SelectBeforeUpdate(bool value)
 		{
-			throw new NotImplementedException();
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.SelectBeforeUpdate(value));
 		}
 
 		#endregion
@@ -55,22 +55,22 @@ namespace ConfOrm.NH
 
 		public void Loader(string namedQueryReference)
 		{
-			throw new NotImplementedException();
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.Loader(namedQueryReference));
 		}
 
 		public void SqlInsert(string sql)
 		{
-			throw new NotImplementedException();
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.SqlInsert(sql));
 		}
 
 		public void SqlUpdate(string sql)
 		{
-			throw new NotImplementedException();
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.SqlUpdate(sql));
 		}
 
 		public void SqlDelete(string sql)
 		{
-			throw new NotImplementedException();
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.SqlDelete(sql));
 		}
 
 		#endregion
