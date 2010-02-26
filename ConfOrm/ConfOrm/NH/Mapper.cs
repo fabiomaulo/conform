@@ -138,14 +138,15 @@ namespace ConfOrm.NH
 		private void AddSubclassMapping(HbmMapping mapping, Type type)
 		{
 			IPropertyContainerMapper propertiesContainer = null;
-			if (domainInspector.IsTablePerClass(type))
-			{
-				var classMapper = new JoinedSubclassMapper(type, mapping);
-				propertiesContainer = classMapper;
-			}
-			else if (domainInspector.IsTablePerClassHierarchy(type))
+			if (domainInspector.IsTablePerClassHierarchy(type))
 			{
 				var classMapper = new SubclassMapper(type, mapping);
+				propertiesContainer = classMapper;
+				customizerHolder.InvokeCustomizers(type, classMapper);
+			}
+			else if (domainInspector.IsTablePerClass(type))
+			{
+				var classMapper = new JoinedSubclassMapper(type, mapping);
 				propertiesContainer = classMapper;
 			}
 			else if (domainInspector.IsTablePerConcreteClass(type))

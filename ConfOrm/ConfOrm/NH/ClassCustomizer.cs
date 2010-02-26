@@ -20,7 +20,7 @@ namespace ConfOrm.NH
 
 		public void DiscriminatorValue(object value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.DiscriminatorValue(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.DiscriminatorValue(value));
 		}
 
 		#endregion

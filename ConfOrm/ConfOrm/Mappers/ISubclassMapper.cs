@@ -2,12 +2,11 @@ namespace ConfOrm.Mappers
 {
 	public interface ISubclassAttributesMapper: IEntityAttributesMapper, IEntitySqlsMapper
 	{
-		
+		void DiscriminatorValue(object value);
 	}
 
 	public interface ISubclassMapper : ISubclassAttributesMapper, IPropertyContainerMapper
 	{
-		void DiscriminatorValue(object value);
 	}
 
 	public interface ISubclassAttributesMapper<TEntity> : IEntityAttributesMapper, IEntitySqlsMapper where TEntity : class

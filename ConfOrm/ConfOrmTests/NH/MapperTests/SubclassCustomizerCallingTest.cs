@@ -47,5 +47,19 @@ namespace ConfOrmTests.NH.MapperTests
 
 			isCalled.Should().Be(true);
 		}
+
+		[Test]
+		public void WhenCustomizeDiscriminatorValueThenSetDiscriminatorValue()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+			var mapper = new Mapper(orm.Object);
+
+			mapper.Subclass<Inherited>(ca => ca.DiscriminatorValue(123));
+
+			var hbmEntity = mapper.CompileMappingFor(new[] { typeof(MyClass), typeof(Inherited) }).SubClasses[0];
+
+			hbmEntity.DiscriminatorValue.Should().Be("123");
+		}
+
 	}
 }

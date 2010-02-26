@@ -7,12 +7,12 @@ namespace ConfOrm.NH
 	{
 		public SubclassCustomizer(ICustomizersHolder customizersHolder) : base(customizersHolder) {}
 
-		#region Implementation of IEntityAttributesMapper
-
 		public void DiscriminatorValue(object value)
 		{
-			throw new NotImplementedException();
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.DiscriminatorValue(value));
 		}
+
+		#region Implementation of IEntityAttributesMapper
 
 		public void EntityName(string value)
 		{
