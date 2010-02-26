@@ -208,7 +208,7 @@ namespace ConfOrm.NH
 
 		private void MapProperties(Type propertiesContainerType, IPropertyContainerMapper propertiesContainer)
 		{
-			MapProperties(propertiesContainerType, GetPersistentProperties(propertiesContainerType), propertiesContainer);
+			MapProperties(propertiesContainerType, GetPersistentProperties(propertiesContainerType), propertiesContainer, null);
 		}
 
 		private IEnumerable<PropertyInfo> GetPersistentProperties(Type type)
@@ -218,7 +218,7 @@ namespace ConfOrm.NH
 		}
 
 		private void MapProperties(Type propertiesContainerType, IEnumerable<PropertyInfo> propertiesToMap,
-		                           IPropertyContainerMapper propertiesContainer)
+		                           IPropertyContainerMapper propertiesContainer, PropertyPath path)
 		{
 			foreach (PropertyInfo property in propertiesToMap)
 			{
@@ -251,7 +251,8 @@ namespace ConfOrm.NH
 				}
 				else if (domainInspector.IsComponent(propertyType))
 				{
-					MapComponent(member, propertyType, propertiesContainer, propertiesContainerType);
+					var memberPath = new PropertyPath(path, member);
+					MapComponent(member, memberPath, propertyType, propertiesContainer, propertiesContainerType);
 				}
 				else
 				{
@@ -269,7 +270,7 @@ namespace ConfOrm.NH
 				});
 		}
 
-		private void MapComponent(MemberInfo member, Type propertyType, IPropertyContainerMapper propertiesContainer,
+		private void MapComponent(MemberInfo member, PropertyPath memberPath, Type propertyType, IPropertyContainerMapper propertiesContainer,
 		                          Type propertiesContainerType)
 		{
 			propertiesContainer.Component(member, x =>
@@ -283,7 +284,7 @@ namespace ConfOrm.NH
 					{
 						x.Parent(parentReferenceProperty);
 					}
-					MapProperties(propertyType, persistentProperties.Where(pi => pi != parentReferenceProperty), x);
+					MapProperties(propertyType, persistentProperties.Where(pi => pi != parentReferenceProperty), x, memberPath);
 				});
 		}
 
