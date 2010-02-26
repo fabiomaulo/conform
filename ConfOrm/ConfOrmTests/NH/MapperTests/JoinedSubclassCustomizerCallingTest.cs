@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using ConfOrm;
+using ConfOrm.Mappers;
 using ConfOrm.NH;
 using Moq;
 using NUnit.Framework;
@@ -48,5 +50,38 @@ namespace ConfOrmTests.NH.MapperTests
 			isCalled.Should().Be(true);
 		}
 
+		[Test]
+		public void InvokeCustomizers()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+			Mock<ICustomizersHolder> customizers = new Mock<ICustomizersHolder>();
+			var mapper = new Mapper(orm.Object, customizers.Object);
+			mapper.JoinedSubclass<Inherited>(ca =>{ });
+
+			mapper.CompileMappingFor(new[] { typeof(MyClass), typeof(Inherited) });
+
+			customizers.Verify(
+				c => c.InvokeCustomizers(It.Is<Type>(t => t == typeof (Inherited)), It.IsAny<IJoinedSubclassAttributesMapper>()));
+		}
+
+		[Test]
+		public void SetTableSpecifications()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+
+			var mapper = new Mapper(orm.Object);
+			mapper.JoinedSubclass<Inherited>(x =>
+			{
+				x.Table("tabella");
+				x.Schema("dbo");
+				x.Catalog("catalogo");
+			});
+
+			var mappings = mapper.CompileMappingFor(new[] { typeof(MyClass), typeof(Inherited) });
+			var hbmClass = mappings.JoinedSubclasses.Single();
+			hbmClass.table.Should().Be("tabella");
+			hbmClass.catalog.Should().Be("catalogo");
+			hbmClass.schema.Should().Be("dbo");
+		}
 	}
 }

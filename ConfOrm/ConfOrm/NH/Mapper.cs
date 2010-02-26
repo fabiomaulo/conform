@@ -148,6 +148,7 @@ namespace ConfOrm.NH
 			{
 				var classMapper = new JoinedSubclassMapper(type, mapping);
 				propertiesContainer = classMapper;
+				customizerHolder.InvokeCustomizers(type, classMapper);
 			}
 			else if (domainInspector.IsTablePerConcreteClass(type))
 			{
