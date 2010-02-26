@@ -76,5 +76,32 @@ namespace ConfOrmTests.NH
 			mapdoc.RootClasses[0].discriminator.Should().Not.Be.Null();
 			mapdoc.RootClasses[0].discriminator.type.Should().Contain("Int32");
 		}
+
+		[Test]
+		public void CanSetTable()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
+			rc.Table("pizza");
+			mapdoc.RootClasses[0].table.Should().Be("pizza");
+		}
+
+		[Test]
+		public void CanSetCatalog()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
+			rc.Catalog("pizza");
+			mapdoc.RootClasses[0].catalog.Should().Be("pizza");
+		}
+
+		[Test]
+		public void CanSetSchema()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
+			rc.Schema("pizza");
+			mapdoc.RootClasses[0].schema.Should().Be("pizza");
+		}
 	}
 }

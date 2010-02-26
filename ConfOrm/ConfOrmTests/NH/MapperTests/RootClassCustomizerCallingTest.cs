@@ -146,5 +146,31 @@ namespace ConfOrmTests.NH.MapperTests
 			var hbmClass = mappings.RootClasses.Single();
 			hbmClass.discriminatorvalue.Should().Be("123");
 		}
+
+		[Test]
+		public void SetTableSpecifications()
+		{
+			var orm = new Mock<IDomainInspector>();
+			orm.Setup(m => m.IsEntity(It.IsAny<Type>())).Returns(true);
+			orm.Setup(m => m.IsRootEntity(It.IsAny<Type>())).Returns(true);
+			orm.Setup(m => m.IsTablePerClassHierarchy(It.IsAny<Type>())).Returns(true);
+			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
+			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
+
+			var mapper = new Mapper(orm.Object);
+			mapper.Class<MyClass>(x =>
+			{
+				x.Table("tabella");
+				x.Schema("dbo");
+				x.Catalog("catalogo");
+			});
+
+			var mappings = mapper.CompileMappingFor(new[] { typeof(MyClass) });
+			var hbmClass = mappings.RootClasses.Single();
+			hbmClass.table.Should().Be("tabella");
+			hbmClass.catalog.Should().Be("catalogo");
+			hbmClass.schema.Should().Be("dbo");
+		}
+
 	}
 }

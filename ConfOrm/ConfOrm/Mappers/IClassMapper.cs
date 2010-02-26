@@ -10,6 +10,9 @@ namespace ConfOrm.Mappers
 		void Id(MemberInfo idProperty, Action<IIdMapper> idMapper);
 		void Discriminator();
 		void DiscriminatorValue(object value);
+		void Table(string tableName);
+		void Catalog(string catalogName);
+		void Schema(string schemaName);
 	}
 
 	public interface IClassMapper : IClassAttributesMapper, IPropertyContainerMapper
@@ -20,6 +23,9 @@ namespace ConfOrm.Mappers
 	{
 		void Id<TProperty>(Expression<Func<TEntity, TProperty>> idProperty, Action<IIdMapper> idMapper);
 		void DiscriminatorValue(object value);
+		void Table(string tableName);
+		void Catalog(string catalogName);
+		void Schema(string schemaName);
 	}
 
 	public interface IClassMapper<TEntity> : IClassAttributesMapper<TEntity>, IPropertyContainerMapper<TEntity> where TEntity : class

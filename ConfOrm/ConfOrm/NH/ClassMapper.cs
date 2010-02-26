@@ -89,6 +89,21 @@ namespace ConfOrm.NH
 			}
 		}
 
+		public void Table(string tableName)
+		{
+			classMapping.table = tableName;
+		}
+
+		public void Catalog(string catalogName)
+		{
+			classMapping.catalog = catalogName;
+		}
+
+		public void Schema(string schemaName)
+		{
+			classMapping.schema = schemaName;
+		}
+
 		#endregion
 
 		#region Implementation of IEntityAttributesMapper
