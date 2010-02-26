@@ -102,6 +102,7 @@
     <Compile Include="NH\MapperTests\HierarchyTablePerClass.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerClassHierarchyTest.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerConcreteClassTest.cs" />
+    <Compile Include="NH\MapperTests\JoinedSubclassCustomizerCallingTest.cs" />
     <Compile Include="NH\MapperTests\ListOfComponentsTest.cs" />
     <Compile Include="NH\MapperTests\ListOfElementsTest.cs" />
     <Compile Include="NH\MapperTests\ListOfManyToManyTest.cs" />
@@ -112,6 +113,8 @@
     <Compile Include="NH\MapperTests\PrivatePropertiesTest.cs" />
     <Compile Include="NH\MapperTests\PropertyAccessorTest.cs" />
     <Compile Include="NH\MapperTests\RootClassCustomizerCallingTest.cs" />
+    <Compile Include="NH\MapperTests\SubclassCustomizerCallingTest.cs" />
+    <Compile Include="NH\MapperTests\UnionSubclassCustomizerCallingTest.cs" />
     <Compile Include="NH\OneToOneMapperTest.cs" />
     <Compile Include="NH\PropertyMapperTest.cs" />
     <Compile Include="NH\SubclassMapperTest.cs" />

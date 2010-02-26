@@ -94,6 +94,7 @@
     <Compile Include="NH\GeneratorMapper.cs" />
     <Compile Include="NH\ICustomizersHolder.cs" />
     <Compile Include="NH\IPersistentClassCustomizer.cs" />
+    <Compile Include="NH\JoinedSubclassCustomizer.cs" />
     <Compile Include="NH\ManyToOneMapper.cs" />
     <Compile Include="NH\MapMapper.cs" />
     <Compile Include="MappingException.cs" />
@@ -112,8 +113,10 @@
     <Compile Include="NH\PropertyContainerCustomizer.cs" />
     <Compile Include="NH\PropertyMapper.cs" />
     <Compile Include="NH\SetMapper.cs" />
+    <Compile Include="NH\SubclassCustomizer.cs" />
     <Compile Include="NH\SubclassMapper.cs" />
     <Compile Include="NH\TypeNameUtil.cs" />
+    <Compile Include="NH\UnionSubclassCustomizer.cs" />
     <Compile Include="NH\UnionSubclassMapper.cs" />
     <Compile Include="ObjectRelationalMapper.cs" />
     <Compile Include="PatternExtensions.cs" />

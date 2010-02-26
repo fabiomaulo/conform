@@ -54,14 +54,20 @@ namespace ConfOrm.NH
 
 		public void Subclass<TEntity>(Action<ISubclassMapper<TEntity>> customizeAction) where TEntity : class
 		{
+			var customizer = new SubclassCustomizer<TEntity>(customizerHolder);
+			customizeAction(customizer);
 		}
 
 		public void JoinedSubclass<TEntity>(Action<IJoinedSubclassMapper<TEntity>> customizeAction) where TEntity : class
 		{
+			var customizer = new JoinedSubclassCustomizer<TEntity>(customizerHolder);
+			customizeAction(customizer);
 		}
 
 		public void UnionSubclass<TEntity>(Action<IUnionSubclassMapper<TEntity>> customizeAction) where TEntity : class
 		{
+			var customizer = new UnionSubclassCustomizer<TEntity>(customizerHolder);
+			customizeAction(customizer);
 		}
 
 		public void Customize<TPersistent>(Action<IPersistentClassCustomizer<TPersistent>> customizeAction ) where TPersistent: class
