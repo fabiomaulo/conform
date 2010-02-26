@@ -31,6 +31,11 @@ namespace ConfOrm.NH
 
 		#endregion
 
+		public void DiscriminatorValue(object value)
+		{
+			classMapping.discriminatorvalue = value != null ? value.ToString() : "null";
+		}
+
 		#region Implementation of IEntityAttributesMapper
 
 		public void EntityName(string value)
@@ -111,11 +116,6 @@ namespace ConfOrm.NH
 				classMapping.sqldelete = new HbmCustomSQL();
 			}
 			classMapping.sqldelete.Text = new[] { sql };
-		}
-
-		public void DiscriminatorValue(object value)
-		{
-			classMapping.discriminatorvalue = value != null ? value.ToString() : "null";
 		}
 
 		#endregion
