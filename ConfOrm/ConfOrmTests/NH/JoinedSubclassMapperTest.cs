@@ -45,10 +45,10 @@ namespace ConfOrmTests.NH
 		{
 			var subClass = typeof(Inherited);
 			var mapdoc = new HbmMapping();
-			var mapper = new SubclassMapper(subClass, mapdoc);
+			var mapper = new JoinedSubclassMapper(subClass, mapdoc);
 			mapper.EntityName("pepe");
 
-			var hbmEntity = mapdoc.SubClasses[0];
+			var hbmEntity = mapdoc.JoinedSubclasses[0];
 			hbmEntity.EntityName.Should().Be("pepe");
 		}
 
@@ -57,10 +57,10 @@ namespace ConfOrmTests.NH
 		{
 			var subClass = typeof(Inherited);
 			var mapdoc = new HbmMapping();
-			var mapper = new SubclassMapper(subClass, mapdoc);
+			var mapper = new JoinedSubclassMapper(subClass, mapdoc);
 			mapper.Proxy(subClass);
 
-			var hbmEntity = mapdoc.SubClasses[0];
+			var hbmEntity = mapdoc.JoinedSubclasses[0];
 			hbmEntity.Proxy.Should().Contain("Inherited");
 		}
 
@@ -69,7 +69,7 @@ namespace ConfOrmTests.NH
 		{
 			var subClass = typeof(Inherited);
 			var mapdoc = new HbmMapping();
-			var mapper = new SubclassMapper(subClass, mapdoc);
+			var mapper = new JoinedSubclassMapper(subClass, mapdoc);
 			ActionAssert.Throws<MappingException>(() => mapper.Proxy(typeof(Z)));
 		}
 
@@ -78,10 +78,10 @@ namespace ConfOrmTests.NH
 		{
 			var subClass = typeof(Inherited);
 			var mapdoc = new HbmMapping();
-			var mapper = new SubclassMapper(subClass, mapdoc);
+			var mapper = new JoinedSubclassMapper(subClass, mapdoc);
 			mapper.Lazy(true);
 
-			var hbmEntity = mapdoc.SubClasses[0];
+			var hbmEntity = mapdoc.JoinedSubclasses[0];
 
 			hbmEntity.UseLazy.Should().Not.Have.Value();
 
@@ -94,10 +94,10 @@ namespace ConfOrmTests.NH
 		{
 			var subClass = typeof(Inherited);
 			var mapdoc = new HbmMapping();
-			var mapper = new SubclassMapper(subClass, mapdoc);
+			var mapper = new JoinedSubclassMapper(subClass, mapdoc);
 			mapper.DynamicUpdate(true);
 
-			var hbmEntity = mapdoc.SubClasses[0];
+			var hbmEntity = mapdoc.JoinedSubclasses[0];
 
 			hbmEntity.DynamicUpdate.Should().Be(true);
 		}
@@ -107,10 +107,10 @@ namespace ConfOrmTests.NH
 		{
 			var subClass = typeof(Inherited);
 			var mapdoc = new HbmMapping();
-			var mapper = new SubclassMapper(subClass, mapdoc);
+			var mapper = new JoinedSubclassMapper(subClass, mapdoc);
 			mapper.DynamicInsert(true);
 
-			var hbmEntity = mapdoc.SubClasses[0];
+			var hbmEntity = mapdoc.JoinedSubclasses[0];
 
 			hbmEntity.DynamicInsert.Should().Be(true);
 		}
@@ -120,10 +120,10 @@ namespace ConfOrmTests.NH
 		{
 			var subClass = typeof(Inherited);
 			var mapdoc = new HbmMapping();
-			var mapper = new SubclassMapper(subClass, mapdoc);
+			var mapper = new JoinedSubclassMapper(subClass, mapdoc);
 			mapper.BatchSize(10);
 
-			var hbmEntity = mapdoc.SubClasses[0];
+			var hbmEntity = mapdoc.JoinedSubclasses[0];
 
 			hbmEntity.BatchSize.Should().Be(10);
 		}
@@ -133,10 +133,10 @@ namespace ConfOrmTests.NH
 		{
 			var subClass = typeof(Inherited);
 			var mapdoc = new HbmMapping();
-			var mapper = new SubclassMapper(subClass, mapdoc);
+			var mapper = new JoinedSubclassMapper(subClass, mapdoc);
 			mapper.SelectBeforeUpdate(true);
 
-			var hbmEntity = mapdoc.SubClasses[0];
+			var hbmEntity = mapdoc.JoinedSubclasses[0];
 
 			hbmEntity.SelectBeforeUpdate.Should().Be(true);
 		}
@@ -146,10 +146,10 @@ namespace ConfOrmTests.NH
 		{
 			var subClass = typeof(Inherited);
 			var mapdoc = new HbmMapping();
-			var mapper = new SubclassMapper(subClass, mapdoc);
+			var mapper = new JoinedSubclassMapper(subClass, mapdoc);
 			mapper.Loader("blah");
 
-			var hbmEntity = mapdoc.SubClasses[0];
+			var hbmEntity = mapdoc.JoinedSubclasses[0];
 
 			hbmEntity.SqlLoader.Should().Not.Be.Null();
 			hbmEntity.SqlLoader.queryref.Should().Be("blah");
@@ -160,10 +160,10 @@ namespace ConfOrmTests.NH
 		{
 			var subClass = typeof(Inherited);
 			var mapdoc = new HbmMapping();
-			var mapper = new SubclassMapper(subClass, mapdoc);
+			var mapper = new JoinedSubclassMapper(subClass, mapdoc);
 			mapper.SqlInsert("blah");
 
-			var hbmEntity = mapdoc.SubClasses[0];
+			var hbmEntity = mapdoc.JoinedSubclasses[0];
 
 			hbmEntity.SqlInsert.Should().Not.Be.Null();
 			hbmEntity.SqlInsert.Text[0].Should().Be("blah");
@@ -174,10 +174,10 @@ namespace ConfOrmTests.NH
 		{
 			var subClass = typeof(Inherited);
 			var mapdoc = new HbmMapping();
-			var mapper = new SubclassMapper(subClass, mapdoc);
+			var mapper = new JoinedSubclassMapper(subClass, mapdoc);
 			mapper.SqlUpdate("blah");
 
-			var hbmEntity = mapdoc.SubClasses[0];
+			var hbmEntity = mapdoc.JoinedSubclasses[0];
 
 			hbmEntity.SqlUpdate.Should().Not.Be.Null();
 			hbmEntity.SqlUpdate.Text[0].Should().Be("blah");
@@ -188,10 +188,10 @@ namespace ConfOrmTests.NH
 		{
 			var subClass = typeof(Inherited);
 			var mapdoc = new HbmMapping();
-			var mapper = new SubclassMapper(subClass, mapdoc);
+			var mapper = new JoinedSubclassMapper(subClass, mapdoc);
 			mapper.SqlDelete("blah");
 
-			var hbmEntity = mapdoc.SubClasses[0];
+			var hbmEntity = mapdoc.JoinedSubclasses[0];
 
 			hbmEntity.SqlDelete.Should().Not.Be.Null();
 			hbmEntity.SqlDelete.Text[0].Should().Be("blah");
