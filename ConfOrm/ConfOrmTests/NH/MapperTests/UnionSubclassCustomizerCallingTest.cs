@@ -83,5 +83,53 @@ namespace ConfOrmTests.NH.MapperTests
 			hbmClass.catalog.Should().Be("catalogo");
 			hbmClass.schema.Should().Be("dbo");
 		}
+
+		[Test]
+		public void CallCustomizerOfAttributes()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+			var mapper = new Mapper(orm.Object);
+
+			mapper.UnionSubclass<Inherited>(x =>
+			{
+				x.BatchSize(10);
+				x.Lazy(false);
+				x.EntityName("myName");
+				x.DynamicInsert(true);
+				x.DynamicUpdate(true);
+				x.SelectBeforeUpdate(true);
+			});
+
+			var mappings = mapper.CompileMappingFor(new[] { typeof(MyClass), typeof(Inherited) });
+			var hbmClass = mappings.UnionSubclasses.Single();
+			hbmClass.BatchSize.Should().Be(10);
+			hbmClass.EntityName.Should().Be("myName");
+			hbmClass.UseLazy.Should().Be(false);
+			hbmClass.DynamicInsert.Should().Be(true);
+			hbmClass.DynamicUpdate.Should().Be(true);
+			hbmClass.SelectBeforeUpdate.Should().Be(true);
+		}
+
+		[Test]
+		public void SetCustomQueries()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+
+			var mapper = new Mapper(orm.Object);
+			mapper.UnionSubclass<Inherited>(x =>
+			{
+				x.Loader("organization");
+				x.SqlInsert("INSERT INTO ORGANIZATION (NAME, ORGID) VALUES ( UPPER(?), ? )");
+				x.SqlUpdate("UPDATE ORGANIZATION SET NAME=UPPER(?) WHERE ORGID=?");
+				x.SqlDelete("DELETE FROM ORGANIZATION WHERE ORGID=?");
+			});
+
+			var mappings = mapper.CompileMappingFor(new[] { typeof(MyClass), typeof(Inherited) });
+			var hbmClass = mappings.UnionSubclasses.Single();
+			hbmClass.SqlLoader.Satisfy(l => l != null && l.queryref == "organization");
+			hbmClass.SqlInsert.Satisfy(l => l != null && l.Text[0] == "INSERT INTO ORGANIZATION (NAME, ORGID) VALUES ( UPPER(?), ? )");
+			hbmClass.SqlUpdate.Satisfy(l => l != null && l.Text[0] == "UPDATE ORGANIZATION SET NAME=UPPER(?) WHERE ORGID=?");
+			hbmClass.SqlDelete.Satisfy(l => l != null && l.Text[0] == "DELETE FROM ORGANIZATION WHERE ORGID=?");
+		}
 	}
 }
