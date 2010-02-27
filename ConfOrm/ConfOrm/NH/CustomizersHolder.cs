@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using ConfOrm.Mappers;
 
 namespace ConfOrm.NH
 {
 	public class CustomizersHolder : ICustomizersHolder
 	{
-		private readonly Dictionary<MemberInfo, List<Action<IBagPropertiesMapper>>> bagCustomizers =
-			new Dictionary<MemberInfo, List<Action<IBagPropertiesMapper>>>();
+		private readonly Dictionary<PropertyPath, List<Action<IBagPropertiesMapper>>> bagCustomizers =
+			new Dictionary<PropertyPath, List<Action<IBagPropertiesMapper>>>();
 
-		private readonly Dictionary<MemberInfo, List<Action<ICollectionPropertiesMapper>>> collectionCustomizers =
-			new Dictionary<MemberInfo, List<Action<ICollectionPropertiesMapper>>>();
+		private readonly Dictionary<PropertyPath, List<Action<ICollectionPropertiesMapper>>> collectionCustomizers =
+			new Dictionary<PropertyPath, List<Action<ICollectionPropertiesMapper>>>();
 
 		private readonly Dictionary<Type, List<Action<IComponentMapper>>> componetClassCustomizers =
 			new Dictionary<Type, List<Action<IComponentMapper>>>();
@@ -19,26 +18,26 @@ namespace ConfOrm.NH
 		private readonly Dictionary<Type, List<Action<IJoinedSubclassAttributesMapper>>> joinedClassCustomizers =
 			new Dictionary<Type, List<Action<IJoinedSubclassAttributesMapper>>>();
 
-		private readonly Dictionary<MemberInfo, List<Action<IListPropertiesMapper>>> listCustomizers =
-			new Dictionary<MemberInfo, List<Action<IListPropertiesMapper>>>();
+		private readonly Dictionary<PropertyPath, List<Action<IListPropertiesMapper>>> listCustomizers =
+			new Dictionary<PropertyPath, List<Action<IListPropertiesMapper>>>();
 
-		private readonly Dictionary<MemberInfo, List<Action<IManyToOneMapper>>> manyToOneCustomizers =
-			new Dictionary<MemberInfo, List<Action<IManyToOneMapper>>>();
+		private readonly Dictionary<PropertyPath, List<Action<IManyToOneMapper>>> manyToOneCustomizers =
+			new Dictionary<PropertyPath, List<Action<IManyToOneMapper>>>();
 
-		private readonly Dictionary<MemberInfo, List<Action<IMapPropertiesMapper>>> mapCustomizers =
-			new Dictionary<MemberInfo, List<Action<IMapPropertiesMapper>>>();
+		private readonly Dictionary<PropertyPath, List<Action<IMapPropertiesMapper>>> mapCustomizers =
+			new Dictionary<PropertyPath, List<Action<IMapPropertiesMapper>>>();
 
-		private readonly Dictionary<MemberInfo, List<Action<IOneToOneMapper>>> oneToOneCustomizers =
-			new Dictionary<MemberInfo, List<Action<IOneToOneMapper>>>();
+		private readonly Dictionary<PropertyPath, List<Action<IOneToOneMapper>>> oneToOneCustomizers =
+			new Dictionary<PropertyPath, List<Action<IOneToOneMapper>>>();
 
-		private readonly Dictionary<MemberInfo, List<Action<IPropertyMapper>>> propertyCustomizers =
-			new Dictionary<MemberInfo, List<Action<IPropertyMapper>>>();
+		private readonly Dictionary<PropertyPath, List<Action<IPropertyMapper>>> propertyCustomizers =
+			new Dictionary<PropertyPath, List<Action<IPropertyMapper>>>();
 
 		private readonly Dictionary<Type, List<Action<IClassAttributesMapper>>> rootClassCustomizers =
 			new Dictionary<Type, List<Action<IClassAttributesMapper>>>();
 
-		private readonly Dictionary<MemberInfo, List<Action<ISetPropertiesMapper>>> setCustomizers =
-			new Dictionary<MemberInfo, List<Action<ISetPropertiesMapper>>>();
+		private readonly Dictionary<PropertyPath, List<Action<ISetPropertiesMapper>>> setCustomizers =
+			new Dictionary<PropertyPath, List<Action<ISetPropertiesMapper>>>();
 
 		private readonly Dictionary<Type, List<Action<ISubclassAttributesMapper>>> subclassCustomizers =
 			new Dictionary<Type, List<Action<ISubclassAttributesMapper>>>();
@@ -73,42 +72,42 @@ namespace ConfOrm.NH
 			AddCustomizer(componetClassCustomizers, type, classCustomizer);
 		}
 
-		public void AddCustomizer(MemberInfo member, Action<IPropertyMapper> propertyCustomizer)
+		public void AddCustomizer(PropertyPath member, Action<IPropertyMapper> propertyCustomizer)
 		{
 			AddCustomizer(propertyCustomizers, member, propertyCustomizer);
 		}
 
-		public void AddCustomizer(MemberInfo member, Action<IManyToOneMapper> propertyCustomizer)
+		public void AddCustomizer(PropertyPath member, Action<IManyToOneMapper> propertyCustomizer)
 		{
 			AddCustomizer(manyToOneCustomizers, member, propertyCustomizer);
 		}
 
-		public void AddCustomizer(MemberInfo member, Action<IOneToOneMapper> propertyCustomizer)
+		public void AddCustomizer(PropertyPath member, Action<IOneToOneMapper> propertyCustomizer)
 		{
 			AddCustomizer(oneToOneCustomizers, member, propertyCustomizer);
 		}
 
-		public void AddCustomizer(MemberInfo member, Action<ISetPropertiesMapper> propertyCustomizer)
+		public void AddCustomizer(PropertyPath member, Action<ISetPropertiesMapper> propertyCustomizer)
 		{
 			AddCustomizer(setCustomizers, member, propertyCustomizer);
 		}
 
-		public void AddCustomizer(MemberInfo member, Action<IBagPropertiesMapper> propertyCustomizer)
+		public void AddCustomizer(PropertyPath member, Action<IBagPropertiesMapper> propertyCustomizer)
 		{
 			AddCustomizer(bagCustomizers, member, propertyCustomizer);
 		}
 
-		public void AddCustomizer(MemberInfo member, Action<IListPropertiesMapper> propertyCustomizer)
+		public void AddCustomizer(PropertyPath member, Action<IListPropertiesMapper> propertyCustomizer)
 		{
 			AddCustomizer(listCustomizers, member, propertyCustomizer);
 		}
 
-		public void AddCustomizer(MemberInfo member, Action<IMapPropertiesMapper> propertyCustomizer)
+		public void AddCustomizer(PropertyPath member, Action<IMapPropertiesMapper> propertyCustomizer)
 		{
 			AddCustomizer(mapCustomizers, member, propertyCustomizer);
 		}
 
-		public void AddCustomizer(MemberInfo member, Action<ICollectionPropertiesMapper> propertyCustomizer)
+		public void AddCustomizer(PropertyPath member, Action<ICollectionPropertiesMapper> propertyCustomizer)
 		{
 			AddCustomizer(collectionCustomizers, member, propertyCustomizer);
 		}
@@ -138,40 +137,40 @@ namespace ConfOrm.NH
 			InvokeCustomizers(componetClassCustomizers, type, mapper);
 		}
 
-		public void InvokeCustomizers(MemberInfo member, IPropertyMapper mapper)
+		public void InvokeCustomizers(PropertyPath member, IPropertyMapper mapper)
 		{
 			InvokeCustomizers(propertyCustomizers, member, mapper);
 		}
 
-		public void InvokeCustomizers(MemberInfo member, IManyToOneMapper mapper)
+		public void InvokeCustomizers(PropertyPath member, IManyToOneMapper mapper)
 		{
 			InvokeCustomizers(manyToOneCustomizers, member, mapper);
 		}
 
-		public void InvokeCustomizers(MemberInfo member, IOneToOneMapper mapper)
+		public void InvokeCustomizers(PropertyPath member, IOneToOneMapper mapper)
 		{
 			InvokeCustomizers(oneToOneCustomizers, member, mapper);
 		}
 
-		public void InvokeCustomizers(MemberInfo member, ISetPropertiesMapper mapper)
+		public void InvokeCustomizers(PropertyPath member, ISetPropertiesMapper mapper)
 		{
 			InvokeCustomizers(collectionCustomizers, member, mapper);
 			InvokeCustomizers(setCustomizers, member, mapper);
 		}
 
-		public void InvokeCustomizers(MemberInfo member, IBagPropertiesMapper mapper)
+		public void InvokeCustomizers(PropertyPath member, IBagPropertiesMapper mapper)
 		{
 			InvokeCustomizers(collectionCustomizers, member, mapper);
 			InvokeCustomizers(bagCustomizers, member, mapper);
 		}
 
-		public void InvokeCustomizers(MemberInfo member, IListPropertiesMapper mapper)
+		public void InvokeCustomizers(PropertyPath member, IListPropertiesMapper mapper)
 		{
 			InvokeCustomizers(collectionCustomizers, member, mapper);
 			InvokeCustomizers(listCustomizers, member, mapper);
 		}
 
-		public void InvokeCustomizers(MemberInfo member, IMapPropertiesMapper mapper)
+		public void InvokeCustomizers(PropertyPath member, IMapPropertiesMapper mapper)
 		{
 			InvokeCustomizers(collectionCustomizers, member, mapper);
 			InvokeCustomizers(mapCustomizers, member, mapper);

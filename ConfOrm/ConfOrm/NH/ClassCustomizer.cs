@@ -7,7 +7,7 @@ namespace ConfOrm.NH
 {
 	public class ClassCustomizer<TEntity>: PropertyContainerCustomizer<TEntity>, IClassMapper<TEntity> where TEntity : class
 	{
-		public ClassCustomizer(ICustomizersHolder customizersHolder) : base(customizersHolder)
+		public ClassCustomizer(ICustomizersHolder customizersHolder) : base(customizersHolder, null)
 		{}
 
 		#region Implementation of IClassAttributesMapper<TEntity>

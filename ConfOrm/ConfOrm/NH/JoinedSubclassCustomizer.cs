@@ -5,7 +5,7 @@ namespace ConfOrm.NH
 {
 	public class JoinedSubclassCustomizer<TEntity> : PropertyContainerCustomizer<TEntity>, IJoinedSubclassMapper<TEntity> where TEntity : class
 	{
-		public JoinedSubclassCustomizer(ICustomizersHolder customizersHolder) : base(customizersHolder) {}
+		public JoinedSubclassCustomizer(ICustomizersHolder customizersHolder) : base(customizersHolder, null) {}
 
 
 		#region Implementation of IEntityAttributesMapper

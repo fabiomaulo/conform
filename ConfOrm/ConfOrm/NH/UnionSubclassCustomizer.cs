@@ -5,7 +5,7 @@ namespace ConfOrm.NH
 {
 	public class UnionSubclassCustomizer<TEntity> : PropertyContainerCustomizer<TEntity>, IUnionSubclassMapper<TEntity> where TEntity : class
 	{
-		public UnionSubclassCustomizer(ICustomizersHolder customizersHolder) : base(customizersHolder) {}
+		public UnionSubclassCustomizer(ICustomizersHolder customizersHolder) : base(customizersHolder, null) {}
 
 		#region Implementation of IEntityAttributesMapper
 

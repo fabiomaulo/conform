@@ -5,7 +5,7 @@ namespace ConfOrm.NH
 {
 	public class SubclassCustomizer<TEntity> : PropertyContainerCustomizer<TEntity>, ISubclassMapper<TEntity> where TEntity : class
 	{
-		public SubclassCustomizer(ICustomizersHolder customizersHolder) : base(customizersHolder) {}
+		public SubclassCustomizer(ICustomizersHolder customizersHolder) : base(customizersHolder, null) {}
 
 		public void DiscriminatorValue(object value)
 		{

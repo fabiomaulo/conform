@@ -224,49 +224,49 @@ namespace ConfOrm.NH
 			{
 				MemberInfo member = property;
 				Type propertyType = property.GetPropertyOrFieldType();
+				var memberPath = new PropertyPath(path, member);
 				if (domainInspector.IsManyToOne(propertiesContainerType, propertyType))
 				{
-					MapManyToOne(member, propertyType, propertiesContainer, propertiesContainerType);
+					MapManyToOne(member, memberPath, propertyType, propertiesContainer, propertiesContainerType);
 				}
 				else if (domainInspector.IsOneToOne(propertiesContainerType, propertyType))
 				{
-					MapOneToOne(member, propertyType, propertiesContainer, propertiesContainerType);
+					MapOneToOne(member, memberPath, propertyType, propertiesContainer, propertiesContainerType);
 				}
 				else if (domainInspector.IsSet(property))
 				{
-					MapSet(member, propertyType, propertiesContainer, propertiesContainerType);
+					MapSet(member, memberPath, propertyType, propertiesContainer, propertiesContainerType);
 				}
 				else if (domainInspector.IsDictionary(property))
 				{
-					MapDictionary(member, propertyType, propertiesContainer, propertiesContainerType);
+					MapDictionary(member, memberPath, propertyType, propertiesContainer, propertiesContainerType);
 				}
 				else if (domainInspector.IsArray(property)) {}
 				else if (domainInspector.IsList(property))
 				{
-					MapList(member, propertyType, propertiesContainer, propertiesContainerType);
+					MapList(member, memberPath, propertyType, propertiesContainer, propertiesContainerType);
 				}
 				else if (domainInspector.IsBag(property))
 				{
-					MapBag(member, propertyType, propertiesContainer, propertiesContainerType);
+					MapBag(member, memberPath, propertyType, propertiesContainer, propertiesContainerType);
 				}
 				else if (domainInspector.IsComponent(propertyType))
 				{
-					var memberPath = new PropertyPath(path, member);
 					MapComponent(member, memberPath, propertyType, propertiesContainer, propertiesContainerType);
 				}
 				else
 				{
-					MapProperty(member, propertiesContainer);
+					MapProperty(member, memberPath, propertiesContainer);
 				}
 			}
 		}
 
-		private void MapProperty(MemberInfo member, IPropertyContainerMapper propertiesContainer)
+		private void MapProperty(MemberInfo member, PropertyPath propertyPath, IPropertyContainerMapper propertiesContainer)
 		{
 			propertiesContainer.Property(member, propertyMapper =>
 				{
 					propertyPatternsAppliers.ApplyAllMatchs(member, propertyMapper);
-					customizerHolder.InvokeCustomizers(member, propertyMapper);
+					customizerHolder.InvokeCustomizers(propertyPath, propertyMapper);
 				});
 		}
 
@@ -288,7 +288,7 @@ namespace ConfOrm.NH
 				});
 		}
 
-		private void MapBag(MemberInfo member, Type propertyType, IPropertyContainerMapper propertiesContainer,
+		private void MapBag(MemberInfo member, PropertyPath propertyPath, Type propertyType, IPropertyContainerMapper propertiesContainer,
 		                    Type propertiesContainerType)
 		{
 			Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, member, propertyType);
@@ -297,11 +297,11 @@ namespace ConfOrm.NH
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
-					customizerHolder.InvokeCustomizers(member, collectionPropertiesMapper);
+					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
 		}
 
-		private void MapList(MemberInfo member, Type propertyType, IPropertyContainerMapper propertiesContainer,
+		private void MapList(MemberInfo member, PropertyPath propertyPath, Type propertyType, IPropertyContainerMapper propertiesContainer,
 		                     Type propertiesContainerType)
 		{
 			Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, member, propertyType);
@@ -310,11 +310,11 @@ namespace ConfOrm.NH
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
-					customizerHolder.InvokeCustomizers(member, collectionPropertiesMapper);
+					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
 		}
 
-		private void MapDictionary(MemberInfo member, Type propertyType, IPropertyContainerMapper propertiesContainer,
+		private void MapDictionary(MemberInfo member, PropertyPath propertyPath, Type propertyType, IPropertyContainerMapper propertiesContainer,
 		                           Type propertiesContainerType)
 		{
 			Type dictionaryKeyType = propertyType.DetermineDictionaryKeyType();
@@ -329,11 +329,11 @@ namespace ConfOrm.NH
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
-					customizerHolder.InvokeCustomizers(member, collectionPropertiesMapper);
+					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
 		}
 
-		private void MapSet(MemberInfo member, Type propertyType, IPropertyContainerMapper propertiesContainer,
+		private void MapSet(MemberInfo member, PropertyPath propertyPath, Type propertyType, IPropertyContainerMapper propertiesContainer,
 		                    Type propertiesContainerType)
 		{
 			Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, member, propertyType);
@@ -342,29 +342,29 @@ namespace ConfOrm.NH
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
-					customizerHolder.InvokeCustomizers(member, collectionPropertiesMapper);
+					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
 		}
 
-		private void MapOneToOne(MemberInfo member, Type propertyType, IPropertyContainerMapper propertiesContainer,
+		private void MapOneToOne(MemberInfo member, PropertyPath propertyPath, Type propertyType, IPropertyContainerMapper propertiesContainer,
 		                         Type propertiesContainerType)
 		{
 			propertiesContainer.OneToOne(member, oneToOneMapper =>
 				{
 					Cascade cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
 					oneToOneMapper.Cascade(cascade);
-					customizerHolder.InvokeCustomizers(member, oneToOneMapper);
+					customizerHolder.InvokeCustomizers(propertyPath, oneToOneMapper);
 				});
 		}
 
-		private void MapManyToOne(MemberInfo member, Type propertyType, IPropertyContainerMapper propertiesContainer,
+		private void MapManyToOne(MemberInfo member, PropertyPath propertyPath, Type propertyType, IPropertyContainerMapper propertiesContainer,
 		                          Type propertiesContainerType)
 		{
 			propertiesContainer.ManyToOne(member, manyToOneMapper =>
 				{
 					Cascade cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
 					manyToOneMapper.Cascade(cascade);
-					customizerHolder.InvokeCustomizers(member, manyToOneMapper);
+					customizerHolder.InvokeCustomizers(propertyPath, manyToOneMapper);
 				});
 		}
 
@@ -526,6 +526,7 @@ namespace ConfOrm.NH
 
 			private void MapProperties(Type type, IComponentElementMapper propertiesContainer, IEnumerable<PropertyInfo> persistentProperties)
 			{
+				// TODO check PropertyPath behaviour when the component is in a collection
 				foreach (var property in persistentProperties)
 				{
 					var member = property;
@@ -534,7 +535,7 @@ namespace ConfOrm.NH
 					{
 						propertiesContainer.ManyToOne(property, manyToOneMapper =>
 							{
-								customizersHolder.InvokeCustomizers(member, manyToOneMapper);
+								customizersHolder.InvokeCustomizers(new PropertyPath(null, member), manyToOneMapper);
 							});
 					}
 					else if (domainInspector.IsComponent(propertyType))
@@ -558,7 +559,7 @@ namespace ConfOrm.NH
 					{
 						propertiesContainer.Property(property, propertyMapper =>
 							{
-								customizersHolder.InvokeCustomizers(member, propertyMapper);
+								customizersHolder.InvokeCustomizers(new PropertyPath(null, member), propertyMapper);
 							});
 					}
 				}

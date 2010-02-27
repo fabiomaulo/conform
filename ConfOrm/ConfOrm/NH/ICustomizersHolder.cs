@@ -1,5 +1,4 @@
 using System;
-using System.Reflection;
 using ConfOrm.Mappers;
 
 namespace ConfOrm.NH
@@ -12,15 +11,15 @@ namespace ConfOrm.NH
 		void AddCustomizer(Type type, Action<IUnionSubclassAttributesMapper> classCustomizer);
 		void AddCustomizer(Type type, Action<IComponentMapper> classCustomizer);
 
-		void AddCustomizer(MemberInfo member, Action<IPropertyMapper> propertyCustomizer);
-		void AddCustomizer(MemberInfo member, Action<IManyToOneMapper> propertyCustomizer);
-		void AddCustomizer(MemberInfo member, Action<IOneToOneMapper> propertyCustomizer);
-		
-		void AddCustomizer(MemberInfo member, Action<ISetPropertiesMapper> propertyCustomizer);
-		void AddCustomizer(MemberInfo member, Action<IBagPropertiesMapper> propertyCustomizer);
-		void AddCustomizer(MemberInfo member, Action<IListPropertiesMapper> propertyCustomizer);
-		void AddCustomizer(MemberInfo member, Action<IMapPropertiesMapper> propertyCustomizer);
-		void AddCustomizer(MemberInfo member, Action<ICollectionPropertiesMapper> propertyCustomizer);
+		void AddCustomizer(PropertyPath member, Action<IPropertyMapper> propertyCustomizer);
+		void AddCustomizer(PropertyPath member, Action<IManyToOneMapper> propertyCustomizer);
+		void AddCustomizer(PropertyPath member, Action<IOneToOneMapper> propertyCustomizer);
+
+		void AddCustomizer(PropertyPath member, Action<ISetPropertiesMapper> propertyCustomizer);
+		void AddCustomizer(PropertyPath member, Action<IBagPropertiesMapper> propertyCustomizer);
+		void AddCustomizer(PropertyPath member, Action<IListPropertiesMapper> propertyCustomizer);
+		void AddCustomizer(PropertyPath member, Action<IMapPropertiesMapper> propertyCustomizer);
+		void AddCustomizer(PropertyPath member, Action<ICollectionPropertiesMapper> propertyCustomizer);
 
 		void InvokeCustomizers(Type type, IClassAttributesMapper mapper);
 		void InvokeCustomizers(Type type, ISubclassAttributesMapper mapper);
@@ -28,13 +27,13 @@ namespace ConfOrm.NH
 		void InvokeCustomizers(Type type, IUnionSubclassAttributesMapper mapper);
 		void InvokeCustomizers(Type type, IComponentMapper mapper);
 
-		void InvokeCustomizers(MemberInfo member, IPropertyMapper mapper);
-		void InvokeCustomizers(MemberInfo member, IManyToOneMapper mapper);
-		void InvokeCustomizers(MemberInfo member, IOneToOneMapper mapper);
+		void InvokeCustomizers(PropertyPath member, IPropertyMapper mapper);
+		void InvokeCustomizers(PropertyPath member, IManyToOneMapper mapper);
+		void InvokeCustomizers(PropertyPath member, IOneToOneMapper mapper);
 
-		void InvokeCustomizers(MemberInfo member, ISetPropertiesMapper mapper);
-		void InvokeCustomizers(MemberInfo member, IBagPropertiesMapper mapper);
-		void InvokeCustomizers(MemberInfo member, IListPropertiesMapper mapper);
-		void InvokeCustomizers(MemberInfo member, IMapPropertiesMapper mapper);
+		void InvokeCustomizers(PropertyPath member, ISetPropertiesMapper mapper);
+		void InvokeCustomizers(PropertyPath member, IBagPropertiesMapper mapper);
+		void InvokeCustomizers(PropertyPath member, IListPropertiesMapper mapper);
+		void InvokeCustomizers(PropertyPath member, IMapPropertiesMapper mapper);
 	}
 }
