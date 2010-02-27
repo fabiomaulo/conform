@@ -65,5 +65,10 @@ namespace ConfOrm.NH
 		{
 			return PrveiousPath == null ? LocalMember.Name : PrveiousPath.ToColumnName() + LocalMember.Name;
 		}
+
+		public override string ToString()
+		{
+			return PrveiousPath == null ? LocalMember.Name : PrveiousPath + "." + LocalMember.Name;
+		}
 	}
 }

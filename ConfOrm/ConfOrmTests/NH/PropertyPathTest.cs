@@ -125,5 +125,18 @@ namespace ConfOrmTests.NH
 			(new PropertyPath(myClassComponent1ComponentPath, myComponentInComponentName)).ToColumnName().Should().Be("Component1ComponentName");
 			(new PropertyPath(myClassComponent2ComponentPath, myComponentInComponentName)).ToColumnName().Should().Be("Component2ComponentName");
 		}
+
+		[Test]
+		public void ToStringForDebug()
+		{
+			var myClassComponent1Path = new PropertyPath(null, myClassComponent1);
+			var myClassComponent2Path = new PropertyPath(null, myClassComponent2);
+			var myClassComponent1ComponentPath = new PropertyPath(myClassComponent1Path, myComponentComponent);
+			var myClassComponent2ComponentPath = new PropertyPath(myClassComponent2Path, myComponentComponent);
+
+
+			(new PropertyPath(myClassComponent1ComponentPath, myComponentInComponentName)).ToString().Should().Be("Component1.Component.Name");
+			(new PropertyPath(myClassComponent2ComponentPath, myComponentInComponentName)).ToString().Should().Be("Component2.Component.Name");
+		}
 	}
 }
