@@ -53,5 +53,63 @@ namespace ConfOrmTests.NH.MapperTests
 			hbmRealName.Properties.OfType<HbmProperty>().Select(p => p.Columns.Single().name).Should().Have.SameValuesAs("RealNameFirst", "RealNameLast");
 			hbmAka.Properties.OfType<HbmProperty>().Select(p => p.Columns.Single().name).Should().Have.SameValuesAs("AkaFirst", "AkaLast");
 		}
+
+		[Test]
+		public void WhenSpecifiedThenSetDifferentConfigurationForSameComponent()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+
+			var domainInspector = orm.Object;
+			var mapper = new Mapper(domainInspector);
+			mapper.Class<Person>(c =>
+				{
+					c.Component(p => p.RealName, cname =>
+						{
+							cname.Property(cnp => cnp.First, pm => pm.Length(50));
+							cname.Property(cnp => cnp.Last, pm => pm.Length(51));
+						});
+					c.Component(p => p.Aka, cname =>
+					{
+						cname.Property(cnp => cnp.First, pm => pm.Length(20));
+						cname.Property(cnp => cnp.Last, pm => pm.Length(21));
+					});
+				});
+			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(Person) });
+
+			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Person"));
+			var hbmRealName = (HbmComponent)rc.Properties.First(p => p.Name == "RealName");
+			var hbmAka = (HbmComponent)rc.Properties.First(p => p.Name == "Aka");
+			hbmRealName.Properties.OfType<HbmProperty>().Select(p => p.length).Should().Have.SameValuesAs("50", "51");
+			hbmAka.Properties.OfType<HbmProperty>().Select(p => p.length).Should().Have.SameValuesAs("20", "21");
+		}
+
+		[Test]
+		public void WhenCustomizedAndSpecifiedThenSetDifferentConfigurationForSameComponent()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+
+			var domainInspector = orm.Object;
+			var mapper = new Mapper(domainInspector);
+			mapper.Customize<Name>(name =>
+				{
+					name.Property(np => np.First, pm => pm.Length(20));
+					name.Property(np => np.Last, pm => pm.Length(35));
+				});
+
+			mapper.Class<Person>(c =>
+				{
+					c.Component(p => p.RealName, cname => cname.Property(cnp => cnp.Last, pm => pm.Length(50)));
+					c.Component(p => p.Aka, cname => cname.Property(cnp => cnp.First, pm => pm.Length(50)));
+				});
+
+			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(Person) });
+
+			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Person"));
+			var hbmRealName = (HbmComponent)rc.Properties.First(p => p.Name == "RealName");
+			var hbmAka = (HbmComponent)rc.Properties.First(p => p.Name == "Aka");
+			hbmRealName.Properties.OfType<HbmProperty>().Select(p => p.length).Should().Have.SameValuesAs("20", "50");
+			hbmAka.Properties.OfType<HbmProperty>().Select(p => p.length).Should().Have.SameValuesAs("50", "35");
+		}
+
 	}
 }

@@ -266,6 +266,7 @@ namespace ConfOrm.NH
 			propertiesContainer.Property(member, propertyMapper =>
 				{
 					propertyPatternsAppliers.ApplyAllMatchs(member, propertyMapper);
+					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), propertyMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, propertyMapper);
 				});
 		}
@@ -297,6 +298,7 @@ namespace ConfOrm.NH
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
+					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
 		}
@@ -310,6 +312,7 @@ namespace ConfOrm.NH
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
+					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
 		}
@@ -329,6 +332,7 @@ namespace ConfOrm.NH
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
+					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
 		}
@@ -342,6 +346,7 @@ namespace ConfOrm.NH
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
+					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
 		}
@@ -353,6 +358,7 @@ namespace ConfOrm.NH
 				{
 					Cascade cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
 					oneToOneMapper.Cascade(cascade);
+					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), oneToOneMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, oneToOneMapper);
 				});
 		}
@@ -364,6 +370,7 @@ namespace ConfOrm.NH
 				{
 					Cascade cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
 					manyToOneMapper.Cascade(cascade);
+					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), manyToOneMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, manyToOneMapper);
 				});
 		}
