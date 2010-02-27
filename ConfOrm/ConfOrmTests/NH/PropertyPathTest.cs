@@ -8,10 +8,10 @@ namespace ConfOrmTests.NH
 {
 	public class PropertyPathTest
 	{
-		PropertyInfo myClassComponent1 = typeof(MyClass).GetProperty("Component1");
-		PropertyInfo myClassComponent2 = typeof(MyClass).GetProperty("Component2");
-		PropertyInfo myComponentComponent = typeof(MyComponent).GetProperty("Component");
-		PropertyInfo myComponentInComponentName = typeof(MyComponentInComponent).GetProperty("Name");
+		readonly PropertyInfo myClassComponent1 = typeof(MyClass).GetProperty("Component1");
+		readonly PropertyInfo myClassComponent2 = typeof(MyClass).GetProperty("Component2");
+		readonly PropertyInfo myComponentComponent = typeof(MyComponent).GetProperty("Component");
+		readonly PropertyInfo myComponentInComponentName = typeof(MyComponentInComponent).GetProperty("Name");
 
 		private class MyClass
 		{
@@ -89,6 +89,41 @@ namespace ConfOrmTests.NH
 			var myClassComponent2ComponentPath = new PropertyPath(myClassComponent2Path, myComponentComponent);
 			new PropertyPath(myClassComponent1ComponentPath, myComponentInComponentName).Should().Be(new PropertyPath(myClassComponent1ComponentPath, myComponentInComponentName));
 			new PropertyPath(myClassComponent1ComponentPath, myComponentInComponentName).Should().Not.Be(new PropertyPath(myClassComponent2ComponentPath, myComponentInComponentName));
+		}
+
+		[Test]
+		public void ToColumnNameLevel1()
+		{
+			var myClassComponent1Path = new PropertyPath(null, myClassComponent1);
+			var myClassComponent2Path = new PropertyPath(null, myClassComponent2);
+
+			myClassComponent1Path.ToColumnName().Should().Be("Component1");
+			myClassComponent2Path.ToColumnName().Should().Be("Component2");
+		}
+
+		[Test]
+		public void ToColumnNameLevel2()
+		{
+			var myClassComponent1Path = new PropertyPath(null, myClassComponent1);
+			var myClassComponent2Path = new PropertyPath(null, myClassComponent2);
+			var myClassComponent1ComponentPath = new PropertyPath(myClassComponent1Path, myComponentComponent);
+			var myClassComponent2ComponentPath = new PropertyPath(myClassComponent2Path, myComponentComponent);
+
+			myClassComponent1ComponentPath.ToColumnName().Should().Be("Component1Component");
+			myClassComponent2ComponentPath.ToColumnName().Should().Be("Component2Component");
+		}
+
+		[Test]
+		public void ToColumnNameLevel3()
+		{
+			var myClassComponent1Path = new PropertyPath(null, myClassComponent1);
+			var myClassComponent2Path = new PropertyPath(null, myClassComponent2);
+			var myClassComponent1ComponentPath = new PropertyPath(myClassComponent1Path, myComponentComponent);
+			var myClassComponent2ComponentPath = new PropertyPath(myClassComponent2Path, myComponentComponent);
+
+
+			(new PropertyPath(myClassComponent1ComponentPath, myComponentInComponentName)).ToColumnName().Should().Be("Component1ComponentName");
+			(new PropertyPath(myClassComponent2ComponentPath, myComponentInComponentName)).ToColumnName().Should().Be("Component2ComponentName");
 		}
 	}
 }

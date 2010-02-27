@@ -60,5 +60,10 @@ namespace ConfOrm.NH
 		{
 			return hashCode;
 		}
+
+		public string ToColumnName()
+		{
+			return PrveiousPath == null ? LocalMember.Name : PrveiousPath.ToColumnName() + LocalMember.Name;
+		}
 	}
 }
