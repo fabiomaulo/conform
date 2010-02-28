@@ -1,5 +1,4 @@
 using System.Linq;
-using ConfOrm.Mappers;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
@@ -87,6 +86,14 @@ namespace ConfOrmTests.NH
 			hbmId.generator.@class.Should().Be.EqualTo("foreign");
 			hbmId.generator.param.Should().Not.Be.Null().And.Have.Count.EqualTo(1);
 			hbmId.generator.param.Single().Satisfy(p => p.name == "property" && p.GetText() == "OneToOne");
+		}
+
+		[Test]
+		public void CanSetGeneratorAssigned()
+		{
+			var hbmId = new HbmId();
+			new IdMapper(hbmId).Generator(Generators.Assigned);
+			hbmId.generator.@class.Should().Be.EqualTo("assigned");
 		}
 	}
 }

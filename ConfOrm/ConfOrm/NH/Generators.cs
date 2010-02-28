@@ -15,8 +15,10 @@ namespace ConfOrm.NH
 			GuidComb = new GuidCombGeneratorDef();
 			Sequence = new SequenceGeneratorDef();
 			Identity = new IdentityGeneratorDef();
+			Assigned = new AssignedGeneratorDef();
 		}
 
+		public static IGeneratorDef Assigned { get; private set; }
 		public static IGeneratorDef Native { get; private set; }
 		public static IGeneratorDef HighLow { get; private set; }
 		public static IGeneratorDef Guid { get; private set; }
@@ -27,6 +29,23 @@ namespace ConfOrm.NH
 		{
 			return new ForeignGeneratorDef(TypeExtensions.DecodeMemberAccessExpression(property));
 		}
+	}
+
+	public class AssignedGeneratorDef : IGeneratorDef
+	{
+		#region Implementation of IGeneratorDef
+
+		public string Class
+		{
+			get { return "assigned"; }
+		}
+
+		public object Params
+		{
+			get { return null; }
+		}
+
+		#endregion
 	}
 
 	public class ForeignGeneratorDef : IGeneratorDef
