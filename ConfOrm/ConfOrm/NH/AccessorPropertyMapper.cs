@@ -7,7 +7,7 @@ using NHibernate.Properties;
 
 namespace ConfOrm.NH
 {
-	public class AccessorPropertyMapper
+	public class AccessorPropertyMapper : IAccessorPropertyMapper
 	{
 		private const BindingFlags FieldBindingFlag =
 			BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy;
