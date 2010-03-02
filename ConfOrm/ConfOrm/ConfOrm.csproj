@@ -62,6 +62,7 @@
     <Compile Include="Mappers\IEntitySqlsMapper.cs" />
     <Compile Include="Mappers\IListPropertiesMapper.cs" />
     <Compile Include="Mappers\ISetPropertiesMapper.cs" />
+    <Compile Include="NH\AccessorPropertyMapper.cs" />
     <Compile Include="NH\ClassCustomizer.cs" />
     <Compile Include="NH\ColumnMapper.cs" />
     <Compile Include="NH\ComponentCustomizer.cs" />
