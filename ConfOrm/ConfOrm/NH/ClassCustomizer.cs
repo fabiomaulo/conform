@@ -12,6 +12,11 @@ namespace ConfOrm.NH
 
 		#region Implementation of IClassAttributesMapper<TEntity>
 
+		public void Id(Action<IIdMapper> idMapper)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.Id(idMapper));
+		}
+
 		public void Id<TProperty>(Expression<Func<TEntity, TProperty>> idProperty, Action<IIdMapper> idMapper)
 		{
 			MemberInfo member = TypeExtensions.DecodeMemberAccessExpression(idProperty);

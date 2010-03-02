@@ -172,5 +172,17 @@ namespace ConfOrmTests.NH.MapperTests
 			hbmClass.schema.Should().Be("dbo");
 		}
 
+		[Test]
+		public void CallCustomizerOfIdWithoutProperty()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+			var mapper = new Mapper(orm.Object);
+			bool idCalled = false;
+
+			mapper.Class<MyClass>(x => x.Id(i => idCalled = true));
+
+			mapper.CompileMappingFor(new[] { typeof(MyClass) });
+			idCalled.Should().Be.True();
+		}
 	}
 }
