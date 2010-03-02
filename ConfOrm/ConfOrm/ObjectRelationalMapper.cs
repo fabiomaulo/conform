@@ -31,39 +31,35 @@ namespace ConfOrm
 
 		#endregion
 
-		#region Patterns
+		private readonly IPatternsHolder patterns;
 
-		private readonly List<IPattern<MemberInfo>> poidPatterns;
-		private readonly List<IPattern<MemberInfo>> setPatterns;
-		private readonly List<IPattern<MemberInfo>> bagPatterns;
-		private readonly List<IPattern<MemberInfo>> listPatterns;
-		private readonly List<IPattern<MemberInfo>> arrayPatterns;
-		private readonly List<IPattern<Type>> componetPatterns;
-		private readonly List<IPattern<MemberInfo>> dictionaryPatterns;
-		private readonly List<IPatternValueGetter<Relation, Cascade>> cascadePatterns;
-		private readonly List<IPatternValueGetter<MemberInfo, IPersistentIdStrategy>> poidStrategyPatterns;
-		private readonly List<IPattern<MemberInfo>> persistentPropertyExclusionPatterns;
+		public ObjectRelationalMapper() : this(new PatternsHolder()) {}
 
-		#endregion
-
-		public ObjectRelationalMapper()
+		public ObjectRelationalMapper(IPatternsHolder patterns)
 		{
-			poidPatterns = new List<IPattern<MemberInfo>> {new PoIdPattern()};
-			setPatterns = new List<IPattern<MemberInfo>> { new SetCollectionPattern() };
-			bagPatterns = new List<IPattern<MemberInfo>> { new BagCollectionPattern() };
-			listPatterns = new List<IPattern<MemberInfo>> { new ListCollectionPattern(this) };
-			arrayPatterns = new List<IPattern<MemberInfo>> { new ArrayCollectionPattern() };
-			componetPatterns = new List<IPattern<Type>> { new ComponentPattern() };
-			dictionaryPatterns = new List<IPattern<MemberInfo>> { new DictionaryCollectionPattern() };
-			cascadePatterns = new List<IPatternValueGetter<Relation, Cascade>> { new BidirectionalOneToManyCascadePattern(this) };
-			poidStrategyPatterns = new List<IPatternValueGetter<MemberInfo, IPersistentIdStrategy>>
-			                       	{new HighLowPoidPattern(), new GuidOptimizedPoidPattern()};
-			persistentPropertyExclusionPatterns = new List<IPattern<MemberInfo>> { new ReadOnlyPropertyPattern() };
+			if (patterns == null)
+			{
+				throw new ArgumentNullException("patterns");
+			}
+			this.patterns = patterns;
+			patterns.Poids.Add(new PoIdPattern());
+			patterns.Sets.Add(new SetCollectionPattern());
+			patterns.Bags.Add(new BagCollectionPattern());
+			patterns.Lists.Add(new ListCollectionPattern(this));
+			patterns.Arrays.Add(new ArrayCollectionPattern());
+			patterns.Componets.Add(new ComponentPattern());
+			patterns.Dictionaries.Add(new DictionaryCollectionPattern());
+			patterns.Cascades.Add(new BidirectionalOneToManyCascadePattern(this));
+
+			patterns.PoidStrategies.Add(new HighLowPoidPattern());
+			patterns.PoidStrategies.Add(new GuidOptimizedPoidPattern());
+
+			patterns.PersistentPropertiesExclusions.Add(new ReadOnlyPropertyPattern());
 		}
 
-		public ICollection<IPatternValueGetter<MemberInfo, IPersistentIdStrategy>> PoidStrategies
+		public IPatternsHolder Patterns
 		{
-			get { return poidStrategyPatterns; }
+			get { return patterns; }
 		}
 
 		#region Implementation of IObjectRelationalMapper
@@ -225,7 +221,7 @@ namespace ConfOrm
 
 		public bool IsComponent(Type type)
 		{
-			return (components.Contains(type) || (componetPatterns.Match(type) && !IsEntity(type))) && !complex.Contains(type);
+			return (components.Contains(type) || (Patterns.Componets.Match(type) && !IsEntity(type))) && !complex.Contains(type);
 		}
 
 		public bool IsComplex(Type type)
@@ -316,47 +312,47 @@ namespace ConfOrm
 				return resultByClasses;
 			}
 
-			return cascadePatterns.GetValueOfFirstMatch(relationOn);
+			return Patterns.Cascades.GetValueOfFirstMatch(relationOn);
 		}
 
 		public bool IsPersistentId(MemberInfo member)
 		{
-			return poidPatterns.Match(member);
+			return Patterns.Poids.Match(member);
 		}
 
 		public IPersistentIdStrategy GetPersistentIdStrategy(MemberInfo member)
 		{
-			return poidStrategyPatterns.GetValueOfFirstMatch(member);
+			return Patterns.PoidStrategies.GetValueOfFirstMatch(member);
 		}
 
 		public bool IsPersistentProperty(MemberInfo role)
 		{
-			return !persistentPropertyExclusionPatterns.Match(role) || persistentProperty.Contains(role);
+			return !Patterns.PersistentPropertiesExclusions.Match(role) || persistentProperty.Contains(role);
 		}
 
 		public bool IsSet(MemberInfo role)
 		{
-			return sets.Contains(role) || setPatterns.Match(role); 
+			return sets.Contains(role) || Patterns.Sets.Match(role); 
 		}
 
 		public bool IsBag(MemberInfo role)
 		{
-			return bags.Contains(role) || (!sets.Contains(role) && !lists.Contains(role) && !arrays.Contains(role) && bagPatterns.Match(role));
+			return bags.Contains(role) || (!sets.Contains(role) && !lists.Contains(role) && !arrays.Contains(role) && Patterns.Bags.Match(role));
 		}
 
 		public bool IsList(MemberInfo role)
 		{
-			return lists.Contains(role) || (!arrays.Contains(role) && !bags.Contains(role) && listPatterns.Match(role));
+			return lists.Contains(role) || (!arrays.Contains(role) && !bags.Contains(role) && Patterns.Lists.Match(role));
 		}
 
 		public bool IsArray(MemberInfo role)
 		{
-			return arrays.Contains(role) || (!lists.Contains(role) && !bags.Contains(role) && arrayPatterns.Match(role));
+			return arrays.Contains(role) || (!lists.Contains(role) && !bags.Contains(role) && Patterns.Arrays.Match(role));
 		}
 
 		public bool IsDictionary(MemberInfo role)
 		{
-			return dictionaries.Contains(role) || dictionaryPatterns.Match(role);
+			return dictionaries.Contains(role) || Patterns.Dictionaries.Match(role);
 		}
 
 		#endregion

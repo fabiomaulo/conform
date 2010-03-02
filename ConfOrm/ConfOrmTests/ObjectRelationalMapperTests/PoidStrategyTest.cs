@@ -43,7 +43,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		public void WhenIntPoidExplicitIdentityThenApplyIdentity()
 		{
 			var orm = new ObjectRelationalMapper();
-			orm.PoidStrategies.Add(new IdentityPoidPattern());
+			orm.Patterns.PoidStrategies.Add(new IdentityPoidPattern());
 			orm.GetPersistentIdStrategy(typeof(EntityInt).GetProperty("Id")).Strategy.Should().Be.EqualTo(PoIdStrategy.Identity);
 		}
 
@@ -51,7 +51,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		public void WhenIntPoidExplicitSequenceThenApplySequence()
 		{
 			var orm = new ObjectRelationalMapper();
-			orm.PoidStrategies.Add(new SequencePoidPattern());
+			orm.Patterns.PoidStrategies.Add(new SequencePoidPattern());
 			orm.GetPersistentIdStrategy(typeof(EntityInt).GetProperty("Id")).Strategy.Should().Be.EqualTo(PoIdStrategy.Sequence);
 		}
 
@@ -59,7 +59,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		public void WhenIntPoidExplicitNativeThenApplyNative()
 		{
 			var orm = new ObjectRelationalMapper();
-			orm.PoidStrategies.Add(new NativePoidPattern());
+			orm.Patterns.PoidStrategies.Add(new NativePoidPattern());
 			orm.GetPersistentIdStrategy(typeof(EntityInt).GetProperty("Id")).Strategy.Should().Be.EqualTo(PoIdStrategy.Native);
 		}
 
@@ -67,7 +67,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		public void WhenGuidPoidExplicitGuidThenApplyGuid()
 		{
 			var orm = new ObjectRelationalMapper();
-			orm.PoidStrategies.Add(new GuidPoidPattern());
+			orm.Patterns.PoidStrategies.Add(new GuidPoidPattern());
 			orm.GetPersistentIdStrategy(typeof(EntityGuid).GetProperty("Id")).Strategy.Should().Be.EqualTo(PoIdStrategy.Guid);
 		}
 
@@ -81,7 +81,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			customPoidPattern.Setup(p => p.Match(It.Is<MemberInfo>(mi => mi == specificId))).Returns(true);
 			customPoidPattern.Setup(p => p.Get(It.Is<MemberInfo>(mi => mi == specificId))).Returns(identityResult.Object);
 			var orm = new ObjectRelationalMapper();
-			orm.PoidStrategies.Add(customPoidPattern.Object);
+			orm.Patterns.PoidStrategies.Add(customPoidPattern.Object);
 		
 			orm.GetPersistentIdStrategy(typeof(EntityInt).GetProperty("Id")).Strategy.Should().Be.EqualTo(PoIdStrategy.HighLow);
 			orm.GetPersistentIdStrategy(specificId).Strategy.Should().Be.EqualTo(PoIdStrategy.Identity);

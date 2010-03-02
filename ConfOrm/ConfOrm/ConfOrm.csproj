@@ -52,7 +52,7 @@
     <Compile Include="IObjectRelationalMapper.cs" />
     <Compile Include="IPattern.cs" />
     <Compile Include="IPatternApplier.cs" />
-    <Compile Include="IPatterns.cs" />
+    <Compile Include="IPatternsHolder.cs" />
     <Compile Include="IPatternValueGetter.cs" />
     <Compile Include="Mappers\CollectionLazy.cs" />
     <Compile Include="Mappers\IBagPropertiesMapper.cs" />
@@ -124,6 +124,7 @@
     <Compile Include="NH\UnionSubclassMapper.cs" />
     <Compile Include="ObjectRelationalMapper.cs" />
     <Compile Include="PatternExtensions.cs" />
+    <Compile Include="PatternsHolder.cs" />
     <Compile Include="Patterns\AbstractCollectionPattern.cs" />
     <Compile Include="Patterns\AbstractPropertyToFieldPattern.cs" />
     <Compile Include="Patterns\ArrayCollectionPattern.cs" />

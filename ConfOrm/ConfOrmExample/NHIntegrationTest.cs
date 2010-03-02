@@ -62,8 +62,8 @@ namespace ConfOrmExample
 
 			orm.ManyToMany<Human, Human>();
 			orm.OneToOne<User, Human>();
-			
-			orm.PoidStrategies.Add(new NativePoidPattern());
+
+			orm.Patterns.PoidStrategies.Add(new NativePoidPattern());
 
 			return orm;
 		}
