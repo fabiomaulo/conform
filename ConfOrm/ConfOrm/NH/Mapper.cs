@@ -12,6 +12,7 @@ namespace ConfOrm.NH
 	{
 		internal const BindingFlags PropertiesBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
 		private readonly IDomainInspector domainInspector;
+		private readonly List<IPatternApplier<MemberInfo, IIdMapper>> poidPatternsAppliers;
 		private readonly List<IPatternApplier<MemberInfo, IPropertyMapper>> propertyPatternsAppliers;
 		private readonly List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> collectionPatternsAppliers;
 		private readonly ICustomizersHolder customizerHolder;
@@ -28,7 +29,7 @@ namespace ConfOrm.NH
 				throw new ArgumentNullException("domainInspector");
 			}
 			this.domainInspector = domainInspector;
-
+			poidPatternsAppliers = new List<IPatternApplier<MemberInfo, IIdMapper>> { new NoSetterPoidToFieldAccessorApplier() };
 			propertyPatternsAppliers = new List<IPatternApplier<MemberInfo, IPropertyMapper>>
 			                           	{
 			                           		new ReadOnlyPropertyAccessorApplier(),
@@ -176,6 +177,7 @@ namespace ConfOrm.NH
 							}
 						});
 					}
+					poidPatternsAppliers.ApplyAllMatchs(poidPropertyOrField, idMapper);
 				});
 			if (domainInspector.IsTablePerClassHierarchy(type))
 			{

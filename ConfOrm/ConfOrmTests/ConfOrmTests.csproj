@@ -112,6 +112,7 @@
     <Compile Include="NH\MapperTests\ManyToManyApplyCascade.cs" />
     <Compile Include="NH\MapperTests\OneToManyOnDeleteConstraintTest.cs" />
     <Compile Include="NH\MapperTests\OneToManyOnDeleteConstraintWhenCyclicTest.cs" />
+    <Compile Include="NH\MapperTests\PoidPropertyPatternsTest.cs" />
     <Compile Include="NH\MapperTests\PrivatePropertiesTest.cs" />
     <Compile Include="NH\MapperTests\PropertyAccessorTest.cs" />
     <Compile Include="NH\MapperTests\RootClassCustomizerCallingTest.cs" />
