@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NH\AbstractPropertyContainerMapperTest.cs" />
+    <Compile Include="NH\AccessorPropertyMapperTest.cs" />
     <Compile Include="NH\BagMapperTest.cs" />
     <Compile Include="NH\CascadeConverterTest.cs" />
     <Compile Include="NH\ClassMapperTest.cs" />
