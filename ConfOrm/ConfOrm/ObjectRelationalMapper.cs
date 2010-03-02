@@ -28,6 +28,7 @@ namespace ConfOrm
 		private readonly Dictionary<Relation, Cascade> cascade = new Dictionary<Relation, Cascade>();
 		private readonly HashSet<MemberInfo> persistentProperty = new HashSet<MemberInfo>();
 		private readonly HashSet<Type> complex = new HashSet<Type>();
+		private readonly HashSet<MemberInfo> poids = new HashSet<MemberInfo>();
 
 		#endregion
 
@@ -149,6 +150,12 @@ namespace ConfOrm
 		{
 			var type = typeof(TComplex);
 			complex.Add(type);
+		}
+
+		public void Poid<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
+			poids.Add(member);
 		}
 
 		public void ManyToMany<TLeftEntity, TRigthEntity>()
@@ -317,7 +324,7 @@ namespace ConfOrm
 
 		public bool IsPersistentId(MemberInfo member)
 		{
-			return Patterns.Poids.Match(member);
+			return poids.Contains(member) || Patterns.Poids.Match(member);
 		}
 
 		public IPersistentIdStrategy GetPersistentIdStrategy(MemberInfo member)

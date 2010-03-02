@@ -16,6 +16,7 @@ namespace ConfOrm
 		void Component<TComponent>();
 		void Complex<TComplex>();
 
+		void Poid<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 		void ManyToMany<TLeftEntity, TRigthEntity>();
 		void ManyToOne<TLeftEntity, TRigthEntity>();
 		void OneToOne<TLeftEntity, TRigthEntity>();
