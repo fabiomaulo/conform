@@ -48,7 +48,7 @@ namespace ConfOrmTests.NH.MapperTests
 			rc.Id.access.Should().Be("nosetter.camelcase");
 		}
 
-		[Test, Ignore("Not fixed yet.")]
+		[Test]
 		public void WhenEntityWithoutPoidInModelThenSetTypeAndDefaultGenerator()
 		{
 			var orm = new Mock<IDomainInspector>();

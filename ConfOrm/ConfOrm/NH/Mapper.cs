@@ -29,7 +29,11 @@ namespace ConfOrm.NH
 				throw new ArgumentNullException("domainInspector");
 			}
 			this.domainInspector = domainInspector;
-			poidPatternsAppliers = new List<IPatternApplier<MemberInfo, IIdMapper>> { new NoSetterPoidToFieldAccessorApplier() };
+			poidPatternsAppliers = new List<IPatternApplier<MemberInfo, IIdMapper>>
+			                       	{
+			                       		new NoSetterPoidToFieldAccessorApplier(),
+																new NoPoidGuidApplier()
+			                       	};
 			propertyPatternsAppliers = new List<IPatternApplier<MemberInfo, IPropertyMapper>>
 			                           	{
 			                           		new ReadOnlyPropertyAccessorApplier(),

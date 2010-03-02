@@ -147,6 +147,7 @@
     <Compile Include="Patterns\HighLowPoidPattern.cs" />
     <Compile Include="Patterns\IdentityPoidPattern.cs" />
     <Compile Include="Patterns\ListCollectionPattern.cs" />
+    <Compile Include="Patterns\NoPoidGuidApplier.cs" />
     <Compile Include="Patterns\NoSetterCollectionPropertyToFieldAccessorApplier.cs" />
     <Compile Include="Patterns\NoSetterPoidToFieldAccessorApplier.cs" />
     <Compile Include="Patterns\NoSetterPropertyToFieldAccessorApplier.cs" />

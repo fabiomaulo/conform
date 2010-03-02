@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Type;
 
 namespace ConfOrm.NH
 {
@@ -80,6 +81,15 @@ namespace ConfOrm.NH
 		public void Access(Type accessorType)
 		{
 			accessorMapper.Access(accessorType);
+		}
+
+		public void Type(IIdentifierType persistentType)
+		{
+			if (persistentType != null)
+			{
+				hbmId.type1 = persistentType.Name;
+				hbmId.type = null;
+			}
 		}
 
 		#endregion
