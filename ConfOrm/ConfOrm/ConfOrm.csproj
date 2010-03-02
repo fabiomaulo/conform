@@ -52,6 +52,7 @@
     <Compile Include="IObjectRelationalMapper.cs" />
     <Compile Include="IPattern.cs" />
     <Compile Include="IPatternApplier.cs" />
+    <Compile Include="IPatterns.cs" />
     <Compile Include="IPatternValueGetter.cs" />
     <Compile Include="Mappers\CollectionLazy.cs" />
     <Compile Include="Mappers\IBagPropertiesMapper.cs" />
