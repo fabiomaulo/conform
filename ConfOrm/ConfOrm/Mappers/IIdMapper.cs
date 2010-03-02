@@ -8,8 +8,8 @@ namespace ConfOrm.Mappers
 		void Generator(IGeneratorDef generator);
 		void Generator(IGeneratorDef generator, Action<IGeneratorMapper> generatorMapping);
 
-		//void Access(Accessor accessor);
-		//void Access(Type accessorType);
+		void Access(Accessor accessor);
+		void Access(Type accessorType);
 		//void Type(IIdentifierType persistentType);
 		//void Type<TPersistentType>() where TPersistentType : IIdentifierType;
 		//void Type<TPersistentType>(object parameters) where TPersistentType : IIdentifierType;

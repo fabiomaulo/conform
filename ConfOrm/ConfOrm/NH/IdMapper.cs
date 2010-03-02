@@ -8,7 +8,15 @@ namespace ConfOrm.NH
 {
 	public class IdMapper : IIdMapper
 	{
+		private readonly IAccessorPropertyMapper accessorMapper;
 		private readonly HbmId hbmId;
+
+		private class NoMemberPropertyMapper : IEntityPropertyMapper
+		{
+			public void Access(Accessor accessor) { }
+
+			public void Access(Type accessorType) { }
+		}
 
 		public IdMapper(HbmId hbmId)
 			: this(null, hbmId)
@@ -23,6 +31,11 @@ namespace ConfOrm.NH
 				var idType = member.GetPropertyOrFieldType();
 				hbmId.name = member.Name;
 				hbmId.type1 = idType.GetNhTypeName();
+				accessorMapper = new AccessorPropertyMapper(member.DeclaringType, member.Name, x => hbmId.access = x);
+			}
+			else
+			{
+				accessorMapper = new NoMemberPropertyMapper();
 			}
 		}
 
@@ -57,6 +70,16 @@ namespace ConfOrm.NH
 		{
 			ApplyGenerator(generator);
 			generatorMapping(new GeneratorMapper(hbmId.generator));
+		}
+
+		public void Access(Accessor accessor)
+		{
+			accessorMapper.Access(accessor);
+		}
+
+		public void Access(Type accessorType)
+		{
+			accessorMapper.Access(accessorType);
 		}
 
 		#endregion

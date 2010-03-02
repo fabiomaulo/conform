@@ -1,4 +1,6 @@
 using System.Linq;
+using System.Reflection;
+using ConfOrm.Mappers;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
@@ -94,6 +96,33 @@ namespace ConfOrmTests.NH
 			var hbmId = new HbmId();
 			new IdMapper(hbmId).Generator(Generators.Assigned);
 			hbmId.generator.@class.Should().Be.EqualTo("assigned");
+		}
+
+		private class BaseEntity
+		{
+			private int id;
+
+			public int Id
+			{
+				get { return id; }
+			}
+		}
+
+		private class Entity: BaseEntity
+		{
+			
+		}
+
+		[Test]
+		public void WhenHasMemberCanSetAccessor()
+		{
+			var member = typeof (Entity).GetProperty("Id",
+			                                         BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
+			                                         | BindingFlags.FlattenHierarchy);
+			var hbmId = new HbmId();
+			var mapper = new IdMapper(member, hbmId);
+			mapper.Access(Accessor.NoSetter);
+			hbmId.access.Should().Be("nosetter.camelcase");
 		}
 	}
 }
