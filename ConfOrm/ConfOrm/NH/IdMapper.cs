@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
 
@@ -10,8 +11,19 @@ namespace ConfOrm.NH
 		private readonly HbmId hbmId;
 
 		public IdMapper(HbmId hbmId)
+			: this(null, hbmId)
+		{
+		}
+
+		public IdMapper(MemberInfo member, HbmId hbmId)
 		{
 			this.hbmId = hbmId;
+			if (member != null)
+			{
+				var idType = member.GetPropertyOrFieldType();
+				hbmId.name = member.Name;
+				hbmId.type1 = idType.GetNhTypeName();
+			}
 		}
 
 		#region Implementation of IIdMapper

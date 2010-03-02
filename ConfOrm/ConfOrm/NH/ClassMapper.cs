@@ -9,6 +9,7 @@ namespace ConfOrm.NH
 	public class ClassMapper: AbstractPropertyContainerMapper, IClassMapper
 	{
 		private readonly HbmClass classMapping;
+		private readonly IIdMapper idMapper;
 
 		public ClassMapper(Type rootClass, HbmMapping mapDoc, MemberInfo idProperty)
 			: base(rootClass, mapDoc)
@@ -21,15 +22,11 @@ namespace ConfOrm.NH
 				classMapping.@abstract = true;
 				classMapping.abstractSpecified = true;
 			}
-			if (idProperty != null)
-			{
-				var idType = GetMemberType(idProperty);
-				classMapping.Item = new HbmId {name = idProperty.Name, type1 = idType.GetNhTypeName()};
-			}
-			else
-			{
-				classMapping.Item = new HbmId();				
-			}
+			
+			var hbmId = new HbmId();
+			classMapping.Item = hbmId;
+			idMapper = new IdMapper(idProperty, hbmId);
+
 			mapDoc.Items = mapDoc.Items == null ? toAdd : mapDoc.Items.Concat(toAdd).ToArray();
 		}
 
@@ -49,18 +46,15 @@ namespace ConfOrm.NH
 
 		#region Implementation of IClassMapper
 
-		public void Id(Action<IIdMapper> idMapper)
+		public void Id(Action<IIdMapper> mapper)
 		{
-			idMapper(new IdMapper((HbmId)classMapping.Item));
+			mapper(idMapper);
 		}
 
-		public void Id(MemberInfo idProperty, Action<IIdMapper> idMapper)
+		public void Id(MemberInfo idProperty, Action<IIdMapper> mapper)
 		{
-			var idType = GetMemberType(idProperty);
 			var id = (HbmId)classMapping.Item;
-			id.name = idProperty.Name;
-			id.type1 = idType.GetNhTypeName();
-			idMapper(new IdMapper(id));
+			mapper(new IdMapper(idProperty, id));
 		}
 
 		public void Discriminator()
