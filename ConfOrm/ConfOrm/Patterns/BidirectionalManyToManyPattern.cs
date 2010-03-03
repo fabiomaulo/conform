@@ -61,14 +61,14 @@ namespace ConfOrm.Patterns
 				if (genericEnumerable != null)
 				{
 					Type genericArgument = genericEnumerable.GetGenericArguments()[0];
-					if (genericArgument.IsAssignableFrom(toMany))
+					if (genericArgument == toMany)
 					{
 						return true;
 					}
 					if (genericArgument.IsGenericType && typeof(KeyValuePair<,>) == genericArgument.GetGenericTypeDefinition())
 					{
 						var dictionaryGenericArguments = genericArgument.GetGenericArguments();
-						if (dictionaryGenericArguments[1].IsAssignableFrom(toMany) || dictionaryGenericArguments[0].IsAssignableFrom(toMany))
+						if (dictionaryGenericArguments[1] == toMany || dictionaryGenericArguments[0] == toMany)
 						{
 							return true;
 						}
