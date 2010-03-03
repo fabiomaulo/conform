@@ -12,7 +12,7 @@ namespace ConfOrm.Patterns
 		
 		#region Implementation of IPattern<MemberInfo>
 
-		public bool Match(MemberInfo subject)
+		public virtual bool Match(MemberInfo subject)
 		{
 			if (subject == null)
 			{

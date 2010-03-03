@@ -8,6 +8,43 @@ namespace ConfOrm.Patterns
 {
 	public class BidirectionalManyToManyTableApplier : BidirectionalManyToManyPattern, IPatternApplier<MemberInfo, ICollectionPropertiesMapper>
 	{
+		public override bool Match(MemberInfo subject)
+		{
+			if (subject == null)
+			{
+				throw new ArgumentNullException("subject");
+			}
+			var propertyType = subject.GetPropertyOrFieldType();
+			if (!propertyType.IsGenericCollection())
+			{
+				// can't determine relation for a no generic collection
+				return false;
+			}
+
+			var fromMany = subject.DeclaringType;
+			Type cadidateToMany = propertyType.DetermineCollectionElementType();
+			if (cadidateToMany.IsGenericType && typeof(KeyValuePair<,>) == cadidateToMany.GetGenericTypeDefinition())
+			{
+				// many-to-many on map
+				var dictionaryGenericArguments = cadidateToMany.GetGenericArguments();
+				if(fromMany == dictionaryGenericArguments[0] || fromMany == dictionaryGenericArguments[1])
+				{
+					// no match circular many-to-many reference
+					return false;
+				}
+			}
+			else
+			{
+				// many-to-many on plain collection
+				if(fromMany == cadidateToMany)
+				{
+					// no match circular many-to-many reference
+					return false;
+				}
+			}
+			return base.Match(subject);
+		}
+
 		#region Implementation of IPatternApplier<MemberInfo,ICollectionPropertiesMapper>
 
 		public void Apply(MemberInfo subject, ICollectionPropertiesMapper applyTo)

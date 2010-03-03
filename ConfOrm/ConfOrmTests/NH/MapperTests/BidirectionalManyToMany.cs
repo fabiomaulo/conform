@@ -49,6 +49,12 @@ namespace ConfOrmTests.NH.MapperTests
 			public IEnumerable<UserMix> Users { get; set; }
 		}
 
+		private class Person
+		{
+			public int Id { get; set; }
+			public IEnumerable<Person> Friends { get; set; }
+		}
+
 		private Mock<IDomainInspector> GetMockedDomainInspector()
 		{
 			var orm = new Mock<IDomainInspector>();
@@ -71,6 +77,9 @@ namespace ConfOrmTests.NH.MapperTests
 
 			orm.Setup(m => m.IsDictionary(It.Is<MemberInfo>(p => p == typeof(UserMix).GetProperty("RolesMap")))).Returns(true);
 			orm.Setup(m => m.IsBag(It.Is<MemberInfo>(p => p == typeof(RoleMix).GetProperty("Users")))).Returns(true);
+
+			orm.Setup(m => m.IsBag(It.Is<MemberInfo>(p => p == typeof(Person).GetProperty("Friends")))).Returns(true);
+
 			return orm;
 		}
 
@@ -105,6 +114,16 @@ namespace ConfOrmTests.NH.MapperTests
 			var hbmUserRoles = mappings.RootClasses.First(rc => rc.Name.Contains("UserMix")).Properties.OfType<HbmMap>().Single();
 			var hbmRoleUsers = mappings.RootClasses.First(rc => rc.Name.Contains("RoleMix")).Properties.OfType<HbmBag>().Single();
 			hbmUserRoles.Table.Should().Not.Be.Null().And.Not.Be.Empty().And.Be.EqualTo(hbmRoleUsers.Table);
+		}
+
+		[Test]
+		public void WhenCircularReferenceShouldNotMatch()
+		{
+			var orm = GetMockedDomainInspector();
+			var mapper = new Mapper(orm.Object);
+			var mappings = mapper.CompileMappingFor(new[] { typeof(Person) });
+			var hbmPersonFriends = mappings.RootClasses.First(rc => rc.Name.Contains("Person")).Properties.OfType<HbmBag>().Single();
+			hbmPersonFriends.Table.Should().Be.Null();
 		}
 	}
 }
