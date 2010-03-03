@@ -84,6 +84,7 @@
     <Compile Include="NH\MapperTests\BagOfOneToManyInverseTest.cs" />
     <Compile Include="NH\MapperTests\BagOfOneToManyTest.cs" />
     <Compile Include="NH\MapperTests\BaseFuncionality.cs" />
+    <Compile Include="NH\MapperTests\BidirectionalManyToMany.cs" />
     <Compile Include="NH\MapperTests\BidirectionalOneToManyCascadeCircularIntegrationTest.cs" />
     <Compile Include="NH\MapperTests\CascadeManyToOneTest.cs" />
     <Compile Include="NH\MapperTests\CascadeOneToOneTest.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Patterns\ArrayCollectionPatternTest.cs" />
     <Compile Include="Patterns\AssignedPoidPatternTest.cs" />
     <Compile Include="Patterns\BagCollectionPatternTest.cs" />
+    <Compile Include="Patterns\BidirectionalManyToManyPatternTest.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyPatternCircularTest.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyPatternTest.cs" />
     <Compile Include="Patterns\BidirectionalRelationPatternTest.cs" />

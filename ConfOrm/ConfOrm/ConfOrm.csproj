@@ -132,6 +132,7 @@
     <Compile Include="Patterns\ArrayCollectionPattern.cs" />
     <Compile Include="Patterns\AssignedPoidPattern.cs" />
     <Compile Include="Patterns\BagCollectionPattern.cs" />
+    <Compile Include="Patterns\BidirectionalManyToManyPattern.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyApplier.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyOnDeleteConstraintApplier.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyPattern.cs" />
