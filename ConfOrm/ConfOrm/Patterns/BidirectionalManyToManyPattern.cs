@@ -25,7 +25,7 @@ namespace ConfOrm.Patterns
 				return false;
 			}
 
-				var fromMany = subject.DeclaringType;
+			var fromMany = subject.DeclaringType;
 			Type cadidateToMany = propertyType.DetermineCollectionElementType();
 			if (cadidateToMany.IsGenericType && typeof(KeyValuePair<,>) == cadidateToMany.GetGenericTypeDefinition())
 			{

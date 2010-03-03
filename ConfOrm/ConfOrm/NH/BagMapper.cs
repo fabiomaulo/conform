@@ -128,6 +128,21 @@ namespace ConfOrm.NH
 			mapping.collectiontype = collectionType.AssemblyQualifiedName;
 		}
 
+		public void Table(string tableName)
+		{
+			mapping.table = tableName;
+		}
+
+		public void Catalog(string catalogName)
+		{
+			mapping.catalog = catalogName;
+		}
+
+		public void Schema(string schemaName)
+		{
+			mapping.schema = schemaName;
+		}
+
 		#endregion
 
 		#region Implementation of IEntityPropertyMapper

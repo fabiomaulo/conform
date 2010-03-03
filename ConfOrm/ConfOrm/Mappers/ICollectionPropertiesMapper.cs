@@ -20,6 +20,9 @@ namespace ConfOrm.Mappers
 		//void Type(string namedCollectionType); // TODO: figure out a way to avoid string for embedded namedCollectionType
 		void Type<TCollection>() where TCollection: IUserCollectionType;
 		void Type(Type collectionType);
+		void Table(string tableName);
+		void Catalog(string catalogName);
+		void Schema(string schemaName);
 	}
 
 	public interface ICollectionPropertiesMapper<TElement> : ICollectionPropertiesMapper

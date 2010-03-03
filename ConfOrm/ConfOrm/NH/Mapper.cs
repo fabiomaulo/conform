@@ -47,6 +47,7 @@ namespace ConfOrm.NH
 			                             		new CollectionPropertyToFieldAccessorApplier(),
 			                             		new BidirectionalOneToManyApplier(domainInspector),
 			                             		new BidirectionalOneToManyOnDeleteConstraintApplier(domainInspector),
+			                             		new BidirectionalManyToManyTableApplier(),
 			                             	};
 			this.customizerHolder = customizerHolder;
 		}
