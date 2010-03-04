@@ -6,8 +6,10 @@ namespace ConfOrm.NH
 {
 	public interface IPatternsAppliersHolder
 	{
-		IList<IPatternApplier<MemberInfo, IIdMapper>> Poid { get; }
-		IList<IPatternApplier<MemberInfo, IPropertyMapper>> Property { get; }
-		IList<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> Collection { get; }
+		ICollection<IPatternApplier<MemberInfo, IIdMapper>> Poid { get; }
+		ICollection<IPatternApplier<MemberInfo, IPropertyMapper>> Property { get; }
+		ICollection<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> Collection { get; }
+		ICollection<IPatternApplier<PropertyPath, IPropertyMapper>> PropertyPath { get; }
+		ICollection<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>> CollectionPath { get; }
 	}
 }

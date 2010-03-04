@@ -11,6 +11,8 @@ namespace ConfOrm.NH
 		private readonly List<IPatternApplier<MemberInfo, IIdMapper>> poid;
 		private readonly List<IPatternApplier<MemberInfo, IPropertyMapper>> property;
 		private readonly List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> collection;
+		private readonly List<IPatternApplier<PropertyPath, IPropertyMapper>> propertyPath;
+		private readonly List<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>> collectionPath;
 
 		public DefaultPatternsAppliersHolder(IDomainInspector domainInspector)
 		{
@@ -38,24 +40,35 @@ namespace ConfOrm.NH
 			                             		new BidirectionalOneToManyOnDeleteConstraintApplier(domainInspector),
 			                             		new BidirectionalManyToManyTableApplier(),
 			                             	};
-
+			propertyPath = new List<IPatternApplier<PropertyPath, IPropertyMapper>>();
+			collectionPath = new List<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>>();
 		}
 
 		#region Implementation of IPatternsAppliersHolder
 
-		public IList<IPatternApplier<MemberInfo, IIdMapper>> Poid
+		public ICollection<IPatternApplier<MemberInfo, IIdMapper>> Poid
 		{
 			get { return poid; }
 		}
 
-		public IList<IPatternApplier<MemberInfo, IPropertyMapper>> Property
+		public ICollection<IPatternApplier<MemberInfo, IPropertyMapper>> Property
 		{
 			get { return property; }
 		}
 
-		public IList<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> Collection
+		public ICollection<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> Collection
 		{
 			get { return collection; }
+		}
+
+		public ICollection<IPatternApplier<PropertyPath, IPropertyMapper>> PropertyPath
+		{
+			get { return propertyPath; }
+		}
+
+		public ICollection<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>> CollectionPath
+		{
+			get { return collectionPath; }
 		}
 
 		#endregion
