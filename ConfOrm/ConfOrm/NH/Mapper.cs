@@ -257,6 +257,7 @@ namespace ConfOrm.NH
 			propertiesContainer.Property(member, propertyMapper =>
 				{
 					PatternsAppliers.Property.ApplyAllMatchs(member, propertyMapper);
+					PatternsAppliers.PropertyPath.ApplyAllMatchs(propertyPath, propertyMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), propertyMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, propertyMapper);
 				});

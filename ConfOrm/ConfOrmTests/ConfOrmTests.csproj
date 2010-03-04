@@ -166,6 +166,7 @@
     <Compile Include="Patterns\BidirectionalOneToManyPatternCircularTest.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyPatternTest.cs" />
     <Compile Include="Patterns\BidirectionalRelationPatternTest.cs" />
+    <Compile Include="Patterns\ComponentMultiUsagePatternTest.cs" />
     <Compile Include="Patterns\ComponentPatternTest.cs" />
     <Compile Include="Patterns\DictionaryCollectionPatternTest.cs" />
     <Compile Include="Patterns\HighLowPoidPatternTest.cs" />

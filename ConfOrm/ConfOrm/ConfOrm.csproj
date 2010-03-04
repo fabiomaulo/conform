@@ -143,6 +143,8 @@
     <Compile Include="Patterns\BidirectionalOneToManyCascadePattern.cs" />
     <Compile Include="Patterns\BidirectionalRelationPattern.cs" />
     <Compile Include="Patterns\CollectionPropertyToFieldAccessorApplier.cs" />
+    <Compile Include="Patterns\ComponentMultiUsagePropertyColumnNameApplier.cs" />
+    <Compile Include="Patterns\ComponentMultiUsagePattern.cs" />
     <Compile Include="Patterns\ComponentPattern.cs" />
     <Compile Include="Patterns\DelegatedCollectionApplier.cs" />
     <Compile Include="Patterns\DelegatedPropertyApplier.cs" />

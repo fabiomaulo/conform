@@ -23,6 +23,12 @@ namespace ConfOrmTests.NH.MapperTests
 		{
 			public string First { get; set; }
 			public string Last { get; set; }
+			public Relation SomeRelation { get; set; }
+		}
+
+		private class Relation
+		{
+			public int Id { get; set; }			
 		}
 
 		private Mock<IDomainInspector> GetMockedDomainInspector()
@@ -34,11 +40,12 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
 			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
 			orm.Setup(m => m.IsComponent(It.Is<Type>(t => t == typeof(Name)))).Returns(true);
+			orm.Setup(m => m.IsManyToOne(It.Is<Type>(t => t == typeof(Name)), It.Is<Type>(t => t == typeof(Relation)))).Returns(true);
 			return orm;
 		}
 
 
-		[Test, Ignore("Not fixed yet")]
+		[Test]
 		public void WhenNotSpecifiedThenComposeColumnNameByDefault()
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();
@@ -52,6 +59,22 @@ namespace ConfOrmTests.NH.MapperTests
 			var hbmAka = (HbmComponent)rc.Properties.First(p => p.Name == "Aka");
 			hbmRealName.Properties.OfType<HbmProperty>().Select(p => p.Columns.Single().name).Should().Have.SameValuesAs("RealNameFirst", "RealNameLast");
 			hbmAka.Properties.OfType<HbmProperty>().Select(p => p.Columns.Single().name).Should().Have.SameValuesAs("AkaFirst", "AkaLast");
+		}
+
+		[Test, Ignore("Not fixed yet")]
+		public void WhenNotSpecifiedThenComposeColumnNameByDefaultForManyToOne()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+
+			var domainInspector = orm.Object;
+			var mapper = new Mapper(domainInspector);
+			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(Person) });
+
+			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Person"));
+			var hbmRealName = (HbmComponent)rc.Properties.First(p => p.Name == "RealName");
+			var hbmAka = (HbmComponent)rc.Properties.First(p => p.Name == "Aka");
+			hbmRealName.Properties.OfType<HbmManyToOne>().Select(p => p.Columns.Single().name).Single().Should().Be("RealNameSomeRelation");
+			hbmAka.Properties.OfType<HbmManyToOne>().Select(p => p.Columns.Single().name).Single().Should().Be("AkaSomeRelation");
 		}
 
 		[Test]

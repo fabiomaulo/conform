@@ -40,7 +40,9 @@ namespace ConfOrm.NH
 			                             		new BidirectionalOneToManyOnDeleteConstraintApplier(domainInspector),
 			                             		new BidirectionalManyToManyTableApplier(),
 			                             	};
-			propertyPath = new List<IPatternApplier<PropertyPath, IPropertyMapper>>();
+			propertyPath = new List<IPatternApplier<PropertyPath, IPropertyMapper>>
+			               	{new ComponentMultiUsagePropertyColumnNameApplier(),};
+
 			collectionPath = new List<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>>();
 		}
 
