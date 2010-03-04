@@ -27,12 +27,12 @@ namespace ConfOrmTests.NH.MapperTests
 		{
 			var orm = new Mock<IDomainInspector>();
 			var mapper = new Mapper(orm.Object);
-			var previousPropertyApplierCount = mapper.PropertyPatternsAppliers.Count;
+			var previousPropertyApplierCount = mapper.PatternsAppliers.Property.Count;
 
 			mapper.AddPropertyPattern(mi => mi.Name.StartsWith("Date") || mi.Name.EndsWith("Date"),
 			                          pm => pm.Type(NHibernateUtil.Date));
 
-			mapper.PropertyPatternsAppliers.Count.Should().Be(previousPropertyApplierCount +1);
+			mapper.PatternsAppliers.Property.Count.Should().Be(previousPropertyApplierCount + 1);
 		}
 
 		[Test]

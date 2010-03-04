@@ -12,44 +12,33 @@ namespace ConfOrm.NH
 	{
 		internal const BindingFlags PropertiesBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
 		private readonly IDomainInspector domainInspector;
-		private readonly List<IPatternApplier<MemberInfo, IIdMapper>> poidPatternsAppliers;
-		private readonly List<IPatternApplier<MemberInfo, IPropertyMapper>> propertyPatternsAppliers;
-		private readonly List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> collectionPatternsAppliers;
 		private readonly ICustomizersHolder customizerHolder;
+		private readonly IPatternsAppliersHolder patternsAppliers;
 
 		public Mapper(IDomainInspector domainInspector)
-			: this(domainInspector, new CustomizersHolder())
-		{
-		}
+			: this(domainInspector, new CustomizersHolder(), new DefaultPatternsAppliersHolder(domainInspector)) {}
 
 		public Mapper(IDomainInspector domainInspector, ICustomizersHolder customizerHolder)
+			: this(domainInspector, customizerHolder, new DefaultPatternsAppliersHolder(domainInspector)) {}
+
+		public Mapper(IDomainInspector domainInspector, ICustomizersHolder customizerHolder,
+		              IPatternsAppliersHolder patternsAppliers)
 		{
 			if (domainInspector == null)
 			{
 				throw new ArgumentNullException("domainInspector");
 			}
+			if (customizerHolder == null)
+			{
+				throw new ArgumentNullException("customizerHolder");
+			}
+			if (patternsAppliers == null)
+			{
+				throw new ArgumentNullException("patternsAppliers");
+			}
 			this.domainInspector = domainInspector;
-			poidPatternsAppliers = new List<IPatternApplier<MemberInfo, IIdMapper>>
-			                       	{
-			                       		new NoSetterPoidToFieldAccessorApplier(),
-																new NoPoidGuidApplier()
-			                       	};
-			propertyPatternsAppliers = new List<IPatternApplier<MemberInfo, IPropertyMapper>>
-			                           	{
-			                           		new ReadOnlyPropertyAccessorApplier(),
-			                           		new NoSetterPropertyToFieldAccessorApplier(),
-			                           		new PropertyToFieldAccessorApplier()
-			                           	};
-			collectionPatternsAppliers = new List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>>
-			                             	{
-			                             		new ReadOnlyCollectionPropertyAccessorApplier(),
-			                             		new NoSetterCollectionPropertyToFieldAccessorApplier(),
-			                             		new CollectionPropertyToFieldAccessorApplier(),
-			                             		new BidirectionalOneToManyApplier(domainInspector),
-			                             		new BidirectionalOneToManyOnDeleteConstraintApplier(domainInspector),
-			                             		new BidirectionalManyToManyTableApplier(),
-			                             	};
 			this.customizerHolder = customizerHolder;
+			this.patternsAppliers = patternsAppliers;
 		}
 
 		public void Class<TRootEntity>(Action<IClassMapper<TRootEntity>> customizeAction) where TRootEntity : class
@@ -82,24 +71,19 @@ namespace ConfOrm.NH
 			customizeAction(customizer);
 		}
 
-		public ICollection<IPatternApplier<MemberInfo, IPropertyMapper>> PropertyPatternsAppliers
+		public IPatternsAppliersHolder PatternsAppliers
 		{
-			get { return propertyPatternsAppliers; }
-		}
-
-		public List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> CollectionPatternsAppliers
-		{
-			get { return collectionPatternsAppliers; }
+			get { return patternsAppliers; }
 		}
 
 		public void AddPropertyPattern(Predicate<MemberInfo> matcher, Action<IPropertyMapper> applier)
 		{
-			propertyPatternsAppliers.Add(new DelegatedPropertyApplier(matcher, applier));
+			PatternsAppliers.Property.Add(new DelegatedPropertyApplier(matcher, applier));
 		}
 
 		public void AddCollectionPattern(Predicate<MemberInfo> matcher, Action<ICollectionPropertiesMapper> applier)
 		{
-			collectionPatternsAppliers.Add(new DelegatedCollectionApplier(matcher, applier));
+			PatternsAppliers.Collection.Add(new DelegatedCollectionApplier(matcher, applier));
 		}
 
 		public HbmMapping CompileMappingFor(IEnumerable<Type> types)
@@ -182,7 +166,7 @@ namespace ConfOrm.NH
 							}
 						});
 					}
-					poidPatternsAppliers.ApplyAllMatchs(poidPropertyOrField, idMapper);
+					PatternsAppliers.Poid.ApplyAllMatchs(poidPropertyOrField, idMapper);
 				});
 			if (domainInspector.IsTablePerClassHierarchy(type))
 			{
@@ -272,7 +256,7 @@ namespace ConfOrm.NH
 		{
 			propertiesContainer.Property(member, propertyMapper =>
 				{
-					propertyPatternsAppliers.ApplyAllMatchs(member, propertyMapper);
+					PatternsAppliers.Property.ApplyAllMatchs(member, propertyMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), propertyMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, propertyMapper);
 				});
@@ -304,7 +288,7 @@ namespace ConfOrm.NH
 			propertiesContainer.Bag(member, collectionPropertiesMapper =>
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
-					collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
+					PatternsAppliers.Collection.ApplyAllMatchs(member, collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
@@ -318,7 +302,7 @@ namespace ConfOrm.NH
 			propertiesContainer.List(member, collectionPropertiesMapper =>
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
-					collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
+					PatternsAppliers.Collection.ApplyAllMatchs(member, collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
@@ -338,7 +322,7 @@ namespace ConfOrm.NH
 			propertiesContainer.Map(member, collectionPropertiesMapper =>
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
-					collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
+					PatternsAppliers.Collection.ApplyAllMatchs(member, collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
@@ -352,7 +336,7 @@ namespace ConfOrm.NH
 			propertiesContainer.Set(member, collectionPropertiesMapper =>
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
-					collectionPatternsAppliers.ApplyAllMatchs(member, collectionPropertiesMapper);
+					PatternsAppliers.Collection.ApplyAllMatchs(member, collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);

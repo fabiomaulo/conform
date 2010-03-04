@@ -68,6 +68,7 @@
     <Compile Include="NH\ColumnMapper.cs" />
     <Compile Include="NH\ComponentCustomizer.cs" />
     <Compile Include="NH\CustomizersHolder.cs" />
+    <Compile Include="NH\DefaultPatternsAppliersHolder.cs" />
     <Compile Include="NH\EntityPropertyMapper.cs" />
     <Compile Include="NH\Generators.cs" />
     <Compile Include="Mappers\IClassMapper.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="NH\ComponentNestedElementMapper.cs" />
     <Compile Include="NH\GeneratorMapper.cs" />
     <Compile Include="NH\ICustomizersHolder.cs" />
+    <Compile Include="NH\IPatternsAppliersHolder.cs" />
     <Compile Include="NH\IPersistentClassCustomizer.cs" />
     <Compile Include="NH\JoinedSubclassCustomizer.cs" />
     <Compile Include="NH\ManyToOneMapper.cs" />

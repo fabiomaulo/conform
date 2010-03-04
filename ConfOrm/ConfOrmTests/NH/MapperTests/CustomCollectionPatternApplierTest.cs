@@ -30,11 +30,11 @@ namespace ConfOrmTests.NH.MapperTests
 		{
 			var orm = new Mock<IDomainInspector>();
 			var mapper = new Mapper(orm.Object);
-			var previousCollectionApplierCount = mapper.CollectionPatternsAppliers.Count;
+			var previousCollectionApplierCount = mapper.PatternsAppliers.Collection.Count;
 
 			mapper.AddCollectionPattern(mi => true, cm => cm.BatchSize(25));
 
-			mapper.CollectionPatternsAppliers.Count.Should().Be(previousCollectionApplierCount + 1);
+			mapper.PatternsAppliers.Collection.Count.Should().Be(previousCollectionApplierCount + 1);
 		}
 
 		[Test]
