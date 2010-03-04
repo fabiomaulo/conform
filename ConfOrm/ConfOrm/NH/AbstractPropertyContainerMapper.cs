@@ -59,7 +59,7 @@ namespace ConfOrm.NH
 		public virtual void ManyToOne(MemberInfo property, Action<IManyToOneMapper> mapping)
 		{
 			var hbm = new HbmManyToOne { name = property.Name };
-			mapping(new ManyToOneMapper(hbm));
+			mapping(new ManyToOneMapper(property, hbm));
 			AddProperty(hbm);
 		}
 

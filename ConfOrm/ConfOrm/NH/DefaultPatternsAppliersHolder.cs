@@ -10,8 +10,10 @@ namespace ConfOrm.NH
 	{
 		private readonly List<IPatternApplier<MemberInfo, IIdMapper>> poid;
 		private readonly List<IPatternApplier<MemberInfo, IPropertyMapper>> property;
+		private readonly List<IPatternApplier<MemberInfo, IManyToOneMapper>> manyToOne;
 		private readonly List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> collection;
 		private readonly List<IPatternApplier<PropertyPath, IPropertyMapper>> propertyPath;
+		private readonly List<IPatternApplier<PropertyPath, IManyToOneMapper>> manyToOnePath;
 		private readonly List<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>> collectionPath;
 
 		public DefaultPatternsAppliersHolder(IDomainInspector domainInspector)
@@ -44,6 +46,9 @@ namespace ConfOrm.NH
 			               	{new ComponentMultiUsagePropertyColumnNameApplier(),};
 
 			collectionPath = new List<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>>();
+			manyToOne = new List<IPatternApplier<MemberInfo, IManyToOneMapper>>();
+			manyToOnePath = new List<IPatternApplier<PropertyPath, IManyToOneMapper>>
+			                	{new ComponentMultiUsageManyToOneColumnNameApplier()};
 		}
 
 		#region Implementation of IPatternsAppliersHolder
@@ -58,6 +63,11 @@ namespace ConfOrm.NH
 			get { return property; }
 		}
 
+		public ICollection<IPatternApplier<MemberInfo, IManyToOneMapper>> ManyToOne
+		{
+			get { return manyToOne; }
+		}
+
 		public ICollection<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> Collection
 		{
 			get { return collection; }
@@ -66,6 +76,11 @@ namespace ConfOrm.NH
 		public ICollection<IPatternApplier<PropertyPath, IPropertyMapper>> PropertyPath
 		{
 			get { return propertyPath; }
+		}
+
+		public ICollection<IPatternApplier<PropertyPath, IManyToOneMapper>> ManyToOnePath
+		{
+			get { return manyToOnePath; }
 		}
 
 		public ICollection<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>> CollectionPath

@@ -11,12 +11,6 @@ namespace ConfOrm.NH
 {
 	public class PropertyMapper: IPropertyMapper
 	{
-		private class NoMemberPropertyMapper : IEntityPropertyMapper
-		{
-			public void Access(Accessor accessor) {}
-
-			public void Access(Type accessorType) {}
-		}
 		private readonly MemberInfo member;
 		private readonly HbmProperty propertyMapping;
 		private readonly IEntityPropertyMapper entityPropertyMapper;

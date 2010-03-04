@@ -59,6 +59,7 @@
     <Compile Include="Mappers\IAccessorPropertyMapper.cs" />
     <Compile Include="Mappers\IBagPropertiesMapper.cs" />
     <Compile Include="Mappers\IColumnMapper.cs" />
+    <Compile Include="Mappers\IColumnsMapper.cs" />
     <Compile Include="Mappers\IDiscriminatorMapper.cs" />
     <Compile Include="Mappers\IEntityAttributesMapper.cs" />
     <Compile Include="Mappers\IEntitySqlsMapper.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="NH\KeyMapper.cs" />
     <Compile Include="NH\ListMapper.cs" />
     <Compile Include="NH\Mapper.cs" />
+    <Compile Include="NH\NoMemberPropertyMapper.cs" />
     <Compile Include="NH\OneToOneMapper.cs" />
     <Compile Include="NH\PersistentClassCustomizer.cs" />
     <Compile Include="NH\PropertyContainerCustomizer.cs" />
@@ -143,6 +145,7 @@
     <Compile Include="Patterns\BidirectionalOneToManyCascadePattern.cs" />
     <Compile Include="Patterns\BidirectionalRelationPattern.cs" />
     <Compile Include="Patterns\CollectionPropertyToFieldAccessorApplier.cs" />
+    <Compile Include="Patterns\ComponentMultiUsageManyToOneColumnNameApplier.cs" />
     <Compile Include="Patterns\ComponentMultiUsagePropertyColumnNameApplier.cs" />
     <Compile Include="Patterns\ComponentMultiUsagePattern.cs" />
     <Compile Include="Patterns\ComponentPattern.cs" />

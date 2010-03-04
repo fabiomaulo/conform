@@ -362,6 +362,8 @@ namespace ConfOrm.NH
 				{
 					Cascade cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
 					manyToOneMapper.Cascade(cascade);
+					PatternsAppliers.ManyToOne.ApplyAllMatchs(member, manyToOneMapper);
+					PatternsAppliers.ManyToOnePath.ApplyAllMatchs(propertyPath, manyToOneMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), manyToOneMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, manyToOneMapper);
 				});

@@ -61,7 +61,7 @@ namespace ConfOrmTests.NH.MapperTests
 			hbmAka.Properties.OfType<HbmProperty>().Select(p => p.Columns.Single().name).Should().Have.SameValuesAs("AkaFirst", "AkaLast");
 		}
 
-		[Test, Ignore("Not fixed yet")]
+		[Test]
 		public void WhenNotSpecifiedThenComposeColumnNameByDefaultForManyToOne()
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();
