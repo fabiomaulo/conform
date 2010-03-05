@@ -141,7 +141,7 @@ namespace ConfOrm.NH
 				propertyMapping.scale = hbm.scale;
 				propertyMapping.notnull = hbm.notnull;
 				propertyMapping.notnullSpecified = hbm.notnullSpecified;
-				propertyMapping.unique = propertyMapping.updateSpecified = hbm.unique;
+				propertyMapping.unique = hbm.unique;
 				propertyMapping.uniquekey = hbm.uniquekey;
 				propertyMapping.index = hbm.index;
 			}
@@ -154,7 +154,7 @@ namespace ConfOrm.NH
 			propertyMapping.precision = null;
 			propertyMapping.scale = null;
 			propertyMapping.notnull = propertyMapping.notnullSpecified = false;
-			propertyMapping.unique = propertyMapping.updateSpecified = false;
+			propertyMapping.unique = false;
 			propertyMapping.uniquekey = null;
 			propertyMapping.index = null;
 		}
