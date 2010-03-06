@@ -1,6 +1,6 @@
 namespace ConfOrm.Mappers
 {
-	public interface IOneToOneMapper
+	public interface IOneToOneMapper: IEntityPropertyMapper
 	{
 		void Cascade(Cascade cascadeStyle);
 	}

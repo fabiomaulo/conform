@@ -72,6 +72,7 @@
     <Compile Include="NH\IdMapperTest.cs" />
     <Compile Include="NH\JoinedSubclassMapperTest.cs" />
     <Compile Include="NH\KeyMapperTest.cs" />
+    <Compile Include="NH\LazyRelationTest.cs" />
     <Compile Include="NH\ListMapperTest.cs" />
     <Compile Include="NH\ManyToOneMapperTest.cs" />
     <Compile Include="NH\MapMapperTest.cs" />
