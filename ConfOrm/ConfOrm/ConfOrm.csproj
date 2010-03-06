@@ -144,6 +144,7 @@
     <Compile Include="Patterns\BidirectionalOneToManyPattern.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyCascadePattern.cs" />
     <Compile Include="Patterns\BidirectionalRelationPattern.cs" />
+    <Compile Include="Patterns\BidirectionalUnaryAssociationPattern.cs" />
     <Compile Include="Patterns\CollectionPropertyToFieldAccessorApplier.cs" />
     <Compile Include="Patterns\ComponentMultiUsageManyToOneColumnNameApplier.cs" />
     <Compile Include="Patterns\ComponentMultiUsagePropertyColumnNameApplier.cs" />
