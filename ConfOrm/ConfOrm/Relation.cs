@@ -2,10 +2,19 @@ using System;
 
 namespace ConfOrm
 {
+	public enum Declared
+	{
+		Explicit,
+		Implicit
+	}
 	public class Relation
 	{
 		private readonly int hashCode;
+
 		public Relation(Type from, Type to)
+			: this(from, to, Declared.Explicit) {}
+
+		public Relation(Type @from, Type to, Declared declaredAs)
 		{
 			if (from == null)
 			{
@@ -17,11 +26,13 @@ namespace ConfOrm
 			}
 			From = from;
 			To = to;
+			DeclaredAs = declaredAs;
 			hashCode = (37 * from.GetHashCode()) ^ to.GetHashCode();
 		}
 
 		public Type From { get; private set; }
 		public Type To { get; private set; }
+		public Declared DeclaredAs { get; private set; }
 
 		public override bool Equals(object obj)
 		{

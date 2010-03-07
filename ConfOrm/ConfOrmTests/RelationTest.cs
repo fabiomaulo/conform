@@ -39,5 +39,11 @@ namespace ConfOrmTests
 			var friendly = (new Relation(typeof(A), typeof(B))).ToString();
 			friendly.Should().Contain(typeof(A).FullName).And.Contain(typeof(B).FullName);
 		}
+
+		[Test]
+		public void CtorForImplicitDeclaration()
+		{
+			(new Relation(typeof (A), typeof (B), Declared.Implicit)).DeclaredAs.Should().Be(Declared.Implicit);
+		}
 	}
 }
