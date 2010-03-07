@@ -48,6 +48,12 @@ namespace ConfOrmExample
 		{
 			var orm = GetMappedDomain();
 			var mapper = new Mapper(orm);
+
+			mapper.Class<User>(cm =>
+				{
+					cm.Id(u => u.Id, im => im.Generator(Generators.Foreign<User>(u => u.Human)));
+					cm.OneToOne(u => u.Human, otom => otom.Constrained(true));
+				});
 			return mapper.CompileMappingFor(Assembly.GetExecutingAssembly().GetTypes().Where(t => t.Namespace == typeof(Animal).Namespace));
 		}
 
