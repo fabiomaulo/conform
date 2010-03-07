@@ -11,10 +11,12 @@ namespace ConfOrm.NH
 		private readonly List<IPatternApplier<MemberInfo, IIdMapper>> poid;
 		private readonly List<IPatternApplier<MemberInfo, IPropertyMapper>> property;
 		private readonly List<IPatternApplier<MemberInfo, IManyToOneMapper>> manyToOne;
+		private readonly List<IPatternApplier<MemberInfo, IOneToOneMapper>> oneToOne;
 		private readonly List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> collection;
 		private readonly List<IPatternApplier<PropertyPath, IPropertyMapper>> propertyPath;
 		private readonly List<IPatternApplier<PropertyPath, IManyToOneMapper>> manyToOnePath;
 		private readonly List<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>> collectionPath;
+		private readonly List<IPatternApplier<PropertyPath, IOneToOneMapper>> oneToOnePath;
 
 		public DefaultPatternsAppliersHolder(IDomainInspector domainInspector)
 		{
@@ -46,9 +48,15 @@ namespace ConfOrm.NH
 			               	{new ComponentMultiUsagePropertyColumnNameApplier(),};
 
 			collectionPath = new List<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>>();
-			manyToOne = new List<IPatternApplier<MemberInfo, IManyToOneMapper>>();
+			manyToOne = new List<IPatternApplier<MemberInfo, IManyToOneMapper>>
+			            	{new BidirectionalForeignKeyAssociationManyToOneApplier(domainInspector)};
 			manyToOnePath = new List<IPatternApplier<PropertyPath, IManyToOneMapper>>
 			                	{new ComponentMultiUsageManyToOneColumnNameApplier()};
+			oneToOne = new List<IPatternApplier<MemberInfo, IOneToOneMapper>>
+			           	{
+			           		new BidirectionalForeignKeyAssociationOneToOneApplier(domainInspector)
+			           	};
+			oneToOnePath = new List<IPatternApplier<PropertyPath, IOneToOneMapper>>();
 		}
 
 		#region Implementation of IPatternsAppliersHolder
@@ -86,6 +94,16 @@ namespace ConfOrm.NH
 		public ICollection<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>> CollectionPath
 		{
 			get { return collectionPath; }
+		}
+
+		public ICollection<IPatternApplier<MemberInfo, IOneToOneMapper>> OneToOne
+		{
+			get { return oneToOne; }
+		}
+
+		public ICollection<IPatternApplier<PropertyPath, IOneToOneMapper>> OneToOnePath
+		{
+			get { return oneToOnePath; }
 		}
 
 		#endregion

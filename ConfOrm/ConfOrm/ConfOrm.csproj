@@ -138,6 +138,8 @@
     <Compile Include="Patterns\ArrayCollectionPattern.cs" />
     <Compile Include="Patterns\AssignedPoidPattern.cs" />
     <Compile Include="Patterns\BagCollectionPattern.cs" />
+    <Compile Include="Patterns\BidirectionalForeignKeyAssociationManyToOneApplier.cs" />
+    <Compile Include="Patterns\BidirectionalForeignKeyAssociationOneToOneApplier.cs" />
     <Compile Include="Patterns\BidirectionalManyToManyPattern.cs" />
     <Compile Include="Patterns\BidirectionalManyToManyTableApplier.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyApplier.cs" />

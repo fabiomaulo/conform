@@ -6,11 +6,11 @@ namespace ConfOrm.Patterns
 {
 	public class BidirectionalUnaryAssociationPattern : IPattern<MemberInfo>
 	{
-		private const BindingFlags PublicPropertiesOfClass = BindingFlags.Public | BindingFlags.Instance;
+		protected const BindingFlags PublicPropertiesOfClass = BindingFlags.Public | BindingFlags.Instance;
 
 		#region Implementation of IPattern<MemberInfo>
 
-		public bool Match(MemberInfo subject)
+		public virtual bool Match(MemberInfo subject)
 		{
 			if (subject == null)
 			{
