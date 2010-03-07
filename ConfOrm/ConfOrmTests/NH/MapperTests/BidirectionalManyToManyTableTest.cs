@@ -11,7 +11,7 @@ using SharpTestsEx;
 
 namespace ConfOrmTests.NH.MapperTests
 {
-	public class BidirectionalManyToMany
+	public class BidirectionalManyToManyTableTest
 	{
 		private class User
 		{
