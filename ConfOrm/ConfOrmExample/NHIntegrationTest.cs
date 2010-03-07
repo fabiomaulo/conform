@@ -48,8 +48,7 @@ namespace ConfOrmExample
 		{
 			var orm = GetMappedDomain();
 			var mapper = new Mapper(orm);
-			return mapper.CompileMappingFor(new [] {typeof(Human)});
-			//return mapper.CompileMappingFor(Assembly.GetExecutingAssembly().GetTypes().Where(t => t.Namespace == typeof(Animal).Namespace));
+			return mapper.CompileMappingFor(Assembly.GetExecutingAssembly().GetTypes().Where(t => t.Namespace == typeof(Animal).Namespace));
 		}
 
 		public static ObjectRelationalMapper GetMappedDomain()
