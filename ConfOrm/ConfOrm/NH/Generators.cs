@@ -29,6 +29,11 @@ namespace ConfOrm.NH
 		{
 			return new ForeignGeneratorDef(TypeExtensions.DecodeMemberAccessExpression(property));
 		}
+
+		public static IGeneratorDef Foreign(MemberInfo property)
+		{
+			return new ForeignGeneratorDef(property);
+		}
 	}
 
 	public class AssignedGeneratorDef : IGeneratorDef

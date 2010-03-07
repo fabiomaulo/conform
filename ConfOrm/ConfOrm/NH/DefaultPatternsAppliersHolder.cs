@@ -25,10 +25,11 @@ namespace ConfOrm.NH
 				throw new ArgumentNullException("domainInspector");
 			}
 			poid = new List<IPatternApplier<MemberInfo, IIdMapper>>
-			                       	{
-			                       		new NoSetterPoidToFieldAccessorApplier(),
-																new NoPoidGuidApplier()
-			                       	};
+			       	{
+			       		new NoSetterPoidToFieldAccessorApplier(),
+			       		new NoPoidGuidApplier(),
+			       		new BidirectionalOneToOneAssociationPoidApplier(domainInspector)
+			       	};
 			property = new List<IPatternApplier<MemberInfo, IPropertyMapper>>
 			                           	{
 			                           		new ReadOnlyPropertyAccessorApplier(),
@@ -54,7 +55,9 @@ namespace ConfOrm.NH
 			                	{new ComponentMultiUsageManyToOneColumnNameApplier()};
 			oneToOne = new List<IPatternApplier<MemberInfo, IOneToOneMapper>>
 			           	{
-			           		new BidirectionalForeignKeyAssociationOneToOneApplier(domainInspector)
+			           		new BidirectionalForeignKeyAssociationOneToOneApplier(domainInspector),
+										new BidirectionalPrimaryKeyAssociationMasterOneToOneApplier(domainInspector),
+										new BidirectionalPrimaryKeyAssociationSlaveOneToOneApplier(domainInspector)
 			           	};
 			oneToOnePath = new List<IPatternApplier<PropertyPath, IOneToOneMapper>>();
 		}

@@ -146,6 +146,9 @@
     <Compile Include="Patterns\BidirectionalOneToManyOnDeleteConstraintApplier.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyPattern.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyCascadePattern.cs" />
+    <Compile Include="Patterns\BidirectionalOneToOneAssociationPoidApplier.cs" />
+    <Compile Include="Patterns\BidirectionalPrimaryKeyAssociationMasterOneToOneApplier.cs" />
+    <Compile Include="Patterns\BidirectionalPrimaryKeyAssociationSlaveOneToOneApplier.cs" />
     <Compile Include="Patterns\BidirectionalRelationPattern.cs" />
     <Compile Include="Patterns\BidirectionalUnaryAssociationPattern.cs" />
     <Compile Include="Patterns\CollectionPropertyToFieldAccessorApplier.cs" />
