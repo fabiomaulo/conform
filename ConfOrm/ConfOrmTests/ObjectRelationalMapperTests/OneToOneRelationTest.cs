@@ -53,5 +53,24 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			mapper.IsOneToOne(typeof(Person), typeof(User)).Should().Be.True();
 		}
 
+		[Test]
+		public void WhenExplicitRegisteredRecognizeMaster()
+		{
+			var mapper = new ObjectRelationalMapper();
+			mapper.TablePerClass<User>();
+			mapper.TablePerClass<Person>();
+			mapper.OneToOne<User, Person>();
+			mapper.IsMasterOneToOne(typeof(User), typeof(Person)).Should().Be.True();
+		}
+
+		[Test]
+		public void WhenExplicitRegisteredRecognizeInverseRelationAsImplicit()
+		{
+			var mapper = new ObjectRelationalMapper();
+			mapper.TablePerClass<User>();
+			mapper.TablePerClass<Person>();
+			mapper.OneToOne<User, Person>();
+			mapper.IsMasterOneToOne(typeof(Person), typeof(User)).Should().Be.False();
+		}
 	}
 }

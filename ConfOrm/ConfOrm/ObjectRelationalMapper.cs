@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using ConfOrm.Patterns;
 
 namespace ConfOrm
 {
@@ -146,7 +145,7 @@ namespace ConfOrm
 		public virtual void ManyToMany<TLeftEntity, TRigthEntity>()
 		{
 			manyToManyRelation.Add(new Relation(typeof(TLeftEntity), typeof(TRigthEntity)));
-			manyToManyRelation.Add(new Relation(typeof(TRigthEntity), typeof(TLeftEntity)));
+			manyToManyRelation.Add(new Relation(typeof(TRigthEntity), typeof(TLeftEntity), Declared.Implicit));
 		}
 
 		public virtual void ManyToOne<TLeftEntity, TRigthEntity>()
@@ -158,7 +157,7 @@ namespace ConfOrm
 		public virtual void OneToOne<TLeftEntity, TRigthEntity>()
 		{
 			oneToOneRelation.Add(new Relation(typeof(TLeftEntity), typeof(TRigthEntity)));
-			oneToOneRelation.Add(new Relation(typeof(TRigthEntity), typeof(TLeftEntity)));
+			oneToOneRelation.Add(new Relation(typeof(TRigthEntity), typeof(TLeftEntity), Declared.Implicit));
 		}
 
 		public virtual void Set<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
@@ -262,6 +261,12 @@ namespace ConfOrm
 			return IsEntity(from) && IsEntity(to) && oneToOneRelation.Contains(new Relation(from, to));
 		}
 
+		public bool IsMasterOneToOne(Type from, Type to)
+		{
+			return IsOneToOne(from, to)
+			       && oneToOneRelation.Single(oto => oto.Equals(new Relation(from, to))).DeclaredAs == Declared.Explicit;
+		}
+
 		public virtual bool IsManyToOne(Type from, Type to)
 		{
 			var areEntities = IsEntity(from) && IsEntity(to);
@@ -274,6 +279,11 @@ namespace ConfOrm
 		public virtual bool IsManyToMany(Type role1, Type role2)
 		{
 			return IsEntity(role1) && IsEntity(role2) && manyToManyRelation.Contains(new Relation(role1, role2));
+		}
+
+		public bool IsMasterManyToMany(Type from, Type to)
+		{
+			return IsManyToMany(from, to) && manyToManyRelation.Single(mtm => mtm.Equals(new Relation(from, to))).DeclaredAs == Declared.Explicit;
 		}
 
 		public virtual bool IsOneToMany(Type from, Type to)

@@ -15,8 +15,10 @@ namespace ConfOrm
 		bool IsTablePerConcreteClass(Type type);
 
 		bool IsOneToOne(Type from, Type to);
+		bool IsMasterOneToOne(Type from, Type to);
 		bool IsManyToOne(Type from, Type to);
 		bool IsManyToMany(Type role1, Type role2);
+		bool IsMasterManyToMany(Type from, Type to);
 		bool IsOneToMany(Type from, Type to);
 		bool IsHeterogeneousAssociations(MemberInfo member);
 		Cascade ApplyCascade(Type from, MemberInfo on, Type to);
