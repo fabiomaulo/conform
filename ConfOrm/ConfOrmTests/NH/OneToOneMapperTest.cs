@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using ConfOrm;
 using ConfOrm.Mappers;
@@ -17,7 +18,7 @@ namespace ConfOrmTests.NH
 
 		private class Relation
 		{
-
+			public string Whatever { get; set; }
 		}
 
 		[Test]
@@ -57,6 +58,47 @@ namespace ConfOrmTests.NH
 			mapper.Lazy(LazyRelation.NoProxy);
 			hbm.Lazy.Should().Have.Value();
 			hbm.Lazy.Should().Be(HbmLaziness.NoProxy);
+		}
+
+		[Test]
+		public void CanSetConstrained()
+		{
+			var hbm = new HbmOneToOne();
+			var mapper = new OneToOneMapper(null, hbm);
+			mapper.Constrained(true);
+			hbm.constrained.Should().Be.True();
+		}
+
+		[Test]
+		public void WhenNoMemberPropertyRefAcceptAnything()
+		{
+			var hbm = new HbmOneToOne();
+			var mapper = new OneToOneMapper(null, hbm);
+			mapper.PropertyReference(typeof(Array).GetProperty("Length"));
+
+			hbm.propertyref.Should().Be("Length");
+		}
+
+		[Test]
+		public void WhenNullMemberPropertyRefNull()
+		{
+			var hbm = new HbmOneToOne();
+			var mapper = new OneToOneMapper(null, hbm);
+			mapper.PropertyReference(null);
+
+			hbm.propertyref.Should().Be.Null();
+		}
+
+		[Test]
+		public void WhenMemberPropertyRefAcceptOnlyMemberOfExpectedType()
+		{
+			var hbm = new HbmOneToOne();
+			var mapper = new OneToOneMapper(typeof(MyClass).GetProperty("Relation"), hbm);
+			mapper.PropertyReference(typeof(Relation).GetProperty("Whatever"));
+
+			hbm.propertyref.Should().Be("Whatever");
+
+			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.PropertyReference(typeof(Array).GetProperty("Length")));
 		}
 	}
 }

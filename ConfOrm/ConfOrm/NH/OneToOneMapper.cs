@@ -57,5 +57,26 @@ namespace ConfOrm.NH
 			oneToOne.lazy = lazyRelation.ToHbm();
 			oneToOne.lazySpecified = oneToOne.lazy != HbmLaziness.Proxy;
 		}
+
+		public void Constrained(bool value)
+		{
+			oneToOne.constrained = value;
+		}
+
+		public void PropertyReference(MemberInfo propertyInTheOtherSide)
+		{
+			if(propertyInTheOtherSide == null)
+			{
+				oneToOne.propertyref = null;
+				return;
+			}
+
+			if (member != null && propertyInTheOtherSide.DeclaringType != member.GetPropertyOrFieldType())
+			{
+				throw new ArgumentOutOfRangeException("propertyInTheOtherSide", string.Format("Expected a member of {0} found the member {1} of {2}", member.GetPropertyOrFieldType(), propertyInTheOtherSide, propertyInTheOtherSide.DeclaringType));
+			}
+
+			oneToOne.propertyref = propertyInTheOtherSide.Name;
+		}
 	}
 }
