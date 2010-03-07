@@ -14,6 +14,7 @@ using NHibernate.Dialect;
 using NHibernate.Driver;
 using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
+using ConfOrm.Mappers;
 
 namespace ConfOrmExample
 {
@@ -49,12 +50,38 @@ namespace ConfOrmExample
 			var orm = GetMappedDomain();
 			var mapper = new Mapper(orm);
 
+			CustomizeRelations(mapper);
+			return mapper.CompileMappingFor(Assembly.GetExecutingAssembly().GetTypes().Where(t => t.Namespace == typeof(Animal).Namespace));
+		}
+
+		private static void CustomizeRelations(Mapper mapper)
+		{
+			/* TODO: add IDomainInspector.IsOptionalOneToMany to avoid auto OnDelete.Cascade and soft-Cascade actions.
+				IsOptionalOneToMany may come in place using Declared.Explicit in the ORM */
 			mapper.Class<User>(cm =>
 				{
 					cm.Id(u => u.Id, im => im.Generator(Generators.Foreign<User>(u => u.Human)));
 					cm.OneToOne(u => u.Human, otom => otom.Constrained(true));
 				});
-			return mapper.CompileMappingFor(Assembly.GetExecutingAssembly().GetTypes().Where(t => t.Namespace == typeof(Animal).Namespace));
+			mapper.Class<Human>(cm => cm.Bag(human => human.Pets, bagm =>
+				{
+					bagm.Cascade(Cascade.None);
+					bagm.Key(km => km.OnDelete(OnDeleteAction.NoAction));
+				}, cer => { }));
+			mapper.Class<Zoo>(cm =>
+				{
+					cm.Map(zoo => zoo.Mammals, mapm =>
+						{
+							mapm.Cascade(Cascade.None);
+							mapm.Key(km => km.OnDelete(OnDeleteAction.NoAction));
+							mapm.Inverse(false);
+						}, cer => { });
+					cm.Map(zoo => zoo.Animals, mapm =>
+						{
+							mapm.Cascade(Cascade.None);
+							mapm.Key(km => km.OnDelete(OnDeleteAction.NoAction));
+						}, cer => { });
+				});
 		}
 
 		public static ObjectRelationalMapper GetMappedDomain()
