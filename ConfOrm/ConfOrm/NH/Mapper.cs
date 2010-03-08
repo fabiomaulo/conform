@@ -86,6 +86,11 @@ namespace ConfOrm.NH
 			PatternsAppliers.Collection.Add(new DelegatedCollectionApplier(matcher, applier));
 		}
 
+		public void AddManyToOnePattern(Predicate<MemberInfo> matcher, Action<IManyToOneMapper> applier)
+		{
+			PatternsAppliers.ManyToOne.Add(new DelegatedMemberApplier<IManyToOneMapper>(matcher, applier));
+		}
+
 		public HbmMapping CompileMappingFor(IEnumerable<Type> types)
 		{
 			if (types == null)
@@ -487,13 +492,15 @@ namespace ConfOrm.NH
 			private readonly Type ownerType;
 			private readonly Type componentType;
 			private readonly IDomainInspector domainInspector;
+			private readonly IPatternsAppliersHolder patternsAppliersHolder;
 			private readonly ICustomizersHolder customizersHolder;
 
-			public ComponentRelationMapper(Type ownerType, Type componentType, IDomainInspector domainInspector, ICustomizersHolder customizersHolder)
+			public ComponentRelationMapper(Type ownerType, Type componentType, IDomainInspector domainInspector, IPatternsAppliersHolder patternsAppliersHolder, ICustomizersHolder customizersHolder)
 			{
 				this.ownerType = ownerType;
 				this.componentType = componentType;
 				this.domainInspector = domainInspector;
+				this.patternsAppliersHolder = patternsAppliersHolder;
 				this.customizersHolder = customizersHolder;
 			}
 
@@ -536,14 +543,15 @@ namespace ConfOrm.NH
 					var propertyType = property.GetPropertyOrFieldType();
 					if (domainInspector.IsManyToOne(type, propertyType))
 					{
-						propertiesContainer.ManyToOne(property, manyToOneMapper =>
+						propertiesContainer.ManyToOne(member, manyToOneMapper =>
 							{
+								patternsAppliersHolder.ManyToOne.ApplyAllMatchs(member, manyToOneMapper);
 								customizersHolder.InvokeCustomizers(new PropertyPath(null, member), manyToOneMapper);
 							});
 					}
 					else if (domainInspector.IsComponent(propertyType))
 					{
-						propertiesContainer.Component(property, x =>
+						propertiesContainer.Component(member, x =>
 							{
 								// Note: for nested-components the Parent discovering is mandatory (recursive nested-component)
 								var componetOwnerType = type;
@@ -560,8 +568,9 @@ namespace ConfOrm.NH
 					}
 					else
 					{
-						propertiesContainer.Property(property, propertyMapper =>
+						propertiesContainer.Property(member, propertyMapper =>
 							{
+								patternsAppliersHolder.Property.ApplyAllMatchs(member, propertyMapper);
 								customizersHolder.InvokeCustomizers(new PropertyPath(null, member), propertyMapper);
 							});
 					}
@@ -582,7 +591,7 @@ namespace ConfOrm.NH
 			}
 			else if (domainInspector.IsComponent(collectionElementType))
 			{
-				return new ComponentRelationMapper(ownerType, collectionElementType, domainInspector, customizerHolder);
+				return new ComponentRelationMapper(ownerType, collectionElementType, domainInspector, PatternsAppliers, customizerHolder);
 			}
 			return new ElementRelationMapper();
 		}
