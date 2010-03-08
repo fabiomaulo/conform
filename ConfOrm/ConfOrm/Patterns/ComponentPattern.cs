@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -7,23 +6,28 @@ namespace ConfOrm.Patterns
 {
 	public class ComponentPattern : IPattern<Type>
 	{
-		private const BindingFlags DefaultBinding =
+		private readonly IDomainInspector domainInspector;
+
+		private const BindingFlags FlattenHierarchyMembers =
 			BindingFlags.FlattenHierarchy | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
-		private readonly List<IPattern<MemberInfo>> poidPatterns;
-
-		public ComponentPattern()
+		public ComponentPattern(IDomainInspector domainInspector)
 		{
-			poidPatterns = new List<IPattern<MemberInfo>> {new PoIdPattern()};
+			if (domainInspector == null)
+			{
+				throw new ArgumentNullException("domainInspector");
+			}
+			this.domainInspector = domainInspector;
 		}
 
 		#region Implementation of IPattern<Type>
 
 		public bool Match(Type subject)
 		{
-			return !subject.IsEnum && !subject.Namespace.StartsWith("System") /* hack */ &&
-				subject.GetProperties(DefaultBinding).Cast<MemberInfo>().Concat(subject.GetFields(DefaultBinding)).All(
-					mi => !poidPatterns.Any(p => p.Match(mi)));
+			return !subject.IsEnum && !subject.Namespace.StartsWith("System") /* hack */ && !domainInspector.IsEntity(subject)
+			       &&
+			       !subject.GetProperties(FlattenHierarchyMembers).Cast<MemberInfo>().Concat(
+			       	subject.GetFields(FlattenHierarchyMembers)).Any(m => domainInspector.IsPersistentId(m));
 		}
 
 		#endregion

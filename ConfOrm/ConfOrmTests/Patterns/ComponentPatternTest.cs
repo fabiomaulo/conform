@@ -1,4 +1,7 @@
+using System.Reflection;
+using ConfOrm;
 using ConfOrm.Patterns;
+using Moq;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -25,31 +28,42 @@ namespace ConfOrmTests.Patterns
 			
 		}
 
+		private Mock<IDomainInspector> GetOrm()
+		{
+			var orm = new Mock<IDomainInspector>();
+			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name.ToLowerInvariant() == "id"))).Returns(true);
+			return orm;
+		}
+
 		[Test]
 		public void ClassWithoutPoidIsComponent()
 		{
-			var p = new ComponentPattern();
+			var orm = GetOrm();
+			var p = new ComponentPattern(orm.Object);
 			p.Match(typeof (AComponent)).Should().Be.True();
 		}
 
 		[Test]
 		public void ClassWithPoidIsNotComponent()
 		{
-			var p = new ComponentPattern();
+			var orm = GetOrm();
+			var p = new ComponentPattern(orm.Object);
 			p.Match(typeof(AEntity)).Should().Be.False();
 		}
 
 		[Test]
 		public void ClassWithPoidFieldIsNotComponent()
 		{
-			var p = new ComponentPattern();
+			var orm = GetOrm();
+			var p = new ComponentPattern(orm.Object);
 			p.Match(typeof(Entity)).Should().Be.False();
 		}
 
 		[Test]
 		public void EnumIsNotComponent()
 		{
-			var p = new ComponentPattern();
+			var orm = GetOrm();
+			var p = new ComponentPattern(orm.Object);
 			p.Match(typeof(Something)).Should().Be.False();
 		}
 	}
