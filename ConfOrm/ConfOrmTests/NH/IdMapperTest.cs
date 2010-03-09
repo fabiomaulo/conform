@@ -124,5 +124,23 @@ namespace ConfOrmTests.NH
 			mapper.Access(Accessor.NoSetter);
 			hbmId.access.Should().Be("nosetter.camelcase");
 		}
+
+		[Test]
+		public void CanSetColumnName()
+		{
+			var hbmId = new HbmId();
+			var mapper = new IdMapper(null, hbmId);
+			mapper.Column("MyName");
+			hbmId.Columns.Single().name.Should().Be("MyName");
+		}
+
+		[Test]
+		public void CanSetLength()
+		{
+			var hbmId = new HbmId();
+			var mapper = new IdMapper(null, hbmId);
+			mapper.Length(10);
+			hbmId.length.Should().Be("10");
+		}
 	}
 }

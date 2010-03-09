@@ -64,5 +64,37 @@ namespace ConfOrmTests.NH.MapperTests
 			hbmProp = (HbmProperty)hbmClass.Properties.First(p => p.Name == "StartAt");
 			hbmProp.Type.Should().Be.Null();
 		}
+
+		[Test]
+		public void AddCustomDelegatedApplierOnPoid()
+		{
+			var orm = new Mock<IDomainInspector>();
+			var mapper = new Mapper(orm.Object);
+			var previousPropertyApplierCount = mapper.PatternsAppliers.Poid.Count;
+
+			mapper.AddPoidPattern(mi => true, (mi, idm) => { });
+
+			mapper.PatternsAppliers.Poid.Count.Should().Be(previousPropertyApplierCount + 1);
+		}
+
+		[Test]
+		public void ExecuteCustomDelegatedApplierOnPoid()
+		{
+			var orm = new Mock<IDomainInspector>();
+			orm.Setup(m => m.IsEntity(It.IsAny<Type>())).Returns(true);
+			orm.Setup(m => m.IsRootEntity(It.IsAny<Type>())).Returns(true);
+			orm.Setup(m => m.IsTablePerClass(It.IsAny<Type>())).Returns(true);
+			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
+			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
+
+			var mapper = new Mapper(orm.Object);
+			mapper.AddPoidPattern(mi => true, (mi, idm) => idm.Column(mi.ReflectedType.Name + "Id"));
+			var mapping = mapper.CompileMappingFor(new[] { typeof(MyClass) });
+
+			var hbmClass = mapping.RootClasses.Single();
+
+			hbmClass.Id.Columns.Single().name.Should().Be("MyClassId");
+		}
+
 	}
 }

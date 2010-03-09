@@ -92,6 +92,16 @@ namespace ConfOrm.NH
 			}
 		}
 
+		public void Column(string name)
+		{
+			hbmId.column1 = name;
+		}
+
+		public void Length(int length)
+		{
+			hbmId.length = length.ToString();
+		}
+
 		#endregion
 	}
 }

@@ -76,6 +76,11 @@ namespace ConfOrm.NH
 			get { return patternsAppliers; }
 		}
 
+		public void AddPoidPattern(Predicate<MemberInfo> matcher, Action<MemberInfo, IIdMapper> applier)
+		{
+			PatternsAppliers.Poid.Add(new DelegatedMemberAdvancedApplier<IIdMapper>(matcher, applier));
+		}
+
 		public void AddPropertyPattern(Predicate<MemberInfo> matcher, Action<IPropertyMapper> applier)
 		{
 			PatternsAppliers.Property.Add(new DelegatedMemberApplier<IPropertyMapper>(matcher, applier));
