@@ -156,7 +156,6 @@
     <Compile Include="Patterns\ComponentMultiUsagePropertyColumnNameApplier.cs" />
     <Compile Include="Patterns\ComponentMultiUsagePattern.cs" />
     <Compile Include="Patterns\ComponentPattern.cs" />
-    <Compile Include="Patterns\DelegatedCollectionApplier.cs" />
     <Compile Include="Patterns\DelegatedMemberAdvancedApplier.cs" />
     <Compile Include="Patterns\DelegatedMemberApplier.cs" />
     <Compile Include="Patterns\DictionaryCollectionPattern.cs" />

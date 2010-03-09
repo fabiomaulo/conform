@@ -88,7 +88,7 @@ namespace ConfOrm.NH
 
 		public void AddCollectionPattern(Predicate<MemberInfo> matcher, Action<ICollectionPropertiesMapper> applier)
 		{
-			PatternsAppliers.Collection.Add(new DelegatedCollectionApplier(matcher, applier));
+			PatternsAppliers.Collection.Add(new DelegatedMemberApplier<ICollectionPropertiesMapper>(matcher, applier));
 		}
 
 		public void AddManyToOnePattern(Predicate<MemberInfo> matcher, Action<IManyToOneMapper> applier)
