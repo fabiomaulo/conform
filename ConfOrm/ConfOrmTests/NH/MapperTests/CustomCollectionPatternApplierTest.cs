@@ -108,5 +108,17 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
 			return orm;
 		}
+
+		[Test]
+		public void AddCustomDelegatedApplierWithMember()
+		{
+			var orm = new Mock<IDomainInspector>();
+			var mapper = new Mapper(orm.Object);
+			var previousCollectionApplierCount = mapper.PatternsAppliers.Collection.Count;
+
+			mapper.AddCollectionPattern(mi => true, (mi, cm) => cm.BatchSize(25));
+
+			mapper.PatternsAppliers.Collection.Count.Should().Be(previousCollectionApplierCount + 1);
+		}
 	}
 }
