@@ -302,7 +302,7 @@ namespace ConfOrm
 			return false;
 		}
 
-		public virtual Cascade ApplyCascade(Type from, MemberInfo on, Type to)
+		public virtual Cascade? ApplyCascade(Type from, MemberInfo on, Type to)
 		{
 			var relationOn = new RelationOn(from, on, to);
 

@@ -66,7 +66,7 @@ namespace ConfOrmTests.Patterns
 		{
 			var orm = new Mock<IDomainInspector>();
 			var pattern = new BidirectionalOneToManyCascadePattern(orm.Object);
-			pattern.Get(null).Satisfy(c => c.Has(Cascade.All) && c.Has(Cascade.DeleteOrphans));
+			pattern.Get(null).Satisfy(c => c.HasValue && c.Value.Has(Cascade.All) && c.Value.Has(Cascade.DeleteOrphans));
 		}
 	}
 }

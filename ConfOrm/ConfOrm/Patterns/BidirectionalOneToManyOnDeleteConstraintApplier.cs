@@ -23,6 +23,10 @@ namespace ConfOrm.Patterns
 				// Circular references
 				return false;
 			}
+			if(DomainInspector.ApplyCascade(one, subject, many) == Cascade.None)
+			{
+				return false;
+			}
 			return base.Match(new Relation(one, many));
 		}
 

@@ -23,7 +23,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		{
 			var orm = new ObjectRelationalMapper();
 			orm.TablePerClass<Node>();
-			orm.ApplyCascade(typeof(Node), subnodesProperty, typeof(Node)).Satisfy(c => c.Has(Cascade.All) && c.Has(Cascade.DeleteOrphans));
+			orm.ApplyCascade(typeof(Node), subnodesProperty, typeof(Node)).Satisfy(c => c.HasValue && c.Value.Has(Cascade.All) && c.Value.Has(Cascade.DeleteOrphans));
 		}
 
 		[Test]
@@ -31,7 +31,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		{
 			var orm = new ObjectRelationalMapper();
 			orm.TablePerClass<Node>();
-			orm.ApplyCascade(typeof(Node), parentProperty, typeof(Node)).Should().Be.EqualTo(Cascade.None);
+			orm.ApplyCascade(typeof(Node), parentProperty, typeof(Node)).Satisfy(c=> !c.HasValue || c.Value == Cascade.None);
 		}
 
 		[Test]

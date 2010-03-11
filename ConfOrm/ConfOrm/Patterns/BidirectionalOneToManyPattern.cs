@@ -17,6 +17,11 @@ namespace ConfOrm.Patterns
 			this.domainInspector = domainInspector;
 		}
 
+		protected IDomainInspector DomainInspector
+		{
+			get { return domainInspector; }
+		}
+
 		#region Implementation of IPattern<Relation>
 
 		public virtual bool Match(Relation subject)

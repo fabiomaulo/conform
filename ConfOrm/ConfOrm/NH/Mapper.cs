@@ -363,8 +363,8 @@ namespace ConfOrm.NH
 		{
 			propertiesContainer.OneToOne(member, oneToOneMapper =>
 				{
-					Cascade cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
-					oneToOneMapper.Cascade(cascade);
+					Cascade? cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
+					oneToOneMapper.Cascade(cascade.GetValueOrDefault(Cascade.None));
 					PatternsAppliers.OneToOne.ApplyAllMatchs(member, oneToOneMapper);
 					PatternsAppliers.OneToOnePath.ApplyAllMatchs(propertyPath, oneToOneMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), oneToOneMapper);
@@ -377,8 +377,8 @@ namespace ConfOrm.NH
 		{
 			propertiesContainer.ManyToOne(member, manyToOneMapper =>
 				{
-					Cascade cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
-					manyToOneMapper.Cascade(cascade);
+					Cascade? cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
+					manyToOneMapper.Cascade(cascade.GetValueOrDefault(Cascade.None));
 					PatternsAppliers.ManyToOne.ApplyAllMatchs(member, manyToOneMapper);
 					PatternsAppliers.ManyToOnePath.ApplyAllMatchs(propertyPath, manyToOneMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), manyToOneMapper);
@@ -450,7 +450,7 @@ namespace ConfOrm.NH
 					mapped.Key(k => k.Column(parentColumnNameInChild));
 				}
 				var cascadeToApply = domainInspector.ApplyCascade(ownerType, member, collectionElementType);
-				mapped.Cascade(cascadeToApply);
+				mapped.Cascade(cascadeToApply.GetValueOrDefault(Cascade.None));
 			}
 
 			private string GetParentColumnNameInChild()
@@ -491,7 +491,7 @@ namespace ConfOrm.NH
 			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)
 			{
 				var cascadeToApply = domainInspector.ApplyCascade(ownerType, member, collectionElementType);
-				mapped.Cascade(cascadeToApply);
+				mapped.Cascade(cascadeToApply.GetValueOrDefault(Cascade.None));
 			}
 
 			#endregion

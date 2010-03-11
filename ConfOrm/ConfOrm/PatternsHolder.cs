@@ -9,8 +9,8 @@ namespace ConfOrm
 		private readonly List<IPattern<MemberInfo>> arrayPatterns = new List<IPattern<MemberInfo>>();
 		private readonly List<IPattern<MemberInfo>> bagPatterns = new List<IPattern<MemberInfo>>();
 
-		private readonly List<IPatternValueGetter<Relation, Cascade>> cascadePatterns =
-			new List<IPatternValueGetter<Relation, Cascade>>();
+		private readonly List<IPatternValueGetter<Relation, Cascade?>> cascadePatterns =
+			new List<IPatternValueGetter<Relation, Cascade?>>();
 
 		private readonly List<IPattern<Type>> componetPatterns = new List<IPattern<Type>>();
 		private readonly List<IPattern<MemberInfo>> dictionaryPatterns = new List<IPattern<MemberInfo>>();
@@ -66,7 +66,7 @@ namespace ConfOrm
 			get { return dictionaryPatterns; }
 		}
 
-		public ICollection<IPatternValueGetter<Relation, Cascade>> Cascades
+		public ICollection<IPatternValueGetter<Relation, Cascade?>> Cascades
 		{
 			get { return cascadePatterns; }
 		}

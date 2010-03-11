@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace ConfOrm.Patterns
 {
-	public class BidirectionalOneToManyCascadePattern : BidirectionalOneToManyPattern, IPatternValueGetter<Relation, Cascade>
+	public class BidirectionalOneToManyCascadePattern : BidirectionalOneToManyPattern, IPatternValueGetter<Relation, Cascade?>
 	{
 		public BidirectionalOneToManyCascadePattern(IDomainInspector domainInspector) : base(domainInspector) {}
 
@@ -31,7 +31,7 @@ namespace ConfOrm.Patterns
 		}
 		#region Implementation of IPatternApplier<Relation,Cascade>
 
-		public Cascade Get(Relation element)
+		public Cascade? Get(Relation element)
 		{
 			return Cascade.All | Cascade.DeleteOrphans;
 		}

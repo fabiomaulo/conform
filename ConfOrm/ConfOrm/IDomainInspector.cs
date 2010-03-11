@@ -21,7 +21,7 @@ namespace ConfOrm
 		bool IsMasterManyToMany(Type from, Type to);
 		bool IsOneToMany(Type from, Type to);
 		bool IsHeterogeneousAssociations(MemberInfo member);
-		Cascade ApplyCascade(Type from, MemberInfo on, Type to);
+		Cascade? ApplyCascade(Type from, MemberInfo on, Type to);
 
 		bool IsPersistentId(MemberInfo member);
 		IPersistentIdStrategy GetPersistentIdStrategy(MemberInfo member);

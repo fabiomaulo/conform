@@ -17,7 +17,7 @@ namespace ConfOrm
 		ICollection<IPattern<MemberInfo>> Arrays { get; }
 		ICollection<IPattern<MemberInfo>> Dictionaries { get; }
 
-		ICollection<IPatternValueGetter<Relation, Cascade>> Cascades { get; }
+		ICollection<IPatternValueGetter<Relation, Cascade?>> Cascades { get; }
 		ICollection<IPattern<MemberInfo>> PersistentPropertiesExclusions { get; }
 	}
 }
