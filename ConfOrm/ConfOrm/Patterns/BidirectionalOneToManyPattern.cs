@@ -10,7 +10,7 @@ namespace ConfOrm.Patterns
 		private readonly IDomainInspector domainInspector;
 
 		private const BindingFlags PublicPropertiesOfClassHierarchy =
-			BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
+			BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
 
 		public BidirectionalOneToManyPattern(IDomainInspector domainInspector)
 		{
@@ -59,7 +59,7 @@ namespace ConfOrm.Patterns
 					if (genericEnumerable != null)
 					{
 						Type genericArgument = genericEnumerable.GetGenericArguments()[0];
-						if (genericArgument.IsAssignableFrom(many))
+						if (genericArgument == many)
 						{
 							return true;
 						}
@@ -67,7 +67,7 @@ namespace ConfOrm.Patterns
 						{
 							var dictionaryGenericArguments = genericArgument.GetGenericArguments();
 							var valueType = dictionaryGenericArguments[1];
-							if (valueType.IsAssignableFrom(many))
+							if (valueType == many)
 							{
 								return true;
 							}
@@ -80,7 +80,7 @@ namespace ConfOrm.Patterns
 
 		protected bool HasPropertyOf(Type many, Type one)
 		{
-			return many.GetProperties(PublicPropertiesOfClassHierarchy).Select(p => p.PropertyType).Any(t => t.IsAssignableFrom(one));
+			return many.GetProperties(PublicPropertiesOfClassHierarchy).Select(p => p.PropertyType).Any(t => t == one);
 		}
 	}
 }
