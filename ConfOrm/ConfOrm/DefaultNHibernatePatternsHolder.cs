@@ -3,9 +3,9 @@ using ConfOrm.Patterns;
 
 namespace ConfOrm
 {
-	public class DefaultPatternsHolder: PatternsHolder
+	public class DefaultNHibernatePatternsHolder: PatternsHolder
 	{
-		public DefaultPatternsHolder(IDomainInspector domainInspector, IExplicitDeclarationsHolder explicitDeclarations)
+		public DefaultNHibernatePatternsHolder(IDomainInspector domainInspector, IExplicitDeclarationsHolder explicitDeclarations)
 		{
 			if (domainInspector == null)
 			{

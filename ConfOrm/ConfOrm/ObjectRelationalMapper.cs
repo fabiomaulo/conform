@@ -13,7 +13,7 @@ namespace ConfOrm
 		public ObjectRelationalMapper()
 		{
 			explicitDeclarations = new ExplicitDeclarationsHolder();
-			Patterns = new DefaultPatternsHolder(this, explicitDeclarations);
+			Patterns = new DefaultNHibernatePatternsHolder(this, explicitDeclarations);
 		}
 
 		public ObjectRelationalMapper(IPatternsHolder patterns): this(patterns, new ExplicitDeclarationsHolder())

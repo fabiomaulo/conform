@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cascade.cs" />
-    <Compile Include="DefaultPatternsHolder.cs" />
+    <Compile Include="DefaultNHibernatePatternsHolder.cs" />
     <Compile Include="ExplicitDeclarationsHolder.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="IDomainInspector.cs" />
