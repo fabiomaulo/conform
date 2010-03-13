@@ -163,6 +163,7 @@
     <Compile Include="ObjectRelationalMapperTests\RegisteringTablePerClass.cs" />
     <Compile Include="ObjectRelationalMapperTests\SetProperties.cs" />
     <Compile Include="ObjectRelationalMapperTests\SpecificPropertyAsPoid.cs" />
+    <Compile Include="ObjectRelationalMapperTests\UnidirectionalOneToOneTest.cs" />
     <Compile Include="PatternExtensionsTest.cs" />
     <Compile Include="Patterns\ArrayCollectionPatternTest.cs" />
     <Compile Include="Patterns\AssignedPoidPatternTest.cs" />
