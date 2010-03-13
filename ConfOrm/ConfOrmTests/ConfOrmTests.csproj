@@ -181,6 +181,7 @@
     <Compile Include="Patterns\ListCollectionPatternTest.cs" />
     <Compile Include="Patterns\NativePoidPatternTest.cs" />
     <Compile Include="Patterns\NoSetterPropertyToFieldAccessorPatternTest.cs" />
+    <Compile Include="Patterns\OneToOneUnidirectionalToManyToOnePatternTest.cs" />
     <Compile Include="Patterns\PoidGuidPatternTest.cs" />
     <Compile Include="Patterns\PoIdGuidStrategyPatternTest.cs" />
     <Compile Include="Patterns\PoidIntPatternTest.cs" />
