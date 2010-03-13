@@ -8,41 +8,30 @@ namespace ConfOrm
 {
 	public class ObjectRelationalMapper : IObjectRelationalMapper, IDomainInspector
 	{
-		#region Explicit mappings
-
-		private readonly HashSet<Type> rootEntities = new HashSet<Type>();
-		private readonly HashSet<Type> tablePerClassEntities = new HashSet<Type>();
-		private readonly HashSet<Type> tablePerClassHierarchyEntities = new HashSet<Type>();
-		private readonly HashSet<Type> tablePerConcreteClassEntities = new HashSet<Type>();
-		private readonly HashSet<Relation> manyToOneRelation = new HashSet<Relation>();
-		private readonly HashSet<Relation> oneToManyRelation = new HashSet<Relation>();
-		private readonly HashSet<Relation> oneToOneRelation = new HashSet<Relation>();
-		private readonly HashSet<Relation> manyToManyRelation = new HashSet<Relation>();
-		private readonly HashSet<MemberInfo> sets = new HashSet<MemberInfo>();
-		private readonly HashSet<MemberInfo> bags = new HashSet<MemberInfo>();
-		private readonly HashSet<MemberInfo> lists = new HashSet<MemberInfo>();
-		private readonly HashSet<MemberInfo> arrays = new HashSet<MemberInfo>();
-		private readonly HashSet<MemberInfo> dictionaries = new HashSet<MemberInfo>();
-		private readonly HashSet<Type> components = new HashSet<Type>();
-		private readonly Dictionary<Relation, Cascade> cascade = new Dictionary<Relation, Cascade>();
-		private readonly HashSet<MemberInfo> persistentProperty = new HashSet<MemberInfo>();
-		private readonly HashSet<Type> complex = new HashSet<Type>();
-		private readonly HashSet<MemberInfo> poids = new HashSet<MemberInfo>();
-
-		#endregion
+		private readonly IExplicitDeclarationsHolder explicitDeclarations;
 
 		public ObjectRelationalMapper()
 		{
 			Patterns = new DefaultPatternsHolder(this);
+			explicitDeclarations = new ExplicitDeclarationsHolder();
 		}
 
-		public ObjectRelationalMapper(IPatternsHolder patterns)
+		public ObjectRelationalMapper(IPatternsHolder patterns): this(patterns, new ExplicitDeclarationsHolder())
+		{
+		}
+
+		public ObjectRelationalMapper(IPatternsHolder patterns, IExplicitDeclarationsHolder explicitDeclarations)
 		{
 			if (patterns == null)
 			{
 				throw new ArgumentNullException("patterns");
 			}
+			if (explicitDeclarations == null)
+			{
+				throw new ArgumentNullException("explicitDeclarations");
+			}
 			Patterns = patterns;
+			this.explicitDeclarations = explicitDeclarations;
 		}
 
 		public IPatternsHolder Patterns { get; protected set; }
@@ -82,13 +71,13 @@ namespace ConfOrm
 		private void RegisterTablePerClassHierarchy(Type type)
 		{
 			PreventComponentAsEntity(type);
-			rootEntities.Add(type);
-			tablePerClassHierarchyEntities.Add(type);
+			explicitDeclarations.RootEntities.Add(type);
+			explicitDeclarations.TablePerClassHierarchyEntities.Add(type);
 		}
 
 		private void PreventComponentAsEntity(Type type)
 		{
-			if (components.Contains(type))
+			if (explicitDeclarations.Components.Contains(type))
 			{
 				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
 			}
@@ -103,8 +92,8 @@ namespace ConfOrm
 		private void RegisterTablePerClass(Type type)
 		{
 			PreventComponentAsEntity(type);
-			rootEntities.Add(type);
-			tablePerClassEntities.Add(type);
+			explicitDeclarations.RootEntities.Add(type);
+			explicitDeclarations.TablePerClassEntities.Add(type);
 		}
 
 		public virtual void TablePerConcreteClass<TBaseEntity>() where TBaseEntity : class
@@ -116,8 +105,8 @@ namespace ConfOrm
 		private void RegisterTablePerConcreteClass(Type type)
 		{
 			PreventComponentAsEntity(type);
-			rootEntities.Add(type);
-			tablePerConcreteClassEntities.Add(type);
+			explicitDeclarations.RootEntities.Add(type);
+			explicitDeclarations.TablePerConcreteClassEntities.Add(type);
 		}
 
 		public virtual void Component<TComponent>()
@@ -127,78 +116,78 @@ namespace ConfOrm
 			{
 				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
 			}
-			components.Add(type);
+			explicitDeclarations.Components.Add(type);
 		}
 
 		public virtual void Complex<TComplex>()
 		{
 			var type = typeof(TComplex);
-			complex.Add(type);
+			explicitDeclarations.ComplexTypes.Add(type);
 		}
 
 		public virtual void Poid<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
-			poids.Add(member);
+			explicitDeclarations.Poids.Add(member);
 		}
 
 		public virtual void ManyToMany<TLeftEntity, TRigthEntity>()
 		{
-			manyToManyRelation.Add(new Relation(typeof(TLeftEntity), typeof(TRigthEntity)));
-			manyToManyRelation.Add(new Relation(typeof(TRigthEntity), typeof(TLeftEntity), Declared.Implicit));
+			explicitDeclarations.ManyToManyRelations.Add(new Relation(typeof(TLeftEntity), typeof(TRigthEntity)));
+			explicitDeclarations.ManyToManyRelations.Add(new Relation(typeof(TRigthEntity), typeof(TLeftEntity), Declared.Implicit));
 		}
 
 		public virtual void ManyToOne<TLeftEntity, TRigthEntity>()
 		{
-			manyToOneRelation.Add(new Relation(typeof (TLeftEntity), typeof (TRigthEntity)));
-			oneToManyRelation.Add(new Relation(typeof(TRigthEntity), typeof(TLeftEntity)));
+			explicitDeclarations.ManyToOneRelations.Add(new Relation(typeof(TLeftEntity), typeof(TRigthEntity)));
+			explicitDeclarations.OneToManyRelations.Add(new Relation(typeof(TRigthEntity), typeof(TLeftEntity)));
 		}
 
 		public virtual void OneToOne<TLeftEntity, TRigthEntity>()
 		{
-			oneToOneRelation.Add(new Relation(typeof(TLeftEntity), typeof(TRigthEntity)));
-			oneToOneRelation.Add(new Relation(typeof(TRigthEntity), typeof(TLeftEntity), Declared.Implicit));
+			explicitDeclarations.OneToOneRelations.Add(new Relation(typeof(TLeftEntity), typeof(TRigthEntity)));
+			explicitDeclarations.OneToOneRelations.Add(new Relation(typeof(TRigthEntity), typeof(TLeftEntity), Declared.Implicit));
 		}
 
 		public virtual void Set<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
-			sets.Add(member);
+			explicitDeclarations.Sets.Add(member);
 		}
 
 		public virtual void Bag<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
-			bags.Add(member);
+			explicitDeclarations.Bags.Add(member);
 		}
 
 		public virtual void List<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
-			lists.Add(member);
+			explicitDeclarations.Lists.Add(member);
 		}
 
 		public virtual void Array<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
-			arrays.Add(member);
+			explicitDeclarations.Arrays.Add(member);
 		}
 
 		public virtual void Dictionary<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
-			dictionaries.Add(member);
+			explicitDeclarations.Dictionaries.Add(member);
 		}
 
 		public virtual void Cascade<TFromEntity, TToEntity>(Cascade cascadeOptions)
 		{
-			cascade.Add(new Relation(typeof(TFromEntity), typeof(TToEntity)), cascadeOptions);
+			explicitDeclarations.Cascades.Add(new Relation(typeof(TFromEntity), typeof(TToEntity)), cascadeOptions);
 		}
 
 		public virtual void PersistentProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
-			persistentProperty.Add(member);
+			explicitDeclarations.PersistentProperties.Add(member);
 		}
 
 		#endregion
@@ -207,32 +196,32 @@ namespace ConfOrm
 
 		public virtual bool IsRootEntity(Type type)
 		{
-			return rootEntities.Contains(type);
+			return explicitDeclarations.RootEntities.Contains(type);
 		}
 
 		public virtual bool IsComponent(Type type)
 		{
-			return (components.Contains(type) || (Patterns.Componets.Match(type) && !IsEntity(type))) && !complex.Contains(type);
+			return (explicitDeclarations.Components.Contains(type) || (Patterns.Componets.Match(type) && !IsEntity(type))) && !explicitDeclarations.ComplexTypes.Contains(type);
 		}
 
 		public virtual bool IsComplex(Type type)
 		{
-			return complex.Contains(type);
+			return explicitDeclarations.ComplexTypes.Contains(type);
 		}
 
 		public virtual bool IsEntity(Type type)
 		{
-			return rootEntities.Contains(type) || type.GetBaseTypes().Any(t => rootEntities.Contains(t));
+			return explicitDeclarations.RootEntities.Contains(type) || type.GetBaseTypes().Any(t => explicitDeclarations.RootEntities.Contains(t));
 		}
 
 		public virtual bool IsTablePerClass(Type type)
 		{
-			return IsMappedFor(tablePerClassEntities, type);
+			return IsMappedFor(explicitDeclarations.TablePerClassEntities, type);
 		}
 
 		public virtual bool IsTablePerClassHierarchy(Type type)
 		{
-			return IsMappedFor(tablePerClassHierarchyEntities, type);
+			return IsMappedFor(explicitDeclarations.TablePerClassHierarchyEntities, type);
 		}
 
 		private bool IsMappedFor(ICollection<Type> explicitMappedEntities, Type type)
@@ -253,48 +242,48 @@ namespace ConfOrm
 
 		public virtual bool IsTablePerConcreteClass(Type type)
 		{
-			return IsMappedFor(tablePerConcreteClassEntities, type);
+			return IsMappedFor(explicitDeclarations.TablePerConcreteClassEntities, type);
 		}
 
 		public virtual bool IsOneToOne(Type from, Type to)
 		{
-			return IsEntity(from) && IsEntity(to) && oneToOneRelation.Contains(new Relation(from, to));
+			return IsEntity(from) && IsEntity(to) && explicitDeclarations.OneToOneRelations.Contains(new Relation(from, to));
 		}
 
 		public bool IsMasterOneToOne(Type from, Type to)
 		{
 			return IsOneToOne(from, to)
-			       && oneToOneRelation.Single(oto => oto.Equals(new Relation(from, to))).DeclaredAs == Declared.Explicit;
+						 && explicitDeclarations.OneToOneRelations.Single(oto => oto.Equals(new Relation(from, to))).DeclaredAs == Declared.Explicit;
 		}
 
 		public virtual bool IsManyToOne(Type from, Type to)
 		{
 			var areEntities = IsEntity(from) && IsEntity(to);
 			var isFromComponentToEntity = IsComponent(from) && IsEntity(to);
-			return (areEntities && manyToOneRelation.Contains(new Relation(from, to)))
-			       || (areEntities && !IsOneToOne(from, to) && !manyToManyRelation.Contains(new Relation(from, to))) ||
+			return (areEntities && explicitDeclarations.ManyToOneRelations.Contains(new Relation(from, to)))
+						 || (areEntities && !IsOneToOne(from, to) && !explicitDeclarations.ManyToManyRelations.Contains(new Relation(from, to))) ||
 						 isFromComponentToEntity;
 		}
 
 		public virtual bool IsManyToMany(Type role1, Type role2)
 		{
-			return IsEntity(role1) && IsEntity(role2) && manyToManyRelation.Contains(new Relation(role1, role2));
+			return IsEntity(role1) && IsEntity(role2) && explicitDeclarations.ManyToManyRelations.Contains(new Relation(role1, role2));
 		}
 
 		public bool IsMasterManyToMany(Type from, Type to)
 		{
-			return IsManyToMany(from, to) && manyToManyRelation.Single(mtm => mtm.Equals(new Relation(from, to))).DeclaredAs == Declared.Explicit;
+			return IsManyToMany(from, to) && explicitDeclarations.ManyToManyRelations.Single(mtm => mtm.Equals(new Relation(from, to))).DeclaredAs == Declared.Explicit;
 		}
 
 		public virtual bool IsOneToMany(Type from, Type to)
 		{
-			if(IsEntity(to) && oneToManyRelation.Contains(new Relation(from, to)))
+			if (IsEntity(to) && explicitDeclarations.OneToManyRelations.Contains(new Relation(from, to)))
 			{
 				return true;
 			}
 			var areEntities = IsEntity(from) && IsEntity(to);
 			var isFromComponentToEntity = IsComponent(from) && IsEntity(to);
-			return (areEntities || isFromComponentToEntity) && !IsOneToOne(from, to) && !manyToManyRelation.Contains(new Relation(from, to));
+			return (areEntities || isFromComponentToEntity) && !IsOneToOne(from, to) && !explicitDeclarations.ManyToManyRelations.Contains(new Relation(from, to));
 		}
 
 		public virtual bool IsHeterogeneousAssociations(MemberInfo member)
@@ -308,7 +297,7 @@ namespace ConfOrm
 
 			Cascade resultByClasses;
 			var relation = new Relation(from, to);
-			if (cascade.TryGetValue(relation, out resultByClasses))
+			if (explicitDeclarations.Cascades.TryGetValue(relation, out resultByClasses))
 			{
 				// Has Explicit Cascade By Classes
 				return resultByClasses;
@@ -319,7 +308,7 @@ namespace ConfOrm
 
 		public virtual bool IsPersistentId(MemberInfo member)
 		{
-			return poids.Contains(member) || Patterns.Poids.Match(member);
+			return explicitDeclarations.Poids.Contains(member) || Patterns.Poids.Match(member);
 		}
 
 		public virtual IPersistentIdStrategy GetPersistentIdStrategy(MemberInfo member)
@@ -329,32 +318,32 @@ namespace ConfOrm
 
 		public virtual bool IsPersistentProperty(MemberInfo role)
 		{
-			return !Patterns.PersistentPropertiesExclusions.Match(role) || persistentProperty.Contains(role);
+			return !Patterns.PersistentPropertiesExclusions.Match(role) || explicitDeclarations.PersistentProperties.Contains(role);
 		}
 
 		public virtual bool IsSet(MemberInfo role)
 		{
-			return sets.Contains(role) || Patterns.Sets.Match(role); 
+			return explicitDeclarations.Sets.Contains(role) || Patterns.Sets.Match(role); 
 		}
 
 		public virtual bool IsBag(MemberInfo role)
 		{
-			return bags.Contains(role) || (!sets.Contains(role) && !lists.Contains(role) && !arrays.Contains(role) && Patterns.Bags.Match(role));
+			return explicitDeclarations.Bags.Contains(role) || (!explicitDeclarations.Sets.Contains(role) && !explicitDeclarations.Lists.Contains(role) && !explicitDeclarations.Arrays.Contains(role) && Patterns.Bags.Match(role));
 		}
 
 		public virtual bool IsList(MemberInfo role)
 		{
-			return lists.Contains(role) || (!arrays.Contains(role) && !bags.Contains(role) && Patterns.Lists.Match(role));
+			return explicitDeclarations.Lists.Contains(role) || (!explicitDeclarations.Arrays.Contains(role) && !explicitDeclarations.Bags.Contains(role) && Patterns.Lists.Match(role));
 		}
 
 		public virtual bool IsArray(MemberInfo role)
 		{
-			return arrays.Contains(role) || (!lists.Contains(role) && !bags.Contains(role) && Patterns.Arrays.Match(role));
+			return explicitDeclarations.Arrays.Contains(role) || (!explicitDeclarations.Lists.Contains(role) && !explicitDeclarations.Bags.Contains(role) && Patterns.Arrays.Match(role));
 		}
 
 		public virtual bool IsDictionary(MemberInfo role)
 		{
-			return dictionaries.Contains(role) || Patterns.Dictionaries.Match(role);
+			return explicitDeclarations.Dictionaries.Contains(role) || Patterns.Dictionaries.Match(role);
 		}
 
 		#endregion
