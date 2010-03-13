@@ -12,8 +12,8 @@ namespace ConfOrm
 
 		public ObjectRelationalMapper()
 		{
-			Patterns = new DefaultPatternsHolder(this);
 			explicitDeclarations = new ExplicitDeclarationsHolder();
+			Patterns = new DefaultPatternsHolder(this, explicitDeclarations);
 		}
 
 		public ObjectRelationalMapper(IPatternsHolder patterns): this(patterns, new ExplicitDeclarationsHolder())
@@ -249,7 +249,8 @@ namespace ConfOrm
 
 		public virtual bool IsOneToOne(Type from, Type to)
 		{
-			return IsEntity(from) && IsEntity(to) && explicitDeclarations.OneToOneRelations.Contains(new Relation(from, to));
+			var relation = new Relation(from, to);
+			return IsEntity(from) && IsEntity(to) && explicitDeclarations.OneToOneRelations.Contains(relation) && !Patterns.ManyToOneRelations.Match(relation);
 		}
 
 		public bool IsMasterOneToOne(Type from, Type to)
@@ -264,10 +265,11 @@ namespace ConfOrm
 		{
 			bool areEntities = IsEntity(from) && IsEntity(to);
 			bool isFromComponentToEntity = IsComponent(from) && IsEntity(to);
-			return (areEntities && explicitDeclarations.ManyToOneRelations.Contains(new Relation(from, to)))
-			       ||
+			var relation = new Relation(from, to);
+			return (areEntities && explicitDeclarations.ManyToOneRelations.Contains(relation))
+						 || (areEntities && Patterns.ManyToOneRelations.Match(relation)) ||
 			       (areEntities && !IsOneToOne(from, to)
-			        && !explicitDeclarations.ManyToManyRelations.Contains(new Relation(from, to))) || isFromComponentToEntity;
+			        && !explicitDeclarations.ManyToManyRelations.Contains(relation)) || isFromComponentToEntity;
 		}
 
 		public virtual bool IsManyToMany(Type role1, Type role2)

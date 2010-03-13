@@ -61,7 +61,9 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			mapper.TablePerClass<BEntity>();
 			mapper.OneToOne<AEntity, BEntity>();
 			mapper.IsOneToMany(typeof(BEntity), typeof(AEntity)).Should().Be.False();
-			mapper.IsManyToOne(typeof(AEntity), typeof(BEntity)).Should().Be.False();
+
+			// the default behaviour map an unidirectional one-to-one as a many-to-one (for NHibernate)
+			// mapper.IsManyToOne(typeof(AEntity), typeof(BEntity)).Should().Be.False();
 		}
 
 		[Test]

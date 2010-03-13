@@ -19,5 +19,7 @@ namespace ConfOrm
 
 		ICollection<IPatternValueGetter<Relation, Cascade?>> Cascades { get; }
 		ICollection<IPattern<MemberInfo>> PersistentPropertiesExclusions { get; }
+
+		ICollection<IPattern<Relation>> ManyToOneRelations { get; }
 	}
 }

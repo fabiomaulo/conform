@@ -73,7 +73,12 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Cascade<AEntity, BEntity>(Cascade.Persist | Cascade.Remove);
 			HbmMapping mapping = GetMapping(orm);
 
-			VerifyMappingWithCascade(mapping);
+			// the default behaviour map an unidirectional one-to-one as a many-to-one (for NHibernate)
+			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("AEntity"));
+			rc.Properties.Should().Have.Count.EqualTo(2);
+			rc.Properties.Select(p => p.Name).Should().Have.SameValuesAs("Name", "B");
+			var relation = rc.Properties.First(p => p.Name == "B");
+			((HbmManyToOne)relation).cascade.Should().Contain("persist").And.Contain("delete");
 		}
 
 	}

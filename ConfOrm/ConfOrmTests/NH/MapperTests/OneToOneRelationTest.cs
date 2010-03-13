@@ -50,16 +50,16 @@ namespace ConfOrmTests.NH.MapperTests
 			var domainInspector = orm.Object;
 			HbmMapping mapping = GetMapping(domainInspector);
 
-			VerifyAEntityMapping(mapping);
+			VerifyAEntityMapping<HbmOneToOne>(mapping);
 		}
 
-		private void VerifyAEntityMapping(HbmMapping mapping)
+		private void VerifyAEntityMapping<T>(HbmMapping mapping)
 		{
 			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("AEntity"));
 			rc.Properties.Should().Have.Count.EqualTo(2);
 			rc.Properties.Select(p => p.Name).Should().Have.SameValuesAs("Name", "B");
 			var relation = rc.Properties.First(p => p.Name == "B");
-			relation.Should().Be.OfType<HbmOneToOne>();
+			relation.Should().Be.OfType<T>();
 			var normalProp = rc.Properties.First(p => p.Name == "Name");
 			normalProp.Should().Be.OfType<HbmProperty>();
 		}
@@ -73,7 +73,7 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.OneToOne<AEntity, BEntity>();
 			HbmMapping mapping = GetMapping(orm);
 
-			VerifyAEntityMapping(mapping);
+			VerifyAEntityMapping<HbmManyToOne>(mapping);
 		}
 	}
 }

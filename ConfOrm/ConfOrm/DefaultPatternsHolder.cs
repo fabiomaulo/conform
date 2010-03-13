@@ -5,7 +5,7 @@ namespace ConfOrm
 {
 	public class DefaultPatternsHolder: PatternsHolder
 	{
-		public DefaultPatternsHolder(IDomainInspector domainInspector)
+		public DefaultPatternsHolder(IDomainInspector domainInspector, IExplicitDeclarationsHolder explicitDeclarations)
 		{
 			if (domainInspector == null)
 			{
@@ -24,6 +24,7 @@ namespace ConfOrm
 			PoidStrategies.Add(new GuidOptimizedPoidPattern());
 
 			PersistentPropertiesExclusions.Add(new ReadOnlyPropertyPattern());
+			ManyToOneRelations.Add(new OneToOneUnidirectionalToManyToOnePattern(explicitDeclarations));
 		}
 	}
 }

@@ -17,7 +17,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			public int Id { get; set; }
 		}
 
-		[Test, Ignore("Not fixed yet.")]
+		[Test]
 		public void WhenUnidirectionalOneToOneThenShouldBeManyToOne()
 		{
 			var orm = new ObjectRelationalMapper();

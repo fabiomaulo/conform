@@ -9,6 +9,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		private class Person
 		{
 			public int Id { get; set; }
+			public User User { get; set; }
 		}
 
 		private class User
