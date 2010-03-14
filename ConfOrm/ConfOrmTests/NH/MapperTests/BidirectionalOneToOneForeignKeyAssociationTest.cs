@@ -39,10 +39,28 @@ namespace ConfOrmTests.NH.MapperTests
 			customerAddress.cascade.Should().Be("all");
 		}
 
+		[Test]
+		public void WhenCustomerIsTheMasterThenDoesNotApplyTheForeignGeneratorNeitherCustomerNorAddress()
+		{
+			Mock<IDomainInspector> orm = GetOrmMockCustomerToAddress();
+
+			var mapper = new Mapper(orm.Object);
+			var mappings = mapper.CompileMappingFor(new[] { typeof(Customer), typeof(Address) });
+
+			HbmClass customer = mappings.RootClasses.Single(rc => rc.Name.Contains("Customer"));
+			customer.Id.generator.@class.Should().Not.Be("foreign");
+
+			HbmClass address = mappings.RootClasses.Single(rc => rc.Name.Contains("Address"));
+			address.Id.generator.@class.Should().Not.Be("foreign");
+		}
+
 		private Mock<IDomainInspector> GetOrmMockCustomerToAddress()
 		{
+			var idStrategy = new Mock<IPersistentIdStrategy>();
+			idStrategy.Setup(ids => ids.Strategy).Returns(PoIdStrategy.Native);
 			var orm = new Mock<IDomainInspector>();
 			orm.Setup(m => m.IsEntity(It.IsAny<Type>())).Returns(true);
+			orm.Setup(m => m.GetPersistentIdStrategy(It.IsAny<MemberInfo>())).Returns(idStrategy.Object);
 			orm.Setup(m => m.IsRootEntity(It.IsAny<Type>())).Returns(true);
 			orm.Setup(m => m.IsTablePerClass(It.IsAny<Type>())).Returns(true);
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
@@ -50,6 +68,8 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsManyToOne(It.Is<Type>(t => t == typeof (Customer)), It.Is<Type>(t => t == typeof (Address)))).
 				Returns(true);
 			orm.Setup(m => m.IsOneToOne(It.Is<Type>(t => t == typeof (Address)), It.Is<Type>(t => t == typeof (Customer)))).
+				Returns(true);
+			orm.Setup(m => m.IsMasterOneToOne(It.Is<Type>(t => t == typeof(Address)), It.Is<Type>(t => t == typeof(Customer)))).
 				Returns(true);
 			return orm;
 		}
@@ -83,10 +103,29 @@ namespace ConfOrmTests.NH.MapperTests
 			addressCustomer.cascade.Should().Be("all");
 		}
 
+		[Test]
+		public void WhenAddressIsTheMasterThenDoesNotApplyTheForeignGeneratorNeitherCustomerNorAddress()
+		{
+			Mock<IDomainInspector> orm = GetOrmMockCustomerToAddress();
+
+			var mapper = new Mapper(orm.Object);
+			var mappings = mapper.CompileMappingFor(new[] { typeof(Customer), typeof(Address) });
+
+			HbmClass customer = mappings.RootClasses.Single(rc => rc.Name.Contains("Customer"));
+			customer.Id.generator.@class.Should().Not.Be("foreign");
+
+			HbmClass address = mappings.RootClasses.Single(rc => rc.Name.Contains("Address"));
+			
+			address.Id.generator.@class.Should().Not.Be("foreign");
+		}
+
 		private Mock<IDomainInspector> GetOrmMockAddressToCustomer()
 		{
+			var idStrategy = new Mock<IPersistentIdStrategy>();
+			idStrategy.Setup(ids => ids.Strategy).Returns(PoIdStrategy.Native);
 			var orm = new Mock<IDomainInspector>();
 			orm.Setup(m => m.IsEntity(It.IsAny<Type>())).Returns(true);
+			orm.Setup(m => m.GetPersistentIdStrategy(It.IsAny<MemberInfo>())).Returns(idStrategy.Object);
 			orm.Setup(m => m.IsRootEntity(It.IsAny<Type>())).Returns(true);
 			orm.Setup(m => m.IsTablePerClass(It.IsAny<Type>())).Returns(true);
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
@@ -94,6 +133,8 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsManyToOne(It.Is<Type>(t => t == typeof(Address)), It.Is<Type>(t => t == typeof(Customer)))).
 				Returns(true);
 			orm.Setup(m => m.IsOneToOne(It.Is<Type>(t => t == typeof(Customer)), It.Is<Type>(t => t == typeof(Address)))).
+				Returns(true);
+			orm.Setup(m => m.IsMasterOneToOne(It.Is<Type>(t => t == typeof(Customer)), It.Is<Type>(t => t == typeof(Address)))).
 				Returns(true);
 			return orm;
 		}

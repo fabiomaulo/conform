@@ -31,8 +31,12 @@ namespace ConfOrm.Patterns
 			}
 			Type container = subject.ReflectedType;
 			MemberInfo bidirectionalOneToOneOrNull = BidirectionalOneToOneOrNull(container);
-			return bidirectionalOneToOneOrNull != null
-			       && domainInspector.IsOneToOne(container, bidirectionalOneToOneOrNull.GetPropertyOrFieldType());
+			if (bidirectionalOneToOneOrNull != null)
+			{
+				var otherSidePropertyType = bidirectionalOneToOneOrNull.GetPropertyOrFieldType();
+				return domainInspector.IsOneToOne(container, otherSidePropertyType) && domainInspector.IsOneToOne(otherSidePropertyType, container);
+			}
+			return false;
 		}
 
 		#endregion
