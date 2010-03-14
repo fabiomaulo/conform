@@ -69,6 +69,8 @@ namespace ConfOrmTests.NH.MapperTests
 				Returns(true);
 			orm.Setup(m => m.IsOneToOne(It.Is<Type>(t => t == typeof (Address)), It.Is<Type>(t => t == typeof (Customer)))).
 				Returns(true);
+			orm.Setup(m => m.IsOneToOne(It.Is<Type>(t => t == typeof(Customer)), It.Is<Type>(t => t == typeof(Address)))).
+				Returns(true);
 			orm.Setup(m => m.IsMasterOneToOne(It.Is<Type>(t => t == typeof(Address)), It.Is<Type>(t => t == typeof(Customer)))).
 				Returns(true);
 			return orm;
@@ -133,6 +135,8 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsManyToOne(It.Is<Type>(t => t == typeof(Address)), It.Is<Type>(t => t == typeof(Customer)))).
 				Returns(true);
 			orm.Setup(m => m.IsOneToOne(It.Is<Type>(t => t == typeof(Customer)), It.Is<Type>(t => t == typeof(Address)))).
+				Returns(true);
+			orm.Setup(m => m.IsOneToOne(It.Is<Type>(t => t == typeof(Address)), It.Is<Type>(t => t == typeof(Customer)))).
 				Returns(true);
 			orm.Setup(m => m.IsMasterOneToOne(It.Is<Type>(t => t == typeof(Customer)), It.Is<Type>(t => t == typeof(Address)))).
 				Returns(true);

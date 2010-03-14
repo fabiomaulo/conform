@@ -34,7 +34,7 @@ namespace ConfOrm.Patterns
 			if (bidirectionalOneToOneOrNull != null)
 			{
 				var otherSidePropertyType = bidirectionalOneToOneOrNull.GetPropertyOrFieldType();
-				return domainInspector.IsOneToOne(container, otherSidePropertyType) && domainInspector.IsOneToOne(otherSidePropertyType, container);
+				return domainInspector.IsOneToOne(container, otherSidePropertyType) && !domainInspector.IsManyToOne(container, otherSidePropertyType);
 			}
 			return false;
 		}
