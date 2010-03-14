@@ -58,6 +58,7 @@
     <Compile Include="IPatternsHolder.cs" />
     <Compile Include="IPatternValueGetter.cs" />
     <Compile Include="Mappers\CollectionLazy.cs" />
+    <Compile Include="Mappers\FetchMode.cs" />
     <Compile Include="Mappers\IAccessorPropertyMapper.cs" />
     <Compile Include="Mappers\IBagPropertiesMapper.cs" />
     <Compile Include="Mappers\IColumnMapper.cs" />

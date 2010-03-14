@@ -17,7 +17,7 @@ namespace ConfOrmTests.NH
 
 		private class Relation
 		{
-			
+
 		}
 
 		[Test]
@@ -178,5 +178,30 @@ namespace ConfOrmTests.NH
 			mapping.index.Should().Be("II");
 		}
 
+		[Test]
+		public void WhenSetFetchModeToJoinThenSetFetch()
+		{
+			var member = typeof(MyClass).GetProperty("Relation");
+			var mapping = new HbmManyToOne();
+			var mapper = new ManyToOneMapper(member, mapping);
+
+			mapper.Fetch(FetchMode.Join);
+
+			mapping.fetch.Should().Be(HbmFetchMode.Join);
+			mapping.fetchSpecified.Should().Be.True();
+		}
+
+		[Test]
+		public void WhenSetFetchModeToSelectThenResetFetch()
+		{
+			var member = typeof(MyClass).GetProperty("Relation");
+			var mapping = new HbmManyToOne();
+			var mapper = new ManyToOneMapper(member, mapping);
+
+			mapper.Fetch(FetchMode.Select);
+
+			mapping.fetch.Should().Be(HbmFetchMode.Select);
+			mapping.fetchSpecified.Should().Be.False();
+		}
 	}
 }

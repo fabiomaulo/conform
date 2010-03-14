@@ -58,6 +58,12 @@ namespace ConfOrm.NH
 			Column(x => x.Index(indexName));
 		}
 
+		public void Fetch(FetchMode fetchMode)
+		{
+			manyToOne.fetch = fetchMode.ToHbm();
+			manyToOne.fetchSpecified = manyToOne.fetch == HbmFetchMode.Join;
+		}
+
 		#endregion
 
 		#region Implementation of IAccessorPropertyMapper
