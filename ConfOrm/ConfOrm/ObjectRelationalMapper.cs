@@ -255,10 +255,8 @@ namespace ConfOrm
 
 		public bool IsMasterOneToOne(Type from, Type to)
 		{
-			return IsOneToOne(from, to)
-			       &&
-			       explicitDeclarations.OneToOneRelations.Single(oto => oto.Equals(new Relation(from, to))).DeclaredAs
-			       == Declared.Explicit;
+			Relation relation = explicitDeclarations.OneToOneRelations.SingleOrDefault(oto => oto.Equals(new Relation(from, to)));
+			return relation != null && relation.DeclaredAs == Declared.Explicit;
 		}
 
 		public virtual bool IsManyToOne(Type from, Type to)

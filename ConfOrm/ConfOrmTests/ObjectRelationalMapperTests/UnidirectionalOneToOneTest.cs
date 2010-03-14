@@ -26,6 +26,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 
 			orm.IsOneToOne(typeof (MyClass), typeof (MyOneClass)).Should().Be.False();
 			orm.IsManyToOne(typeof(MyClass), typeof(MyOneClass)).Should().Be.True();
+			orm.IsMasterOneToOne(typeof(MyClass), typeof(MyOneClass)).Should().Be.True();
 		}
 	}
 }
