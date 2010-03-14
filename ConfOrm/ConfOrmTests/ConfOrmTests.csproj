@@ -123,6 +123,7 @@
     <Compile Include="NH\MapperTests\PropertyAccessorTest.cs" />
     <Compile Include="NH\MapperTests\RootClassCustomizerCallingTest.cs" />
     <Compile Include="NH\MapperTests\SubclassCustomizerCallingTest.cs" />
+    <Compile Include="NH\MapperTests\UnidirectionalOneToOneTest.cs" />
     <Compile Include="NH\MapperTests\UnionSubclassCustomizerCallingTest.cs" />
     <Compile Include="NH\OneToOneMapperTest.cs" />
     <Compile Include="NH\PropertyMapperTest.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="ObjectRelationalMapperTests\RegisteringTablePerClass.cs" />
     <Compile Include="ObjectRelationalMapperTests\SetProperties.cs" />
     <Compile Include="ObjectRelationalMapperTests\SpecificPropertyAsPoid.cs" />
+    <Compile Include="NH\MapperTests\UnidirectionalOneToOneIntegrationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\UnidirectionalOneToOneTest.cs" />
     <Compile Include="PatternExtensionsTest.cs" />
     <Compile Include="Patterns\ArrayCollectionPatternTest.cs" />
@@ -194,6 +196,7 @@
     <Compile Include="Patterns\ReadOnlyPropertyPatternTest.cs" />
     <Compile Include="Patterns\SequencePoidPatternTest.cs" />
     <Compile Include="Patterns\SetCollectionPatternTest.cs" />
+    <Compile Include="Patterns\UnidirectionalUnaryAssociationPatternTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelationOnTest.cs" />
     <Compile Include="RelationTest.cs" />
