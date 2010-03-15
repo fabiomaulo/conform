@@ -87,6 +87,10 @@ namespace ConfOrmExample
 		public static ObjectRelationalMapper GetMappedDomain()
 		{
 			var orm = new ObjectRelationalMapper();
+
+			// Remove one of not required patterns
+			orm.Patterns.ManyToOneRelations.Remove(
+				orm.Patterns.ManyToOneRelations.Single(p => p.GetType() == typeof (OneToOneUnidirectionalToManyToOnePattern)));
 			
 			orm.TablePerClass<Animal>();
 			orm.TablePerClass<User>();
