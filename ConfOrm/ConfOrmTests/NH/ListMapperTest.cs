@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
@@ -116,6 +117,16 @@ namespace ConfOrmTests.NH
 			mapper.Access(Accessor.Field);
 
 			hbm.Access.Should().Not.Be.Null();
+		}
+
+		[Test]
+		public void CanChangeListIndexDef()
+		{
+			var hbm = new HbmList();
+			var mapper = new ListMapper(typeof(Animal), typeof(Animal), hbm);
+			mapper.Index(i => { i.Column("Pepe");
+			                  	i.Base(1); });
+			hbm.Item.Should().Be.OfType<HbmListIndex>().And.Value.Satisfy(i => i.column1 == "Pepe" && i.@base == "1");
 		}
 	}
 }

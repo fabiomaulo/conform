@@ -11,6 +11,7 @@ namespace ConfOrm.NH
 		private readonly KeyMapper keyMapper;
 		private readonly HbmList mapping;
 		private readonly IEntityPropertyMapper entityPropertyMapper;
+		private readonly IListIndexMapper listIndexMapper;
 
 		public ListMapper(Type ownerType, Type elementType, HbmList mapping)
 		{
@@ -34,7 +35,9 @@ namespace ConfOrm.NH
 				mapping.key = new HbmKey();
 			}
 			keyMapper = new KeyMapper(ownerType, mapping.Key);
-			mapping.Item = new HbmListIndex();
+			var listIndex = new HbmListIndex();
+			mapping.Item = listIndex;
+			listIndexMapper = new ListIndexMapper(ownerType, listIndex);
 			entityPropertyMapper = new EntityPropertyMapper(ownerType, mapping.Name, x => mapping.access = x);
 		}
 
@@ -142,6 +145,11 @@ namespace ConfOrm.NH
 		public void Schema(string schemaName)
 		{
 			mapping.schema = schemaName;
+		}
+
+		public void Index(Action<IListIndexMapper> listIndexMapping)
+		{
+			listIndexMapping(listIndexMapper);
 		}
 
 		#endregion
