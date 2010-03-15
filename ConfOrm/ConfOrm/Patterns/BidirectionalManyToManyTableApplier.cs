@@ -14,6 +14,11 @@ namespace ConfOrm.Patterns
 			{
 				throw new ArgumentNullException("subject");
 			}
+			return !IsCircularManyToMany(subject) && base.Match(subject);
+		}
+
+		protected bool IsCircularManyToMany(MemberInfo subject)
+		{
 			var propertyType = subject.GetPropertyOrFieldType();
 			if (!propertyType.IsGenericCollection())
 			{
@@ -23,26 +28,26 @@ namespace ConfOrm.Patterns
 
 			var fromMany = subject.DeclaringType;
 			Type cadidateToMany = propertyType.DetermineCollectionElementType();
-			if (cadidateToMany.IsGenericType && typeof(KeyValuePair<,>) == cadidateToMany.GetGenericTypeDefinition())
+			if (cadidateToMany.IsGenericType && typeof (KeyValuePair<,>) == cadidateToMany.GetGenericTypeDefinition())
 			{
 				// many-to-many on map
 				var dictionaryGenericArguments = cadidateToMany.GetGenericArguments();
-				if(fromMany == dictionaryGenericArguments[0] || fromMany == dictionaryGenericArguments[1])
+				if (fromMany == dictionaryGenericArguments[0] || fromMany == dictionaryGenericArguments[1])
 				{
-					// no match circular many-to-many reference
-					return false;
+					// circular many-to-many reference
+					return true;
 				}
 			}
 			else
 			{
 				// many-to-many on plain collection
-				if(fromMany == cadidateToMany)
+				if (fromMany == cadidateToMany)
 				{
-					// no match circular many-to-many reference
-					return false;
+					// circular many-to-many reference
+					return true;
 				}
 			}
-			return base.Match(subject);
+			return false;
 		}
 
 		#region Implementation of IPatternApplier<MemberInfo,ICollectionPropertiesMapper>
