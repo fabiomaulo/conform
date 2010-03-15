@@ -86,6 +86,7 @@
     <Compile Include="NH\MapperTests\BagOfOneToManyInverseTest.cs" />
     <Compile Include="NH\MapperTests\BagOfOneToManyTest.cs" />
     <Compile Include="NH\MapperTests\BaseFuncionality.cs" />
+    <Compile Include="NH\MapperTests\BidirectionalManyToManyInverseTest.cs" />
     <Compile Include="NH\MapperTests\BidirectionalManyToManyTableTest.cs" />
     <Compile Include="NH\MapperTests\BidirectionalOneToManyCascadeCircularIntegrationTest.cs" />
     <Compile Include="NH\MapperTests\BidirectionalOneToManyCascadeIntegrationTest.cs" />
