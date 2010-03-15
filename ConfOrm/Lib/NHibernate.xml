@@ -10649,6 +10649,17 @@
             </summary>
             <returns>The list filled with the results.</returns>
         </member>
+        <member name="M:NHibernate.IQueryOver`1.ToRowCountQuery">
+            <summary>
+            Clones the QueryOver, removes orders and paging, and projects the row-count
+            for the query
+            </summary>
+        </member>
+        <member name="M:NHibernate.IQueryOver`1.RowCount">
+            <summary>
+            Short for ToRowCountQuery().SingleOrDefault()
+            </summary>
+        </member>
         <member name="M:NHibernate.IQueryOver`1.SingleOrDefault">
             <summary>
             Convenience method to return a single instance that matches
@@ -10692,6 +10703,11 @@
             single roundtrip
             </summary>
         </member>
+        <member name="M:NHibernate.IQueryOver`1.Clone">
+            <summary>
+            Creates an exact clone of the IQueryOver
+            </summary>
+        </member>
         <member name="P:NHibernate.IQueryOver`1.UnderlyingCriteria">
             <summary>
             Access the underlying ICriteria
@@ -10706,6 +10722,17 @@
             <summary>
             Get an executable instance of <c>IQueryOver&lt;TRoot&gt;</c>,
             to actually run the query.</summary>
+        </member>
+        <member name="M:NHibernate.Criterion.QueryOver`1.ToRowCountQuery">
+            <summary>
+            Clones the QueryOver, clears the orders and paging, and projects the RowCount
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Criterion.QueryOver`1.Clone">
+            <summary>
+            Creates an exact clone of the QueryOver
+            </summary>
         </member>
         <member name="M:NHibernate.Criterion.QueryOver`1.As``1">
             <summary>
@@ -10872,6 +10899,11 @@
             </summary>
             <param name="path">Lambda expression</param>
             <returns>criteria instance</returns>
+        </member>
+        <member name="M:NHibernate.IQueryOver`2.ClearOrders">
+            <summary>
+            Clear all orders from the query.
+            </summary>
         </member>
         <member name="M:NHibernate.IQueryOver`2.Skip(System.Int32)">
             <summary>
@@ -21143,9 +21175,6 @@
             Calculate and cache select-clause suffixes. Must be
             called by subclasses after instantiation.
             </summary>
-        </member>
-        <member name="M:NHibernate.Loader.Loader.GetParameterTypes(NHibernate.Engine.QueryParameters,System.Boolean,System.Boolean)">
-            <returns><see cref="T:System.Collections.IList"/> of <see cref="T:NHibernate.Type.IType"/></returns>
         </member>
         <member name="P:NHibernate.Loader.Loader.EntityEagerPropertyFetches">
             <summary> 
@@ -33892,15 +33921,12 @@
             A placeholder for an ADO.NET parameter in an <see cref="T:NHibernate.SqlCommand.SqlString"/>.
             </summary>
         </member>
-        <member name="F:NHibernate.SqlCommand.Parameter.OriginalPositionInQuery">
+        <member name="F:NHibernate.SqlCommand.Parameter.ParameterPosition">
             <summary>
             We need to know what the position of the parameter was in a query
             before we rearranged the query.
-            This is used only by dialects that rearrange the query, unfortunately, 
-            the MS SQL 2005 dialect have to re shuffle the query (and ruin positional parameter
-            support) because the SQL 2005 and 2008 SQL dialects have a completely broken
-            support for paging, which is just a tad less important than SELECT.
-            See  	 NH-1528
+            This is the ADO parameter position that this SqlString parameter is
+            bound to.  The SqlString can be safely rearranged once this is set.
             </summary>
         </member>
         <member name="M:NHibernate.SqlCommand.Parameter.GenerateParameters(System.Int32)">
