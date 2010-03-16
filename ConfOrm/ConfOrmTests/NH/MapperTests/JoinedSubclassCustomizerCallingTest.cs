@@ -61,7 +61,7 @@ namespace ConfOrmTests.NH.MapperTests
 			mapper.CompileMappingFor(new[] { typeof(MyClass), typeof(Inherited) });
 
 			customizers.Verify(
-				c => c.InvokeCustomizers(It.Is<Type>(t => t == typeof (Inherited)), It.IsAny<IJoinedSubclassAttributesMapper>()));
+				c => c.InvokeCustomizers(It.Is<Type>(t => t == typeof (Inherited)), It.IsAny<IJoinedSubclassMapper>()));
 		}
 
 		[Test]
@@ -111,7 +111,6 @@ namespace ConfOrmTests.NH.MapperTests
 			hbmClass.SelectBeforeUpdate.Should().Be(true);
 		}
 
-
 		[Test]
 		public void SetCustomQueries()
 		{
@@ -132,6 +131,19 @@ namespace ConfOrmTests.NH.MapperTests
 			hbmClass.SqlInsert.Satisfy(l => l != null && l.Text[0] == "INSERT INTO ORGANIZATION (NAME, ORGID) VALUES ( UPPER(?), ? )");
 			hbmClass.SqlUpdate.Satisfy(l => l != null && l.Text[0] == "UPDATE ORGANIZATION SET NAME=UPPER(?) WHERE ORGID=?");
 			hbmClass.SqlDelete.Satisfy(l => l != null && l.Text[0] == "DELETE FROM ORGANIZATION WHERE ORGID=?");
+		}
+
+		[Test]
+		public void CallCustomizerOfKey()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+			var mapper = new Mapper(orm.Object);
+
+			mapper.JoinedSubclass<Inherited>(x => x.Key(km=> km.Column("pizzaId")));
+
+			var mappings = mapper.CompileMappingFor(new[] { typeof(MyClass), typeof(Inherited) });
+			var hbmClass = mappings.JoinedSubclasses.Single();
+			hbmClass.key.column1.Should().Be("pizzaId");
 		}
 	}
 }

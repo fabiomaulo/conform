@@ -1,3 +1,5 @@
+using System;
+
 namespace ConfOrm.Mappers
 {
 	public interface IJoinedSubclassAttributesMapper : IEntityAttributesMapper, IEntitySqlsMapper
@@ -9,7 +11,7 @@ namespace ConfOrm.Mappers
 
 	public interface IJoinedSubclassMapper : IJoinedSubclassAttributesMapper,IPropertyContainerMapper
 	{
-		
+		void Key(Action<IKeyMapper> keyMapping);
 	}
 
 	public interface IJoinedSubclassAttributesMapper<TEntity> : IEntityAttributesMapper, IEntitySqlsMapper where TEntity : class
@@ -21,6 +23,7 @@ namespace ConfOrm.Mappers
 
 	public interface IJoinedSubclassMapper<TEntity> : IJoinedSubclassAttributesMapper<TEntity>, IPropertyContainerMapper<TEntity> where TEntity : class
 	{
+		void Key(Action<IKeyMapper> keyMapping);
 	}
 
 }

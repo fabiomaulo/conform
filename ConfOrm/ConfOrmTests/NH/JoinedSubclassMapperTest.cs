@@ -197,5 +197,17 @@ namespace ConfOrmTests.NH
 			hbmEntity.SqlDelete.Text[0].Should().Be("blah");
 		}
 
+		[Test]
+		public void CallKeyMapper()
+		{
+			var subClass = typeof(Inherited);
+			var mapdoc = new HbmMapping();
+			var mapper = new JoinedSubclassMapper(subClass, mapdoc);
+			var keyMapperCalled = false;
+
+			mapper.Key(km => keyMapperCalled = true);
+
+			keyMapperCalled.Should().Be.True();
+		}
 	}
 }

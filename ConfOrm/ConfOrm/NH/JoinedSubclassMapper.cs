@@ -8,15 +8,19 @@ namespace ConfOrm.NH
 	public class JoinedSubclassMapper : AbstractPropertyContainerMapper, IJoinedSubclassMapper
 	{
 		private readonly HbmJoinedSubclass classMapping = new HbmJoinedSubclass();
+		private readonly KeyMapper keyMapper;
 
 		public JoinedSubclassMapper(Type subClass, HbmMapping mapDoc) : base(subClass, mapDoc)
 		{
 			var toAdd = new[] { classMapping };
 			classMapping.name = subClass.GetShortClassName(mapDoc);
 			classMapping.extends = subClass.BaseType.GetShortClassName(mapDoc);
-			classMapping.key = new HbmKey { column1 = subClass.BaseType.Name.ToLowerInvariant() + "_key" };
+			if (classMapping.key == null)
+			{
+				classMapping.key = new HbmKey { column1 = subClass.BaseType.Name.ToLowerInvariant() + "_key" };
+			}
+			keyMapper = new KeyMapper(subClass, classMapping.key);
 			mapDoc.Items = mapDoc.Items == null ? toAdd : mapDoc.Items.Concat(toAdd).ToArray();
-
 		}
 
 		#region Overrides of AbstractPropertyContainerMapper
@@ -132,6 +136,11 @@ namespace ConfOrm.NH
 		public void Schema(string schemaName)
 		{
 			classMapping.schema = schemaName;
+		}
+
+		public void Key(Action<IKeyMapper> keyMapping)
+		{
+			keyMapping(keyMapper);
 		}
 
 		#endregion
