@@ -101,6 +101,11 @@ namespace ConfOrm.NH
 			PatternsAppliers.ManyToOne.Add(new DelegatedMemberApplier<IManyToOneMapper>(matcher, applier));
 		}
 
+		public void AddManyToOnePattern(Predicate<MemberInfo> matcher, Action<MemberInfo, IManyToOneMapper> applier)
+		{
+			PatternsAppliers.ManyToOne.Add(new DelegatedMemberAdvancedApplier<IManyToOneMapper>(matcher, applier));
+		}
+
 		public HbmMapping CompileMappingFor(IEnumerable<Type> types)
 		{
 			if (types == null)
