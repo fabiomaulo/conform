@@ -5,9 +5,9 @@ namespace ConfOrm.NH
 {
 	public interface ICustomizersHolder
 	{
-		void AddCustomizer(Type type, Action<IClassMapper> classCustomizer);
+		void AddCustomizer(Type type, Action<IClassAttributesMapper> classCustomizer);
 		void AddCustomizer(Type type, Action<ISubclassAttributesMapper> classCustomizer);
-		void AddCustomizer(Type type, Action<IJoinedSubclassMapper> classCustomizer);
+		void AddCustomizer(Type type, Action<IJoinedSubclassAttributesMapper> classCustomizer);
 		void AddCustomizer(Type type, Action<IUnionSubclassAttributesMapper> classCustomizer);
 		void AddCustomizer(Type type, Action<IComponentMapper> classCustomizer);
 
@@ -21,9 +21,9 @@ namespace ConfOrm.NH
 		void AddCustomizer(PropertyPath member, Action<IMapPropertiesMapper> propertyCustomizer);
 		void AddCustomizer(PropertyPath member, Action<ICollectionPropertiesMapper> propertyCustomizer);
 
-		void InvokeCustomizers(Type type, IClassMapper mapper);
+		void InvokeCustomizers(Type type, IClassAttributesMapper mapper);
 		void InvokeCustomizers(Type type, ISubclassAttributesMapper mapper);
-		void InvokeCustomizers(Type type, IJoinedSubclassMapper mapper);
+		void InvokeCustomizers(Type type, IJoinedSubclassAttributesMapper mapper);
 		void InvokeCustomizers(Type type, IUnionSubclassAttributesMapper mapper);
 		void InvokeCustomizers(Type type, IComponentMapper mapper);
 

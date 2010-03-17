@@ -25,22 +25,22 @@ namespace ConfOrm.NH
 
 		public void DiscriminatorValue(object value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassMapper m) => m.DiscriminatorValue(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.DiscriminatorValue(value));
 		}
 
 		public void Table(string tableName)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassMapper m) => m.Table(tableName));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Table(tableName));
 		}
 
 		public void Catalog(string catalogName)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassMapper m) => m.Catalog(catalogName));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Catalog(catalogName));
 		}
 
 		public void Schema(string schemaName)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassMapper m) => m.Schema(schemaName));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Schema(schemaName));
 		}
 
 		#endregion
@@ -49,42 +49,42 @@ namespace ConfOrm.NH
 
 		public void Mutable(bool isMutable)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassMapper m) => m.Mutable(isMutable));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Mutable(isMutable));
 		}
 
 		public void EntityName(string value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassMapper m) => m.EntityName(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.EntityName(value));
 		}
 
 		public void Proxy(Type proxy)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassMapper m) => m.Proxy(proxy));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Proxy(proxy));
 		}
 
 		public void Lazy(bool value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassMapper m) => m.Lazy(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Lazy(value));
 		}
 
 		public void DynamicUpdate(bool value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassMapper m) => m.DynamicUpdate(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.DynamicUpdate(value));
 		}
 
 		public void DynamicInsert(bool value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassMapper m) => m.DynamicInsert(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.DynamicInsert(value));
 		}
 
 		public void BatchSize(int value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassMapper m) => m.BatchSize(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.BatchSize(value));
 		}
 
 		public void SelectBeforeUpdate(bool value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassMapper m) => m.SelectBeforeUpdate(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.SelectBeforeUpdate(value));
 		}
 
 		#endregion
@@ -93,22 +93,22 @@ namespace ConfOrm.NH
 
 		public void Loader(string namedQueryReference)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassMapper m) => m.Loader(namedQueryReference));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Loader(namedQueryReference));
 		}
 
 		public void SqlInsert(string sql)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassMapper m) => m.SqlInsert(sql));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.SqlInsert(sql));
 		}
 
 		public void SqlUpdate(string sql)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassMapper m) => m.SqlUpdate(sql));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.SqlUpdate(sql));
 		}
 
 		public void SqlDelete(string sql)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassMapper m) => m.SqlDelete(sql));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.SqlDelete(sql));
 		}
 
 		#endregion

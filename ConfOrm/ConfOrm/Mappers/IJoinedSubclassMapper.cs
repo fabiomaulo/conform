@@ -7,11 +7,11 @@ namespace ConfOrm.Mappers
 		void Table(string tableName);
 		void Catalog(string catalogName);
 		void Schema(string schemaName);
+		void Key(Action<IKeyMapper> keyMapping);
 	}
 
 	public interface IJoinedSubclassMapper : IJoinedSubclassAttributesMapper,IPropertyContainerMapper
 	{
-		void Key(Action<IKeyMapper> keyMapping);
 	}
 
 	public interface IJoinedSubclassAttributesMapper<TEntity> : IEntityAttributesMapper, IEntitySqlsMapper where TEntity : class
