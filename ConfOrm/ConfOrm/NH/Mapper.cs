@@ -158,18 +158,21 @@ namespace ConfOrm.NH
 			{
 				var classMapper = new SubclassMapper(type, mapping);
 				propertiesContainer = classMapper;
+				PatternsAppliers.Subclass.ApplyAllMatchs(type, classMapper);
 				customizerHolder.InvokeCustomizers(type, classMapper);
 			}
 			else if (domainInspector.IsTablePerClass(type))
 			{
 				var classMapper = new JoinedSubclassMapper(type, mapping);
 				propertiesContainer = classMapper;
+				PatternsAppliers.JoinedSubclass.ApplyAllMatchs(type, classMapper);
 				customizerHolder.InvokeCustomizers(type, classMapper);
 			}
 			else if (domainInspector.IsTablePerConcreteClass(type))
 			{
 				var classMapper = new UnionSubclassMapper(type, mapping);
 				propertiesContainer = classMapper;
+				PatternsAppliers.UnionSubclass.ApplyAllMatchs(type, classMapper);
 				customizerHolder.InvokeCustomizers(type, classMapper);
 			}
 			MapProperties(type, propertiesContainer);
@@ -198,6 +201,7 @@ namespace ConfOrm.NH
 			{
 				classMapper.Discriminator();
 			}
+			PatternsAppliers.RootClass.ApplyAllMatchs(type, classMapper);
 			customizerHolder.InvokeCustomizers(type, classMapper);
 			MapProperties(type, GetPersistentProperties(type, RootClassPropertiesBindingFlags), classMapper);
 		}

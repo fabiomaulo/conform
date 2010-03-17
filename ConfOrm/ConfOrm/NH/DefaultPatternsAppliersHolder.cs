@@ -8,6 +8,11 @@ namespace ConfOrm.NH
 {
 	public class DefaultPatternsAppliersHolder: IPatternsAppliersHolder
 	{
+		private readonly List<IPatternApplier<Type, IClassAttributesMapper>> rootClass;
+		private readonly List<IPatternApplier<Type, IJoinedSubclassAttributesMapper>> joinedSubclass;
+		private readonly List<IPatternApplier<Type, ISubclassAttributesMapper>> subclass;
+		private readonly List<IPatternApplier<Type, IUnionSubclassAttributesMapper>> unionSubclass;
+
 		private readonly List<IPatternApplier<MemberInfo, IIdMapper>> poid;
 		private readonly List<IPatternApplier<MemberInfo, IPropertyMapper>> property;
 		private readonly List<IPatternApplier<MemberInfo, IManyToOneMapper>> manyToOne;
@@ -24,6 +29,10 @@ namespace ConfOrm.NH
 			{
 				throw new ArgumentNullException("domainInspector");
 			}
+			rootClass = new List<IPatternApplier<Type, IClassAttributesMapper>>();
+			joinedSubclass = new List<IPatternApplier<Type, IJoinedSubclassAttributesMapper>>();
+			subclass = new List<IPatternApplier<Type, ISubclassAttributesMapper>>();
+			unionSubclass = new List<IPatternApplier<Type, IUnionSubclassAttributesMapper>>();
 			poid = new List<IPatternApplier<MemberInfo, IIdMapper>>
 			       	{
 			       		new NoSetterPoidToFieldAccessorApplier(),
@@ -67,6 +76,26 @@ namespace ConfOrm.NH
 		}
 
 		#region Implementation of IPatternsAppliersHolder
+
+		public ICollection<IPatternApplier<Type, IClassAttributesMapper>> RootClass
+		{
+			get { return rootClass; }
+		}
+
+		public ICollection<IPatternApplier<Type, IJoinedSubclassAttributesMapper>> JoinedSubclass
+		{
+			get { return joinedSubclass; }
+		}
+
+		public ICollection<IPatternApplier<Type, ISubclassAttributesMapper>> Subclass
+		{
+			get { return subclass; }
+		}
+
+		public ICollection<IPatternApplier<Type, IUnionSubclassAttributesMapper>> UnionSubclass
+		{
+			get { return unionSubclass; }
+		}
 
 		public ICollection<IPatternApplier<MemberInfo, IIdMapper>> Poid
 		{

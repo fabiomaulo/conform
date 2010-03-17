@@ -13,11 +13,11 @@ namespace ConfOrm.Mappers
 		void Table(string tableName);
 		void Catalog(string catalogName);
 		void Schema(string schemaName);
+		void Mutable(bool isMutable);
 	}
 
 	public interface IClassMapper : IClassAttributesMapper, IPropertyContainerMapper
 	{
-		void Mutable(bool isMutable);
 	}
 
 	public interface IClassAttributesMapper<TEntity> : IEntityAttributesMapper, IEntitySqlsMapper where TEntity : class
