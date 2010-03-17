@@ -96,5 +96,17 @@ namespace ConfOrmTests.NH.MapperTests
 			hbmClass.Id.Columns.Single().name.Should().Be("MyClassId");
 		}
 
+		[Test]
+		public void AddCustomAdvancedDelegatedApplier()
+		{
+			var orm = new Mock<IDomainInspector>();
+			var mapper = new Mapper(orm.Object);
+			var previousPropertyApplierCount = mapper.PatternsAppliers.Property.Count;
+
+			mapper.AddPropertyPattern(mi => mi.Name.StartsWith("Date") || mi.Name.EndsWith("Date"),
+																(mi, pm) => pm.Type(NHibernateUtil.Date));
+
+			mapper.PatternsAppliers.Property.Count.Should().Be(previousPropertyApplierCount + 1);
+		}
 	}
 }
