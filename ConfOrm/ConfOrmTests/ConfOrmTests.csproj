@@ -94,6 +94,7 @@
     <Compile Include="NH\MapperTests\BidirectionalOneToOnePrimaryKeyAssociationTest.cs" />
     <Compile Include="NH\MapperTests\CascadeManyToOneTest.cs" />
     <Compile Include="NH\MapperTests\CascadeOneToOneTest.cs" />
+    <Compile Include="NH\MapperTests\ComplexTypeForCollectionTest.cs" />
     <Compile Include="NH\MapperTests\ComplexTypeTest.cs" />
     <Compile Include="NH\MapperTests\ComponentDoublePropertyTest.cs" />
     <Compile Include="NH\MapperTests\ComponentPropertyTest.cs" />

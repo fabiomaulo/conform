@@ -179,6 +179,12 @@ namespace ConfOrm
 			explicitDeclarations.Dictionaries.Add(member);
 		}
 
+		public void Complex<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
+			explicitDeclarations.ComplexTypeMembers.Add(member);
+		}
+
 		public virtual void Cascade<TFromEntity, TToEntity>(Cascade cascadeOptions)
 		{
 			explicitDeclarations.Cascades.Add(new Relation(typeof(TFromEntity), typeof(TToEntity)), cascadeOptions);
@@ -205,9 +211,9 @@ namespace ConfOrm
 			       && !explicitDeclarations.ComplexTypes.Contains(type);
 		}
 
-		public virtual bool IsComplex(Type type)
+		public virtual bool IsComplex(MemberInfo member)
 		{
-			return explicitDeclarations.ComplexTypes.Contains(type);
+			return explicitDeclarations.ComplexTypes.Contains(member.GetPropertyOrFieldType()) || explicitDeclarations.ComplexTypeMembers.Contains(member);
 		}
 
 		public virtual bool IsEntity(Type type)

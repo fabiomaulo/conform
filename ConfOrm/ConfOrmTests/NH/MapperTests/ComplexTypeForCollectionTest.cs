@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ConfOrm;
@@ -10,34 +11,12 @@ using SharpTestsEx;
 
 namespace ConfOrmTests.NH.MapperTests
 {
-	public class ComplexTypeTest
+	public class ComplexTypeForCollectionTest
 	{
 		private class MyClass
 		{
 			public int Id { get; set; }
-			public MonetaryAmount Amount { get; set; }
-		}
-
-		private class MonetaryAmount
-		{
-			private readonly decimal value;
-			private readonly string currency;
-
-			public MonetaryAmount(decimal value, string currency)
-			{
-				this.value = value;
-				this.currency = currency;
-			}
-
-			public string Currency
-			{
-				get { return currency; }
-			}
-
-			public decimal Value
-			{
-				get { return value; }
-			}
+			public ICollection<string> Tags { get; set; }
 		}
 
 		private Mock<IDomainInspector> GetMockedDomainInspector()
@@ -48,14 +27,14 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsTablePerClass(It.IsAny<Type>())).Returns(true);
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
 			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
-			orm.Setup(m => m.IsComplex(It.Is<MemberInfo>(mi => mi == typeof(MyClass).GetProperty("Amount")))).Returns(true);
+			orm.Setup(m => m.IsComplex(It.Is<MemberInfo>(mi => mi == typeof(MyClass).GetProperty("Tags")))).Returns(true);
 			return orm;
 		}
 
 		private HbmMapping GetMapping(IDomainInspector domainInspector)
 		{
 			var mapper = new Mapper(domainInspector);
-			return mapper.CompileMappingFor(new[] { typeof(MyClass)});
+			return mapper.CompileMappingFor(new[] { typeof(MyClass) });
 		}
 
 		[Test]
@@ -75,7 +54,7 @@ namespace ConfOrmTests.NH.MapperTests
 			rc.Properties.Should().Have.Count.EqualTo(1);
 			rc.Properties.Single().Should().Be.OfType<HbmProperty>();
 			var propertyMapping = (HbmProperty)rc.Properties.Single();
-			propertyMapping.Name.Should().Be.EqualTo("Amount");
+			propertyMapping.Name.Should().Be.EqualTo("Tags");
 			propertyMapping.Type.Should("The persistent type can't be inferred at this point (IUserType in NH)").Be.Null();
 		}
 
@@ -84,7 +63,7 @@ namespace ConfOrmTests.NH.MapperTests
 		{
 			var orm = new ObjectRelationalMapper();
 			orm.TablePerClass<MyClass>();
-			orm.Complex<MonetaryAmount>();
+			orm.Complex<MyClass>(mc=> mc.Tags);
 			HbmMapping mapping = GetMapping(orm);
 
 			VerifyMapping(mapping);

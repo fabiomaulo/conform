@@ -23,6 +23,7 @@ namespace ConfOrm
 		IDictionary<Relation, Cascade> Cascades { get; }
 		ICollection<MemberInfo> PersistentProperties { get; }
 		ICollection<Type> ComplexTypes { get; }
+		ICollection<MemberInfo> ComplexTypeMembers { get; }
 		ICollection<MemberInfo> Poids { get; }
 	}
 }

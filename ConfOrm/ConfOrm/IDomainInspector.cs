@@ -7,7 +7,6 @@ namespace ConfOrm
 	{
 		bool IsRootEntity(Type type);
 		bool IsComponent(Type type);
-		bool IsComplex(Type type);
 		bool IsEntity(Type type);
 
 		bool IsTablePerClass(Type type);
@@ -33,5 +32,6 @@ namespace ConfOrm
 		bool IsList(MemberInfo role);
 		bool IsArray(MemberInfo role);
 		bool IsDictionary(MemberInfo role);
+		bool IsComplex(MemberInfo member);
 	}
 }

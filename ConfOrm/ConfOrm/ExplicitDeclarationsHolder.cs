@@ -24,6 +24,7 @@ namespace ConfOrm
 		private readonly HashSet<MemberInfo> persistentProperties = new HashSet<MemberInfo>();
 		private readonly HashSet<Type> complexTypes = new HashSet<Type>();
 		private readonly HashSet<MemberInfo> poids = new HashSet<MemberInfo>();
+		private readonly HashSet<MemberInfo> complexTypeMembers = new HashSet<MemberInfo>();
 
 		public ICollection<Type> RootEntities
 		{
@@ -108,6 +109,11 @@ namespace ConfOrm
 		public ICollection<Type> ComplexTypes
 		{
 			get { return complexTypes; }
+		}
+
+		public ICollection<MemberInfo> ComplexTypeMembers
+		{
+			get { return complexTypeMembers; }
 		}
 
 		public ICollection<MemberInfo> Poids

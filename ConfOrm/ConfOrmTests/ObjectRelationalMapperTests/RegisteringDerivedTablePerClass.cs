@@ -17,6 +17,11 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		{
 		}
 
+		private class Dummy
+		{
+			public TestSubEntity TestSubEntity { get; set; }
+			public TestSubSubEntity TestSubSubEntity { get; set; }
+		}
 		private ObjectRelationalMapper mapper;
 		[TestFixtureSetUp]
 		public void RegisterTablePerClass()
@@ -49,8 +54,8 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		[Test]
 		public void IsNotRecognizedAsComplex()
 		{
-			(typeof(TestSubEntity)).Satisfy(te => !mapper.IsComplex(te));
-			(typeof(TestSubSubEntity)).Satisfy(te => !mapper.IsComplex(te));
+			(typeof(Dummy)).GetProperty("TestSubEntity").Satisfy(te => !mapper.IsComplex(te));
+			(typeof(Dummy)).GetProperty("TestSubSubEntity").Satisfy(te => !mapper.IsComplex(te));
 		}
 
 		[Test]

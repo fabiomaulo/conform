@@ -241,7 +241,11 @@ namespace ConfOrm.NH
 				MemberInfo member = property;
 				Type propertyType = property.GetPropertyOrFieldType();
 				var memberPath = new PropertyPath(path, member);
-				if (domainInspector.IsManyToOne(propertiesContainerType, propertyType))
+				if(domainInspector.IsComplex(member))
+				{
+					MapProperty(member, memberPath, propertiesContainer);					
+				}
+				else if (domainInspector.IsManyToOne(propertiesContainerType, propertyType))
 				{
 					MapManyToOne(member, memberPath, propertyType, propertiesContainer, propertiesContainerType);
 				}
