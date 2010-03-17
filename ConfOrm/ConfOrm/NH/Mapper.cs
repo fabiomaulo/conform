@@ -11,6 +11,7 @@ namespace ConfOrm.NH
 	public class Mapper
 	{
 		internal const BindingFlags PropertiesBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+		internal const BindingFlags RootClassPropertiesBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
 		private readonly IDomainInspector domainInspector;
 		private readonly ICustomizersHolder customizerHolder;
 		private readonly IPatternsAppliersHolder patternsAppliers;
@@ -198,7 +199,7 @@ namespace ConfOrm.NH
 				classMapper.Discriminator();
 			}
 			customizerHolder.InvokeCustomizers(type, classMapper);
-			MapProperties(type, classMapper);
+			MapProperties(type, GetPersistentProperties(type, RootClassPropertiesBindingFlags), classMapper);
 		}
 
 		private IGeneratorDef GetGenerator(PoIdStrategy strategy)
@@ -224,12 +225,18 @@ namespace ConfOrm.NH
 
 		private void MapProperties(Type propertiesContainerType, IPropertyContainerMapper propertiesContainer)
 		{
-			MapProperties(propertiesContainerType, GetPersistentProperties(propertiesContainerType), propertiesContainer, null);
+			MapProperties(propertiesContainerType, GetPersistentProperties(propertiesContainerType, PropertiesBindingFlags), propertiesContainer, null);
 		}
 
-		private IEnumerable<PropertyInfo> GetPersistentProperties(Type type)
+		private void MapProperties(Type propertiesContainerType, IEnumerable<PropertyInfo> propertiesToMap,
+															 IPropertyContainerMapper propertiesContainer)
 		{
-			var properties = type.GetProperties(PropertiesBindingFlags);
+			MapProperties(propertiesContainerType, propertiesToMap, propertiesContainer, null);			
+		}
+
+		private IEnumerable<PropertyInfo> GetPersistentProperties(Type type, BindingFlags propertiesBindingFlags)
+		{
+			var properties = type.GetProperties(propertiesBindingFlags);
 			return properties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p));
 		}
 
@@ -299,7 +306,7 @@ namespace ConfOrm.NH
 				{
 					// Note: should, the Parent relation, be managed through DomainInspector ?
 					Type componentType = propertyType;
-					IEnumerable<PropertyInfo> persistentProperties = GetPersistentProperties(componentType);
+					IEnumerable<PropertyInfo> persistentProperties = GetPersistentProperties(componentType, PropertiesBindingFlags);
 					PropertyInfo parentReferenceProperty =
 						persistentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == propertiesContainerType);
 					if (parentReferenceProperty != null)

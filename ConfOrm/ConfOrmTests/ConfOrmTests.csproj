@@ -112,6 +112,7 @@
     <Compile Include="NH\MapperTests\HierarchyTablePerClass.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerClassHierarchyTest.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerConcreteClassTest.cs" />
+    <Compile Include="NH\MapperTests\ImplicitPolymorphismOnRootClass.cs" />
     <Compile Include="NH\MapperTests\JoinedSubclassCustomizerCallingTest.cs" />
     <Compile Include="NH\MapperTests\ListOfComponentsTest.cs" />
     <Compile Include="NH\MapperTests\ListOfElementsTest.cs" />
