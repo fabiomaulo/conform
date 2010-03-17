@@ -184,5 +184,19 @@ namespace ConfOrmTests.NH.MapperTests
 			mapper.CompileMappingFor(new[] { typeof(MyClass) });
 			idCalled.Should().Be.True();
 		}
+
+		[Test]
+		public void CallCustomizerMutable()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+			var mapper = new Mapper(orm.Object);
+			bool idCalled = false;
+
+			mapper.Class<MyClass>(x => x.Mutable(false));
+
+			var mappings = mapper.CompileMappingFor(new[] { typeof(MyClass) });
+			var hbmClass = mappings.RootClasses.Single();
+			hbmClass.mutable.Should().Be.False();
+		}
 	}
 }

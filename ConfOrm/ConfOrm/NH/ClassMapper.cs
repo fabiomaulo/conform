@@ -98,6 +98,11 @@ namespace ConfOrm.NH
 			classMapping.schema = schemaName;
 		}
 
+		public void Mutable(bool isMutable)
+		{
+			classMapping.mutable = isMutable;
+		}
+
 		#endregion
 
 		#region Implementation of IEntityAttributesMapper

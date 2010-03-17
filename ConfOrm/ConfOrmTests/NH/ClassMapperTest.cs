@@ -103,5 +103,14 @@ namespace ConfOrmTests.NH
 			rc.Schema("pizza");
 			mapdoc.RootClasses[0].schema.Should().Be("pizza");
 		}
+
+		[Test]
+		public void CanSetMutable()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
+			rc.Mutable(false);
+			mapdoc.RootClasses[0].mutable.Should().Be.False();			
+		}
 	}
 }

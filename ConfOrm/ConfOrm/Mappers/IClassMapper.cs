@@ -17,6 +17,7 @@ namespace ConfOrm.Mappers
 
 	public interface IClassMapper : IClassAttributesMapper, IPropertyContainerMapper
 	{
+		void Mutable(bool isMutable);
 	}
 
 	public interface IClassAttributesMapper<TEntity> : IEntityAttributesMapper, IEntitySqlsMapper where TEntity : class
@@ -31,5 +32,6 @@ namespace ConfOrm.Mappers
 
 	public interface IClassMapper<TEntity> : IClassAttributesMapper<TEntity>, IPropertyContainerMapper<TEntity> where TEntity : class
 	{
+		void Mutable(bool isMutable);
 	}
 }
