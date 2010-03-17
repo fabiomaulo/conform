@@ -8,6 +8,13 @@ namespace ConfOrm.Patterns
 	public class BidirectionalManyToManyTableApplier : BidirectionalManyToManyPattern,
 	                                                   IPatternApplier<MemberInfo, ICollectionPropertiesMapper>
 	{
+		private readonly IDomainInspector domainInspector;
+
+		public BidirectionalManyToManyTableApplier(IDomainInspector domainInspector)
+		{
+			this.domainInspector = domainInspector;
+		}
+
 		#region IPatternApplier<MemberInfo,ICollectionPropertiesMapper> Members
 
 		public override bool Match(MemberInfo subject)
@@ -30,7 +37,17 @@ namespace ConfOrm.Patterns
 
 		protected virtual string GetTableNameForRelation(Type fromMany, Type toMany)
 		{
-			string[] names = (from t in (new[] {fromMany, toMany}) orderby t.Name select t.Name).ToArray();
+			bool fromIsMaster = domainInspector.IsMasterManyToMany(fromMany, toMany);
+			bool toIsMaster = domainInspector.IsMasterManyToMany(toMany, fromMany);
+			string[] names;
+			if (fromIsMaster == toIsMaster)
+			{
+				names = (from t in (new[] {fromMany, toMany}) orderby t.Name select t.Name).ToArray();
+			}
+			else
+			{
+				names = fromIsMaster ? new[] {fromMany.Name, toMany.Name} : new[] {toMany.Name, fromMany.Name};
+			}
 			return names[0] + names[1];
 		}
 	}

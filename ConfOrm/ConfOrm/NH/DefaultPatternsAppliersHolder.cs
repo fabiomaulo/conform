@@ -52,7 +52,7 @@ namespace ConfOrm.NH
 			                             		new CollectionPropertyToFieldAccessorApplier(),
 			                             		new BidirectionalOneToManyApplier(domainInspector),
 			                             		new BidirectionalOneToManyOnDeleteConstraintApplier(domainInspector),
-			                             		new BidirectionalManyToManyTableApplier(),
+			                             		new BidirectionalManyToManyTableApplier(domainInspector),
 																			new BidirectionalManyToManyInverseApplier(domainInspector),
 			                             	};
 			propertyPath = new List<IPatternApplier<PropertyPath, IPropertyMapper>>
