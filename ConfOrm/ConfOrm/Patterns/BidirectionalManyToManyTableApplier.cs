@@ -48,6 +48,11 @@ namespace ConfOrm.Patterns
 			{
 				names = fromIsMaster ? new[] {fromMany.Name, toMany.Name} : new[] {toMany.Name, fromMany.Name};
 			}
+			return GetTableNameForRelation(names);
+		}
+
+		protected virtual string GetTableNameForRelation(string[] names)
+		{
 			return names[0] + names[1];
 		}
 	}
