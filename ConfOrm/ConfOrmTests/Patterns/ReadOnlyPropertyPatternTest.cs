@@ -32,6 +32,8 @@ namespace ConfOrmTests.Patterns
 			{
 				set { }
 			}
+
+			public string AutoPropWithPrivateSet { get; private set; }
 		}
 
 		[Test]
@@ -65,6 +67,14 @@ namespace ConfOrmTests.Patterns
 		{
 			var pattern = new ReadOnlyPropertyPattern();
 			var pi = typeof(MyEntity).GetField("pizza", BindingFlags.Instance | BindingFlags.NonPublic);
+			pattern.Match(pi).Should().Be.False();
+		}
+
+		[Test]
+		public void WhenAutopropWithPrivateFieldThenNoMatch()
+		{
+			var pattern = new ReadOnlyPropertyPattern();
+			var pi = typeof(MyEntity).GetProperty("AutoPropWithPrivateSet");
 			pattern.Match(pi).Should().Be.False();
 		}
 	}
