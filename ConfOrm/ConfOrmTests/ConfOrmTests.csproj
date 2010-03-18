@@ -145,6 +145,7 @@
     <Compile Include="NH\UnionSubclassMapperTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\BidirectionalOneToManyCascadeCircularTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\GenericBaseEntityWithPoperties.cs" />
+    <Compile Include="ObjectRelationalMapperTests\ImplicitPolymorphismsWithGenericOneToManyTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\ManyToOneRelationInComponentTest.cs" />
     <Compile Include="NH\MapperTests\ManyToOneRelationTest.cs" />
     <Compile Include="NH\MapperTests\MappingPerClass.cs" />

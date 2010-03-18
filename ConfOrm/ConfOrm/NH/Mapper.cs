@@ -655,7 +655,7 @@ namespace ConfOrm.NH
 
 		protected virtual ICollectionElementRelationMapper DetermineCollectionElementRelationType(MemberInfo property, Type collectionElementType)
 		{
-			var ownerType = property.DeclaringType;
+			var ownerType = property.ReflectedType;
 			if (domainInspector.IsOneToMany(ownerType, collectionElementType))
 			{
 				return new OneToManyRelationMapper(property, ownerType, collectionElementType, domainInspector);
