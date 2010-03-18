@@ -1,14 +1,13 @@
 using System;
-using System.Reflection;
 
 namespace ConfOrm.Patterns
 {
-	public class DelegatedMemberApplier<TApplyTo> : IPatternApplier<MemberInfo, TApplyTo>
+	public class DelegatedAdvancedApplier<TSubject, TApplyTo> : IPatternApplier<TSubject, TApplyTo>
 	{
-		private readonly Action<TApplyTo> applier;
-		private readonly Predicate<MemberInfo> matcher;
+		private readonly Action<TSubject, TApplyTo> applier;
+		private readonly Predicate<TSubject> matcher;
 
-		public DelegatedMemberApplier(Predicate<MemberInfo> matcher, Action<TApplyTo> applier)
+		public DelegatedAdvancedApplier(Predicate<TSubject> matcher, Action<TSubject, TApplyTo> applier)
 		{
 			if (matcher == null)
 			{
@@ -24,7 +23,7 @@ namespace ConfOrm.Patterns
 
 		#region Implementation of IPattern<MemberInfo>
 
-		public bool Match(MemberInfo subject)
+		public bool Match(TSubject subject)
 		{
 			return matcher(subject);
 		}
@@ -33,9 +32,9 @@ namespace ConfOrm.Patterns
 
 		#region Implementation of IPatternApplier<MemberInfo,TApplyTo>
 
-		public void Apply(MemberInfo subject, TApplyTo applyTo)
+		public void Apply(TSubject subject, TApplyTo applyTo)
 		{
-			applier(applyTo);
+			applier(subject, applyTo);
 		}
 
 		#endregion

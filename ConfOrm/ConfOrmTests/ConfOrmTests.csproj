@@ -94,6 +94,8 @@
     <Compile Include="NH\MapperTests\BidirectionalOneToOnePrimaryKeyAssociationTest.cs" />
     <Compile Include="NH\MapperTests\CascadeManyToOneTest.cs" />
     <Compile Include="NH\MapperTests\CascadeOneToOneTest.cs" />
+    <Compile Include="NH\MapperTests\JoinedSubclassPatternsAddition.cs" />
+    <Compile Include="NH\MapperTests\RootClassPatternsAddition.cs" />
     <Compile Include="NH\MapperTests\ComplexTypeForCollectionTest.cs" />
     <Compile Include="NH\MapperTests\ComplexTypeTest.cs" />
     <Compile Include="NH\MapperTests\ComponentDoublePropertyTest.cs" />
@@ -130,9 +132,11 @@
     <Compile Include="NH\MapperTests\RootClassCustomizerCallingTest.cs" />
     <Compile Include="NH\MapperTests\SubclassAppliersCallingTest.cs" />
     <Compile Include="NH\MapperTests\SubclassCustomizerCallingTest.cs" />
+    <Compile Include="NH\MapperTests\SubclassPatternsAddition.cs" />
     <Compile Include="NH\MapperTests\UnidirectionalOneToOneTest.cs" />
     <Compile Include="NH\MapperTests\UnionSubclassAppliersCallingTest.cs" />
     <Compile Include="NH\MapperTests\UnionSubclassCustomizerCallingTest.cs" />
+    <Compile Include="NH\MapperTests\UnionSubclassPatternsAddition.cs" />
     <Compile Include="NH\OneToOneMapperTest.cs" />
     <Compile Include="NH\PropertyMapperTest.cs" />
     <Compile Include="NH\PropertyPathTest.cs" />

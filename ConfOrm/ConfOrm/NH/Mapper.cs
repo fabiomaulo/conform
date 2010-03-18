@@ -79,37 +79,77 @@ namespace ConfOrm.NH
 
 		public void AddPoidPattern(Predicate<MemberInfo> matcher, Action<MemberInfo, IIdMapper> applier)
 		{
-			PatternsAppliers.Poid.Add(new DelegatedMemberAdvancedApplier<IIdMapper>(matcher, applier));
+			PatternsAppliers.Poid.Add(new DelegatedAdvancedApplier<MemberInfo, IIdMapper>(matcher, applier));
 		}
 
 		public void AddPropertyPattern(Predicate<MemberInfo> matcher, Action<IPropertyMapper> applier)
 		{
-			PatternsAppliers.Property.Add(new DelegatedMemberApplier<IPropertyMapper>(matcher, applier));
+			PatternsAppliers.Property.Add(new DelegatedApplier<MemberInfo, IPropertyMapper>(matcher, applier));
 		}
 
 		public void AddPropertyPattern(Predicate<MemberInfo> matcher, Action<MemberInfo, IPropertyMapper> applier)
 		{
-			PatternsAppliers.Property.Add(new DelegatedMemberAdvancedApplier<IPropertyMapper>(matcher, applier));
+			PatternsAppliers.Property.Add(new DelegatedAdvancedApplier<MemberInfo, IPropertyMapper>(matcher, applier));
 		}
 
 		public void AddCollectionPattern(Predicate<MemberInfo> matcher, Action<ICollectionPropertiesMapper> applier)
 		{
-			PatternsAppliers.Collection.Add(new DelegatedMemberApplier<ICollectionPropertiesMapper>(matcher, applier));
+			PatternsAppliers.Collection.Add(new DelegatedApplier<MemberInfo, ICollectionPropertiesMapper>(matcher, applier));
 		}
 
 		public void AddCollectionPattern(Predicate<MemberInfo> matcher, Action<MemberInfo, ICollectionPropertiesMapper> applier)
 		{
-			PatternsAppliers.Collection.Add(new DelegatedMemberAdvancedApplier<ICollectionPropertiesMapper>(matcher, applier));
+			PatternsAppliers.Collection.Add(new DelegatedAdvancedApplier<MemberInfo, ICollectionPropertiesMapper>(matcher, applier));
 		}
 
 		public void AddManyToOnePattern(Predicate<MemberInfo> matcher, Action<IManyToOneMapper> applier)
 		{
-			PatternsAppliers.ManyToOne.Add(new DelegatedMemberApplier<IManyToOneMapper>(matcher, applier));
+			PatternsAppliers.ManyToOne.Add(new DelegatedApplier<MemberInfo, IManyToOneMapper>(matcher, applier));
 		}
 
 		public void AddManyToOnePattern(Predicate<MemberInfo> matcher, Action<MemberInfo, IManyToOneMapper> applier)
 		{
-			PatternsAppliers.ManyToOne.Add(new DelegatedMemberAdvancedApplier<IManyToOneMapper>(matcher, applier));
+			PatternsAppliers.ManyToOne.Add(new DelegatedAdvancedApplier<MemberInfo, IManyToOneMapper>(matcher, applier));
+		}
+
+		public void AddRootClassPattern(Predicate<Type> matcher, Action<Type, IClassAttributesMapper> applier)
+		{
+			PatternsAppliers.RootClass.Add(new DelegatedAdvancedApplier<Type, IClassAttributesMapper>(matcher, applier));
+		}
+
+		public void AddSubclassPattern(Predicate<Type> matcher, Action<Type, ISubclassAttributesMapper> applier)
+		{
+			PatternsAppliers.Subclass.Add(new DelegatedAdvancedApplier<Type, ISubclassAttributesMapper>(matcher, applier));
+		}
+
+		public void AddJoinedSubclassPattern(Predicate<Type> matcher, Action<Type, IJoinedSubclassAttributesMapper> applier)
+		{
+			PatternsAppliers.JoinedSubclass.Add(new DelegatedAdvancedApplier<Type, IJoinedSubclassAttributesMapper>(matcher, applier));
+		}
+
+		public void AddUnionSubclassPattern(Predicate<Type> matcher, Action<Type, IUnionSubclassAttributesMapper> applier)
+		{
+			PatternsAppliers.UnionSubclass.Add(new DelegatedAdvancedApplier<Type, IUnionSubclassAttributesMapper>(matcher, applier));
+		}
+
+		public void AddRootClassPattern(Predicate<Type> matcher, Action<IClassAttributesMapper> applier)
+		{
+			PatternsAppliers.RootClass.Add(new DelegatedApplier<Type, IClassAttributesMapper>(matcher, applier));
+		}
+
+		public void AddSubclassPattern(Predicate<Type> matcher, Action<ISubclassAttributesMapper> applier)
+		{
+			PatternsAppliers.Subclass.Add(new DelegatedApplier<Type, ISubclassAttributesMapper>(matcher, applier));
+		}
+
+		public void AddJoinedSubclassPattern(Predicate<Type> matcher, Action<IJoinedSubclassAttributesMapper> applier)
+		{
+			PatternsAppliers.JoinedSubclass.Add(new DelegatedApplier<Type, IJoinedSubclassAttributesMapper>(matcher, applier));
+		}
+
+		public void AddUnionSubclassPattern(Predicate<Type> matcher, Action<IUnionSubclassAttributesMapper> applier)
+		{
+			PatternsAppliers.UnionSubclass.Add(new DelegatedApplier<Type, IUnionSubclassAttributesMapper>(matcher, applier));
 		}
 
 		public HbmMapping CompileMappingFor(IEnumerable<Type> types)

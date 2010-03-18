@@ -162,8 +162,8 @@
     <Compile Include="Patterns\ComponentMultiUsagePropertyColumnNameApplier.cs" />
     <Compile Include="Patterns\ComponentMultiUsagePattern.cs" />
     <Compile Include="Patterns\ComponentPattern.cs" />
-    <Compile Include="Patterns\DelegatedMemberAdvancedApplier.cs" />
-    <Compile Include="Patterns\DelegatedMemberApplier.cs" />
+    <Compile Include="Patterns\DelegatedAdvancedApplier.cs" />
+    <Compile Include="Patterns\DelegatedApplier.cs" />
     <Compile Include="Patterns\DictionaryCollectionPattern.cs" />
     <Compile Include="Patterns\GuidOptimizedPoidPattern.cs" />
     <Compile Include="Patterns\GuidPoidPattern.cs" />
