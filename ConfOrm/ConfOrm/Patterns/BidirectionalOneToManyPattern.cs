@@ -10,7 +10,7 @@ namespace ConfOrm.Patterns
 		private readonly IDomainInspector domainInspector;
 
 		private const BindingFlags PublicPropertiesOfClassHierarchy =
-			BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
+			BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
 
 		public BidirectionalOneToManyPattern(IDomainInspector domainInspector)
 		{

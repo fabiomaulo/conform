@@ -185,6 +185,7 @@
     <Compile Include="Patterns\BagCollectionPatternTest.cs" />
     <Compile Include="Patterns\BidirectionalManyToManyPatternTest.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyPatternCircularTest.cs" />
+    <Compile Include="Patterns\BidirectionalOneToManyPatternGenericCircularTest.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyPatternTest.cs" />
     <Compile Include="Patterns\BidirectionalOneToOneAssociationPoidApplierTest.cs" />
     <Compile Include="Patterns\BidirectionalRelationPatternTest.cs" />
