@@ -149,6 +149,7 @@
     <Compile Include="Patterns\BidirectionalManyToManyPattern.cs" />
     <Compile Include="Patterns\BidirectionalManyToManyTableApplier.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyApplier.cs" />
+    <Compile Include="Patterns\BidirectionalOneToManyMemberPattern.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyOnDeleteConstraintApplier.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyPattern.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyCascadePattern.cs" />
