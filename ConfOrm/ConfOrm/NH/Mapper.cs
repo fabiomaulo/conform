@@ -12,6 +12,7 @@ namespace ConfOrm.NH
 	{
 		internal const BindingFlags PropertiesBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
 		internal const BindingFlags RootClassPropertiesBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
+		internal const BindingFlags ComponentPropertiesBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
 		private readonly IDomainInspector domainInspector;
 		private readonly ICustomizersHolder customizerHolder;
 		private readonly IPatternsAppliersHolder patternsAppliers;
@@ -350,7 +351,7 @@ namespace ConfOrm.NH
 				{
 					// Note: should, the Parent relation, be managed through DomainInspector ?
 					Type componentType = propertyType;
-					IEnumerable<PropertyInfo> persistentProperties = GetPersistentProperties(componentType, PropertiesBindingFlags);
+					IEnumerable<PropertyInfo> persistentProperties = GetPersistentProperties(componentType, ComponentPropertiesBindingFlags);
 					PropertyInfo parentReferenceProperty =
 						persistentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == propertiesContainerType);
 					if (parentReferenceProperty != null)
