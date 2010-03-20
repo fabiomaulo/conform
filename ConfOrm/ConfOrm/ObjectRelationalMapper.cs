@@ -216,6 +216,11 @@ namespace ConfOrm
 			return explicitDeclarations.ComplexTypes.Contains(member.GetPropertyOrFieldType()) || explicitDeclarations.ComplexTypeMembers.Contains(member);
 		}
 
+		public bool IsVersion(MemberInfo member)
+		{
+			return false;
+		}
+
 		public virtual bool IsEntity(Type type)
 		{
 			return explicitDeclarations.RootEntities.Contains(type)

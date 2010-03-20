@@ -33,5 +33,6 @@ namespace ConfOrm
 		bool IsArray(MemberInfo role);
 		bool IsDictionary(MemberInfo role);
 		bool IsComplex(MemberInfo member);
+		bool IsVersion(MemberInfo member);
 	}
 }
