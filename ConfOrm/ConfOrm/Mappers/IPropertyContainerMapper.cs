@@ -5,15 +5,8 @@ using System.Reflection;
 
 namespace ConfOrm.Mappers
 {
-	public interface IPropertyContainerMapper
+	public interface IPropertyContainerMapper : IPlainPropertyContainerMapper
 	{
-		void Property(MemberInfo property, Action<IPropertyMapper> mapping);
-
-		void Component(MemberInfo property, Action<IComponentMapper> mapping);
-
-		void ManyToOne(MemberInfo property, Action<IManyToOneMapper> mapping);
-		void OneToOne(MemberInfo property, Action<IOneToOneMapper> mapping);
-
 		void Set(MemberInfo property, Action<ISetPropertiesMapper> collectionMapping,
 		         Action<ICollectionElementRelation> mapping);
 
@@ -27,16 +20,8 @@ namespace ConfOrm.Mappers
 		                         Action<ICollectionElementRelation> mapping);
 	}
 
-	public interface IPropertyContainerMapper<TEntity>
+	public interface IPropertyContainerMapper<TEntity> : IPlainPropertyContainerMapper<TEntity>
 	{
-		void Property<TProperty>(Expression<Func<TEntity, TProperty>> property, Action<IPropertyMapper> mapping);
-
-		void Component<TComponent>(Expression<Func<TEntity, TComponent>> property,
-															 Action<IComponentMapper<TComponent>> mapping) where TComponent : class;
-
-		void ManyToOne<TProperty>(Expression<Func<TEntity, TProperty>> property, Action<IManyToOneMapper> mapping) where TProperty : class;
-		void OneToOne<TProperty>(Expression<Func<TEntity, TProperty>> property, Action<IOneToOneMapper> mapping) where TProperty : class;
-
 		void Set<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
 											 Action<ISetPropertiesMapper> collectionMapping,
 											 Action<ICollectionElementRelation<TElement>> mapping);
