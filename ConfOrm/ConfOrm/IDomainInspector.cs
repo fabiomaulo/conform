@@ -24,6 +24,7 @@ namespace ConfOrm
 
 		bool IsPersistentId(MemberInfo member);
 		IPersistentIdStrategy GetPersistentIdStrategy(MemberInfo member);
+		bool IsPropertyOfNaturalId(MemberInfo member);
 
 		bool IsPersistentProperty(MemberInfo role);
 

@@ -343,6 +343,11 @@ namespace ConfOrm
 			return Patterns.PoidStrategies.GetValueOfFirstMatch(member);
 		}
 
+		public bool IsPropertyOfNaturalId(MemberInfo member)
+		{
+			return false;
+		}
+
 		public virtual bool IsPersistentProperty(MemberInfo role)
 		{
 			return !Patterns.PersistentPropertiesExclusions.Match(role)
