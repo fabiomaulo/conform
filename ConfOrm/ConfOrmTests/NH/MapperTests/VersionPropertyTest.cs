@@ -37,7 +37,7 @@ namespace ConfOrmTests.NH.MapperTests
 			rc.Properties.Select(p => p.Name).Should().Have.SameValuesAs("MyVersion", "AProperty");
 		}
 
-		[Test, Ignore("Not fixed yet.")]
+		[Test]
 		public void WhenVersionDefinedThenVersionProperty()
 		{
 			var orm = new Mock<IDomainInspector>();

@@ -242,10 +242,16 @@ namespace ConfOrm.NH
 			{
 				classMapper.Discriminator();
 			}
+			var persistentProperties = GetPersistentProperties(type, RootClassPropertiesBindingFlags);
+			var versionMember = persistentProperties.SingleOrDefault(mi => domainInspector.IsVersion(mi));
+			if (versionMember!= null)
+			{
+				classMapper.Version(versionMember, x => { });
+			}
 			PatternsAppliers.RootClass.ApplyAllMatchs(type, classMapper);
 			customizerHolder.InvokeCustomizers(type, classMapper);
 			MapProperties(type,
-			              GetPersistentProperties(type, RootClassPropertiesBindingFlags).Where(
+			              persistentProperties.Where(
 			              	mi => !domainInspector.IsVersion(mi)), classMapper);
 		}
 
