@@ -244,7 +244,9 @@ namespace ConfOrm.NH
 			}
 			PatternsAppliers.RootClass.ApplyAllMatchs(type, classMapper);
 			customizerHolder.InvokeCustomizers(type, classMapper);
-			MapProperties(type, GetPersistentProperties(type, RootClassPropertiesBindingFlags), classMapper);
+			MapProperties(type,
+			              GetPersistentProperties(type, RootClassPropertiesBindingFlags).Where(
+			              	mi => !domainInspector.IsVersion(mi)), classMapper);
 		}
 
 		private IGeneratorDef GetGenerator(PoIdStrategy strategy)

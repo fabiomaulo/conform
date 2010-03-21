@@ -138,6 +138,7 @@
     <Compile Include="NH\MapperTests\UnionSubclassAppliersCallingTest.cs" />
     <Compile Include="NH\MapperTests\UnionSubclassCustomizerCallingTest.cs" />
     <Compile Include="NH\MapperTests\UnionSubclassPatternsAddition.cs" />
+    <Compile Include="NH\MapperTests\VersionPropertyTest.cs" />
     <Compile Include="NH\OneToOneMapperTest.cs" />
     <Compile Include="NH\PropertyMapperTest.cs" />
     <Compile Include="NH\PropertyPathTest.cs" />
