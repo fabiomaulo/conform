@@ -137,6 +137,7 @@
     <Compile Include="NH\TypeNameUtil.cs" />
     <Compile Include="NH\UnionSubclassCustomizer.cs" />
     <Compile Include="NH\UnionSubclassMapper.cs" />
+    <Compile Include="NH\VersionMapper.cs" />
     <Compile Include="ObjectRelationalMapper.cs" />
     <Compile Include="PatternExtensions.cs" />
     <Compile Include="PatternsHolder.cs" />
