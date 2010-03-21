@@ -14,6 +14,7 @@ namespace ConfOrm.Mappers
 		void Catalog(string catalogName);
 		void Schema(string schemaName);
 		void Mutable(bool isMutable);
+		void Version(Action<IVersionMapper> versionMapper);
 	}
 
 	public interface IClassMapper : IClassAttributesMapper, IPropertyContainerMapper

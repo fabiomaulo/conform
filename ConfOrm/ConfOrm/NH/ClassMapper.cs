@@ -103,6 +103,11 @@ namespace ConfOrm.NH
 			classMapping.mutable = isMutable;
 		}
 
+		public void Version(Action<IVersionMapper> versionMapper)
+		{
+			
+		}
+
 		#endregion
 
 		#region Implementation of IEntityAttributesMapper

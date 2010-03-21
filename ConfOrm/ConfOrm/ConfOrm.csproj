@@ -69,7 +69,9 @@
     <Compile Include="Mappers\IListIndexMapper.cs" />
     <Compile Include="Mappers\IListPropertiesMapper.cs" />
     <Compile Include="Mappers\ISetPropertiesMapper.cs" />
+    <Compile Include="Mappers\IVersionMapper.cs" />
     <Compile Include="Mappers\Lazy.cs" />
+    <Compile Include="Mappers\VersionGeneration.cs" />
     <Compile Include="NH\AccessorPropertyMapper.cs" />
     <Compile Include="NH\ClassCustomizer.cs" />
     <Compile Include="NH\ColumnMapper.cs" />
