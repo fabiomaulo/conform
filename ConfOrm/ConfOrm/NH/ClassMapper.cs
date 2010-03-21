@@ -10,6 +10,7 @@ namespace ConfOrm.NH
 	{
 		private readonly HbmClass classMapping;
 		private readonly IIdMapper idMapper;
+		private IVersionMapper versionMapper;
 
 		public ClassMapper(Type rootClass, HbmMapping mapDoc, MemberInfo idProperty)
 			: base(rootClass, mapDoc)
@@ -103,9 +104,15 @@ namespace ConfOrm.NH
 			classMapping.mutable = isMutable;
 		}
 
-		public void Version(Action<IVersionMapper> versionMapper)
+		public void Version(MemberInfo versionProperty, Action<IVersionMapper> versionMapping)
 		{
-			
+			if(versionMapper == null)
+			{
+				var hbmVersion = new HbmVersion();
+				classMapping.Item1 = hbmVersion;
+				versionMapper = new VersionMapper(versionProperty, hbmVersion);
+			}
+			versionMapping(versionMapper);
 		}
 
 		#endregion

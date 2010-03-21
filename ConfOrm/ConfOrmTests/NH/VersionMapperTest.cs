@@ -24,6 +24,16 @@ namespace ConfOrmTests.NH
 		}
 
 		[Test]
+		public void ShouldSetThePropertyNameImmediately()
+		{
+			var member = typeof(MyClass).GetProperty("Version");
+			var mapping = new HbmVersion();
+			new VersionMapper(member, mapping);
+
+			mapping.name.Should().Be.EqualTo("Version");
+		}
+
+		[Test]
 		public void WhenSetAccessorByTypeThenCheckCompatibility()
 		{
 			var member = typeof(MyClass).GetProperty("ReadOnly");

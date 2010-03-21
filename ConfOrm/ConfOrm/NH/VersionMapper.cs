@@ -17,8 +17,17 @@ namespace ConfOrm.NH
 
 		public VersionMapper(MemberInfo member, HbmVersion hbmVersion)
 		{
+			if (member == null)
+			{
+				throw new ArgumentNullException("member");
+			}
+			if (hbmVersion == null)
+			{
+				throw new ArgumentNullException("hbmVersion");
+			}
 			this.member = member;
 			versionMapping = hbmVersion;
+			versionMapping.name = member.Name;
 			entityPropertyMapper = new EntityPropertyMapper(member.DeclaringType, member.Name, x => versionMapping.access = x);
 		}
 

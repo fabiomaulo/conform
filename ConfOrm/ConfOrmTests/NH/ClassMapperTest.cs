@@ -1,3 +1,4 @@
+using ConfOrm.Mappers;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
@@ -11,6 +12,13 @@ namespace ConfOrmTests.NH
 		{
 			public int Id { get; set; }
 		}
+
+		private class EntitySimpleWithVersion
+		{
+			public int Id { get; set; }
+			public int EntityVersion { get; set; }
+		}
+
 		[Test]
 		public void AddClassElementToMappingDocument()
 		{
@@ -111,6 +119,29 @@ namespace ConfOrmTests.NH
 			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
 			rc.Mutable(false);
 			mapdoc.RootClasses[0].mutable.Should().Be.False();			
+		}
+
+		[Test]
+		public void CanSetVersion()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimpleWithVersion), mapdoc, typeof(EntitySimpleWithVersion).GetProperty("Id"));
+			rc.Version(typeof(EntitySimpleWithVersion).GetProperty("EntityVersion"), vm => vm.Generated(VersionGeneration.Always));
+			var hbmVersion = mapdoc.RootClasses[0].Version;
+			hbmVersion.Should().Not.Be.Null();
+			hbmVersion.generated.Should().Be(HbmVersionGeneration.Always);
+		}
+
+		[Test]
+		public void WhenSetTwoVersionPropertiesInTwoActionThenSetTheTwoValuesWithoutLostTheFirst()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimpleWithVersion), mapdoc, typeof(EntitySimpleWithVersion).GetProperty("Id"));
+			rc.Version(typeof(EntitySimpleWithVersion).GetProperty("EntityVersion"), vm => vm.Generated(VersionGeneration.Always));
+			rc.Version(typeof(EntitySimpleWithVersion).GetProperty("EntityVersion"), vm => vm.Column("pizza"));
+			var hbmVersion = mapdoc.RootClasses[0].Version;
+			hbmVersion.generated.Should().Be(HbmVersionGeneration.Always);
+			hbmVersion.column1.Should().Be("pizza");
 		}
 	}
 }
