@@ -24,6 +24,7 @@ namespace ConfOrm
 
 		private readonly List<IPattern<MemberInfo>> setPatterns = new List<IPattern<MemberInfo>>();
 		private readonly List<IPattern<Relation>> manyToOneRelations = new List<IPattern<Relation>>();
+		private readonly List<IPattern<MemberInfo>> versionPropertyPatterns = new List<IPattern<MemberInfo>>();
 
 		#region Implementation of IPatternsHolder
 
@@ -75,6 +76,11 @@ namespace ConfOrm
 		public ICollection<IPattern<MemberInfo>> PersistentPropertiesExclusions
 		{
 			get { return persistentPropertyExclusionPatterns; }
+		}
+
+		public ICollection<IPattern<MemberInfo>> Versions
+		{
+			get { return versionPropertyPatterns; }
 		}
 
 		public ICollection<IPattern<Relation>> ManyToOneRelations

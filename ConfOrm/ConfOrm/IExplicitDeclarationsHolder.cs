@@ -25,5 +25,6 @@ namespace ConfOrm
 		ICollection<Type> ComplexTypes { get; }
 		ICollection<MemberInfo> ComplexTypeMembers { get; }
 		ICollection<MemberInfo> Poids { get; }
+		ICollection<MemberInfo> VersionProperties { get; }
 	}
 }

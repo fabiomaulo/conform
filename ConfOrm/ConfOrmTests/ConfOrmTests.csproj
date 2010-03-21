@@ -183,6 +183,7 @@
     <Compile Include="ObjectRelationalMapperTests\SpecificPropertyAsPoid.cs" />
     <Compile Include="NH\MapperTests\UnidirectionalOneToOneIntegrationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\UnidirectionalOneToOneTest.cs" />
+    <Compile Include="ObjectRelationalMapperTests\VersionTest.cs" />
     <Compile Include="PatternExtensionsTest.cs" />
     <Compile Include="Patterns\ArrayCollectionPatternTest.cs" />
     <Compile Include="Patterns\AssignedPoidPatternTest.cs" />

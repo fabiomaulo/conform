@@ -196,6 +196,12 @@ namespace ConfOrm
 			explicitDeclarations.PersistentProperties.Add(member);
 		}
 
+		public void VersionProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
+			explicitDeclarations.VersionProperties.Add(member);
+		}
+
 		#endregion
 
 		#region Implementation of IDomainInspector
@@ -218,7 +224,7 @@ namespace ConfOrm
 
 		public bool IsVersion(MemberInfo member)
 		{
-			return false;
+			return explicitDeclarations.VersionProperties.Contains(member) || Patterns.Versions.Match(member);
 		}
 
 		public virtual bool IsEntity(Type type)

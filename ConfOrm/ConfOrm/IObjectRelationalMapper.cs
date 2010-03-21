@@ -30,5 +30,6 @@ namespace ConfOrm
 		void Cascade<TFromEntity, TToEntity>(Cascade cascadeOptions);
 		
 		void PersistentProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
+		void VersionProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 	}
 }
