@@ -16,6 +16,7 @@ namespace ConfOrmTests.NH.MapperTests
 		private class MyClass
 		{
 			public int Id { get; set; }
+			public int Version { get; set; }
 			public string SimpleProperty { get; set; }
 			public ICollection<string> Bag { get; set; }
 			public IList<string> List { get; set; }
@@ -36,7 +37,7 @@ namespace ConfOrmTests.NH.MapperTests
 		{
 			public int Id { get; set; }
 		}
-
+		
 		private Mock<IDomainInspector> GetMockedDomainInspector()
 		{
 			var orm = new Mock<IDomainInspector>();
@@ -190,13 +191,27 @@ namespace ConfOrmTests.NH.MapperTests
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();
 			var mapper = new Mapper(orm.Object);
-			bool idCalled = false;
 
 			mapper.Class<MyClass>(x => x.Mutable(false));
 
 			var mappings = mapper.CompileMappingFor(new[] { typeof(MyClass) });
 			var hbmClass = mappings.RootClasses.Single();
 			hbmClass.mutable.Should().Be.False();
+		}
+
+		[Test]
+		public void CallCustomizerVersion()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+			var mapper = new Mapper(orm.Object);
+			bool isCalled = false;
+
+			mapper.Class<MyClass>(x => x.Version(myclass => myclass.Version, y => isCalled = true));
+
+			var mappings = mapper.CompileMappingFor(new[] { typeof(MyClass) });
+			isCalled.Should().Be.True();
+			var hbmClass = mappings.RootClasses.Single();
+			hbmClass.Version.Should().Not.Be.Null();
 		}
 	}
 }

@@ -29,10 +29,11 @@ namespace ConfOrm.Mappers
 		void Table(string tableName);
 		void Catalog(string catalogName);
 		void Schema(string schemaName);
+		void Mutable(bool isMutable);
+		void Version<TProperty>(Expression<Func<TEntity, TProperty>> versionProperty, Action<IVersionMapper> versionMapping);
 	}
 
 	public interface IClassMapper<TEntity> : IClassAttributesMapper<TEntity>, IPropertyContainerMapper<TEntity> where TEntity : class
 	{
-		void Mutable(bool isMutable);
 	}
 }
