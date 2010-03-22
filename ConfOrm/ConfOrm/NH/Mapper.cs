@@ -242,7 +242,7 @@ namespace ConfOrm.NH
 			{
 				classMapper.Discriminator();
 			}
-			var persistentProperties = GetPersistentProperties(type, RootClassPropertiesBindingFlags);
+			var persistentProperties = GetPersistentProperties(type, RootClassPropertiesBindingFlags).ToArray();
 			var versionMember = persistentProperties.SingleOrDefault(mi => domainInspector.IsVersion(mi));
 			if (versionMember!= null)
 			{

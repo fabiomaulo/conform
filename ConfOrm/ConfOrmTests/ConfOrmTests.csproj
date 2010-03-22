@@ -149,6 +149,7 @@
     <Compile Include="ObjectRelationalMapperTests\BidirectionalOneToManyCascadeCircularTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\GenericBaseEntityWithPoperties.cs" />
     <Compile Include="ObjectRelationalMapperTests\ImplicitPolymorphismsWithGenericOneToManyTest.cs" />
+    <Compile Include="ObjectRelationalMapperTests\ImplicitPolymorphismsWithNoPersistentProperties.cs" />
     <Compile Include="ObjectRelationalMapperTests\ManyToOneRelationInComponentTest.cs" />
     <Compile Include="NH\MapperTests\ManyToOneRelationTest.cs" />
     <Compile Include="NH\MapperTests\MappingPerClass.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="Patterns\PropertyToFieldUnderscoreCamelCasePatternTest.cs" />
     <Compile Include="Patterns\PropertyToFieldUnderscorePascalCasePatternTest.cs" />
     <Compile Include="Patterns\ReadOnlyPropertyPatternTest.cs" />
+    <Compile Include="Patterns\ReadOnlyPropertyPatternWithPolymorphismTest.cs" />
     <Compile Include="Patterns\SequencePoidPatternTest.cs" />
     <Compile Include="Patterns\SetCollectionPatternTest.cs" />
     <Compile Include="Patterns\UnidirectionalUnaryAssociationPatternTest.cs" />

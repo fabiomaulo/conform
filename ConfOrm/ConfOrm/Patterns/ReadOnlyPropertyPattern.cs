@@ -40,7 +40,7 @@ namespace ConfOrm.Patterns
 			{
 				return false;
 			}
-			var rfprop =property.ReflectedType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance
+			var rfprop = property.DeclaringType.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance
 			                                     | BindingFlags.DeclaredOnly).SingleOrDefault(pi => pi.Name == property.Name);
 			return rfprop != null && !rfprop.CanWrite && rfprop.CanRead;
 		}

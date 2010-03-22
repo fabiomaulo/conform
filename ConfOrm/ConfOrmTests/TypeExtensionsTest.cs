@@ -30,5 +30,24 @@ namespace ConfOrmTests
 		{
 			typeof(IEnumerable<string>).DetermineDictionaryValueType().Should().Be.Null();
 		}
+
+		private class MyBaseClass
+		{
+			public string BaseProperty { get; set; }
+			public bool BaseBool { get; set; }
+		}
+		private class MyClass : MyBaseClass
+		{
+			
+		}
+
+		[Test]
+		public void DecodeMemberAccessExpressionOfShouldReturnMemberOfRequiredClass()
+		{
+			ConfOrm.TypeExtensions.DecodeMemberAccessExpressionOf<MyClass>(mc => mc.BaseProperty).Satisfy(
+				mi => mi.ReflectedType == typeof (MyClass) && mi.DeclaringType == typeof (MyBaseClass));
+			ConfOrm.TypeExtensions.DecodeMemberAccessExpressionOf<MyClass>(mc => mc.BaseBool).Satisfy(
+				mi => mi.ReflectedType == typeof(MyClass) && mi.DeclaringType == typeof(MyBaseClass));
+		}
 	}
 }

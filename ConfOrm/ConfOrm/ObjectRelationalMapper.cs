@@ -192,7 +192,7 @@ namespace ConfOrm
 
 		public virtual void PersistentProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
-			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
+			var member = TypeExtensions.DecodeMemberAccessExpressionOf(propertyGetter);
 			explicitDeclarations.PersistentProperties.Add(member);
 		}
 
