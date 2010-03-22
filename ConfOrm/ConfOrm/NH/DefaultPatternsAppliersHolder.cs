@@ -30,7 +30,8 @@ namespace ConfOrm.NH
 				throw new ArgumentNullException("domainInspector");
 			}
 			rootClass = new List<IPatternApplier<Type, IClassAttributesMapper>>();
-			joinedSubclass = new List<IPatternApplier<Type, IJoinedSubclassAttributesMapper>>();
+			joinedSubclass = new List<IPatternApplier<Type, IJoinedSubclassAttributesMapper>>
+			                 	{new JoinedSubclassOnDeleteApplier(),};
 			subclass = new List<IPatternApplier<Type, ISubclassAttributesMapper>>();
 			unionSubclass = new List<IPatternApplier<Type, IUnionSubclassAttributesMapper>>();
 			poid = new List<IPatternApplier<MemberInfo, IIdMapper>>

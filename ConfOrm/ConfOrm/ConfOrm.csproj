@@ -174,6 +174,7 @@
     <Compile Include="Patterns\GuidPoidPattern.cs" />
     <Compile Include="Patterns\HighLowPoidPattern.cs" />
     <Compile Include="Patterns\IdentityPoidPattern.cs" />
+    <Compile Include="Patterns\JoinedSubclassOnDeleteApplier.cs" />
     <Compile Include="Patterns\ListCollectionPattern.cs" />
     <Compile Include="Patterns\NoPoidGuidApplier.cs" />
     <Compile Include="Patterns\NoSetterCollectionPropertyToFieldAccessorApplier.cs" />
