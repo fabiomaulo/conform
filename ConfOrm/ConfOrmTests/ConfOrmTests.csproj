@@ -95,6 +95,7 @@
     <Compile Include="NH\MapperTests\CascadeManyToOneTest.cs" />
     <Compile Include="NH\MapperTests\CascadeOneToOneTest.cs" />
     <Compile Include="NH\MapperTests\ComponentPolymorphismTest.cs" />
+    <Compile Include="NH\MapperTests\HierarchyTablePerClassJumpingTest.cs" />
     <Compile Include="NH\MapperTests\JoinedSubclassPatternsAddition.cs" />
     <Compile Include="NH\MapperTests\RootClassPatternsAddition.cs" />
     <Compile Include="NH\MapperTests\ComplexTypeForCollectionTest.cs" />
