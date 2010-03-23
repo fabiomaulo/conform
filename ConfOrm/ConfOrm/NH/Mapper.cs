@@ -194,14 +194,9 @@ namespace ConfOrm.NH
 
 		private void AddSubclassMapping(HbmMapping mapping, Type type)
 		{
-			IPropertyContainerMapper propertiesContainer = null;
 			if (domainInspector.IsTablePerClassHierarchy(type))
 			{
-				var classMapper = new SubclassMapper(type, mapping);
-				propertiesContainer = classMapper;
-				PatternsAppliers.Subclass.ApplyAllMatchs(type, classMapper);
-				customizerHolder.InvokeCustomizers(type, classMapper);
-				MapProperties(type, propertiesContainer);
+				MapSubclass(type, mapping);
 			}
 			else if (domainInspector.IsTablePerClass(type))
 			{
@@ -210,11 +205,31 @@ namespace ConfOrm.NH
 			else if (domainInspector.IsTablePerConcreteClass(type))
 			{
 				var classMapper = new UnionSubclassMapper(type, mapping);
-				propertiesContainer = classMapper;
+				var propertiesContainer = classMapper;
 				PatternsAppliers.UnionSubclass.ApplyAllMatchs(type, classMapper);
 				customizerHolder.InvokeCustomizers(type, classMapper);
 				MapProperties(type, propertiesContainer);
 			}
+		}
+
+		private void MapSubclass(Type type, HbmMapping mapping)
+		{
+			var classMapper = new SubclassMapper(type, mapping);
+			IEnumerable<MemberInfo> propertiesToMap = GetPersistentProperties(type, SubClassPropertiesBindingFlags).ToArray();
+			if (!domainInspector.IsEntity(type.BaseType))
+			{
+				var baseType = GetEntityBaseType(type);
+				if (baseType != null)
+				{
+					classMapper.Extends(baseType);
+					propertiesToMap =
+						GetSkippedEntities(type).SelectMany(t => GetPersistentProperties(t, SubClassPropertiesBindingFlags)).Concat(propertiesToMap);
+				}
+			}
+
+			PatternsAppliers.Subclass.ApplyAllMatchs(type, classMapper);
+			customizerHolder.InvokeCustomizers(type, classMapper);
+			MapProperties(type, propertiesToMap, classMapper);
 		}
 
 		private void MapJoinedSubclass(Type type, HbmMapping mapping)
