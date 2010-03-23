@@ -20,25 +20,32 @@ namespace ConfOrm.NH
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(property);
 			customizersHolder.AddCustomizer(new PropertyPath(null, member),mapping);
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
+			customizersHolder.AddCustomizer(new PropertyPath(null, memberOf), mapping);
 		}
 
 		public void ManyToOne<TProperty>(Expression<Func<TPersistent, TProperty>> property, Action<IManyToOneMapper> mapping) where TProperty : class
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(property);
 			customizersHolder.AddCustomizer(new PropertyPath(null, member), mapping);
-			
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
+			customizersHolder.AddCustomizer(new PropertyPath(null, memberOf), mapping);
 		}
 
 		public void OneToOne<TProperty>(Expression<Func<TPersistent, TProperty>> property, Action<IOneToOneMapper> mapping) where TProperty : class
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(property);
 			customizersHolder.AddCustomizer(new PropertyPath(null, member), mapping);
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
+			customizersHolder.AddCustomizer(new PropertyPath(null, memberOf), mapping);
 		}
 
 		public void Collection<TElement>(Expression<Func<TPersistent, IEnumerable<TElement>>> property, Action<ICollectionPropertiesMapper> mapping)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(property);
 			customizersHolder.AddCustomizer(new PropertyPath(null, member), mapping);
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
+			customizersHolder.AddCustomizer(new PropertyPath(null, memberOf), mapping);
 		}
 
 		#endregion

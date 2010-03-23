@@ -219,8 +219,7 @@ namespace ConfOrm.NH
 				if (baseType != null)
 				{
 					classMapper.Extends(baseType);
-					propertiesToMap =
-						GetSkippedEntities(type).SelectMany(t => GetPersistentProperties(t, SubClassPropertiesBindingFlags)).Concat(propertiesToMap);
+					propertiesToMap = GetSubclassPersistentPropertiesSkipingEntities(type, baseType);
 				}
 			}
 
@@ -239,8 +238,7 @@ namespace ConfOrm.NH
 				if (baseType != null)
 				{
 					classMapper.Extends(baseType);
-					propertiesToMap =
-						GetSkippedEntities(type).SelectMany(t => GetPersistentProperties(t, SubClassPropertiesBindingFlags)).Concat(propertiesToMap);
+					propertiesToMap = GetSubclassPersistentPropertiesSkipingEntities(type, baseType);
 				}
 			}
 
@@ -260,13 +258,38 @@ namespace ConfOrm.NH
 				{
 					classMapper.Extends(baseType);
 					classMapper.Key(km => km.Column(baseType.Name.ToLowerInvariant() + "_key"));
-					propertiesToMap =
-						GetSkippedEntities(type).SelectMany(t => GetPersistentProperties(t, SubClassPropertiesBindingFlags)).Concat(propertiesToMap);
+					propertiesToMap = GetSubclassPersistentPropertiesSkipingEntities(type, baseType);
 				}
 			}
 			PatternsAppliers.JoinedSubclass.ApplyAllMatchs(type, classMapper);
 			customizerHolder.InvokeCustomizers(type, classMapper);
 			MapProperties(type, propertiesToMap, classMapper);
+		}
+
+		private IEnumerable<MemberInfo> GetSubclassPersistentPropertiesSkipingEntities(Type type, Type baseType)
+		{
+			const BindingFlags flattenHierarchyBindingFlag =
+				BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
+			var propertiesOfSubclass = GetPersistentProperties(type, flattenHierarchyBindingFlag);
+			var propertiesOfBaseClass = GetPersistentProperties(baseType, flattenHierarchyBindingFlag);
+			return propertiesOfSubclass.Except(propertiesOfBaseClass, new PropertyNameEqualityComparer());
+		}
+
+		private class PropertyNameEqualityComparer : IEqualityComparer<MemberInfo>
+		{
+			#region Implementation of IEqualityComparer<MemberInfo>
+
+			public bool Equals(MemberInfo x, MemberInfo y)
+			{
+				return x.Name == y.Name;
+			}
+
+			public int GetHashCode(MemberInfo obj)
+			{
+				return obj.Name.GetHashCode();
+			}
+
+			#endregion
 		}
 
 		private Type GetEntityBaseType(Type type)
@@ -280,23 +303,7 @@ namespace ConfOrm.NH
 					return analizingType;
 				}
 			}
-			return null;
-		}
-
-		private IEnumerable<Type> GetSkippedEntities(Type type)
-		{
-			var sauteedEntities = new List<Type>();
-			Type analizingType = type;
-			while (analizingType != null && analizingType != typeof(object))
-			{
-				analizingType = analizingType.BaseType;
-				if (domainInspector.IsEntity(analizingType))
-				{
-					return sauteedEntities;
-				}
-				sauteedEntities.Add(analizingType);
-			}
-			return null;
+			return type.GetInterfaces().FirstOrDefault(i => domainInspector.IsEntity(i));
 		}
 
 		private void AddRootClassMapping(Type type, HbmMapping mapping)
@@ -354,11 +361,6 @@ namespace ConfOrm.NH
 				default:
 					throw new ArgumentOutOfRangeException("strategy");
 			}
-		}
-
-		private void MapProperties(Type propertiesContainerType, IPropertyContainerMapper propertiesContainer)
-		{
-			MapProperties(propertiesContainerType, GetPersistentProperties(propertiesContainerType, SubClassPropertiesBindingFlags), propertiesContainer, null);
 		}
 
 		private void MapProperties(Type propertiesContainerType, IEnumerable<MemberInfo> propertiesToMap,

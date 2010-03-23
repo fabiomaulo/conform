@@ -95,8 +95,11 @@
     <Compile Include="NH\MapperTests\CascadeManyToOneTest.cs" />
     <Compile Include="NH\MapperTests\CascadeOneToOneTest.cs" />
     <Compile Include="NH\MapperTests\ComponentPolymorphismTest.cs" />
+    <Compile Include="NH\MapperTests\HierarchyTablePerClassHierarchyJumpingImpOfInterfaceTest.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerClassHierarchyJumpingTest.cs" />
+    <Compile Include="NH\MapperTests\HierarchyTablePerClassJumpingImpOfInterfaceTest.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerClassJumpingTest.cs" />
+    <Compile Include="NH\MapperTests\HierarchyTablePerConcreteClassJumpingImpOfInterfaceTest.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerConcreteClassJumpingTest.cs" />
     <Compile Include="NH\MapperTests\JoinedSubclassPatternsAddition.cs" />
     <Compile Include="NH\MapperTests\RootClassPatternsAddition.cs" />

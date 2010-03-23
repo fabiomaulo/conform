@@ -97,6 +97,38 @@ namespace ConfOrm
 			return ((MemberExpression)expression.Body).Member;
 		}
 
+		/// <summary>
+		/// Decode a member access expression of a specific ReflectedType
+		/// </summary>
+		/// <typeparam name="TEntity">Type to reflect</typeparam>
+		/// <typeparam name="TProperty">Type of property</typeparam>
+		/// <param name="expression">The expression of the property getter</param>
+		/// <returns>The <see cref="MemberInfo"/> os the ReflectedType. </returns>
+		public static MemberInfo DecodeMemberAccessExpressionOf<TEntity, TProperty>(Expression<Func<TEntity, TProperty>> expression)
+		{
+			MemberInfo memberOfDeclaringType;
+			if (expression.Body.NodeType != ExpressionType.MemberAccess)
+			{
+				if ((expression.Body.NodeType == ExpressionType.Convert) && (expression.Body.Type == typeof(object)))
+				{
+					memberOfDeclaringType = ((MemberExpression)((UnaryExpression)expression.Body).Operand).Member;
+				}
+				else
+				{
+					throw new Exception(string.Format("Invalid expression type: Expected ExpressionType.MemberAccess, Found {0}",
+																						expression.Body.NodeType));
+				}
+			}
+			else
+			{
+				memberOfDeclaringType = ((MemberExpression)expression.Body).Member;
+			}
+			var memberOfReflectType = typeof(TEntity).GetProperty(memberOfDeclaringType.Name,
+																														 BindingFlags.Public | BindingFlags.Instance
+																														 | BindingFlags.FlattenHierarchy);
+			return memberOfReflectType;
+		}
+
 		public static Type DetermineCollectionElementType(this Type genericCollection)
 		{
 			if (genericCollection.IsGenericType)
