@@ -8,6 +8,7 @@ namespace ConfOrm.Mappers
 		void Catalog(string catalogName);
 		void Schema(string schemaName);
 		void Key(Action<IKeyMapper> keyMapping);
+		void Extends(Type baseType);
 	}
 
 	public interface IJoinedSubclassMapper : IJoinedSubclassAttributesMapper,IPropertyContainerMapper

@@ -1,3 +1,5 @@
+using System;
+
 namespace ConfOrm.Mappers
 {
 	public interface IUnionSubclassAttributesMapper : IEntityAttributesMapper, IEntitySqlsMapper
@@ -5,6 +7,7 @@ namespace ConfOrm.Mappers
 		void Table(string tableName);
 		void Catalog(string catalogName);
 		void Schema(string schemaName);
+		void Extends(Type baseType);
 	}
 	public interface IUnionSubclassMapper : IUnionSubclassAttributesMapper, IPropertyContainerMapper
 	{

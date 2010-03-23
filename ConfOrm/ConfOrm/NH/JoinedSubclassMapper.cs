@@ -143,6 +143,20 @@ namespace ConfOrm.NH
 			keyMapping(keyMapper);
 		}
 
+		public void Extends(Type baseType)
+		{
+			if (baseType == null)
+			{
+				throw new ArgumentNullException("baseType");
+			}
+			if (!Container.GetBaseTypes().Contains(baseType))
+			{
+				throw new ArgumentOutOfRangeException("baseType",
+				                                      string.Format("{0} is a valid super-class of {1}", baseType, Container));
+			}
+			classMapping.extends = baseType.GetShortClassName(MapDoc);
+		}
+
 		#endregion
 	}
 }

@@ -1,3 +1,4 @@
+using System;
 using ConfOrm;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
@@ -16,6 +17,8 @@ namespace ConfOrmTests.NH
 		private class Inherited : EntitySimple
 		{
 		}
+
+		private class Inherited2 : Inherited { }
 
 		private class Z
 		{
@@ -210,6 +213,35 @@ namespace ConfOrmTests.NH
 
 			mapper.DiscriminatorValue(null);
 			hbmEntity.DiscriminatorValue.Should().Be("null");
+		}
+
+		[Test]
+		public void WhenSetExtendsExplicitlyThenSetDifferentBaseType()
+		{
+			var subClass = typeof(Inherited2);
+			var mapdoc = new HbmMapping { assembly = subClass.Assembly.FullName, @namespace = subClass.Namespace };
+			var mapper = new JoinedSubclassMapper(subClass, mapdoc);
+			mapper.Extends(typeof(EntitySimple));
+			mapdoc.JoinedSubclasses[0].extends.Should().Be.EqualTo(typeof(EntitySimple).Name);
+		}
+
+		[Test]
+		public void WhenNoSetExtendsExplicitlyThenSetBaseType()
+		{
+			var subClass = typeof(Inherited2);
+			var mapdoc = new HbmMapping { assembly = subClass.Assembly.FullName, @namespace = subClass.Namespace };
+			new JoinedSubclassMapper(subClass, mapdoc);
+			mapdoc.JoinedSubclasses[0].extends.Should().Be.EqualTo(typeof(Inherited).Name);
+		}
+
+		[Test]
+		public void WhenSetExtendsWithWrongBaseTypeThenThrow()
+		{
+			var subClass = typeof(Inherited);
+			var mapdoc = new HbmMapping { assembly = subClass.Assembly.FullName, @namespace = subClass.Namespace };
+			var mapper = new JoinedSubclassMapper(subClass, mapdoc);
+			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.Extends(typeof(Z)));
+			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.Extends(typeof(Inherited2)));
 		}
 	}
 }

@@ -1,8 +1,11 @@
+using System;
+
 namespace ConfOrm.Mappers
 {
 	public interface ISubclassAttributesMapper: IEntityAttributesMapper, IEntitySqlsMapper
 	{
 		void DiscriminatorValue(object value);
+		void Extends(Type baseType);
 	}
 
 	public interface ISubclassMapper : ISubclassAttributesMapper, IPropertyContainerMapper
