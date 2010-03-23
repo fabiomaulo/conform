@@ -15,6 +15,11 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			public IEnumerable<string> Others { get; set; }
 		}
 
+		private class B : A
+		{
+
+		}
+
 		[Test]
 		public void RecognizeSetProperty()
 		{
@@ -34,6 +39,22 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 
 		[Test]
 		public void NoRecognizeNoSetProperty()
+		{
+			var mapper = new ObjectRelationalMapper();
+			var mi = typeof(A).GetProperty("Others");
+			mapper.IsSet(mi).Should().Be.False();
+		}
+
+		[Test]
+		public void WhenInBaseClassThenRecognizeSetProperty()
+		{
+			var mapper = new ObjectRelationalMapper();
+			var mi = typeof(B).GetProperty("Set");
+			mapper.IsSet(mi).Should().Be.True();
+		}
+
+		[Test]
+		public void WhenInBaseClassThenNoRecognizeNoSetProperty()
 		{
 			var mapper = new ObjectRelationalMapper();
 			var mi = typeof(A).GetProperty("Others");

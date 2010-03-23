@@ -9,6 +9,8 @@ namespace ConfOrm
 {
 	public static class TypeExtensions
 	{
+		private const BindingFlags flattenHierarchyMemberBindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
+
 		public static IEnumerable<Type> GetBaseTypes(this Type type)
 		{
 			foreach (var @interface in type.GetInterfaces())
@@ -63,14 +65,14 @@ namespace ConfOrm
 			MemberInfo memberOfDeclaringType;
 			if (expression.Body.NodeType != ExpressionType.MemberAccess)
 			{
-				if ((expression.Body.NodeType == ExpressionType.Convert) && (expression.Body.Type == typeof(object)))
+				if ((expression.Body.NodeType == ExpressionType.Convert) && (expression.Body.Type == typeof (object)))
 				{
-					memberOfDeclaringType = ((MemberExpression)((UnaryExpression)expression.Body).Operand).Member;
+					memberOfDeclaringType = ((MemberExpression) ((UnaryExpression) expression.Body).Operand).Member;
 				}
 				else
 				{
 					throw new Exception(string.Format("Invalid expression type: Expected ExpressionType.MemberAccess, Found {0}",
-																						expression.Body.NodeType));
+					                                  expression.Body.NodeType));
 				}
 			}
 			else
@@ -78,8 +80,8 @@ namespace ConfOrm
 				memberOfDeclaringType = ((MemberExpression) expression.Body).Member;
 			}
 			var memberOfReflectType = typeof (TEntity).GetProperty(memberOfDeclaringType.Name,
-			                                                       BindingFlags.Public | BindingFlags.Instance
-			                                                       | BindingFlags.FlattenHierarchy);
+			                                                                BindingFlags.Public | BindingFlags.Instance
+			                                                                | BindingFlags.FlattenHierarchy);
 			return memberOfReflectType;
 		}
 
@@ -124,9 +126,37 @@ namespace ConfOrm
 				memberOfDeclaringType = ((MemberExpression)expression.Body).Member;
 			}
 			var memberOfReflectType = typeof(TEntity).GetProperty(memberOfDeclaringType.Name,
-																														 BindingFlags.Public | BindingFlags.Instance
-																														 | BindingFlags.FlattenHierarchy);
+																																			BindingFlags.Public | BindingFlags.Instance
+																																			| BindingFlags.FlattenHierarchy);
 			return memberOfReflectType;
+		}
+
+		public static MemberInfo GetMemberFromReflectedType(this MemberInfo source)
+		{
+			if (source == null)
+			{
+				throw new ArgumentNullException("source");
+			}
+
+			if (source.DeclaringType.Equals(source.ReflectedType) || source.ReflectedType == null)
+			{
+				return source;
+			}
+			return source.ReflectedType.GetProperty(source.Name, flattenHierarchyMemberBindingFlags);
+		}
+
+		public static MemberInfo GetMemberFromDeclaringType(this MemberInfo source)
+		{
+			if (source == null)
+			{
+				throw new ArgumentNullException("source");
+			}
+
+			if (source.DeclaringType.Equals(source.ReflectedType))
+			{
+				return source;
+			}
+			return source.DeclaringType.GetProperty(source.Name, flattenHierarchyMemberBindingFlags);
 		}
 
 		public static Type DetermineCollectionElementType(this Type genericCollection)

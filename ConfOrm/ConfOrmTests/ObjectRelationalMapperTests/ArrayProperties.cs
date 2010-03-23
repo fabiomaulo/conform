@@ -13,6 +13,8 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			public IEnumerable<string> Bag { get; set; }
 		}
 
+		private class B: A { }
+
 		[Test]
 		public void RecognizeListProperty()
 		{
@@ -53,6 +55,23 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			var mapper = new ObjectRelationalMapper();
 			mapper.Bag<A>(x => x.Array);
 			var mi = typeof(A).GetProperty("Array");
+			mapper.IsArray(mi).Should().Be.False();
+		}
+
+		[Test]
+		public void WhenInBaseClassThenRecognizeBagProperty()
+		{
+			var mapper = new ObjectRelationalMapper();
+			var mi = typeof(B).GetProperty("Array");
+			mapper.IsArray(mi).Should().Be.True();
+		}
+
+		[Test]
+		public void WhenInBaseClassThenNotRecognizeExplicitRegisteredAsSetProperty()
+		{
+			var mapper = new ObjectRelationalMapper();
+			mapper.Bag<A>(x => x.Array);
+			var mi = typeof(B).GetProperty("Array");
 			mapper.IsArray(mi).Should().Be.False();
 		}
 	}

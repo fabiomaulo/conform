@@ -158,36 +158,48 @@ namespace ConfOrm
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
 			explicitDeclarations.Sets.Add(member);
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(propertyGetter);
+			explicitDeclarations.Sets.Add(memberOf);
 		}
 
 		public virtual void Bag<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
 			explicitDeclarations.Bags.Add(member);
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(propertyGetter);
+			explicitDeclarations.Bags.Add(memberOf);
 		}
 
 		public virtual void List<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
 			explicitDeclarations.Lists.Add(member);
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(propertyGetter);
+			explicitDeclarations.Lists.Add(memberOf);
 		}
 
 		public virtual void Array<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
 			explicitDeclarations.Arrays.Add(member);
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(propertyGetter);
+			explicitDeclarations.Arrays.Add(memberOf);
 		}
 
 		public virtual void Dictionary<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
 			explicitDeclarations.Dictionaries.Add(member);
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(propertyGetter);
+			explicitDeclarations.Dictionaries.Add(memberOf);
 		}
 
 		public void Complex<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
 			explicitDeclarations.ComplexTypeMembers.Add(member);
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(propertyGetter);
+			explicitDeclarations.ComplexTypeMembers.Add(memberOf);
 		}
 
 		public virtual void Cascade<TFromEntity, TToEntity>(Cascade cascadeOptions)
@@ -207,6 +219,8 @@ namespace ConfOrm
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
 			explicitDeclarations.VersionProperties.Add(member);
+			var memberOf = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
+			explicitDeclarations.VersionProperties.Add(memberOf);
 		}
 
 		#endregion
@@ -226,12 +240,12 @@ namespace ConfOrm
 
 		public virtual bool IsComplex(MemberInfo member)
 		{
-			return explicitDeclarations.ComplexTypes.Contains(member.GetPropertyOrFieldType()) || explicitDeclarations.ComplexTypeMembers.Contains(member);
+			return explicitDeclarations.ComplexTypes.Contains(member.GetPropertyOrFieldType()) || explicitDeclarations.ComplexTypeMembers.ContainsMember(member);
 		}
 
 		public bool IsVersion(MemberInfo member)
 		{
-			return explicitDeclarations.VersionProperties.Contains(member) || Patterns.Versions.Match(member);
+			return explicitDeclarations.VersionProperties.ContainsMember(member) || Patterns.Versions.Match(member);
 		}
 
 		public virtual bool IsEntity(Type type)
@@ -342,7 +356,7 @@ namespace ConfOrm
 
 		public virtual bool IsPersistentId(MemberInfo member)
 		{
-			return explicitDeclarations.Poids.Contains(member) || Patterns.Poids.Match(member);
+			return explicitDeclarations.Poids.ContainsMember(member) || Patterns.Poids.Match(member);
 		}
 
 		public virtual IPersistentIdStrategy GetPersistentIdStrategy(MemberInfo member)
@@ -358,41 +372,41 @@ namespace ConfOrm
 		public virtual bool IsPersistentProperty(MemberInfo role)
 		{
 			return !Patterns.PersistentPropertiesExclusions.Match(role)
-			       || explicitDeclarations.PersistentProperties.Contains(role);
+						 || explicitDeclarations.PersistentProperties.ContainsMember(role);
 		}
 
 		public virtual bool IsSet(MemberInfo role)
 		{
-			return explicitDeclarations.Sets.Contains(role) || Patterns.Sets.Match(role);
+			return explicitDeclarations.Sets.ContainsMember(role) || Patterns.Sets.Match(role);
 		}
 
 		public virtual bool IsBag(MemberInfo role)
 		{
-			return explicitDeclarations.Bags.Contains(role)
+			return explicitDeclarations.Bags.ContainsMember(role)
 			       ||
-			       (!explicitDeclarations.Sets.Contains(role) && !explicitDeclarations.Lists.Contains(role)
-			        && !explicitDeclarations.Arrays.Contains(role) && Patterns.Bags.Match(role));
+						 (!explicitDeclarations.Sets.ContainsMember(role) && !explicitDeclarations.Lists.ContainsMember(role)
+							&& !explicitDeclarations.Arrays.ContainsMember(role) && Patterns.Bags.Match(role));
 		}
 
 		public virtual bool IsList(MemberInfo role)
 		{
-			return explicitDeclarations.Lists.Contains(role)
+			return explicitDeclarations.Lists.ContainsMember(role)
 			       ||
-			       (!explicitDeclarations.Arrays.Contains(role) && !explicitDeclarations.Bags.Contains(role)
+						 (!explicitDeclarations.Arrays.ContainsMember(role) && !explicitDeclarations.Bags.ContainsMember(role)
 			        && Patterns.Lists.Match(role));
 		}
 
 		public virtual bool IsArray(MemberInfo role)
 		{
-			return explicitDeclarations.Arrays.Contains(role)
+			return explicitDeclarations.Arrays.ContainsMember(role)
 			       ||
-			       (!explicitDeclarations.Lists.Contains(role) && !explicitDeclarations.Bags.Contains(role)
+						 (!explicitDeclarations.Lists.ContainsMember(role) && !explicitDeclarations.Bags.ContainsMember(role)
 			        && Patterns.Arrays.Match(role));
 		}
 
 		public virtual bool IsDictionary(MemberInfo role)
 		{
-			return explicitDeclarations.Dictionaries.Contains(role) || Patterns.Dictionaries.Match(role);
+			return explicitDeclarations.Dictionaries.ContainsMember(role) || Patterns.Dictionaries.Match(role);
 		}
 
 		#endregion

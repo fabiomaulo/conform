@@ -14,6 +14,11 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			public int Version { get; set; }
 		}
 
+		private class Inherited: MyClass
+		{
+			
+		}
+
 		[Test]
 		public void WhenExplicitDeclaredThenRecognizeVerion()
 		{
@@ -34,6 +39,15 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			orm.Patterns.Versions.Add(versionPattern.Object);
 
 			orm.IsVersion(versionPropertyInfo).Should().Be.True();
+		}
+
+		[Test]
+		public void WhenExplicitDeclaredInBaseClassThenRecognizeVerion()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.VersionProperty<MyClass>(myclass => myclass.Version);
+
+			orm.IsVersion(typeof(Inherited).GetProperty("Version")).Should().Be.True();
 		}
 	}
 }

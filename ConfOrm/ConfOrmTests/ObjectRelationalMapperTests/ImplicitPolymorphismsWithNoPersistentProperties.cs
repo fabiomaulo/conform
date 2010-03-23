@@ -51,7 +51,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			hbmClass.Properties.Select(p => p.Name).Should().Have.SameValuesAs("Something", "Name", "IsValid");
 		}
 
-		[Test, Ignore("Not required so far.")]
+		[Test]
 		public void WhenRegisterPersistentPropertyOnImplicitEntityThenShouldMapEvenPersistentReadOnlyProperties()
 		{
 			var orm = new ObjectRelationalMapper();
