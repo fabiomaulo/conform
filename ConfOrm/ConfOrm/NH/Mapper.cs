@@ -229,7 +229,7 @@ namespace ConfOrm.NH
 					classMapper.Extends(baseType);
 					classMapper.Key(km => km.Column(baseType.Name.ToLowerInvariant() + "_key"));
 					propertiesToMap =
-						GetSauteedEntities(type).SelectMany(t => GetPersistentProperties(t, SubClassPropertiesBindingFlags)).Concat(propertiesToMap);
+						GetSkippedEntities(type).SelectMany(t => GetPersistentProperties(t, SubClassPropertiesBindingFlags)).Concat(propertiesToMap);
 				}
 			}
 			PatternsAppliers.JoinedSubclass.ApplyAllMatchs(type, classMapper);
@@ -251,7 +251,7 @@ namespace ConfOrm.NH
 			return null;
 		}
 
-		private IEnumerable<Type> GetSauteedEntities(Type type)
+		private IEnumerable<Type> GetSkippedEntities(Type type)
 		{
 			var sauteedEntities = new List<Type>();
 			Type analizingType = type;
