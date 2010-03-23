@@ -10,6 +10,7 @@ namespace ConfOrm
 		private readonly HashSet<Type> tablePerClassEntities = new HashSet<Type>();
 		private readonly HashSet<Type> tablePerClassHierarchyEntities = new HashSet<Type>();
 		private readonly HashSet<Type> tablePerConcreteClassEntities = new HashSet<Type>();
+		private readonly HashSet<Type> classExclusions = new HashSet<Type>();
 		private readonly HashSet<Relation> manyToOneRelations = new HashSet<Relation>();
 		private readonly HashSet<Relation> oneToManyRelations = new HashSet<Relation>();
 		private readonly HashSet<Relation> oneToOneRelations = new HashSet<Relation>();
@@ -45,6 +46,11 @@ namespace ConfOrm
 		public ICollection<Type> TablePerConcreteClassEntities
 		{
 			get { return tablePerConcreteClassEntities; }
+		}
+
+		public ICollection<Type> ClassExclusions
+		{
+			get { return classExclusions; }
 		}
 
 		public ICollection<Relation> ManyToOneRelations

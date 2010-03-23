@@ -16,6 +16,20 @@ namespace ConfOrm
 		void Component<TComponent>();
 		void Complex<TComplex>();
 
+		/// <summary>
+		/// Exclude (jump) a class from a entity's hierarchy
+		/// </summary>
+		/// <typeparam name="TClass">The class to exclude.</typeparam>
+		/// <remarks>
+		/// Use this method when you need to "jump" a implementation inside an entity hierarchy.
+		/// </remarks>
+		/// <example>
+		/// You need to map a interface, as root, jumping the first implementation in the hierarchy.
+		/// <code>
+		/// </code>
+		/// </example>
+		void Exclude<TClass>();
+
 		void Poid<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 		void ManyToMany<TLeftEntity, TRigthEntity>();
 		void ManyToOne<TLeftEntity, TRigthEntity>();

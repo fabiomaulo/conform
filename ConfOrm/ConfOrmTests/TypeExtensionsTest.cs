@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using ConfOrm;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -48,6 +50,12 @@ namespace ConfOrmTests
 				mi => mi.ReflectedType == typeof (MyClass) && mi.DeclaringType == typeof (MyBaseClass));
 			ConfOrm.TypeExtensions.DecodeMemberAccessExpressionOf<MyClass>(mc => mc.BaseBool).Satisfy(
 				mi => mi.ReflectedType == typeof(MyClass) && mi.DeclaringType == typeof(MyBaseClass));
+		}
+
+		[Test]
+		public void GetBaseTypesIncludesInterfaces()
+		{
+			typeof (Collection<>).GetBaseTypes().Should().Contain(typeof (IEnumerable));
 		}
 	}
 }

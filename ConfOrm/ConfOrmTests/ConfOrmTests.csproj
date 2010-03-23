@@ -148,6 +148,7 @@
     <Compile Include="NH\VersionMapperTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\BidirectionalOneToManyCascadeCircularTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\GenericBaseEntityWithPoperties.cs" />
+    <Compile Include="ObjectRelationalMapperTests\HierarchyClassExclusionTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\ImplicitPolymorphismsWithGenericOneToManyTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\ImplicitPolymorphismsWithNoPersistentProperties.cs" />
     <Compile Include="ObjectRelationalMapperTests\ManyToOneRelationInComponentTest.cs" />

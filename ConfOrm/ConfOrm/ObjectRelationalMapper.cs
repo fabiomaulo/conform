@@ -125,6 +125,11 @@ namespace ConfOrm
 			explicitDeclarations.ComplexTypes.Add(type);
 		}
 
+		public void Exclude<TClass>()
+		{
+			explicitDeclarations.ClassExclusions.Add(typeof (TClass));
+		}
+
 		public virtual void Poid<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
@@ -229,8 +234,8 @@ namespace ConfOrm
 
 		public virtual bool IsEntity(Type type)
 		{
-			return explicitDeclarations.RootEntities.Contains(type)
-			       || type.GetBaseTypes().Any(t => explicitDeclarations.RootEntities.Contains(t));
+			return !explicitDeclarations.ClassExclusions.Contains(type) && (explicitDeclarations.RootEntities.Contains(type)
+			       || type.GetBaseTypes().Any(t => explicitDeclarations.RootEntities.Contains(t)));
 		}
 
 		public virtual bool IsTablePerClass(Type type)

@@ -11,6 +11,10 @@ namespace ConfOrm
 	{
 		public static IEnumerable<Type> GetBaseTypes(this Type type)
 		{
+			foreach (var @interface in type.GetInterfaces())
+			{
+				yield return @interface;
+			}
 			var analizing = type;
 			while (analizing != null && analizing != typeof(object))
 			{
