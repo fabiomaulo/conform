@@ -204,12 +204,29 @@ namespace ConfOrm.NH
 			}
 			else if (domainInspector.IsTablePerConcreteClass(type))
 			{
-				var classMapper = new UnionSubclassMapper(type, mapping);
-				var propertiesContainer = classMapper;
-				PatternsAppliers.UnionSubclass.ApplyAllMatchs(type, classMapper);
-				customizerHolder.InvokeCustomizers(type, classMapper);
-				MapProperties(type, propertiesContainer);
+				MapUnionSubclass(type, mapping);
 			}
+		}
+
+		private void MapUnionSubclass(Type type, HbmMapping mapping)
+		{
+			var classMapper = new UnionSubclassMapper(type, mapping);
+			
+			IEnumerable<MemberInfo> propertiesToMap = GetPersistentProperties(type, SubClassPropertiesBindingFlags).ToArray();
+			if (!domainInspector.IsEntity(type.BaseType))
+			{
+				var baseType = GetEntityBaseType(type);
+				if (baseType != null)
+				{
+					classMapper.Extends(baseType);
+					propertiesToMap =
+						GetSkippedEntities(type).SelectMany(t => GetPersistentProperties(t, SubClassPropertiesBindingFlags)).Concat(propertiesToMap);
+				}
+			}
+
+			PatternsAppliers.UnionSubclass.ApplyAllMatchs(type, classMapper);
+			customizerHolder.InvokeCustomizers(type, classMapper);
+			MapProperties(type, propertiesToMap, classMapper);
 		}
 
 		private void MapSubclass(Type type, HbmMapping mapping)
