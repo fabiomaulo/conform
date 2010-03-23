@@ -76,5 +76,35 @@ namespace ConfOrmTests.NH.MapperTests
 			var hbmclass = mapping.JoinedSubclasses.Single();
 			hbmclass.Properties.Select(p => p.Name).Should().Have.SameValuesAs("Surname2", "Surname");
 		}
+
+		[Test]
+		public void CanCustomizePropertiesOfSauteedEntitiesThroughGenericCustomizer()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+
+			var domainInspector = orm.Object;
+			var mapper = new Mapper(domainInspector);
+			mapper.Customize<Hinherited2>(ca => ca.Property(h2 => h2.Surname, pm => pm.Length(10)));
+			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(Hinherited), typeof(Hinherited2), typeof(EntitySimple) });
+
+			var hbmclass = mapping.JoinedSubclasses.Single();
+			var hbmProperty = hbmclass.Properties.OfType<HbmProperty>().Where(p => p.Name == "Surname").Single();
+			hbmProperty.length.Should().Be("10");
+		}
+
+		[Test]
+		public void CanCustomizePropertiesOfSauteedEntitiesThroughSpecificCustomizer()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+
+			var domainInspector = orm.Object;
+			var mapper = new Mapper(domainInspector);
+			mapper.JoinedSubclass<Hinherited2>(ca => ca.Property(h2 => h2.Surname, pm => pm.Length(10)));
+			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(Hinherited), typeof(Hinherited2), typeof(EntitySimple) });
+
+			var hbmclass = mapping.JoinedSubclasses.Single();
+			var hbmProperty = hbmclass.Properties.OfType<HbmProperty>().Where(p => p.Name == "Surname").Single();
+			hbmProperty.length.Should().Be("10");
+		}
 	}
 }
