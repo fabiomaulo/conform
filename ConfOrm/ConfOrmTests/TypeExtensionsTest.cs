@@ -57,5 +57,52 @@ namespace ConfOrmTests
 		{
 			typeof (Collection<>).GetBaseTypes().Should().Contain(typeof (IEnumerable));
 		}
+
+		private interface IEntity<T>
+		{
+			T Id { get; set; }
+		}
+		private abstract class AbstractEntity<T> : IEntity<T>
+		{
+			public abstract T Id { get; set; }
+			public abstract bool BaseBool { get; set; }
+		}
+
+		private class BaseEntity : AbstractEntity<int>
+		{
+			public override int Id { get; set; }
+
+			public override bool BaseBool { get; set; }
+		}
+		private class MyEntity: BaseEntity
+		{
+		}
+
+		[Test]
+		public void DecodeMemberAccessExpressionOfWithGenericShouldReturnMemberOfRequiredClass()
+		{
+			ConfOrm.TypeExtensions.DecodeMemberAccessExpressionOf<MyEntity>(mc => mc.Id).Satisfy(
+				mi => mi.ReflectedType == typeof(MyEntity) && mi.DeclaringType == typeof(BaseEntity));
+			ConfOrm.TypeExtensions.DecodeMemberAccessExpressionOf<MyEntity>(mc => mc.BaseBool).Satisfy(
+				mi => mi.ReflectedType == typeof(MyEntity) && mi.DeclaringType == typeof(BaseEntity));
+		}
+
+		[Test]
+		public void WhenBaseIsAbstractGenericGetMemberFromDeclaringType()
+		{
+			var mi = typeof(MyEntity).GetProperty("Id", typeof(int));
+			var declaringMi = mi.GetMemberFromDeclaringType();
+			declaringMi.DeclaringType.Should().Be<BaseEntity>();
+			declaringMi.ReflectedType.Should().Be<BaseEntity>();
+		}
+
+		[Test]
+		public void WhenBaseIsAbstractGetMemberFromDeclaringType()
+		{
+			var mi = typeof(MyEntity).GetProperty("BaseBool", typeof(bool));
+			var declaringMi = mi.GetMemberFromDeclaringType();
+			declaringMi.DeclaringType.Should().Be<BaseEntity>();
+			declaringMi.ReflectedType.Should().Be<BaseEntity>();
+		}
 	}
 }

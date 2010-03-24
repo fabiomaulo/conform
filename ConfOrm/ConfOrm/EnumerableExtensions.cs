@@ -7,7 +7,7 @@ namespace ConfOrm
 	{
 		public static bool ContainsMember(this ICollection<MemberInfo> source, MemberInfo item)
 		{
-			return source.Contains(item) || (!item.DeclaringType.Equals(item.ReflectedType) && (source.Contains(item.GetMemberFromDeclaringType()) || source.Contains(item.GetMemberFromReflectedType())));
+			return source.Contains(item) || (!item.DeclaringType.Equals(item.ReflectedType) && source.Contains(item.GetMemberFromDeclaringType()));
 		}
 	}
 }

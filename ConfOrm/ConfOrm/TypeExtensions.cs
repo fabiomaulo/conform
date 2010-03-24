@@ -9,8 +9,6 @@ namespace ConfOrm
 {
 	public static class TypeExtensions
 	{
-		private const BindingFlags flattenHierarchyMemberBindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
-
 		public static IEnumerable<Type> GetBaseTypes(this Type type)
 		{
 			foreach (var @interface in type.GetInterfaces())
@@ -79,9 +77,7 @@ namespace ConfOrm
 			{
 				memberOfDeclaringType = ((MemberExpression) expression.Body).Member;
 			}
-			var memberOfReflectType = typeof (TEntity).GetProperty(memberOfDeclaringType.Name,
-			                                                                BindingFlags.Public | BindingFlags.Instance
-			                                                                | BindingFlags.FlattenHierarchy);
+			var memberOfReflectType = typeof (TEntity).GetProperty(memberOfDeclaringType.Name, memberOfDeclaringType.GetPropertyOrFieldType());
 			return memberOfReflectType;
 		}
 
@@ -125,24 +121,8 @@ namespace ConfOrm
 			{
 				memberOfDeclaringType = ((MemberExpression)expression.Body).Member;
 			}
-			var memberOfReflectType = typeof(TEntity).GetProperty(memberOfDeclaringType.Name,
-																																			BindingFlags.Public | BindingFlags.Instance
-																																			| BindingFlags.FlattenHierarchy);
+			var memberOfReflectType = typeof(TEntity).GetProperty(memberOfDeclaringType.Name, memberOfDeclaringType.GetPropertyOrFieldType());
 			return memberOfReflectType;
-		}
-
-		public static MemberInfo GetMemberFromReflectedType(this MemberInfo source)
-		{
-			if (source == null)
-			{
-				throw new ArgumentNullException("source");
-			}
-
-			if (source.DeclaringType.Equals(source.ReflectedType) || source.ReflectedType == null)
-			{
-				return source;
-			}
-			return source.ReflectedType.GetProperty(source.Name, flattenHierarchyMemberBindingFlags);
 		}
 
 		public static MemberInfo GetMemberFromDeclaringType(this MemberInfo source)
@@ -156,7 +136,7 @@ namespace ConfOrm
 			{
 				return source;
 			}
-			return source.DeclaringType.GetProperty(source.Name, flattenHierarchyMemberBindingFlags);
+			return source.DeclaringType.GetProperty(source.Name, BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
 		}
 
 		public static Type DetermineCollectionElementType(this Type genericCollection)
