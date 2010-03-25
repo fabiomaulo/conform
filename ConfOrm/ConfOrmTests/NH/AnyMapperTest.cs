@@ -127,5 +127,29 @@ namespace ConfOrmTests.NH
 			mapper.Lazy(true);
 			hbmAny.lazy.Should().Be(true);
 		}
+
+		[Test]
+		public void WhenSetIdColumnPropertiesThenWorkOnSameHbmColumnCreatedAtCtor()
+		{
+			var hbmAny = new HbmAny();
+			var mapper = new AnyMapper(null, typeof(int), hbmAny);
+			var columnsBefore = hbmAny.Columns.ToArray();
+			mapper.Columns(idcm => idcm.Length(10), metacm => { });
+			var columnsAfter = hbmAny.Columns.ToArray();
+			columnsBefore[0].Should().Be.SameInstanceAs(columnsAfter[0]);
+			columnsBefore[0].length.Should().Be("10");
+		}
+
+		[Test]
+		public void WhenSetMetaColumnPropertiesThenWorkOnSameHbmColumnCreatedAtCtor()
+		{
+			var hbmAny = new HbmAny();
+			var mapper = new AnyMapper(null, typeof(int), hbmAny);
+			var columnsBefore = hbmAny.Columns.ToArray();
+			mapper.Columns(idcm => { }, metacm => metacm.Length(500));
+			var columnsAfter = hbmAny.Columns.ToArray();
+			columnsBefore[1].Should().Be.SameInstanceAs(columnsAfter[1]);
+			columnsBefore[1].length.Should().Be("500");
+		}
 	}
 }

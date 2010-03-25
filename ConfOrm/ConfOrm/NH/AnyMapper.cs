@@ -113,7 +113,8 @@ namespace ConfOrm.NH
 
 		public void Columns(Action<IColumnMapper> idColumnMapping, Action<IColumnMapper> classColumnMapping)
 		{
-			throw new NotImplementedException();
+			idColumnMapping(idColumnMapper);
+			classColumnMapping(classColumnMapper);
 		}
 
 		public void MetaValue(object value, Type entityType)
