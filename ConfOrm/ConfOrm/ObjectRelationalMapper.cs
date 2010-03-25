@@ -202,6 +202,14 @@ namespace ConfOrm
 			explicitDeclarations.ComplexTypeMembers.Add(memberOf);
 		}
 
+		public void HeterogeneousAssociation<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
+			explicitDeclarations.HeterogeneousAssociations.Add(member);
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(propertyGetter);
+			explicitDeclarations.HeterogeneousAssociations.Add(memberOf);
+		}
+
 		public virtual void Cascade<TFromEntity, TToEntity>(Cascade cascadeOptions)
 		{
 			explicitDeclarations.Cascades.Add(new Relation(typeof(TFromEntity), typeof(TToEntity)), cascadeOptions);
@@ -336,7 +344,7 @@ namespace ConfOrm
 
 		public virtual bool IsHeterogeneousAssociations(MemberInfo member)
 		{
-			return false;
+			return explicitDeclarations.HeterogeneousAssociations.ContainsMember(member);
 		}
 
 		public virtual Cascade? ApplyCascade(Type from, MemberInfo on, Type to)

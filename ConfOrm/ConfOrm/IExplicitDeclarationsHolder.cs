@@ -27,5 +27,6 @@ namespace ConfOrm
 		ICollection<MemberInfo> ComplexTypeMembers { get; }
 		ICollection<MemberInfo> Poids { get; }
 		ICollection<MemberInfo> VersionProperties { get; }
+		ICollection<MemberInfo> HeterogeneousAssociations { get; }
 	}
 }

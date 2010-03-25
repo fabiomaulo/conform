@@ -40,6 +40,7 @@ namespace ConfOrm
 		void Array<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 		void Dictionary<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 		void Complex<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
+		void HeterogeneousAssociation<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 	
 		void Cascade<TFromEntity, TToEntity>(Cascade cascadeOptions);
 		
