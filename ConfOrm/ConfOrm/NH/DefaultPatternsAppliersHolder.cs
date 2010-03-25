@@ -22,6 +22,8 @@ namespace ConfOrm.NH
 		private readonly List<IPatternApplier<PropertyPath, IManyToOneMapper>> manyToOnePath;
 		private readonly List<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>> collectionPath;
 		private readonly List<IPatternApplier<PropertyPath, IOneToOneMapper>> oneToOnePath;
+		private readonly List<IPatternApplier<MemberInfo, IAnyMapper>> any;
+		private readonly List<IPatternApplier<PropertyPath, IAnyMapper>> anyPath;
 
 		public DefaultPatternsAppliersHolder(IDomainInspector domainInspector)
 		{
@@ -74,6 +76,13 @@ namespace ConfOrm.NH
 										new BidirectionalPrimaryKeyAssociationSlaveOneToOneApplier(domainInspector)
 			           	};
 			oneToOnePath = new List<IPatternApplier<PropertyPath, IOneToOneMapper>>();
+			any = new List<IPatternApplier<MemberInfo, IAnyMapper>>
+			      	{
+			      		new ReadOnlyAnyAccessorApplier(),
+			      		new NoSetterAnyToFieldAccessorApplier(),
+			      		new AnyToFieldAccessorApplier()
+			      	};
+			anyPath = new List<IPatternApplier<PropertyPath, IAnyMapper>>();
 		}
 
 		#region Implementation of IPatternsAppliersHolder
@@ -141,6 +150,16 @@ namespace ConfOrm.NH
 		public ICollection<IPatternApplier<PropertyPath, IOneToOneMapper>> OneToOnePath
 		{
 			get { return oneToOnePath; }
+		}
+
+		public ICollection<IPatternApplier<MemberInfo, IAnyMapper>> Any
+		{
+			get { return any; }
+		}
+
+		public ICollection<IPatternApplier<PropertyPath, IAnyMapper>> AnyPath
+		{
+			get { return anyPath; }
 		}
 
 		#endregion

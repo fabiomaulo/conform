@@ -14,6 +14,7 @@ namespace ConfOrm.NH
 		void AddCustomizer(PropertyPath member, Action<IPropertyMapper> propertyCustomizer);
 		void AddCustomizer(PropertyPath member, Action<IManyToOneMapper> propertyCustomizer);
 		void AddCustomizer(PropertyPath member, Action<IOneToOneMapper> propertyCustomizer);
+		void AddCustomizer(PropertyPath member, Action<IAnyMapper> propertyCustomizer);
 
 		void AddCustomizer(PropertyPath member, Action<ISetPropertiesMapper> propertyCustomizer);
 		void AddCustomizer(PropertyPath member, Action<IBagPropertiesMapper> propertyCustomizer);
@@ -30,6 +31,7 @@ namespace ConfOrm.NH
 		void InvokeCustomizers(PropertyPath member, IPropertyMapper mapper);
 		void InvokeCustomizers(PropertyPath member, IManyToOneMapper mapper);
 		void InvokeCustomizers(PropertyPath member, IOneToOneMapper mapper);
+		void InvokeCustomizers(PropertyPath member, IAnyMapper mapper);
 
 		void InvokeCustomizers(PropertyPath member, ISetPropertiesMapper mapper);
 		void InvokeCustomizers(PropertyPath member, IBagPropertiesMapper mapper);

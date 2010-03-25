@@ -387,6 +387,10 @@ namespace ConfOrm.NH
 				{
 					MapProperty(member, memberPath, propertiesContainer);					
 				}
+				else if (domainInspector.IsHeterogeneousAssociations(member))
+				{
+					MapAny(member, memberPath, propertiesContainer);
+				}
 				else if (domainInspector.IsManyToOne(propertiesContainerType, propertyType))
 				{
 					MapManyToOne(member, memberPath, propertyType, propertiesContainer, propertiesContainerType);
@@ -421,6 +425,17 @@ namespace ConfOrm.NH
 					MapProperty(member, memberPath, propertiesContainer);
 				}
 			}
+		}
+
+		private void MapAny(MemberInfo member, PropertyPath memberPath, IPropertyContainerMapper propertiesContainer)
+		{
+			propertiesContainer.Any(member, typeof(int), anyMapper =>
+			{
+				PatternsAppliers.Any.ApplyAllMatchs(member, anyMapper);
+				PatternsAppliers.AnyPath.ApplyAllMatchs(memberPath, anyMapper);
+				customizerHolder.InvokeCustomizers(new PropertyPath(null, member), anyMapper);
+				customizerHolder.InvokeCustomizers(memberPath, anyMapper);
+			});
 		}
 
 		private void MapProperty(MemberInfo member, PropertyPath propertyPath, IPropertyContainerMapper propertiesContainer)

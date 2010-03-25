@@ -45,6 +45,9 @@ namespace ConfOrm.NH
 		private readonly Dictionary<Type, List<Action<IUnionSubclassAttributesMapper>>> unionClassCustomizers =
 			new Dictionary<Type, List<Action<IUnionSubclassAttributesMapper>>>();
 
+		private readonly Dictionary<PropertyPath, List<Action<IAnyMapper>>> anyCustomizers =
+			new Dictionary<PropertyPath, List<Action<IAnyMapper>>>();
+
 		#region ICustomizersHolder Members
 
 		public void AddCustomizer(Type type, Action<IClassAttributesMapper> classCustomizer)
@@ -85,6 +88,11 @@ namespace ConfOrm.NH
 		public void AddCustomizer(PropertyPath member, Action<IOneToOneMapper> propertyCustomizer)
 		{
 			AddCustomizer(oneToOneCustomizers, member, propertyCustomizer);
+		}
+
+		public void AddCustomizer(PropertyPath member, Action<IAnyMapper> propertyCustomizer)
+		{
+			AddCustomizer(anyCustomizers, member, propertyCustomizer);
 		}
 
 		public void AddCustomizer(PropertyPath member, Action<ISetPropertiesMapper> propertyCustomizer)
@@ -150,6 +158,11 @@ namespace ConfOrm.NH
 		public void InvokeCustomizers(PropertyPath member, IOneToOneMapper mapper)
 		{
 			InvokeCustomizers(oneToOneCustomizers, member, mapper);
+		}
+
+		public void InvokeCustomizers(PropertyPath member, IAnyMapper mapper)
+		{
+			InvokeCustomizers(anyCustomizers, member, mapper);
 		}
 
 		public void InvokeCustomizers(PropertyPath member, ISetPropertiesMapper mapper)

@@ -23,6 +23,7 @@ namespace ConfOrmTests.NH.MapperTests
 			public IDictionary<string, MyOneToManyRelated> Map { get; set; }
 			public MyManyToOneRelated ManyToOne { get; set; }
 			public MyOneToOneRelated OneToOne { get; set; }
+			public object Any { get; set; }
 		}
 		private class MyManyToOneRelated
 		{
@@ -51,6 +52,7 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsDictionary(It.Is<MemberInfo>(p => p == typeof(MyClass).GetProperty("Map")))).Returns(true);
 			orm.Setup(m => m.IsManyToOne(It.Is<Type>(t => t == typeof(MyClass)), It.Is<Type>(t => t == typeof(MyManyToOneRelated)))).Returns(true);
 			orm.Setup(m => m.IsOneToOne(It.Is<Type>(t => t == typeof(MyClass)), It.Is<Type>(t => t == typeof(MyOneToOneRelated)))).Returns(true);
+			orm.Setup(m => m.IsHeterogeneousAssociations(It.Is<MemberInfo>(p => p == typeof(MyClass).GetProperty("Any")))).Returns(true);
 			return orm;
 		}
 
@@ -66,6 +68,7 @@ namespace ConfOrmTests.NH.MapperTests
 			bool mapCalled = false;
 			bool manyToOneCalled = false;
 			bool oneToOneCalled = false;
+			bool anyCalled = false;
 
 			mapper.Customize<MyClass>(x =>
 				{
@@ -76,6 +79,7 @@ namespace ConfOrmTests.NH.MapperTests
 					x.Collection(mc => mc.Map, pm => mapCalled = true);
 					x.ManyToOne(mc => mc.ManyToOne, pm => manyToOneCalled = true);
 					x.OneToOne(mc => mc.OneToOne, pm => oneToOneCalled = true);
+					x.Any(mc => mc.Any, pm => anyCalled = true);
 				});
 
 			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(MyClass) });
@@ -86,6 +90,7 @@ namespace ConfOrmTests.NH.MapperTests
 			mapCalled.Should().Be.True();
 			manyToOneCalled.Should().Be.True();
 			oneToOneCalled.Should().Be.True();
+			anyCalled.Should().Be.True();
 		}
 	}
 }

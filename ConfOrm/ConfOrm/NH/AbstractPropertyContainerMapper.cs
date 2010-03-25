@@ -70,6 +70,13 @@ namespace ConfOrm.NH
 			AddProperty(hbm);
 		}
 
+		public void Any(MemberInfo property, Type idTypeOfMetaType, Action<IAnyMapper> mapping)
+		{
+			var hbm = new HbmAny { name = property.Name };
+			mapping(new AnyMapper(property, idTypeOfMetaType, hbm, MapDoc));
+			AddProperty(hbm);
+		}
+
 		public virtual void Set(MemberInfo property, Action<ISetPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
 		{
 			var hbm = new HbmSet { name = property.Name };

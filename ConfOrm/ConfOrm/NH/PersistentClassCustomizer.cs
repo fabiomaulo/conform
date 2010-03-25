@@ -48,6 +48,14 @@ namespace ConfOrm.NH
 			customizersHolder.AddCustomizer(new PropertyPath(null, memberOf), mapping);
 		}
 
+		public void Any<TProperty>(Expression<Func<TPersistent, TProperty>> property, Action<IAnyMapper> mapping) where TProperty : class
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpression(property);
+			customizersHolder.AddCustomizer(new PropertyPath(null, member), mapping);
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
+			customizersHolder.AddCustomizer(new PropertyPath(null, memberOf), mapping);
+		}
+
 		#endregion
 	}
 }

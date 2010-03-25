@@ -12,6 +12,7 @@ namespace ConfOrm.Mappers
 
 		void ManyToOne(MemberInfo property, Action<IManyToOneMapper> mapping);
 		void OneToOne(MemberInfo property, Action<IOneToOneMapper> mapping);
+		void Any(MemberInfo property, Type idTypeOfMetaType, Action<IAnyMapper> mapping);
 	}
 
 	public interface IPlainPropertyContainerMapper<TContainer>
@@ -23,5 +24,6 @@ namespace ConfOrm.Mappers
 
 		void ManyToOne<TProperty>(Expression<Func<TContainer, TProperty>> property, Action<IManyToOneMapper> mapping) where TProperty : class;
 		void OneToOne<TProperty>(Expression<Func<TContainer, TProperty>> property, Action<IOneToOneMapper> mapping) where TProperty : class;
+		void Any<TProperty>(Expression<Func<TContainer, TProperty>> property, Type idTypeOfMetaType, Action<IAnyMapper> mapping) where TProperty : class;
 	}
 }

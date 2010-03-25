@@ -77,6 +77,8 @@
     <Compile Include="NH\ListMapperTest.cs" />
     <Compile Include="NH\ManyToOneMapperTest.cs" />
     <Compile Include="NH\MapMapperTest.cs" />
+    <Compile Include="NH\MapperTests\AnyAppliersCallingTest.cs" />
+    <Compile Include="NH\MapperTests\AnyMappingSimpleTest.cs" />
     <Compile Include="NH\MapperTests\AppliersCallingOnCompositeElementTest.cs" />
     <Compile Include="NH\MapperTests\BagOfComponentsTest.cs" />
     <Compile Include="NH\MapperTests\BagOfComponentsWithParentTest.cs" />

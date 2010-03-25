@@ -23,6 +23,11 @@ namespace ConfOrmTests.NH
 			public string Name { get; set; }
 		}
 
+		private class MyClass
+		{
+			public object Reference { get; set; }
+		}
+
 		[Test]
 		public void CantCreateWithoutHbmMapping()
 		{
@@ -73,6 +78,17 @@ namespace ConfOrmTests.NH
 
 			properties.Should().Have.Count.EqualTo(1);
 			properties.First().Should().Be.OfType<HbmProperty>().And.ValueOf.Name.Should().Be.EqualTo("Name");
+		}
+
+		[Test]
+		public void CallAnyMapper()
+		{
+			var properties = new List<object>();
+			var map = new StubPropertyContainerMapper<EntitySimple>(properties);
+			var called = false;
+			map.Any(typeof(MyClass).GetProperty("Reference"), typeof(int), x => called = true);
+
+			called.Should().Be.True();
 		}
 
 		private class HackPropertyContainerMapper : AbstractPropertyContainerMapper
