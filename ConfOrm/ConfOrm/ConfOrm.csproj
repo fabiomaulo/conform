@@ -51,6 +51,7 @@
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="ExplicitDeclarationsHolder.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="ForClass.cs" />
     <Compile Include="IDomainInspector.cs" />
     <Compile Include="IExplicitDeclarationsHolder.cs" />
     <Compile Include="IObjectRelationalMapper.cs" />
