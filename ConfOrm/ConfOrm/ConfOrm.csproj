@@ -61,6 +61,7 @@
     <Compile Include="Mappers\CollectionLazy.cs" />
     <Compile Include="Mappers\FetchMode.cs" />
     <Compile Include="Mappers\IAccessorPropertyMapper.cs" />
+    <Compile Include="Mappers\IAnyMapper.cs" />
     <Compile Include="Mappers\IBagPropertiesMapper.cs" />
     <Compile Include="Mappers\IColumnMapper.cs" />
     <Compile Include="Mappers\IColumnsMapper.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Mappers\Lazy.cs" />
     <Compile Include="Mappers\VersionGeneration.cs" />
     <Compile Include="NH\AccessorPropertyMapper.cs" />
+    <Compile Include="NH\AnyMapper.cs" />
     <Compile Include="NH\ClassCustomizer.cs" />
     <Compile Include="NH\ColumnMapper.cs" />
     <Compile Include="NH\ComponentCustomizer.cs" />
