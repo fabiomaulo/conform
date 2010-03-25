@@ -28,16 +28,17 @@ namespace ConfOrmTests.NH.MapperTests
 		{
 			public object AnyClass { get; set; }
 		}
+
 		private class MyReferenceClass
 		{
-			public int Id { get; set; }
+			public string Id { get; set; }
 		}
 
 		private Mock<IDomainInspector> GetMockedDomainInspector()
 		{
 			var orm = new Mock<IDomainInspector>();
 			orm.Setup(m => m.IsEntity(It.IsAny<Type>())).Returns(true);
-			orm.Setup(m => m.IsRootEntity(It.Is<Type>(t => t == typeof(MyClass)))).Returns(true);
+			orm.Setup(m => m.IsRootEntity(It.Is<Type>(t => t == typeof(MyClass) || t == typeof(MyReferenceClass)))).Returns(true);
 			orm.Setup(m => m.IsTablePerClass(It.IsAny<Type>())).Returns(true);
 			orm.Setup(m => m.IsComponent(It.Is<Type>(t => t == typeof(MyComponent)))).Returns(true);
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
@@ -83,6 +84,22 @@ namespace ConfOrmTests.NH.MapperTests
 			var hbmComponent = hbmClass.Properties.OfType<HbmComponent>().Single();
 			var hbmAny = (HbmAny)hbmComponent.Properties.Single(p => p.Name == "AnyClass");
 			hbmAny.idtype.Should().Be("Guid");
+		}
+
+		[Test]
+		public void WhenAddMetaTypeThenSetIdMetaTypeWithGiveIdMetaType()
+		{
+			var orm = GetMockedDomainInspector();
+			var mapper = new Mapper(orm.Object);
+			mapper.Class<MyClass>(cm => cm.Any(myclass => myclass.OtherReferenceClass, typeof(string), am =>
+				{
+					am.MetaValue("A", typeof (MyReferenceClass));
+				}));
+			var mappings = mapper.CompileMappingFor(new[] { typeof(MyClass) });
+
+			var hbmClass = mappings.RootClasses.Single();
+			var hbmAny = (HbmAny)hbmClass.Properties.Single(p => p.Name == "OtherReferenceClass");
+			hbmAny.idtype.Should().Be("String");
 		}
 	}
 }

@@ -56,9 +56,11 @@ namespace ConfOrm.NH
 			where TProperty : class
 		{
 			MemberInfo member = TypeExtensions.DecodeMemberAccessExpression(property);
+			CustomizersHolder.AddCustomizer(new PropertyPath(PropertyPath, member), am => am.IdType(idTypeOfMetaType));
 			CustomizersHolder.AddCustomizer(new PropertyPath(PropertyPath, member), mapping);
 			MemberInfo memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
 			CustomizersHolder.AddCustomizer(new PropertyPath(PropertyPath, memberOf), mapping);
+			CustomizersHolder.AddCustomizer(new PropertyPath(PropertyPath, memberOf), am => am.IdType(idTypeOfMetaType));
 		}
 
 		public void Set<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
