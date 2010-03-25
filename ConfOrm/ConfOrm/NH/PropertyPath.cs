@@ -7,27 +7,37 @@ namespace ConfOrm.NH
 	{
 		private readonly int hashCode;
 		private readonly MemberInfo localMember;
-		private readonly PropertyPath prveiousPath;
+		private readonly PropertyPath previousPath;
 
-		public PropertyPath(PropertyPath prveiousPath, MemberInfo localMember)
+		public PropertyPath(PropertyPath previousPath, MemberInfo localMember)
 		{
 			if (localMember == null)
 			{
 				throw new ArgumentNullException("localMember");
 			}
-			this.prveiousPath = prveiousPath;
+			this.previousPath = previousPath;
 			this.localMember = localMember;
-			hashCode = localMember.GetHashCode() ^ (prveiousPath != null ? prveiousPath.GetHashCode() : 41);
+			hashCode = localMember.GetHashCode() ^ (previousPath != null ? previousPath.GetHashCode() : 41);
 		}
 
-		public PropertyPath PrveiousPath
+		public PropertyPath PreviousPath
 		{
-			get { return prveiousPath; }
+			get { return previousPath; }
 		}
 
 		public MemberInfo LocalMember
 		{
 			get { return localMember; }
+		}
+
+		public MemberInfo GetRootMember()
+		{
+			var analizing = this;
+			while (analizing.previousPath != null)
+			{
+				analizing = analizing.previousPath;
+			}
+			return analizing.localMember;
 		}
 
 		public override bool Equals(object obj)
@@ -63,12 +73,12 @@ namespace ConfOrm.NH
 
 		public string ToColumnName()
 		{
-			return PrveiousPath == null ? LocalMember.Name : PrveiousPath.ToColumnName() + LocalMember.Name;
+			return PreviousPath == null ? LocalMember.Name : PreviousPath.ToColumnName() + LocalMember.Name;
 		}
 
 		public override string ToString()
 		{
-			return PrveiousPath == null ? LocalMember.Name : PrveiousPath + "." + LocalMember.Name;
+			return PreviousPath == null ? LocalMember.Name : PreviousPath + "." + LocalMember.Name;
 		}
 	}
 }

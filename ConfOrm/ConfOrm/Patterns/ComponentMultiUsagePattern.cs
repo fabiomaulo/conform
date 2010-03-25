@@ -13,12 +13,12 @@ namespace ConfOrm.Patterns
 
 		public bool Match(PropertyPath subject)
 		{
-			if (subject == null || subject.PrveiousPath == null || subject.LocalMember == null)
+			if (subject == null || subject.PreviousPath == null || subject.LocalMember == null)
 			{
 				return false;
 			}
 			Type componentType = subject.LocalMember.DeclaringType;
-			Type componentContainerType = subject.PrveiousPath.LocalMember.DeclaringType; // TODO: should be recursive
+			Type componentContainerType = subject.PreviousPath.LocalMember.DeclaringType; // TODO: should be recursive
 
 			return CountPropertyOf(componentContainerType, componentType) > 1;
 		}

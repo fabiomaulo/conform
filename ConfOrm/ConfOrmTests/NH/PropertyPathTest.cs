@@ -138,5 +138,20 @@ namespace ConfOrmTests.NH
 			(new PropertyPath(myClassComponent1ComponentPath, myComponentInComponentName)).ToString().Should().Be("Component1.Component.Name");
 			(new PropertyPath(myClassComponent2ComponentPath, myComponentInComponentName)).ToString().Should().Be("Component2.Component.Name");
 		}
+
+		[Test]
+		public void GetRootFromRootLevelShouldReturnRootProperty()
+		{
+			(new PropertyPath(null, myClassComponent1)).GetRootMember().Should().Be(myClassComponent1);
+		}
+
+		[Test]
+		public void GetRootFromDeepLevelShouldReturnRootProperty()
+		{
+			var myClassComponent1Path = new PropertyPath(null, myClassComponent1);
+			var myClassComponent1ComponentPath = new PropertyPath(myClassComponent1Path, myComponentComponent);
+			var myClassComponent1ComponentNamePath = new PropertyPath(myClassComponent1ComponentPath, myComponentInComponentName);
+			myClassComponent1ComponentNamePath.GetRootMember().Should().Be(myClassComponent1);
+		}
 	}
 }

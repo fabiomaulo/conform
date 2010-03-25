@@ -431,6 +431,11 @@ namespace ConfOrm.NH
 		{
 			propertiesContainer.Any(member, typeof(int), anyMapper =>
 			{
+				var poidPropertyOrField = GetPoidPropertyOrField(memberPath.GetRootMember().DeclaringType);
+				if (poidPropertyOrField != null)
+				{
+					anyMapper.IdType(poidPropertyOrField.GetPropertyOrFieldType());
+				}
 				PatternsAppliers.Any.ApplyAllMatchs(member, anyMapper);
 				PatternsAppliers.AnyPath.ApplyAllMatchs(memberPath, anyMapper);
 				customizerHolder.InvokeCustomizers(new PropertyPath(null, member), anyMapper);
