@@ -43,9 +43,9 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsComponent(It.Is<Type>(t => t == typeof(MyComponent)))).Returns(true);
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
 			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
-			orm.Setup(m => m.IsHeterogeneousAssociations(It.Is<MemberInfo>(p => p == typeof(MyClass).GetProperty("OtherReferenceClass")))).Returns(true);
-			orm.Setup(m => m.IsHeterogeneousAssociations(It.Is<MemberInfo>(p => p == typeof(Subclass).GetProperty("AnyClass")))).Returns(true);
-			orm.Setup(m => m.IsHeterogeneousAssociations(It.Is<MemberInfo>(p => p == typeof(MyComponent).GetProperty("AnyClass")))).Returns(true);
+			orm.Setup(m => m.IsHeterogeneousAssociation(It.Is<MemberInfo>(p => p == typeof(MyClass).GetProperty("OtherReferenceClass")))).Returns(true);
+			orm.Setup(m => m.IsHeterogeneousAssociation(It.Is<MemberInfo>(p => p == typeof(Subclass).GetProperty("AnyClass")))).Returns(true);
+			orm.Setup(m => m.IsHeterogeneousAssociation(It.Is<MemberInfo>(p => p == typeof(MyComponent).GetProperty("AnyClass")))).Returns(true);
 			return orm;
 		}
 

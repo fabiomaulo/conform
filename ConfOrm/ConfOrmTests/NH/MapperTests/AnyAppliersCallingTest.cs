@@ -29,7 +29,7 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsTablePerClass(It.IsAny<Type>())).Returns(true);
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
 			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
-			orm.Setup(m => m.IsHeterogeneousAssociations(It.Is<MemberInfo>(p => p == typeof(MyClass).GetProperty("MyReferenceClass")))).Returns(true);
+			orm.Setup(m => m.IsHeterogeneousAssociation(It.Is<MemberInfo>(p => p == typeof(MyClass).GetProperty("MyReferenceClass")))).Returns(true);
 			return orm;
 		}
 

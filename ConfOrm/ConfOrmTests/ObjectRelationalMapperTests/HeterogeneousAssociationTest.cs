@@ -23,7 +23,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			var orm = new ObjectRelationalMapper();
 			orm.HeterogeneousAssociation<MyClass>(mc => mc.MyReferenceClass);
 
-			orm.IsHeterogeneousAssociations(typeof(MyClass).GetProperty("MyReferenceClass")).Should().Be.True();
+			orm.IsHeterogeneousAssociation(typeof(MyClass).GetProperty("MyReferenceClass")).Should().Be.True();
 		}
 	}
 }

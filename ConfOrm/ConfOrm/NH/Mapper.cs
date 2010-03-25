@@ -387,7 +387,7 @@ namespace ConfOrm.NH
 				{
 					MapProperty(member, memberPath, propertiesContainer);					
 				}
-				else if (domainInspector.IsHeterogeneousAssociations(member))
+				else if (domainInspector.IsHeterogeneousAssociation(member))
 				{
 					MapAny(member, memberPath, propertiesContainer);
 				}

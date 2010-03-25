@@ -342,7 +342,7 @@ namespace ConfOrm
 			       && !explicitDeclarations.ManyToManyRelations.Contains(new Relation(from, to));
 		}
 
-		public virtual bool IsHeterogeneousAssociations(MemberInfo member)
+		public virtual bool IsHeterogeneousAssociation(MemberInfo member)
 		{
 			return explicitDeclarations.HeterogeneousAssociations.ContainsMember(member);
 		}

@@ -52,7 +52,7 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsDictionary(It.Is<MemberInfo>(p => p == typeof(MyClass).GetProperty("Map")))).Returns(true);
 			orm.Setup(m => m.IsManyToOne(It.Is<Type>(t => t == typeof(MyClass)), It.Is<Type>(t => t == typeof(MyManyToOneRelated)))).Returns(true);
 			orm.Setup(m => m.IsOneToOne(It.Is<Type>(t => t == typeof(MyClass)), It.Is<Type>(t => t == typeof(MyOneToOneRelated)))).Returns(true);
-			orm.Setup(m => m.IsHeterogeneousAssociations(It.Is<MemberInfo>(p => p == typeof(MyClass).GetProperty("Any")))).Returns(true);
+			orm.Setup(m => m.IsHeterogeneousAssociation(It.Is<MemberInfo>(p => p == typeof(MyClass).GetProperty("Any")))).Returns(true);
 			return orm;
 		}
 
