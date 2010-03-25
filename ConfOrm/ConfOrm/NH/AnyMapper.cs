@@ -71,32 +71,44 @@ namespace ConfOrm.NH
 
 		public void MetaType(IType metaType)
 		{
-			throw new NotImplementedException();
+			if(metaType != null)
+			{
+				any.metatype = metaType.Name;
+			}
 		}
 
 		public void MetaType<TMetaType>()
 		{
-			throw new NotImplementedException();
+			MetaType(typeof (TMetaType));
 		}
 
 		public void MetaType(Type metaType)
 		{
-			throw new NotImplementedException();
+			if (metaType != null)
+			{
+				any.metatype = metaType.GetNhTypeName();
+			}
 		}
 
 		public void IdType(IType idType)
 		{
-			throw new NotImplementedException();
+			if (idType != null)
+			{
+				any.idtype = idType.Name;
+			}
 		}
 
 		public void IdType<TIdType>()
 		{
-			throw new NotImplementedException();
+			IdType(typeof (TIdType));
 		}
 
 		public void IdType(Type idType)
 		{
-			throw new NotImplementedException();
+			if (idType != null)
+			{
+				any.idtype = idType.GetNhTypeName();
+			}
 		}
 
 		public void Columns(Action<IColumnMapper> idColumnMapping, Action<IColumnMapper> classColumnMapping)
@@ -111,17 +123,17 @@ namespace ConfOrm.NH
 
 		public void Cascade(Cascade cascadeStyle)
 		{
-			throw new NotImplementedException();
+			any.cascade = (cascadeStyle & ~ConfOrm.Cascade.DeleteOrphans).ToCascadeString();
 		}
 
 		public void Index(string indexName)
 		{
-			throw new NotImplementedException();
+			any.index = indexName;
 		}
 
 		public void Lazy(bool isLazy)
 		{
-			throw new NotImplementedException();
+			any.lazy = isLazy;
 		}
 
 		#endregion

@@ -1,5 +1,7 @@
 using System.Linq;
+using ConfOrm;
 using ConfOrm.NH;
+using NHibernate;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -34,6 +36,96 @@ namespace ConfOrmTests.NH
 			new AnyMapper(null, typeof(int), hbmAny);
 			hbmAny.Columns.Should().Have.Count.EqualTo(2);
 			hbmAny.Columns.Select(c => c.name).All(n => n.Satisfy(name=> !string.IsNullOrEmpty(name)));
+		}
+
+		[Test]
+		public void CanSetIdTypeThroughIType()
+		{
+			var hbmAny = new HbmAny();
+			var mapper = new AnyMapper(null, typeof(int), hbmAny);
+			mapper.IdType(NHibernateUtil.Int64);
+			hbmAny.idtype.Should().Be("Int64");
+		}
+
+		[Test]
+		public void CanSetIdTypeThroughGenericMethod()
+		{
+			var hbmAny = new HbmAny();
+			var mapper = new AnyMapper(null, typeof(int), hbmAny);
+			mapper.IdType<long>();
+			hbmAny.idtype.Should().Be("Int64");
+		}
+
+		[Test]
+		public void CanSetIdTypeThroughType()
+		{
+			var hbmAny = new HbmAny();
+			var mapper = new AnyMapper(null, typeof(int), hbmAny);
+			mapper.IdType(typeof(long));
+			hbmAny.idtype.Should().Be("Int64");
+		}
+
+		[Test]
+		public void CanSetMetaTypeThroughIType()
+		{
+			var hbmAny = new HbmAny();
+			var mapper = new AnyMapper(null, typeof(int), hbmAny);
+			mapper.MetaType(NHibernateUtil.Character);
+			hbmAny.MetaType.Should().Be("Char");
+		}
+
+		[Test]
+		public void CanSetMetaTypeThroughGenericMethod()
+		{
+			var hbmAny = new HbmAny();
+			var mapper = new AnyMapper(null, typeof(int), hbmAny);
+			mapper.MetaType<char>();
+			hbmAny.MetaType.Should().Be("Char");
+		}
+
+		[Test]
+		public void CanSetMetaTypeThroughType()
+		{
+			var hbmAny = new HbmAny();
+			var mapper = new AnyMapper(null, typeof(int), hbmAny);
+			mapper.MetaType(typeof(char));
+			hbmAny.MetaType.Should().Be("Char");
+		}
+
+		[Test]
+		public void CanSetCascade()
+		{
+			var hbmAny = new HbmAny();
+			var mapper = new AnyMapper(null, typeof(int), hbmAny);
+			mapper.Cascade(Cascade.All);
+			hbmAny.cascade.Should().Be("all");
+		}
+
+		[Test]
+		public void AutoCleanInvalidCascade()
+		{
+			var hbmAny = new HbmAny();
+			var mapper = new AnyMapper(null, typeof(int), hbmAny);
+			mapper.Cascade(Cascade.All | Cascade.DeleteOrphans);
+			hbmAny.cascade.Should().Be("all");
+		}
+
+		[Test]
+		public void CanSetIndex()
+		{
+			var hbmAny = new HbmAny();
+			var mapper = new AnyMapper(null, typeof(int), hbmAny);
+			mapper.Index("pizza");
+			hbmAny.index.Should().Be("pizza");
+		}
+
+		[Test]
+		public void CanSetLazy()
+		{
+			var hbmAny = new HbmAny();
+			var mapper = new AnyMapper(null, typeof(int), hbmAny);
+			mapper.Lazy(true);
+			hbmAny.lazy.Should().Be(true);
 		}
 	}
 }
