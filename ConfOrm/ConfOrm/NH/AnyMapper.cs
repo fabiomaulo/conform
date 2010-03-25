@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
@@ -13,15 +14,17 @@ namespace ConfOrm.NH
 		private readonly MemberInfo member;
 		private readonly Type foreignIdType;
 		private readonly HbmAny any;
+		private readonly HbmMapping mapDoc;
 		private readonly IEntityPropertyMapper entityPropertyMapper;
 		private readonly ColumnMapper idColumnMapper;
 		private readonly ColumnMapper classColumnMapper;
 
-		public AnyMapper(MemberInfo member, Type foreignIdType, HbmAny any)
+		public AnyMapper(MemberInfo member, Type foreignIdType, HbmAny any, HbmMapping mapDoc)
 		{
 			this.member = member;
 			this.foreignIdType = foreignIdType;
 			this.any = any;
+			this.mapDoc = mapDoc;
 			if (member == null)
 			{
 				this.any.access = "none";
@@ -73,6 +76,7 @@ namespace ConfOrm.NH
 		{
 			if(metaType != null)
 			{
+				CheckImmutability(metaType.Name);
 				any.metatype = metaType.Name;
 			}
 		}
@@ -86,7 +90,17 @@ namespace ConfOrm.NH
 		{
 			if (metaType != null)
 			{
-				any.metatype = metaType.GetNhTypeName();
+				var nhTypeName = metaType.GetNhTypeName();
+				CheckImmutability(nhTypeName);
+				any.metatype = nhTypeName;
+			}
+		}
+
+		private void CheckImmutability(string nhTypeName)
+		{
+			if (any.metavalue != null && any.metavalue.Length > 0 && any.metatype != nhTypeName)
+			{
+				throw new ArgumentException(string.Format("Can't change the meta-type (was '{0}' trying to change to '{1}')", any.metatype, nhTypeName));
 			}
 		}
 
@@ -119,7 +133,37 @@ namespace ConfOrm.NH
 
 		public void MetaValue(object value, Type entityType)
 		{
-			throw new NotImplementedException();
+			if (value == null)
+			{
+				throw new ArgumentNullException("value");
+			}
+			if (entityType == null)
+			{
+				throw new ArgumentNullException("entityType");
+			}
+			if (value is Type)
+			{
+				throw new ArgumentOutOfRangeException("value", "System.Type is invalid meta-type (you don't need to set meta-values).");
+			}
+			var metavalueType = value.GetType();
+			if(any.metavalue == null)
+			{
+				any.metavalue = new HbmMetaValue[0];
+			}
+			var values = any.metavalue.ToDictionary(mv => mv.value, mv => mv.@class);
+			MetaType(metavalueType);
+			var newClassMetavalue = entityType.GetShortClassName(mapDoc);
+			var metavalueKey = value.ToString();
+			string existingClassMetavalue;
+			if (values.TryGetValue(metavalueKey, out existingClassMetavalue) && existingClassMetavalue != newClassMetavalue)
+			{
+				throw new ArgumentException(
+					string.Format(
+						"Can't set two different classes for same meta-value (meta-value='{0}' old-class:'{1}' new-class='{2}')",
+						metavalueKey, existingClassMetavalue, newClassMetavalue));
+			}
+			values[metavalueKey] = newClassMetavalue;
+			any.metavalue = values.Select(vd => new HbmMetaValue { value = vd.Key, @class = vd.Value }).ToArray();
 		}
 
 		public void Cascade(Cascade cascadeStyle)
