@@ -76,7 +76,7 @@ namespace ConfOrm.NH
 		{
 			if(metaType != null)
 			{
-				CheckImmutability(metaType.Name);
+				CheckMetaTypeImmutability(metaType.Name);
 				any.metatype = metaType.Name;
 			}
 		}
@@ -91,12 +91,12 @@ namespace ConfOrm.NH
 			if (metaType != null)
 			{
 				var nhTypeName = metaType.GetNhTypeName();
-				CheckImmutability(nhTypeName);
+				CheckMetaTypeImmutability(nhTypeName);
 				any.metatype = nhTypeName;
 			}
 		}
 
-		private void CheckImmutability(string nhTypeName)
+		private void CheckMetaTypeImmutability(string nhTypeName)
 		{
 			if (any.metavalue != null && any.metavalue.Length > 0 && any.metatype != nhTypeName)
 			{
@@ -108,6 +108,7 @@ namespace ConfOrm.NH
 		{
 			if (idType != null)
 			{
+				CheckIdTypeImmutability(idType.Name);
 				any.idtype = idType.Name;
 			}
 		}
@@ -121,7 +122,17 @@ namespace ConfOrm.NH
 		{
 			if (idType != null)
 			{
-				any.idtype = idType.GetNhTypeName();
+				var nhTypeName = idType.GetNhTypeName();
+				CheckIdTypeImmutability(nhTypeName);
+				any.idtype = nhTypeName;
+			}
+		}
+
+		private void CheckIdTypeImmutability(string nhTypeName)
+		{
+			if (any.metavalue != null && any.metavalue.Length > 0 && any.idtype != nhTypeName)
+			{
+				throw new ArgumentException(string.Format("Can't change the id-type after add meta-values (was '{0}' trying to change to '{1}')", any.idtype, nhTypeName));
 			}
 		}
 

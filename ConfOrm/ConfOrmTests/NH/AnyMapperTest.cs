@@ -262,5 +262,18 @@ namespace ConfOrmTests.NH
 			hbmAny.Columns.ElementAt(0).name.Should().Contain("MyReferenceClass");
 			hbmAny.Columns.ElementAt(1).name.Should().Contain("MyReferenceClass");
 		}
+
+		[Test]
+		public void IdMetaTypeShouldBeImmutableAfterAddMetaValues()
+		{
+			var hbmMapping = new HbmMapping();
+			var hbmAny = new HbmAny();
+			var mapper = new AnyMapper(null, typeof(int), hbmAny, hbmMapping);
+			mapper.MetaValue('A', typeof(MyReferenceClass));
+			ActionAssert.NotThrow(() => mapper.IdType(NHibernateUtil.Int32));
+			ActionAssert.NotThrow(mapper.IdType<int>);
+			ActionAssert.Throws<ArgumentException>(mapper.IdType<string>);
+			ActionAssert.Throws<ArgumentException>(()=> mapper.IdType(NHibernateUtil.String));
+		}
 	}
 }
