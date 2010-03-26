@@ -4,15 +4,19 @@ using System.Reflection;
 
 namespace ConfOrm.Mappers
 {
-	public interface IPlainPropertyContainerMapper
+	public interface IBasePlainPropertyContainerMapper
 	{
 		void Property(MemberInfo property, Action<IPropertyMapper> mapping);
 
 		void Component(MemberInfo property, Action<IComponentMapper> mapping);
 
 		void ManyToOne(MemberInfo property, Action<IManyToOneMapper> mapping);
-		void OneToOne(MemberInfo property, Action<IOneToOneMapper> mapping);
 		void Any(MemberInfo property, Type idTypeOfMetaType, Action<IAnyMapper> mapping);
+	}
+
+	public interface IPlainPropertyContainerMapper : IBasePlainPropertyContainerMapper
+	{
+		void OneToOne(MemberInfo property, Action<IOneToOneMapper> mapping);
 	}
 
 	public interface IPlainPropertyContainerMapper<TContainer>

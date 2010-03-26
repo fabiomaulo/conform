@@ -71,6 +71,7 @@
     <Compile Include="Mappers\IEntitySqlsMapper.cs" />
     <Compile Include="Mappers\IListIndexMapper.cs" />
     <Compile Include="Mappers\IListPropertiesMapper.cs" />
+    <Compile Include="Mappers\INaturalIdMapper.cs" />
     <Compile Include="Mappers\IPlainPropertyContainerMapper.cs" />
     <Compile Include="Mappers\ISetPropertiesMapper.cs" />
     <Compile Include="Mappers\IVersionMapper.cs" />
