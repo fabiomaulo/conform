@@ -74,9 +74,12 @@ namespace ConfOrm.NH
 			                	{new ComponentMultiUsageManyToOneColumnNameApplier()};
 			oneToOne = new List<IPatternApplier<MemberInfo, IOneToOneMapper>>
 			           	{
+			           		new MemberReadOnlyAccessorApplier<IOneToOneMapper>(),
+			           		new MemberNoSetterToFieldAccessorApplier<IOneToOneMapper>(),
+			           		new MemberToFieldAccessorApplier<IOneToOneMapper>(),
 			           		new BidirectionalForeignKeyAssociationOneToOneApplier(domainInspector),
-										new BidirectionalPrimaryKeyAssociationMasterOneToOneApplier(domainInspector),
-										new BidirectionalPrimaryKeyAssociationSlaveOneToOneApplier(domainInspector)
+			           		new BidirectionalPrimaryKeyAssociationMasterOneToOneApplier(domainInspector),
+			           		new BidirectionalPrimaryKeyAssociationSlaveOneToOneApplier(domainInspector)
 			           	};
 			oneToOnePath = new List<IPatternApplier<PropertyPath, IOneToOneMapper>>();
 			any = new List<IPatternApplier<MemberInfo, IAnyMapper>>

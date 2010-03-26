@@ -108,6 +108,7 @@
     <Compile Include="NH\MapperTests\HierarchyTablePerConcreteClassJumpingTest.cs" />
     <Compile Include="NH\MapperTests\JoinedSubclassPatternsAddition.cs" />
     <Compile Include="NH\MapperTests\ManyToOneRelationAccessorsTest.cs" />
+    <Compile Include="NH\MapperTests\OneToOneRelationAccessorsTest.cs" />
     <Compile Include="NH\MapperTests\RootClassPatternsAddition.cs" />
     <Compile Include="NH\MapperTests\ComplexTypeForCollectionTest.cs" />
     <Compile Include="NH\MapperTests\ComplexTypeTest.cs" />
