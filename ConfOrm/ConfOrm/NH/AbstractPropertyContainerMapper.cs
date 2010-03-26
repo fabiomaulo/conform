@@ -120,10 +120,5 @@ namespace ConfOrm.NH
 		}
 
 		#endregion
-
-		protected Type GetMemberType(MemberInfo propertyOrField)
-		{
-			return propertyOrField.GetPropertyOrFieldType();
-		}
 	}
 }
