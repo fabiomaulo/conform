@@ -148,7 +148,6 @@
     <Compile Include="PatternsHolder.cs" />
     <Compile Include="Patterns\AbstractCollectionPattern.cs" />
     <Compile Include="Patterns\AbstractPropertyToFieldPattern.cs" />
-    <Compile Include="Patterns\AnyToFieldAccessorApplier.cs" />
     <Compile Include="Patterns\ArrayCollectionPattern.cs" />
     <Compile Include="Patterns\AssignedPoidPattern.cs" />
     <Compile Include="Patterns\BagCollectionPattern.cs" />
@@ -167,7 +166,6 @@
     <Compile Include="Patterns\BidirectionalPrimaryKeyAssociationSlaveOneToOneApplier.cs" />
     <Compile Include="Patterns\BidirectionalRelationPattern.cs" />
     <Compile Include="Patterns\BidirectionalUnaryAssociationPattern.cs" />
-    <Compile Include="Patterns\CollectionPropertyToFieldAccessorApplier.cs" />
     <Compile Include="Patterns\ComponentMultiUsageManyToOneColumnNameApplier.cs" />
     <Compile Include="Patterns\ComponentMultiUsagePropertyColumnNameApplier.cs" />
     <Compile Include="Patterns\ComponentMultiUsagePattern.cs" />
@@ -183,9 +181,9 @@
     <Compile Include="Patterns\ListCollectionPattern.cs" />
     <Compile Include="Patterns\MemberNoSetterToFieldAccessorApplier.cs" />
     <Compile Include="Patterns\MemberReadOnlyAccessorApplier.cs" />
+    <Compile Include="Patterns\MemberToFieldAccessorApplier.cs" />
     <Compile Include="Patterns\NoPoidGuidApplier.cs" />
     <Compile Include="Patterns\NoSetterPropertyToFieldPattern.cs" />
-    <Compile Include="Patterns\PropertyToFieldAccessorApplier.cs" />
     <Compile Include="Patterns\PropertyToFieldPattern.cs" />
     <Compile Include="Patterns\NativePoidPattern.cs" />
     <Compile Include="Patterns\PoidGuidPattern.cs" />

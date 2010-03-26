@@ -108,7 +108,7 @@ namespace ConfOrmTests.Patterns
 		public void ApplierAlwaysField()
 		{
 			var mapper = new Mock<IPropertyMapper>();
-			var pattern = new PropertyToFieldAccessorApplier();
+			var pattern = new MemberToFieldAccessorApplier<IPropertyMapper>();
 			pattern.Apply(null, mapper.Object);
 			mapper.Verify(x => x.Access(It.Is<Accessor>(a => a == Accessor.Field)));
 		}
