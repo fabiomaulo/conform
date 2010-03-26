@@ -44,13 +44,13 @@ namespace ConfOrm.NH
 			       	};
 			property = new List<IPatternApplier<MemberInfo, IPropertyMapper>>
 			                           	{
-			                           		new ReadOnlyPropertyAccessorApplier(),
+			                           		new MemberReadOnlyAccessorApplier<IPropertyMapper>(),
 			                           		new MemberNoSetterToFieldAccessorApplier<IPropertyMapper>(),
 			                           		new PropertyToFieldAccessorApplier()
 			                           	};
 			collection = new List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>>
 			                             	{
-			                             		new ReadOnlyCollectionPropertyAccessorApplier(),
+			                             		new MemberReadOnlyAccessorApplier<ICollectionPropertiesMapper>(),
 			                             		new MemberNoSetterToFieldAccessorApplier<ICollectionPropertiesMapper>(),
 			                             		new CollectionPropertyToFieldAccessorApplier(),
 			                             		new BidirectionalOneToManyApplier(domainInspector),
@@ -78,7 +78,7 @@ namespace ConfOrm.NH
 			oneToOnePath = new List<IPatternApplier<PropertyPath, IOneToOneMapper>>();
 			any = new List<IPatternApplier<MemberInfo, IAnyMapper>>
 			      	{
-			      		new ReadOnlyAnyAccessorApplier(),
+			      		new MemberReadOnlyAccessorApplier<IAnyMapper>(),
 			      		new MemberNoSetterToFieldAccessorApplier<IAnyMapper>(),
 			      		new AnyToFieldAccessorApplier()
 			      	};

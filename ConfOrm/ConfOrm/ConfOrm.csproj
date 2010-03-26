@@ -182,13 +182,11 @@
     <Compile Include="Patterns\JoinedSubclassOnDeleteApplier.cs" />
     <Compile Include="Patterns\ListCollectionPattern.cs" />
     <Compile Include="Patterns\MemberNoSetterToFieldAccessorApplier.cs" />
+    <Compile Include="Patterns\MemberReadOnlyAccessorApplier.cs" />
     <Compile Include="Patterns\NoPoidGuidApplier.cs" />
     <Compile Include="Patterns\NoSetterPropertyToFieldPattern.cs" />
     <Compile Include="Patterns\PropertyToFieldAccessorApplier.cs" />
     <Compile Include="Patterns\PropertyToFieldPattern.cs" />
-    <Compile Include="Patterns\ReadOnlyAnyAccessorApplier.cs" />
-    <Compile Include="Patterns\ReadOnlyCollectionPropertyAccessorApplier.cs" />
-    <Compile Include="Patterns\ReadOnlyPropertyAccessorApplier.cs" />
     <Compile Include="Patterns\NativePoidPattern.cs" />
     <Compile Include="Patterns\PoidGuidPattern.cs" />
     <Compile Include="Patterns\PoIdGuidStrategyPattern.cs" />
