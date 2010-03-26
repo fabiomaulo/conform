@@ -19,6 +19,13 @@ namespace ConfOrmTests.NH
 			public int EntityVersion { get; set; }
 		}
 
+		private class EntitySimpleWithNaturalId
+		{
+			public int Id { get; set; }
+			public int Code { get; set; }
+			public string Name { get; set; }
+		}
+
 		[Test]
 		public void AddClassElementToMappingDocument()
 		{
@@ -143,5 +150,37 @@ namespace ConfOrmTests.NH
 			hbmVersion.generated.Should().Be(HbmVersionGeneration.Always);
 			hbmVersion.column1.Should().Be("pizza");
 		}
+
+		[Test]
+		public void CanSetNaturalId()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimpleWithNaturalId), mapdoc, typeof(EntitySimpleWithNaturalId).GetProperty("Id"));
+			rc.NaturalId(nidm => nidm.Property(typeof(EntitySimpleWithNaturalId).GetProperty("Code"), pm => { }));
+			
+			mapdoc.RootClasses[0].Properties.Should("The property should be only inside natural-id").Have.Count.EqualTo(0);
+			
+			var hbmNaturalId = mapdoc.RootClasses[0].naturalid;
+			hbmNaturalId.Should().Not.Be.Null();
+			hbmNaturalId.Properties.Should().Have.Count.EqualTo(1);
+		}
+
+		[Test]
+		public void WhenSetTwoNaturalIdPropertiesInTwoActionsThenSetTheTwoValuesWithoutLostTheFirst()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimpleWithNaturalId), mapdoc, typeof(EntitySimpleWithNaturalId).GetProperty("Id"));
+			rc.NaturalId(nidm => nidm.Property(typeof(EntitySimpleWithNaturalId).GetProperty("Code"), pm => { }));
+			rc.NaturalId(nidm => nidm.Property(typeof(EntitySimpleWithNaturalId).GetProperty("Name"), pm => { }));
+			rc.NaturalId(nidm => nidm.Mutable(true));
+
+			mapdoc.RootClasses[0].Properties.Should("The property should be only inside natural-id").Have.Count.EqualTo(0);
+
+			var hbmNaturalId = mapdoc.RootClasses[0].naturalid;
+			hbmNaturalId.Should().Not.Be.Null();
+			hbmNaturalId.mutable.Should().Be.True();
+			hbmNaturalId.Properties.Should().Have.Count.EqualTo(2);
+		}
+
 	}
 }

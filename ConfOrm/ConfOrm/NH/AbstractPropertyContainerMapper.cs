@@ -5,75 +5,17 @@ using NHibernate.Cfg.MappingSchema;
 
 namespace ConfOrm.NH
 {
-	public abstract class AbstractPropertyContainerMapper : IPropertyContainerMapper
+	public abstract class AbstractPropertyContainerMapper : AbstractBasePropertyContainerMapper, IPropertyContainerMapper
 	{
-		private readonly Type container;
-		private readonly HbmMapping mapDoc;
-
-		protected AbstractPropertyContainerMapper(Type container, HbmMapping mapDoc)
-		{
-			if (container == null)
-			{
-				throw new ArgumentNullException("container");
-			}
-			if (mapDoc == null)
-			{
-				throw new ArgumentNullException("mapDoc");
-			}
-			this.container = container;
-			this.mapDoc = mapDoc;
-		}
-
-		protected HbmMapping MapDoc
-		{
-			get { return mapDoc; }
-		}
-
-		protected Type Container
-		{
-			get { return container; }
-		}
-
-		protected abstract void AddProperty(object property);
+		protected AbstractPropertyContainerMapper(Type container, HbmMapping mapDoc) : base(container, mapDoc)
+		{}
 
 		#region Implementation of IPropertyContainerMapper
-
-		public virtual void Property(MemberInfo property, Action<IPropertyMapper> mapping)
-		{
-			if (!property.DeclaringType.IsAssignableFrom(container))
-			{
-				throw new ArgumentOutOfRangeException("property","Can't add a property of another graph");
-			}
-			var hbmProperty = new HbmProperty { name = property.Name };
-			mapping(new PropertyMapper(property, hbmProperty));
-			AddProperty(hbmProperty);
-		}
-
-		public virtual void Component(MemberInfo property, Action<IComponentMapper> mapping)
-		{
-			var hbm = new HbmComponent { name = property.Name };
-			mapping(new ComponentMapper(hbm, property.GetPropertyOrFieldType(), MapDoc));
-			AddProperty(hbm);
-		}
-
-		public virtual void ManyToOne(MemberInfo property, Action<IManyToOneMapper> mapping)
-		{
-			var hbm = new HbmManyToOne { name = property.Name };
-			mapping(new ManyToOneMapper(property, hbm));
-			AddProperty(hbm);
-		}
 
 		public virtual void OneToOne(MemberInfo property, Action<IOneToOneMapper> mapping)
 		{
 			var hbm = new HbmOneToOne { name = property.Name };
 			mapping(new OneToOneMapper(property, hbm));
-			AddProperty(hbm);
-		}
-
-		public void Any(MemberInfo property, Type idTypeOfMetaType, Action<IAnyMapper> mapping)
-		{
-			var hbm = new HbmAny { name = property.Name };
-			mapping(new AnyMapper(property, idTypeOfMetaType, hbm, MapDoc));
 			AddProperty(hbm);
 		}
 

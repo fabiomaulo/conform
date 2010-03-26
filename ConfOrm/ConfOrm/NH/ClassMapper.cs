@@ -11,6 +11,7 @@ namespace ConfOrm.NH
 		private readonly HbmClass classMapping;
 		private readonly IIdMapper idMapper;
 		private IVersionMapper versionMapper;
+		private INaturalIdMapper naturalIdMapper;
 
 		public ClassMapper(Type rootClass, HbmMapping mapDoc, MemberInfo idProperty)
 			: base(rootClass, mapDoc)
@@ -113,6 +114,17 @@ namespace ConfOrm.NH
 				versionMapper = new VersionMapper(versionProperty, hbmVersion);
 			}
 			versionMapping(versionMapper);
+		}
+
+		public void NaturalId(Action<INaturalIdMapper> naturalIdMapping)
+		{
+			if(naturalIdMapper == null)
+			{
+				var hbmNaturalId = new HbmNaturalId();
+				classMapping.naturalid = hbmNaturalId;
+				naturalIdMapper = new NaturalIdMapper(Container, hbmNaturalId, MapDoc);
+			}
+			naturalIdMapping(naturalIdMapper);
 		}
 
 		#endregion

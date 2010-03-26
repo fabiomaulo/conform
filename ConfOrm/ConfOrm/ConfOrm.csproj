@@ -77,6 +77,7 @@
     <Compile Include="Mappers\IVersionMapper.cs" />
     <Compile Include="Mappers\Lazy.cs" />
     <Compile Include="Mappers\VersionGeneration.cs" />
+    <Compile Include="NH\AbstractBasePropertyContainerMapper.cs" />
     <Compile Include="NH\AccessorPropertyMapper.cs" />
     <Compile Include="NH\AnyMapper.cs" />
     <Compile Include="NH\ClassCustomizer.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="NH\KeyMapper.cs" />
     <Compile Include="NH\ListMapper.cs" />
     <Compile Include="NH\Mapper.cs" />
+    <Compile Include="NH\NaturalIdMapper.cs" />
     <Compile Include="NH\NoMemberPropertyMapper.cs" />
     <Compile Include="NH\OneToOneMapper.cs" />
     <Compile Include="NH\PersistentClassCustomizer.cs" />

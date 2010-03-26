@@ -58,6 +58,11 @@ namespace ConfOrm.NH
 			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Version(member, versionMapping));
 		}
 
+		public void NaturalId(Action<INaturalIdMapper> naturalIdMapping)
+		{
+			throw new NotImplementedException();
+		}
+
 		public void EntityName(string value)
 		{
 			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.EntityName(value));
