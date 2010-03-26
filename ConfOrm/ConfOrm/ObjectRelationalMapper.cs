@@ -372,7 +372,7 @@ namespace ConfOrm
 			return Patterns.PoidStrategies.GetValueOfFirstMatch(member);
 		}
 
-		public bool IsPropertyOfNaturalId(MemberInfo member)
+		public bool IsMemberOfNaturalId(MemberInfo member)
 		{
 			return false;
 		}
