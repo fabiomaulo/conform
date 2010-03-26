@@ -110,7 +110,7 @@ namespace ConfOrmTests.Patterns
 		public void ApplierAlwaysField()
 		{
 			var mapper = new Mock<IPropertyMapper>();
-			var pattern = new NoSetterPropertyToFieldAccessorApplier();
+			var pattern = new MemberNoSetterToFieldAccessorApplier<IPropertyMapper>();
 			pattern.Apply(null, mapper.Object);
 			mapper.Verify(x => x.Access(It.Is<Accessor>(a=> a == Accessor.NoSetter)));
 		}

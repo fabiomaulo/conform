@@ -3,13 +3,11 @@ using NHibernate.Type;
 
 namespace ConfOrm.Mappers
 {
-	public interface IIdMapper
+	public interface IIdMapper : IAccessorPropertyMapper
 	{
 		void Generator(IGeneratorDef generator);
 		void Generator(IGeneratorDef generator, Action<IGeneratorMapper> generatorMapping);
 
-		void Access(Accessor accessor);
-		void Access(Type accessorType);
 		void Type(IIdentifierType persistentType);
 		//void Type<TPersistentType>() where TPersistentType : IIdentifierType;
 		//void Type<TPersistentType>(object parameters) where TPersistentType : IIdentifierType;

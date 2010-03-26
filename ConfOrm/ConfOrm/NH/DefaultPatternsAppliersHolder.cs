@@ -38,20 +38,20 @@ namespace ConfOrm.NH
 			unionSubclass = new List<IPatternApplier<Type, IUnionSubclassAttributesMapper>>();
 			poid = new List<IPatternApplier<MemberInfo, IIdMapper>>
 			       	{
-			       		new NoSetterPoidToFieldAccessorApplier(),
+			       		new MemberNoSetterToFieldAccessorApplier<IIdMapper>(),
 			       		new NoPoidGuidApplier(),
 			       		new BidirectionalOneToOneAssociationPoidApplier(domainInspector)
 			       	};
 			property = new List<IPatternApplier<MemberInfo, IPropertyMapper>>
 			                           	{
 			                           		new ReadOnlyPropertyAccessorApplier(),
-			                           		new NoSetterPropertyToFieldAccessorApplier(),
+			                           		new MemberNoSetterToFieldAccessorApplier<IPropertyMapper>(),
 			                           		new PropertyToFieldAccessorApplier()
 			                           	};
 			collection = new List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>>
 			                             	{
 			                             		new ReadOnlyCollectionPropertyAccessorApplier(),
-			                             		new NoSetterCollectionPropertyToFieldAccessorApplier(),
+			                             		new MemberNoSetterToFieldAccessorApplier<ICollectionPropertiesMapper>(),
 			                             		new CollectionPropertyToFieldAccessorApplier(),
 			                             		new BidirectionalOneToManyApplier(domainInspector),
 			                             		new BidirectionalOneToManyOnDeleteConstraintApplier(domainInspector),
@@ -79,7 +79,7 @@ namespace ConfOrm.NH
 			any = new List<IPatternApplier<MemberInfo, IAnyMapper>>
 			      	{
 			      		new ReadOnlyAnyAccessorApplier(),
-			      		new NoSetterAnyToFieldAccessorApplier(),
+			      		new MemberNoSetterToFieldAccessorApplier<IAnyMapper>(),
 			      		new AnyToFieldAccessorApplier()
 			      	};
 			anyPath = new List<IPatternApplier<PropertyPath, IAnyMapper>>();
