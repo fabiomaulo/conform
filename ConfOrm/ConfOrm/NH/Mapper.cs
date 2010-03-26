@@ -337,9 +337,55 @@ namespace ConfOrm.NH
 			}
 			PatternsAppliers.RootClass.ApplyAllMatchs(type, classMapper);
 			customizerHolder.InvokeCustomizers(type, classMapper);
-			MapProperties(type,
-			              persistentProperties.Where(
-			              	mi => !domainInspector.IsVersion(mi)), classMapper);
+
+			var naturalIdPropeties = persistentProperties.Where(mi => domainInspector.IsMemberOfNaturalId(mi)).ToArray();
+			if (naturalIdPropeties.Length > 0)
+			{
+				classMapper.NaturalId(naturalIdMapper =>
+					{
+						foreach (PropertyInfo property in naturalIdPropeties)
+						{
+							MapNaturalIdProperties(type, naturalIdMapper, property);
+						}
+					});
+			}
+
+			MapProperties(type, persistentProperties.Where(mi => !domainInspector.IsVersion(mi)).Except(naturalIdPropeties), classMapper);
+		}
+
+		private void MapNaturalIdProperties(Type rootEntityType, INaturalIdMapper naturalIdMapper, PropertyInfo property)
+		{
+			MemberInfo member = property;
+			Type propertyType = property.GetPropertyOrFieldType();
+			var memberPath = new PropertyPath(null, member);
+			if (domainInspector.IsComplex(member))
+			{
+				MapProperty(member, memberPath, naturalIdMapper);
+			}
+			else if (domainInspector.IsHeterogeneousAssociation(member))
+			{
+				MapAny(member, memberPath, naturalIdMapper);
+			}
+			else if (domainInspector.IsManyToOne(rootEntityType, propertyType))
+			{
+				MapManyToOne(member, memberPath, propertyType, naturalIdMapper, rootEntityType);
+			}
+			else if (domainInspector.IsComponent(propertyType))
+			{
+				MapComponent(member, memberPath, propertyType, naturalIdMapper, rootEntityType);
+			}
+			else if (domainInspector.IsOneToOne(rootEntityType, propertyType) || domainInspector.IsSet(property)
+			         || domainInspector.IsDictionary(property) || domainInspector.IsArray(property)
+			         || domainInspector.IsList(property) || domainInspector.IsBag(property))
+			{
+				throw new ArgumentOutOfRangeException("property",
+				                                      string.Format("The property {0} of {1} can't be part of natural-id.",
+				                                                    property.Name, property.DeclaringType));
+			}
+			else
+			{
+				MapProperty(member, memberPath, naturalIdMapper);
+			}
 		}
 
 		private IGeneratorDef GetGenerator(PoIdStrategy strategy)
@@ -427,7 +473,7 @@ namespace ConfOrm.NH
 			}
 		}
 
-		private void MapAny(MemberInfo member, PropertyPath memberPath, IPropertyContainerMapper propertiesContainer)
+		private void MapAny(MemberInfo member, PropertyPath memberPath, IBasePlainPropertyContainerMapper propertiesContainer)
 		{
 			propertiesContainer.Any(member, typeof(int), anyMapper =>
 			{
@@ -443,7 +489,7 @@ namespace ConfOrm.NH
 			});
 		}
 
-		private void MapProperty(MemberInfo member, PropertyPath propertyPath, IPropertyContainerMapper propertiesContainer)
+		private void MapProperty(MemberInfo member, PropertyPath propertyPath, IBasePlainPropertyContainerMapper propertiesContainer)
 		{
 			propertiesContainer.Property(member, propertyMapper =>
 				{
@@ -454,7 +500,7 @@ namespace ConfOrm.NH
 				});
 		}
 
-		private void MapComponent(MemberInfo member, PropertyPath memberPath, Type propertyType, IPropertyContainerMapper propertiesContainer,
+		private void MapComponent(MemberInfo member, PropertyPath memberPath, Type propertyType, IBasePlainPropertyContainerMapper propertiesContainer,
 		                          Type propertiesContainerType)
 		{
 			propertiesContainer.Component(member, x =>
@@ -548,7 +594,7 @@ namespace ConfOrm.NH
 				});
 		}
 
-		private void MapManyToOne(MemberInfo member, PropertyPath propertyPath, Type propertyType, IPropertyContainerMapper propertiesContainer,
+		private void MapManyToOne(MemberInfo member, PropertyPath propertyPath, Type propertyType, IBasePlainPropertyContainerMapper propertiesContainer,
 		                          Type propertiesContainerType)
 		{
 			propertiesContainer.ManyToOne(member, manyToOneMapper =>
