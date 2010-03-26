@@ -64,6 +64,9 @@ namespace ConfOrm.NH
 			collectionPath = new List<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>>();
 			manyToOne = new List<IPatternApplier<MemberInfo, IManyToOneMapper>>
 			            	{
+			            		new MemberReadOnlyAccessorApplier<IManyToOneMapper>(),
+			            		new MemberNoSetterToFieldAccessorApplier<IManyToOneMapper>(),
+			            		new MemberToFieldAccessorApplier<IManyToOneMapper>(),
 			            		new BidirectionalForeignKeyAssociationManyToOneApplier(domainInspector),
 			            		new UnidirectionalOneToOneUniqueCascadeApplier(domainInspector)
 			            	};
