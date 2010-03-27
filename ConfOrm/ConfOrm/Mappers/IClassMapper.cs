@@ -32,7 +32,7 @@ namespace ConfOrm.Mappers
 		void Schema(string schemaName);
 		void Mutable(bool isMutable);
 		void Version<TProperty>(Expression<Func<TEntity, TProperty>> versionProperty, Action<IVersionMapper> versionMapping);
-		void NaturalId(Action<INaturalIdMapper> naturalIdMapping);
+		void NaturalId(Action<INaturalIdAttributesMapper> naturalIdMapping);
 	}
 
 	public interface IClassMapper<TEntity> : IClassAttributesMapper<TEntity>, IPropertyContainerMapper<TEntity> where TEntity : class

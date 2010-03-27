@@ -93,5 +93,19 @@ namespace ConfOrmTests.NH.MapperTests
 			var mapper = new Mapper(orm.Object);
 			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.CompileMappingFor(new[] {typeof (MyClass)}));
 		}
+
+		[Test]
+		public void CanCustomize()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+
+			var domainInspector = orm.Object;
+			var mapper = new Mapper(domainInspector);
+			mapper.Class<MyClass>(cm => cm.NaturalId(nidm => nidm.Mutable(true)));
+			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(MyClass) });
+
+			HbmClass rc = mapping.RootClasses.Single();
+			rc.naturalid.mutable.Should().Be.True();
+		}
 	}
 }
