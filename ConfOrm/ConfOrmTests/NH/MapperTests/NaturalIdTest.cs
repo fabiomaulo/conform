@@ -74,5 +74,24 @@ namespace ConfOrmTests.NH.MapperTests
 			hbmNId.Properties.Satisfy(ps => ps.OfType<HbmComponent>().Any());
 			hbmNId.Properties.Satisfy(ps => ps.OfType<HbmAny>().Any());
 		}
+
+		[Test]
+		public void WhenNotSupportedElementThenThrow()
+		{
+			var orm = new Mock<IDomainInspector>();
+			orm.Setup(m => m.IsEntity(It.Is<Type>(t => t == typeof(MyClass) || t == typeof(Related)))).Returns(true);
+			orm.Setup(m => m.IsRootEntity(It.Is<Type>(t => t == typeof(MyClass) || t == typeof(Related)))).Returns(true);
+			orm.Setup(m => m.IsTablePerClass(It.Is<Type>(t => t == typeof(MyClass) || t == typeof(Related)))).Returns(true);
+
+			orm.Setup(m => m.IsOneToOne(It.Is<Type>(t => t == typeof(MyClass)), It.Is<Type>(t => t == typeof(Related)))).Returns(true);
+
+			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
+			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
+
+			orm.Setup(m => m.IsMemberOfNaturalId(It.Is<MemberInfo>(p => p == typeof(MyClass).GetProperty("Related")))).Returns(true);
+			
+			var mapper = new Mapper(orm.Object);
+			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.CompileMappingFor(new[] {typeof (MyClass)}));
+		}
 	}
 }
