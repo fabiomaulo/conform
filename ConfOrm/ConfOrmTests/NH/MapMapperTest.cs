@@ -143,6 +143,16 @@ namespace ConfOrmTests.NH
 		}
 
 		[Test]
+		public void CanSetMapKeyManyToManyProperty()
+		{
+			var mapdoc = new HbmMapping();
+			var hbm = new HbmMap();
+			var mapper = new MapMapper(typeof(Animal), typeof(Animal), typeof(string), hbm, mapdoc);
+			mapper.MapKeyManyToMany(x => x.ForeignKey("pizza"));
+			hbm.Item.Should().Be.OfType<HbmMapKeyManyToMany>().And.ValueOf.foreignkey.Should().Be("pizza");
+		}
+
+		[Test]
 		public void SetCollectionTypeByGenericType()
 		{
 			var mapdoc = new HbmMapping();

@@ -13,6 +13,7 @@ namespace ConfOrm.NH
 		private readonly HbmMapping mapDoc;
 		private readonly IEntityPropertyMapper entityPropertyMapper;
 		private ICacheMapper cacheMapper;
+		private MapKeyManyToManyMapper mapKeyManyToManyMapper;
 
 		public MapMapper(Type ownerType, Type keyType, Type valueType, HbmMap mapping, HbmMapping mapDoc)
 		{
@@ -181,12 +182,13 @@ namespace ConfOrm.NH
 
 		public void MapKeyManyToMany(Action<IMapKeyManyToManyMapper> mapKeyMapping)
 		{
-			var mkManyToMany = mapping.Item as HbmMapKeyManyToMany;
-			if (mkManyToMany == null)
+			if (mapKeyManyToManyMapper == null)
 			{
-				mapping.Item = new HbmMapKeyManyToMany {@class = KeyType.GetShortClassName(mapDoc)};
+				var mapKeyManyToManyMapping = new HbmMapKeyManyToMany {@class = KeyType.GetShortClassName(mapDoc)};
+				mapKeyManyToManyMapper = new MapKeyManyToManyMapper(mapKeyManyToManyMapping);
 			}
-			mapKeyMapping(null);
+			mapping.Item = mapKeyManyToManyMapper.MapKeyManyToManyMapping;
+			mapKeyMapping(mapKeyManyToManyMapper);
 		}
 
 		#endregion

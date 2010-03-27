@@ -84,12 +84,16 @@
     <Compile Include="NH\AccessorPropertyMapper.cs" />
     <Compile Include="NH\AnyMapper.cs" />
     <Compile Include="NH\CacheMapper.cs" />
+    <Compile Include="NH\CustomizersImpl\BagPropertiesCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\ClassCustomizer.cs" />
     <Compile Include="NH\ColumnMapper.cs" />
     <Compile Include="NH\CustomizersImpl\CollectionKeyCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\CollectionPropertiesCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\ComponentCustomizer.cs" />
     <Compile Include="NH\CustomizersHolder.cs" />
+    <Compile Include="NH\CustomizersImpl\ListPropertiesCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\MapPropertiesCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\SetPropertiesCustomizer.cs" />
     <Compile Include="NH\DefaultPatternsAppliersHolder.cs" />
     <Compile Include="NH\EntityPropertyMapper.cs" />
     <Compile Include="NH\Generators.cs" />
@@ -125,6 +129,7 @@
     <Compile Include="NH\CustomizersImpl\JoinedSubclassKeyCustomizer.cs" />
     <Compile Include="NH\ListIndexMapper.cs" />
     <Compile Include="NH\ManyToOneMapper.cs" />
+    <Compile Include="NH\MapKeyManyToManyMapper.cs" />
     <Compile Include="NH\MapMapper.cs" />
     <Compile Include="MappingException.cs" />
     <Compile Include="NH\AbstractPropertyContainerMapper.cs" />

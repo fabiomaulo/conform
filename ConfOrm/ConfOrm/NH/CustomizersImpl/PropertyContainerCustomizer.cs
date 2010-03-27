@@ -64,43 +64,43 @@ namespace ConfOrm.NH.CustomizersImpl
 		}
 
 		public void Set<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
-		                          Action<ISetPropertiesMapper> collectionMapping,
+		                          Action<ISetPropertiesMapper<TEntity, TElement>> collectionMapping,
 		                          Action<ICollectionElementRelation<TElement>> mapping)
 		{
-			MemberInfo member = TypeExtensions.DecodeMemberAccessExpression(property);
-			CustomizersHolder.AddCustomizer(new PropertyPath(PropertyPath, member), collectionMapping);
-			MemberInfo memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
-			CustomizersHolder.AddCustomizer(new PropertyPath(PropertyPath, memberOf), collectionMapping);
+			var member = TypeExtensions.DecodeMemberAccessExpression(property);
+			collectionMapping(new SetPropertiesCustomizer<TEntity, TElement>(new PropertyPath(null, member), CustomizersHolder));
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
+			collectionMapping(new SetPropertiesCustomizer<TEntity, TElement>(new PropertyPath(null, memberOf), CustomizersHolder));
 		}
 
 		public void Bag<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
-		                          Action<IBagPropertiesMapper> collectionMapping,
+															Action<IBagPropertiesMapper<TEntity, TElement>> collectionMapping,
 		                          Action<ICollectionElementRelation<TElement>> mapping)
 		{
-			MemberInfo member = TypeExtensions.DecodeMemberAccessExpression(property);
-			CustomizersHolder.AddCustomizer(new PropertyPath(PropertyPath, member), collectionMapping);
-			MemberInfo memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
-			CustomizersHolder.AddCustomizer(new PropertyPath(PropertyPath, memberOf), collectionMapping);
+			var member = TypeExtensions.DecodeMemberAccessExpression(property);
+			collectionMapping(new BagPropertiesCustomizer<TEntity, TElement>(new PropertyPath(null, member), CustomizersHolder));
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
+			collectionMapping(new BagPropertiesCustomizer<TEntity, TElement>(new PropertyPath(null, memberOf), CustomizersHolder));
 		}
 
 		public void List<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
-		                           Action<IListPropertiesMapper> collectionMapping,
+															 Action<IListPropertiesMapper<TEntity, TElement>> collectionMapping,
 		                           Action<ICollectionElementRelation<TElement>> mapping)
 		{
-			MemberInfo member = TypeExtensions.DecodeMemberAccessExpression(property);
-			CustomizersHolder.AddCustomizer(new PropertyPath(PropertyPath, member), collectionMapping);
-			MemberInfo memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
-			CustomizersHolder.AddCustomizer(new PropertyPath(PropertyPath, memberOf), collectionMapping);
+			var member = TypeExtensions.DecodeMemberAccessExpression(property);
+			collectionMapping(new ListPropertiesCustomizer<TEntity, TElement>(new PropertyPath(null, member), CustomizersHolder));
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
+			collectionMapping(new ListPropertiesCustomizer<TEntity, TElement>(new PropertyPath(null, memberOf), CustomizersHolder));
 		}
 
 		public void Map<TKey, TElement>(Expression<Func<TEntity, IDictionary<TKey, TElement>>> property,
-		                                Action<IMapPropertiesMapper> collectionMapping,
+																		Action<IMapPropertiesMapper<TEntity, TKey, TElement>> collectionMapping,
 		                                Action<ICollectionElementRelation<TElement>> mapping)
 		{
-			MemberInfo member = TypeExtensions.DecodeMemberAccessExpression(property);
-			CustomizersHolder.AddCustomizer(new PropertyPath(PropertyPath, member), collectionMapping);
-			MemberInfo memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
-			CustomizersHolder.AddCustomizer(new PropertyPath(PropertyPath, memberOf), collectionMapping);
+			var member = TypeExtensions.DecodeMemberAccessExpression(property);
+			collectionMapping(new MapPropertiesCustomizer<TEntity, TKey, TElement>(new PropertyPath(null, member), CustomizersHolder));
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
+			collectionMapping(new MapPropertiesCustomizer<TEntity, TKey, TElement>(new PropertyPath(null, memberOf), CustomizersHolder));
 		}
 	}
 }

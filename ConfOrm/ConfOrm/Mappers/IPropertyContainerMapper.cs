@@ -20,19 +20,19 @@ namespace ConfOrm.Mappers
 		                         Action<ICollectionElementRelation> mapping);
 	}
 
-	public interface IPropertyContainerMapper<TEntity> : IPlainPropertyContainerMapper<TEntity>
+	public interface IPropertyContainerMapper<TEntity> : IPlainPropertyContainerMapper<TEntity> where TEntity : class
 	{
 		void Set<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
-											 Action<ISetPropertiesMapper> collectionMapping,
+											 Action<ISetPropertiesMapper<TEntity, TElement>> collectionMapping,
 											 Action<ICollectionElementRelation<TElement>> mapping);
 		void Bag<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
-											 Action<IBagPropertiesMapper> collectionMapping,
+											 Action<IBagPropertiesMapper<TEntity, TElement>> collectionMapping,
 											 Action<ICollectionElementRelation<TElement>> mapping);
 		void List<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
-											 Action<IListPropertiesMapper> collectionMapping,
+											 Action<IListPropertiesMapper<TEntity, TElement>> collectionMapping,
 											 Action<ICollectionElementRelation<TElement>> mapping);
 		void Map<TKey, TElement>(Expression<Func<TEntity, IDictionary<TKey, TElement>>> property,
-											 Action<IMapPropertiesMapper> collectionMapping,
+											 Action<IMapPropertiesMapper<TEntity, TKey, TElement>> collectionMapping,
 											 Action<ICollectionElementRelation<TElement>> mapping);
 	}
 }
