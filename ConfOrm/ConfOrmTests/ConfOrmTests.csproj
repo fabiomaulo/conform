@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ForClassTest.cs" />
+    <Compile Include="Mappers\CacheIncludeTest.cs" />
+    <Compile Include="Mappers\CacheUsageTest.cs" />
     <Compile Include="Mappers\VersionGenerationTest.cs" />
     <Compile Include="NH\AbstractPropertyContainerMapperTest.cs" />
     <Compile Include="NH\AccessorPropertyMapperTest.cs" />
