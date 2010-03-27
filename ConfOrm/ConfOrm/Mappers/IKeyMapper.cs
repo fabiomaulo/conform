@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace ConfOrm.Mappers
 {
 	public enum OnDeleteAction
@@ -10,5 +12,8 @@ namespace ConfOrm.Mappers
 	{
 		void Column(string columnName);
 		void OnDelete(OnDeleteAction deleteAction);
+		void PropertyRef(MemberInfo property);
 	}
+
+	// TODO : implement IKeyMapper<TEntity> to support strongly typed PropertyRef
 }

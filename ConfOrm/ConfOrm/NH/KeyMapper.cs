@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
 
@@ -6,10 +7,12 @@ namespace ConfOrm.NH
 {
 	public class KeyMapper: IKeyMapper
 	{
+		private readonly Type ownerEntityType;
 		private readonly HbmKey mapping;
 
 		public KeyMapper(Type ownerEntityType, HbmKey mapping)
 		{
+			this.ownerEntityType = ownerEntityType;
 			this.mapping = mapping;
 			this.mapping.column1 = ownerEntityType.Name.ToLowerInvariant() + "_key";
 		}
@@ -36,6 +39,20 @@ namespace ConfOrm.NH
 					mapping.ondelete = HbmOndelete.Cascade;
 					break;
 			}
+		}
+
+		public void PropertyRef(MemberInfo property)
+		{
+			if (property == null)
+			{
+				mapping.propertyref = null;
+				return;
+			}
+			if (!ownerEntityType.Equals(property.DeclaringType) && !ownerEntityType.Equals(property.ReflectedType))
+			{
+				throw new ArgumentOutOfRangeException("property", "Can't reference a property of another entity.");
+			}
+			mapping.propertyref = property.Name;
 		}
 
 		#endregion

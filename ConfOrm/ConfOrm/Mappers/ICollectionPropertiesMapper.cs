@@ -28,6 +28,8 @@ namespace ConfOrm.Mappers
 
 	public interface ICollectionPropertiesMapper<TElement> : ICollectionPropertiesMapper
 	{
+		// TODO : implement as ICollectionPropertiesMapper<TEntity, TElement> to support strongly typed IKeyMapper<TEntity>
+
 		void OrderBy<TProperty>(Expression<Func<TElement, TProperty>> property);
 	}
 
