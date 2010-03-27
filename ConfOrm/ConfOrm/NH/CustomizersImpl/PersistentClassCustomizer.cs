@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using ConfOrm.Mappers;
 
-namespace ConfOrm.NH
+namespace ConfOrm.NH.CustomizersImpl
 {
 	public class PersistentClassCustomizer<TPersistent> : IPersistentClassCustomizer<TPersistent> where TPersistent : class
 	{

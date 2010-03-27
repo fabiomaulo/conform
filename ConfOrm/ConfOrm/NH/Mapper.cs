@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ConfOrm.Mappers;
+using ConfOrm.NH.CustomizersImpl;
 using ConfOrm.Patterns;
 using NHibernate.Cfg.MappingSchema;
 

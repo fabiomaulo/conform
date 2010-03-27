@@ -2,7 +2,7 @@ using System;
 using System.Linq.Expressions;
 using ConfOrm.Mappers;
 
-namespace ConfOrm.NH
+namespace ConfOrm.NH.CustomizersImpl
 {
 	public class JoinedSubclassKeyCustomizer<TEntity>: IKeyMapper<TEntity> 
 		where TEntity : class

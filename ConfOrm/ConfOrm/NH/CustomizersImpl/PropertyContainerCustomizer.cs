@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using ConfOrm.Mappers;
 
-namespace ConfOrm.NH
+namespace ConfOrm.NH.CustomizersImpl
 {
 	public class PropertyContainerCustomizer<TEntity> where TEntity : class
 	{

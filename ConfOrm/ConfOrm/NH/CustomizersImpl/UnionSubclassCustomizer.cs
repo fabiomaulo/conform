@@ -1,7 +1,7 @@
 using System;
 using ConfOrm.Mappers;
 
-namespace ConfOrm.NH
+namespace ConfOrm.NH.CustomizersImpl
 {
 	public class UnionSubclassCustomizer<TEntity> : PropertyContainerCustomizer<TEntity>, IUnionSubclassMapper<TEntity> where TEntity : class
 	{

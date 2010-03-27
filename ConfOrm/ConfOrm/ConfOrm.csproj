@@ -84,9 +84,9 @@
     <Compile Include="NH\AccessorPropertyMapper.cs" />
     <Compile Include="NH\AnyMapper.cs" />
     <Compile Include="NH\CacheMapper.cs" />
-    <Compile Include="NH\ClassCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\ClassCustomizer.cs" />
     <Compile Include="NH\ColumnMapper.cs" />
-    <Compile Include="NH\ComponentCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\ComponentCustomizer.cs" />
     <Compile Include="NH\CustomizersHolder.cs" />
     <Compile Include="NH\DefaultPatternsAppliersHolder.cs" />
     <Compile Include="NH\EntityPropertyMapper.cs" />
@@ -119,8 +119,8 @@
     <Compile Include="NH\ICustomizersHolder.cs" />
     <Compile Include="NH\IPatternsAppliersHolder.cs" />
     <Compile Include="NH\IPersistentClassCustomizer.cs" />
-    <Compile Include="NH\JoinedSubclassCustomizer.cs" />
-    <Compile Include="NH\JoinedSubclassKeyCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\JoinedSubclassCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\JoinedSubclassKeyCustomizer.cs" />
     <Compile Include="NH\ListIndexMapper.cs" />
     <Compile Include="NH\ManyToOneMapper.cs" />
     <Compile Include="NH\MapMapper.cs" />
@@ -138,17 +138,17 @@
     <Compile Include="NH\NaturalIdMapper.cs" />
     <Compile Include="NH\NoMemberPropertyMapper.cs" />
     <Compile Include="NH\OneToOneMapper.cs" />
-    <Compile Include="NH\PersistentClassCustomizer.cs" />
-    <Compile Include="NH\PropertyContainerCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\PersistentClassCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\PropertyContainerCustomizer.cs" />
     <Compile Include="NH\PropertyMapper.cs" />
     <Compile Include="NH\PropertyPath.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="NH\SetMapper.cs" />
-    <Compile Include="NH\SubclassCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\SubclassCustomizer.cs" />
     <Compile Include="NH\SubclassMapper.cs" />
     <Compile Include="NH\TypeNameUtil.cs" />
-    <Compile Include="NH\UnionSubclassCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\UnionSubclassCustomizer.cs" />
     <Compile Include="NH\UnionSubclassMapper.cs" />
     <Compile Include="NH\VersionMapper.cs" />
     <Compile Include="ObjectRelationalMapper.cs" />

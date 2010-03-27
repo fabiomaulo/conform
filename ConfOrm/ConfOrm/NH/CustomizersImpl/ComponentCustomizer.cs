@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using ConfOrm.Mappers;
 
-namespace ConfOrm.NH
+namespace ConfOrm.NH.CustomizersImpl
 {
 	public class ComponentCustomizer<TComponent> : PropertyContainerCustomizer<TComponent>, IComponentMapper<TComponent>
 		where TComponent : class
