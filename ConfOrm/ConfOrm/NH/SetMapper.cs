@@ -11,6 +11,7 @@ namespace ConfOrm.NH
 		private readonly KeyMapper keyMapper;
 		private readonly HbmSet mapping;
 		private readonly IEntityPropertyMapper entityPropertyMapper;
+		private ICacheMapper cacheMapper;
 
 		public SetMapper(Type ownerType, Type elementType, HbmSet mapping)
 		{
@@ -147,6 +148,17 @@ namespace ConfOrm.NH
 		public void Schema(string schemaName)
 		{
 			mapping.schema = schemaName;
+		}
+
+		public void Cache(Action<ICacheMapper> cacheMapping)
+		{
+			if (cacheMapper == null)
+			{
+				var hbmCache = new HbmCache();
+				mapping.cache = hbmCache;
+				cacheMapper = new CacheMapper(hbmCache);
+			}
+			cacheMapping(cacheMapper);
 		}
 
 		#endregion

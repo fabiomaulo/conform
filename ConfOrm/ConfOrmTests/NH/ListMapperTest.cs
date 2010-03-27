@@ -128,5 +128,29 @@ namespace ConfOrmTests.NH
 			                  	i.Base(1); });
 			hbm.Item.Should().Be.OfType<HbmListIndex>().And.Value.Satisfy(i => i.column1 == "Pepe" && i.@base == "1");
 		}
+
+		[Test]
+		public void CanSetCache()
+		{
+			var hbm = new HbmList();
+			var mapper = new ListMapper(typeof(Animal), typeof(Animal), hbm);
+			mapper.Cache(x => x.Region("pizza"));
+
+			hbm.cache.Should().Not.Be.Null();
+		}
+
+		[Test]
+		public void WhenSetTwoCachePropertiesInTwoActionsThenSetTheTwoValuesWithoutLostTheFirst()
+		{
+			var hbm = new HbmList();
+			var mapper = new ListMapper(typeof(Animal), typeof(Animal), hbm);
+			mapper.Cache(ch => ch.Region("pizza"));
+			mapper.Cache(ch => ch.Usage(CacheUsage.NonstrictReadWrite));
+
+			var hbmCache = hbm.cache;
+			hbmCache.Should().Not.Be.Null();
+			hbmCache.region.Should().Be("pizza");
+			hbmCache.usage.Should().Be(HbmCacheUsage.NonstrictReadWrite);
+		}
 	}
 }

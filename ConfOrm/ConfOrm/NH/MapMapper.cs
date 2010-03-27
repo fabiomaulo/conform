@@ -12,6 +12,7 @@ namespace ConfOrm.NH
 		private readonly HbmMap mapping;
 		private readonly HbmMapping mapDoc;
 		private readonly IEntityPropertyMapper entityPropertyMapper;
+		private ICacheMapper cacheMapper;
 
 		public MapMapper(Type ownerType, Type keyType, Type valueType, HbmMap mapping, HbmMapping mapDoc)
 		{
@@ -165,6 +166,17 @@ namespace ConfOrm.NH
 		public void Schema(string schemaName)
 		{
 			mapping.schema = schemaName;
+		}
+
+		public void Cache(Action<ICacheMapper> cacheMapping)
+		{
+			if (cacheMapper == null)
+			{
+				var hbmCache = new HbmCache();
+				mapping.cache = hbmCache;
+				cacheMapper = new CacheMapper(hbmCache);
+			}
+			cacheMapping(cacheMapper);
 		}
 
 		public void MapKeyManyToMany(Action<IMapKeyManyToManyMapper> mapKeyMapping)

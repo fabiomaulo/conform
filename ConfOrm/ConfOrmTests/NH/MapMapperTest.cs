@@ -172,5 +172,31 @@ namespace ConfOrmTests.NH
 
 			hbm.Access.Should().Not.Be.Null();
 		}
+
+		[Test]
+		public void CanSetCache()
+		{
+			var mapdoc = new HbmMapping();
+			var hbm = new HbmMap();
+			var mapper = new MapMapper(typeof(Animal), typeof(Animal), typeof(string), hbm, mapdoc);
+			mapper.Cache(x => x.Region("pizza"));
+
+			hbm.cache.Should().Not.Be.Null();
+		}
+
+		[Test]
+		public void WhenSetTwoCachePropertiesInTwoActionsThenSetTheTwoValuesWithoutLostTheFirst()
+		{
+			var mapdoc = new HbmMapping();
+			var hbm = new HbmMap();
+			var mapper = new MapMapper(typeof(Animal), typeof(Animal), typeof(string), hbm, mapdoc);
+			mapper.Cache(ch => ch.Region("pizza"));
+			mapper.Cache(ch => ch.Usage(CacheUsage.NonstrictReadWrite));
+
+			var hbmCache = hbm.cache;
+			hbmCache.Should().Not.Be.Null();
+			hbmCache.region.Should().Be("pizza");
+			hbmCache.usage.Should().Be(HbmCacheUsage.NonstrictReadWrite);
+		}
 	}
 }

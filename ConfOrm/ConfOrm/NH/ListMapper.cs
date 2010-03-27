@@ -12,6 +12,7 @@ namespace ConfOrm.NH
 		private readonly HbmList mapping;
 		private readonly IEntityPropertyMapper entityPropertyMapper;
 		private readonly IListIndexMapper listIndexMapper;
+		private ICacheMapper cacheMapper;
 
 		public ListMapper(Type ownerType, Type elementType, HbmList mapping)
 		{
@@ -145,6 +146,17 @@ namespace ConfOrm.NH
 		public void Schema(string schemaName)
 		{
 			mapping.schema = schemaName;
+		}
+
+		public void Cache(Action<ICacheMapper> cacheMapping)
+		{
+			if (cacheMapper == null)
+			{
+				var hbmCache = new HbmCache();
+				mapping.cache = hbmCache;
+				cacheMapper = new CacheMapper(hbmCache);
+			}
+			cacheMapping(cacheMapper);
 		}
 
 		public void Index(Action<IListIndexMapper> listIndexMapping)
