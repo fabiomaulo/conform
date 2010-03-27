@@ -4,6 +4,12 @@ namespace ConfOrm.Mappers
 	{
 		void Usage(CacheUsage cacheUsage);
 		void Region(string regionName);
-		void Include(CacheInclude cacheUsage);
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="cacheInclude"></param>
+		/// <remarks>Not supported in NH3.</remarks>
+		void Include(CacheInclude cacheInclude);
 	}
 }

@@ -66,6 +66,7 @@
     <Compile Include="NH\AccessorPropertyMapperTest.cs" />
     <Compile Include="NH\AnyMapperTest.cs" />
     <Compile Include="NH\BagMapperTest.cs" />
+    <Compile Include="NH\CacheMapperTest.cs" />
     <Compile Include="NH\CascadeConverterTest.cs" />
     <Compile Include="NH\ClassMapperTest.cs" />
     <Compile Include="NH\CollectionElementRelationTest.cs" />

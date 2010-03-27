@@ -83,6 +83,7 @@
     <Compile Include="NH\AbstractBasePropertyContainerMapper.cs" />
     <Compile Include="NH\AccessorPropertyMapper.cs" />
     <Compile Include="NH\AnyMapper.cs" />
+    <Compile Include="NH\CacheMapper.cs" />
     <Compile Include="NH\ClassCustomizer.cs" />
     <Compile Include="NH\ColumnMapper.cs" />
     <Compile Include="NH\ComponentCustomizer.cs" />
