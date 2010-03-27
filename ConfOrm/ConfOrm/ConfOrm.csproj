@@ -120,6 +120,7 @@
     <Compile Include="NH\IPatternsAppliersHolder.cs" />
     <Compile Include="NH\IPersistentClassCustomizer.cs" />
     <Compile Include="NH\JoinedSubclassCustomizer.cs" />
+    <Compile Include="NH\JoinedSubclassKeyCustomizer.cs" />
     <Compile Include="NH\ListIndexMapper.cs" />
     <Compile Include="NH\ManyToOneMapper.cs" />
     <Compile Include="NH\MapMapper.cs" />

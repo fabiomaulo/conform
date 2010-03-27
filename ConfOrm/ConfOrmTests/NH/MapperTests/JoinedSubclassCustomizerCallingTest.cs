@@ -5,6 +5,7 @@ using ConfOrm;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
 using Moq;
+using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -19,6 +20,7 @@ namespace ConfOrmTests.NH.MapperTests
 
 		private class Inherited : MyClass
 		{
+			public int IntProp { get; set; }
 		}
 
 		private Mock<IDomainInspector> GetMockedDomainInspector()
@@ -144,6 +146,32 @@ namespace ConfOrmTests.NH.MapperTests
 			var mappings = mapper.CompileMappingFor(new[] { typeof(MyClass), typeof(Inherited) });
 			var hbmClass = mappings.JoinedSubclasses.Single();
 			hbmClass.key.column1.Should().Be("pizzaId");
+		}
+
+		[Test]
+		public void CallCustomizerOfKeyPropertyRef()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+			var mapper = new Mapper(orm.Object);
+
+			mapper.JoinedSubclass<Inherited>(x => x.Key(km => km.PropertyRef(y => y.IntProp)));
+
+			var mappings = mapper.CompileMappingFor(new[] { typeof(MyClass), typeof(Inherited) });
+			var hbmClass = mappings.JoinedSubclasses.Single();
+			hbmClass.key.propertyref.Should().Be("IntProp");
+		}
+
+		[Test]
+		public void CallCustomizerOfKeyOnDelete()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+			var mapper = new Mapper(orm.Object);
+
+			mapper.JoinedSubclass<Inherited>(x => x.Key(km => km.OnDelete(OnDeleteAction.Cascade)));
+
+			var mappings = mapper.CompileMappingFor(new[] { typeof(MyClass), typeof(Inherited) });
+			var hbmClass = mappings.JoinedSubclasses.Single();
+			hbmClass.key.ondelete.Should().Be(HbmOndelete.Cascade);
 		}
 	}
 }

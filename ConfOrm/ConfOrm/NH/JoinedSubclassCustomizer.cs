@@ -5,14 +5,17 @@ namespace ConfOrm.NH
 {
 	public class JoinedSubclassCustomizer<TEntity> : PropertyContainerCustomizer<TEntity>, IJoinedSubclassMapper<TEntity> where TEntity : class
 	{
-		public JoinedSubclassCustomizer(ICustomizersHolder customizersHolder) : base(customizersHolder, null) {}
-
+		private readonly IKeyMapper<TEntity> keyMapper;
+		public JoinedSubclassCustomizer(ICustomizersHolder customizersHolder) : base(customizersHolder, null)
+		{
+			keyMapper = new JoinedSubclassKeyCustomizer<TEntity>(customizersHolder);
+		}
 
 		#region Implementation of IEntityAttributesMapper
 
-		public void Key(Action<IKeyMapper> keyMapping)
+		public void Key(Action<IKeyMapper<TEntity>> keyMapping)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IJoinedSubclassAttributesMapper m) => m.Key(keyMapping));
+			keyMapping(keyMapper);
 		}
 
 		public void EntityName(string value)
