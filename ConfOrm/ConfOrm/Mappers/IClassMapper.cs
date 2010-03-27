@@ -16,6 +16,7 @@ namespace ConfOrm.Mappers
 		void Mutable(bool isMutable);
 		void Version(MemberInfo versionProperty, Action<IVersionMapper> versionMapping);
 		void NaturalId(Action<INaturalIdMapper> naturalIdMapping);
+		void Cache(Action<ICacheMapper> cacheMapping);
 	}
 
 	public interface IClassMapper : IClassAttributesMapper, IPropertyContainerMapper
@@ -33,6 +34,7 @@ namespace ConfOrm.Mappers
 		void Mutable(bool isMutable);
 		void Version<TProperty>(Expression<Func<TEntity, TProperty>> versionProperty, Action<IVersionMapper> versionMapping);
 		void NaturalId(Action<INaturalIdAttributesMapper> naturalIdMapping);
+		void Cache(Action<ICacheMapper> cacheMapping);
 	}
 
 	public interface IClassMapper<TEntity> : IClassAttributesMapper<TEntity>, IPropertyContainerMapper<TEntity> where TEntity : class

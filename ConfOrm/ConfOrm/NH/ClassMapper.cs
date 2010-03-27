@@ -12,6 +12,7 @@ namespace ConfOrm.NH
 		private readonly IIdMapper idMapper;
 		private IVersionMapper versionMapper;
 		private INaturalIdMapper naturalIdMapper;
+		private ICacheMapper cacheMapper;
 
 		public ClassMapper(Type rootClass, HbmMapping mapDoc, MemberInfo idProperty)
 			: base(rootClass, mapDoc)
@@ -125,6 +126,17 @@ namespace ConfOrm.NH
 				naturalIdMapper = new NaturalIdMapper(Container, hbmNaturalId, MapDoc);
 			}
 			naturalIdMapping(naturalIdMapper);
+		}
+
+		public void Cache(Action<ICacheMapper> cacheMapping)
+		{
+			if (cacheMapper == null)
+			{
+				var hbmCache = new HbmCache();
+				classMapping.cache = hbmCache;
+				cacheMapper = new CacheMapper(hbmCache);
+			}
+			cacheMapping(cacheMapper);
 		}
 
 		#endregion

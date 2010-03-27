@@ -213,5 +213,20 @@ namespace ConfOrmTests.NH.MapperTests
 			var hbmClass = mappings.RootClasses.Single();
 			hbmClass.Version.Should().Not.Be.Null();
 		}
+
+		[Test]
+		public void CallCustomizerCache()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+			var mapper = new Mapper(orm.Object);
+			bool isCalled = false;
+
+			mapper.Class<MyClass>(x => x.Cache(y => isCalled = true));
+
+			var mappings = mapper.CompileMappingFor(new[] { typeof(MyClass) });
+			isCalled.Should().Be.True();
+			var hbmClass = mappings.RootClasses.Single();
+			hbmClass.cache.Should().Not.Be.Null();
+		}
 	}
 }

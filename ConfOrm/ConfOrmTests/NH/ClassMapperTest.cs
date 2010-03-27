@@ -182,5 +182,27 @@ namespace ConfOrmTests.NH
 			hbmNaturalId.Properties.Should().Have.Count.EqualTo(2);
 		}
 
+		[Test]
+		public void CallSetCache()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
+			rc.Cache(ch=> ch.Region("pizza"));
+			mapdoc.RootClasses[0].cache.Should().Not.Be.Null();
+		}
+
+		[Test]
+		public void WhenSetTwoCachePropertiesInTwoActionsThenSetTheTwoValuesWithoutLostTheFirst()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimpleWithNaturalId), mapdoc, typeof(EntitySimpleWithNaturalId).GetProperty("Id"));
+			rc.Cache(ch => ch.Region("pizza"));
+			rc.Cache(ch => ch.Usage(CacheUsage.NonstrictReadWrite));
+
+			var hbmCache = mapdoc.RootClasses[0].cache;
+			hbmCache.Should().Not.Be.Null();
+			hbmCache.region.Should().Be("pizza");
+			hbmCache.usage.Should().Be(HbmCacheUsage.NonstrictReadWrite);
+		}
 	}
 }

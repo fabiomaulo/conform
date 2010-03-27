@@ -63,6 +63,11 @@ namespace ConfOrm.NH
 			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.NaturalId(nidm => naturalIdMapping(nidm)));
 		}
 
+		public void Cache(Action<ICacheMapper> cacheMapping)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Cache(cacheMapping));
+		}
+
 		public void EntityName(string value)
 		{
 			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.EntityName(value));
