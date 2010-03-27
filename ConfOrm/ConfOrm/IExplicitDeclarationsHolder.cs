@@ -28,5 +28,6 @@ namespace ConfOrm
 		ICollection<MemberInfo> Poids { get; }
 		ICollection<MemberInfo> VersionProperties { get; }
 		ICollection<MemberInfo> HeterogeneousAssociations { get; }
+		ICollection<MemberInfo> NaturalIds { get; }
 	}
 }

@@ -136,6 +136,19 @@ namespace ConfOrm
 			explicitDeclarations.Poids.Add(member);
 		}
 
+		public void NaturalId<TBaseEntity>(params Expression<Func<TBaseEntity, object>>[] propertiesGetters) where TBaseEntity : class
+		{
+			if (!IsRootEntity(typeof(TBaseEntity)))
+			{
+				throw new ArgumentOutOfRangeException("TBaseEntity", "The entity class should be a root-entity; register the table-strategy first.");
+			}
+			foreach (var propertyGetter in propertiesGetters.Where(pg=> pg!=null))
+			{
+				var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
+				explicitDeclarations.NaturalIds.Add(member);
+			}
+		}
+
 		public virtual void ManyToMany<TLeftEntity, TRigthEntity>()
 		{
 			explicitDeclarations.ManyToManyRelations.Add(new Relation(typeof(TLeftEntity), typeof(TRigthEntity)));
@@ -374,7 +387,7 @@ namespace ConfOrm
 
 		public bool IsMemberOfNaturalId(MemberInfo member)
 		{
-			return false;
+			return explicitDeclarations.NaturalIds.ContainsMember(member);
 		}
 
 		public virtual bool IsPersistentProperty(MemberInfo role)

@@ -28,6 +28,7 @@ namespace ConfOrm
 		private readonly HashSet<MemberInfo> complexTypeMembers = new HashSet<MemberInfo>();
 		private readonly HashSet<MemberInfo> versions = new HashSet<MemberInfo>();
 		private readonly HashSet<MemberInfo> heterogeneousAssociations = new HashSet<MemberInfo>();
+		private readonly HashSet<MemberInfo> naturalIds = new HashSet<MemberInfo>();
 
 		public ICollection<Type> RootEntities
 		{
@@ -137,6 +138,11 @@ namespace ConfOrm
 		public ICollection<MemberInfo> HeterogeneousAssociations
 		{
 			get { return heterogeneousAssociations; }
+		}
+
+		public ICollection<MemberInfo> NaturalIds
+		{
+			get { return naturalIds; }
 		}
 	}
 }

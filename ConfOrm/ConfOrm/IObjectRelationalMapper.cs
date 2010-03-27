@@ -31,6 +31,7 @@ namespace ConfOrm
 		void Exclude<TClass>();
 
 		void Poid<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
+		void NaturalId<TBaseEntity>(params Expression<Func<TBaseEntity, object>>[] propertiesGetters) where TBaseEntity : class;
 		void ManyToMany<TLeftEntity, TRigthEntity>();
 		void ManyToOne<TLeftEntity, TRigthEntity>();
 		void OneToOne<TLeftEntity, TRigthEntity>();
