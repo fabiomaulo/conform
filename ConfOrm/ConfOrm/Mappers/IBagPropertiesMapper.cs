@@ -5,7 +5,7 @@ namespace ConfOrm.Mappers
 
 	}
 
-	public interface IBagPropertiesMapper<TElement> : ICollectionPropertiesMapper<TElement>
+	public interface IBagPropertiesMapper<TEntity, TElement> : ICollectionPropertiesMapper<TEntity, TElement> where TEntity : class
 	{
 		
 	}

@@ -1,3 +1,5 @@
+using System;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace ConfOrm.Mappers
@@ -15,5 +17,10 @@ namespace ConfOrm.Mappers
 		void PropertyRef(MemberInfo property);
 	}
 
-	// TODO : implement IKeyMapper<TEntity> to support strongly typed PropertyRef
+	public interface IKeyMapper<TEntity> where TEntity: class
+	{
+		void Column(string columnName);
+		void OnDelete(OnDeleteAction deleteAction);
+		void PropertyRef<TProperty>(Expression<Func<TEntity, TProperty>> propertyGetter);
+	}
 }

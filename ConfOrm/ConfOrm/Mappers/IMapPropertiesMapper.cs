@@ -7,7 +7,7 @@ namespace ConfOrm.Mappers
 		void MapKeyManyToMany(Action<IMapKeyManyToManyMapper> mapKeyMapping);
 	}
 
-	public interface IMapPropertiesMapper<TKey, TElement> : ICollectionPropertiesMapper<TElement>
+	public interface IMapPropertiesMapper<TEntity, TKey, TElement> : ICollectionPropertiesMapper<TEntity, TElement> where TEntity : class
 	{
 		void MapKeyManyToMany(Action<IMapKeyManyToManyMapper> mapKeyMapping);
 	}

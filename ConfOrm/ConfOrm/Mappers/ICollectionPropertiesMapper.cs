@@ -26,11 +26,23 @@ namespace ConfOrm.Mappers
 		void Cache(Action<ICacheMapper> cacheMapping);
 	}
 
-	public interface ICollectionPropertiesMapper<TElement> : ICollectionPropertiesMapper
+	public interface ICollectionPropertiesMapper<TEntity, TElement> where TEntity: class
 	{
-		// TODO : implement as ICollectionPropertiesMapper<TEntity, TElement> to support strongly typed IKeyMapper<TEntity>
-
+		void Inverse(bool value);
+		void Mutable(bool value);
+		void Where(string sqlWhereClause);
+		void BatchSize(int value);
+		void Lazy(CollectionLazy collectionLazy);
+		void Key(Action<IKeyMapper<TEntity>> keyMapping);
 		void OrderBy<TProperty>(Expression<Func<TElement, TProperty>> property);
+		void Sort();
+		void Sort<TComparer>();
+		void Cascade(Cascade cascadeStyle);
+		void Type<TCollection>() where TCollection : IUserCollectionType;
+		void Type(Type collectionType);
+		void Table(string tableName);
+		void Catalog(string catalogName);
+		void Schema(string schemaName);
+		void Cache(Action<ICacheMapper> cacheMapping);
 	}
-
 }

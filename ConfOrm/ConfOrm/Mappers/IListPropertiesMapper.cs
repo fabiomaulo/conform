@@ -7,7 +7,7 @@ namespace ConfOrm.Mappers
 		void Index(Action<IListIndexMapper> listIndexMapping);
 	}
 
-	public interface IListPropertiesMapper<TElement> : ICollectionPropertiesMapper<TElement>
+	public interface IListPropertiesMapper<TEntity, TElement> : ICollectionPropertiesMapper<TEntity, TElement> where TEntity : class
 	{
 		void Index(Action<IListIndexMapper> listIndexMapping);
 	}

@@ -4,7 +4,7 @@ namespace ConfOrm.Mappers
 	{
 
 	}
-	public interface ISetPropertiesMapper<TElement> : ICollectionPropertiesMapper<TElement>
+	public interface ISetPropertiesMapper<TEntity, TElement> : ICollectionPropertiesMapper<TEntity, TElement> where TEntity : class
 	{
 		
 	}
