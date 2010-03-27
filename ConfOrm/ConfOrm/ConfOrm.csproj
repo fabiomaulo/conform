@@ -86,6 +86,8 @@
     <Compile Include="NH\CacheMapper.cs" />
     <Compile Include="NH\CustomizersImpl\ClassCustomizer.cs" />
     <Compile Include="NH\ColumnMapper.cs" />
+    <Compile Include="NH\CustomizersImpl\CollectionKeyCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\CollectionPropertiesCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\ComponentCustomizer.cs" />
     <Compile Include="NH\CustomizersHolder.cs" />
     <Compile Include="NH\DefaultPatternsAppliersHolder.cs" />

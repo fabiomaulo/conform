@@ -40,12 +40,12 @@ namespace ConfOrm.NH.CustomizersImpl
 			customizersHolder.AddCustomizer(new PropertyPath(null, memberOf), mapping);
 		}
 
-		public void Collection<TElement>(Expression<Func<TPersistent, IEnumerable<TElement>>> property, Action<ICollectionPropertiesMapper> mapping)
+		public void Collection<TElement>(Expression<Func<TPersistent, IEnumerable<TElement>>> property, Action<ICollectionPropertiesMapper<TPersistent, TElement>> mapping)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(property);
-			customizersHolder.AddCustomizer(new PropertyPath(null, member), mapping);
+			mapping(new CollectionPropertiesCustomizer<TPersistent, TElement>(new PropertyPath(null, member), customizersHolder));
 			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
-			customizersHolder.AddCustomizer(new PropertyPath(null, memberOf), mapping);
+			mapping(new CollectionPropertiesCustomizer<TPersistent, TElement>(new PropertyPath(null, memberOf), customizersHolder));
 		}
 
 		public void Any<TProperty>(Expression<Func<TPersistent, TProperty>> property, Action<IAnyMapper> mapping) where TProperty : class

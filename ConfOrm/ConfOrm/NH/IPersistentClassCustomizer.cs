@@ -13,7 +13,7 @@ namespace ConfOrm.NH
 		void OneToOne<TProperty>(Expression<Func<TPersistent, TProperty>> property, Action<IOneToOneMapper> mapping) where TProperty : class;
 
 		void Collection<TElement>(Expression<Func<TPersistent, IEnumerable<TElement>>> property,
-											 Action<ICollectionPropertiesMapper> collectionMapping);
+											 Action<ICollectionPropertiesMapper<TPersistent, TElement>> collectionMapping);
 		void Any<TProperty>(Expression<Func<TPersistent, TProperty>> property, Action<IAnyMapper> mapping) where TProperty : class;
 	}
 }
