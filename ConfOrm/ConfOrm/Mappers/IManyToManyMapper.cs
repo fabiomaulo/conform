@@ -2,9 +2,7 @@ using System;
 
 namespace ConfOrm.Mappers
 {
-	public interface IManyToManyMapper
+	public interface IManyToManyMapper: IColumnsMapper
 	{
-		void Column(Action<IColumnMapper> columnMapper);
-		void Column(string name);
 	}
 }
