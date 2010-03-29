@@ -34,6 +34,7 @@ namespace ConfOrm.NH
 		public void ManyToMany(Action<IManyToManyMapper> mapping)
 		{
 			var hbm = new HbmManyToMany { @class = collectionElementType.GetShortClassName(mapDoc) };
+			mapping(new ManyToManyMapper(collectionElementType, hbm));
 			elementRelationshipAssing(hbm);
 		}
 

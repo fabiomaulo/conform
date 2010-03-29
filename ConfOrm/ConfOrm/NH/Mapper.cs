@@ -695,20 +695,25 @@ namespace ConfOrm.NH
 			private readonly Type ownerType;
 			private readonly Type collectionElementType;
 			private readonly IDomainInspector domainInspector;
+			private readonly IPatternsAppliersHolder appliers;
 
-			public ManyToManyRelationMapper(MemberInfo member, Type ownerType, Type collectionElementType, IDomainInspector domainInspector)
+			public ManyToManyRelationMapper(MemberInfo member, Type ownerType, Type collectionElementType, IDomainInspector domainInspector, IPatternsAppliersHolder appliers)
 			{
 				this.member = member;
 				this.ownerType = ownerType;
 				this.collectionElementType = collectionElementType;
 				this.domainInspector = domainInspector;
+				this.appliers = appliers;
 			}
 
 			#region Implementation of ICollectionElementRelationMapper
 
 			public void Map(ICollectionElementRelation relation)
 			{
-				relation.ManyToMany(x => { });
+				relation.ManyToMany(x =>
+					{
+						appliers.ManyToMany.ApplyAllMatchs(member, x);
+					});
 			}
 
 			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)
@@ -820,7 +825,7 @@ namespace ConfOrm.NH
 			}
 			else if (domainInspector.IsManyToMany(ownerType, collectionElementType))
 			{
-				return new ManyToManyRelationMapper(property, ownerType, collectionElementType, domainInspector);
+				return new ManyToManyRelationMapper(property, ownerType, collectionElementType, domainInspector, PatternsAppliers);
 			}
 			else if (domainInspector.IsComponent(collectionElementType))
 			{

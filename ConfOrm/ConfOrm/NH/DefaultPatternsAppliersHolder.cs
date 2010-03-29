@@ -24,6 +24,8 @@ namespace ConfOrm.NH
 		private readonly List<IPatternApplier<PropertyPath, IOneToOneMapper>> oneToOnePath;
 		private readonly List<IPatternApplier<MemberInfo, IAnyMapper>> any;
 		private readonly List<IPatternApplier<PropertyPath, IAnyMapper>> anyPath;
+		private readonly List<IPatternApplier<MemberInfo, IManyToManyMapper>> manyToMany;
+		private readonly List<IPatternApplier<PropertyPath, IManyToManyMapper>> manyToManyPath;
 
 		public DefaultPatternsAppliersHolder(IDomainInspector domainInspector)
 		{
@@ -89,6 +91,8 @@ namespace ConfOrm.NH
 			      		new MemberToFieldAccessorApplier<IAnyMapper>()
 			      	};
 			anyPath = new List<IPatternApplier<PropertyPath, IAnyMapper>>();
+			manyToMany = new List<IPatternApplier<MemberInfo, IManyToManyMapper>>();
+			manyToManyPath = new List<IPatternApplier<PropertyPath, IManyToManyMapper>>();
 		}
 
 		#region Implementation of IPatternsAppliersHolder
@@ -166,6 +170,16 @@ namespace ConfOrm.NH
 		public ICollection<IPatternApplier<PropertyPath, IAnyMapper>> AnyPath
 		{
 			get { return anyPath; }
+		}
+
+		public ICollection<IPatternApplier<MemberInfo, IManyToManyMapper>> ManyToMany
+		{
+			get { return manyToMany; }
+		}
+
+		public ICollection<IPatternApplier<PropertyPath, IManyToManyMapper>> ManyToManyPath
+		{
+			get { return manyToManyPath; }
 		}
 
 		#endregion

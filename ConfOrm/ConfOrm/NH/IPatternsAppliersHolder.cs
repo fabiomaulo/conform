@@ -23,5 +23,7 @@ namespace ConfOrm.NH
 		ICollection<IPatternApplier<PropertyPath, IOneToOneMapper>> OneToOnePath { get; }
 		ICollection<IPatternApplier<MemberInfo, IAnyMapper>> Any { get; }
 		ICollection<IPatternApplier<PropertyPath, IAnyMapper>> AnyPath { get; }
+		ICollection<IPatternApplier<MemberInfo, IManyToManyMapper>> ManyToMany { get; }
+		ICollection<IPatternApplier<PropertyPath, IManyToManyMapper>> ManyToManyPath { get; }
 	}
 }

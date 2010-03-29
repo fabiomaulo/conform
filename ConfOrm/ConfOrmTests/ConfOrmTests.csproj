@@ -117,6 +117,7 @@
     <Compile Include="NH\MapperTests\HierarchyTablePerConcreteClassJumpingImpOfInterfaceTest.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerConcreteClassJumpingTest.cs" />
     <Compile Include="NH\MapperTests\JoinedSubclassPatternsAddition.cs" />
+    <Compile Include="NH\MapperTests\ManyToManyApplierCalling.cs" />
     <Compile Include="NH\MapperTests\ManyToOneRelationAccessorsTest.cs" />
     <Compile Include="NH\MapperTests\NaturalIdTest.cs" />
     <Compile Include="NH\MapperTests\OneToOneRelationAccessorsTest.cs" />
