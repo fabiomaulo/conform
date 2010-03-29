@@ -6,7 +6,7 @@ namespace ConfOrm.Mappers
 	{
 		void Element();
 		void OneToMany();
-		void ManyToMany();
+		void ManyToMany(Action<IManyToManyMapper> mapping);
 		void Component(Action<IComponentElementMapper> mapping);
 	}
 
@@ -14,7 +14,7 @@ namespace ConfOrm.Mappers
 	{
 		void Element();
 		void OneToMany();
-		void ManyToMany();
+		void ManyToMany(Action<IManyToManyMapper> mapping);
 		void Component(Action<IComponentElementMapper<TElement>> mapping);
 	}
 }

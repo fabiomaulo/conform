@@ -36,7 +36,7 @@ namespace ConfOrmTests.NH
 		{
 			object relationField = null;
 			var hbm = new CollectionElementRelation(typeof(Address), new HbmMapping(), element => relationField = element);
-			hbm.ManyToMany();
+			hbm.ManyToMany(x => { });
 			relationField.Should().Not.Be.Null().And.Be.OfType<HbmManyToMany>().And.ValueOf.@class.Satisfy(
 				a => !string.IsNullOrEmpty(a));
 		}
