@@ -68,7 +68,7 @@ namespace ConfOrm
 			RegisterTablePerClassHierarchy(type);
 		}
 
-		private void RegisterTablePerClassHierarchy(Type type)
+		protected void RegisterTablePerClassHierarchy(Type type)
 		{
 			PreventComponentAsEntity(type);
 			explicitDeclarations.RootEntities.Add(type);
@@ -89,7 +89,7 @@ namespace ConfOrm
 			RegisterTablePerClass(type);
 		}
 
-		private void RegisterTablePerClass(Type type)
+		protected void RegisterTablePerClass(Type type)
 		{
 			PreventComponentAsEntity(type);
 			explicitDeclarations.RootEntities.Add(type);
@@ -102,7 +102,7 @@ namespace ConfOrm
 			RegisterTablePerConcreteClass(type);
 		}
 
-		private void RegisterTablePerConcreteClass(Type type)
+		protected void RegisterTablePerConcreteClass(Type type)
 		{
 			PreventComponentAsEntity(type);
 			explicitDeclarations.RootEntities.Add(type);
@@ -136,7 +136,7 @@ namespace ConfOrm
 			explicitDeclarations.Poids.Add(member);
 		}
 
-		public void NaturalId<TBaseEntity>(params Expression<Func<TBaseEntity, object>>[] propertiesGetters) where TBaseEntity : class
+		public virtual void NaturalId<TBaseEntity>(params Expression<Func<TBaseEntity, object>>[] propertiesGetters) where TBaseEntity : class
 		{
 			if (!IsRootEntity(typeof(TBaseEntity)))
 			{
@@ -207,7 +207,7 @@ namespace ConfOrm
 			explicitDeclarations.Dictionaries.Add(memberOf);
 		}
 
-		public void Complex<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
+		public virtual void Complex<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
 			explicitDeclarations.ComplexTypeMembers.Add(member);
@@ -215,7 +215,7 @@ namespace ConfOrm
 			explicitDeclarations.ComplexTypeMembers.Add(memberOf);
 		}
 
-		public void HeterogeneousAssociation<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
+		public virtual void HeterogeneousAssociation<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
 			explicitDeclarations.HeterogeneousAssociations.Add(member);
@@ -236,7 +236,7 @@ namespace ConfOrm
 			explicitDeclarations.PersistentProperties.Add(memberOf);
 		}
 
-		public void VersionProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
+		public virtual void VersionProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
 			explicitDeclarations.VersionProperties.Add(member);
@@ -285,7 +285,7 @@ namespace ConfOrm
 			return IsMappedFor(explicitDeclarations.TablePerClassHierarchyEntities, type);
 		}
 
-		private bool IsMappedFor(ICollection<Type> explicitMappedEntities, Type type)
+		protected bool IsMappedFor(ICollection<Type> explicitMappedEntities, Type type)
 		{
 			bool isExplicitMapped = explicitMappedEntities.Contains(type);
 			bool isDerived = false;
@@ -335,7 +335,7 @@ namespace ConfOrm
 			       && explicitDeclarations.ManyToManyRelations.Contains(new Relation(role1, role2));
 		}
 
-		public bool IsMasterManyToMany(Type from, Type to)
+		public virtual bool IsMasterManyToMany(Type from, Type to)
 		{
 			return IsManyToMany(from, to)
 			       &&
@@ -385,7 +385,7 @@ namespace ConfOrm
 			return Patterns.PoidStrategies.GetValueOfFirstMatch(member);
 		}
 
-		public bool IsMemberOfNaturalId(MemberInfo member)
+		public virtual bool IsMemberOfNaturalId(MemberInfo member)
 		{
 			return explicitDeclarations.NaturalIds.ContainsMember(member);
 		}
