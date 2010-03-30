@@ -29,5 +29,6 @@ namespace ConfOrm
 		ICollection<MemberInfo> VersionProperties { get; }
 		ICollection<MemberInfo> HeterogeneousAssociations { get; }
 		ICollection<MemberInfo> NaturalIds { get; }
+		ICollection<MemberInfo> ExclusionProperties { get; }
 	}
 }

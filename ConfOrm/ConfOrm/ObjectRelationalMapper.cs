@@ -236,6 +236,14 @@ namespace ConfOrm
 			explicitDeclarations.PersistentProperties.Add(memberOf);
 		}
 
+		public void ExcludeProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
+		{
+			var member = TypeExtensions.DecodeMemberAccessExpressionOf(propertyGetter);
+			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(propertyGetter);
+			explicitDeclarations.ExclusionProperties.Add(member);
+			explicitDeclarations.ExclusionProperties.Add(memberOf);
+		}
+
 		public virtual void VersionProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
@@ -392,7 +400,7 @@ namespace ConfOrm
 
 		public virtual bool IsPersistentProperty(MemberInfo role)
 		{
-			return !Patterns.PersistentPropertiesExclusions.Match(role)
+			return (!explicitDeclarations.ExclusionProperties.Contains(role) && !Patterns.PersistentPropertiesExclusions.Match(role))
 						 || explicitDeclarations.PersistentProperties.ContainsMember(role);
 		}
 

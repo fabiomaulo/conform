@@ -31,5 +31,13 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			orm.PersistentProperty<MyEntity>(me => me.ReadOnly);
 			orm.IsPersistentProperty(typeof(MyEntity).GetProperty("ReadOnly")).Should().Be.True();
 		}
+
+		[Test]
+		public void WhenExplicitDeclaredExclusionThenNoPersistent()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.ExcludeProperty<MyEntity>(me => me.NoReadOnly);
+			orm.IsPersistentProperty(typeof(MyEntity).GetProperty("NoReadOnly")).Should().Be.False();
+		}
 	}
 }
