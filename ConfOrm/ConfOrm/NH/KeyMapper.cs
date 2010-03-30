@@ -14,7 +14,12 @@ namespace ConfOrm.NH
 		{
 			this.ownerEntityType = ownerEntityType;
 			this.mapping = mapping;
-			this.mapping.column1 = ownerEntityType.Name.ToLowerInvariant() + "_key";
+			this.mapping.column1 = DefaultColumnName(ownerEntityType);
+		}
+
+		public static string DefaultColumnName(Type ownerEntityType)
+		{
+			return ownerEntityType.Name.ToLowerInvariant() + "_key";
 		}
 
 		#region Implementation of IKeyMapper

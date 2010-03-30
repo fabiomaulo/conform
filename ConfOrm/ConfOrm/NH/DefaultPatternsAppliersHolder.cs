@@ -91,7 +91,8 @@ namespace ConfOrm.NH
 			      		new MemberToFieldAccessorApplier<IAnyMapper>()
 			      	};
 			anyPath = new List<IPatternApplier<PropertyPath, IAnyMapper>>();
-			manyToMany = new List<IPatternApplier<MemberInfo, IManyToManyMapper>>();
+			manyToMany = new List<IPatternApplier<MemberInfo, IManyToManyMapper>>
+			             	{new BidirectionalManyToManyColumnApplier(),};
 			manyToManyPath = new List<IPatternApplier<PropertyPath, IManyToManyMapper>>();
 		}
 
