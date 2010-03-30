@@ -11,22 +11,22 @@ namespace ConfOrm.Patterns
 		public void Apply(MemberInfo subject, IManyToManyMapper applyTo)
 		{
 			var relation = GetRelation(subject);
-			if (relation.From == relation.To)
-			{
-				// circular many-to-many
-				applyTo.Column(subject.Name);
-			}
-			else
-			{
-				applyTo.Column(GetColumnName(relation));
-			}
+			applyTo.Column(GetColumnName(subject, relation));
 		}
 
 		#endregion
 
-		protected virtual string GetColumnName(Relation relation)
+		protected virtual string GetColumnName(MemberInfo subject, Relation relation)
 		{
-			return KeyMapper.DefaultColumnName(relation.To);
+			if (relation.From == relation.To)
+			{
+				// circular many-to-many
+				return subject.Name;
+			}
+			else
+			{
+				return KeyMapper.DefaultColumnName(relation.To);
+			}
 		}
 	}
 }
