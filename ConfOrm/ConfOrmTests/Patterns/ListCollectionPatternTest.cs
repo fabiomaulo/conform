@@ -15,6 +15,8 @@ namespace ConfOrmTests.Patterns
 			private ICollection<string> others;
 			private IList<string> emails;
 			public IList<string> NickNames { get; set; }
+			public byte[] Bytes { get; set; }
+			public string StringProp { get; set; }
 
 			public ICollection<string> Emails
 			{
@@ -73,5 +75,22 @@ namespace ConfOrmTests.Patterns
 			p.Match(mi).Should().Be.False();
 		}
 
+		[Test]
+		public void NotMatchWithStringProperty()
+		{
+			var orm = new Mock<IDomainInspector>();
+			var mi = typeof(Entity).GetProperty("StringProp");
+			var p = new ListCollectionPattern(orm.Object);
+			p.Match(mi).Should().Be.False();
+		}
+
+		[Test]
+		public void NotMatchWithByteArrayProperty()
+		{
+			var orm = new Mock<IDomainInspector>();
+			var mi = typeof(Entity).GetProperty("Bytes");
+			var p = new ListCollectionPattern(orm.Object);
+			p.Match(mi).Should().Be.False();
+		}
 	}
 }

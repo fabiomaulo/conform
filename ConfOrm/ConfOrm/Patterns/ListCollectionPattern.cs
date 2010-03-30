@@ -20,6 +20,10 @@ namespace ConfOrm.Patterns
 		protected override bool MemberMatch(MemberInfo subject)
 		{
 			Type memberType = subject.GetPropertyOrFieldType();
+			if (IsNotSupportedAsList(memberType))
+			{
+				return false;
+			}
 			if (typeof (IList).IsAssignableFrom(memberType))
 			{
 				return true;
@@ -40,5 +44,10 @@ namespace ConfOrm.Patterns
 		}
 
 		#endregion
+
+		private static bool IsNotSupportedAsList(Type memberType)
+		{
+			return memberType == typeof(byte[]);
+		}
 	}
 }
