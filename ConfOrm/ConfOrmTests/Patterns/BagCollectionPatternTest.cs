@@ -13,7 +13,7 @@ namespace ConfOrmTests.Patterns
 		{
 			private ICollection<string> emails;
 			public IEnumerable<string> NickNames { get; set; }
-
+			public byte[] Bytes { get; set; }
 			public object Emails
 			{
 				get { return emails; }
@@ -50,6 +50,14 @@ namespace ConfOrmTests.Patterns
 		public void NotMatchWithStringProperty()
 		{
 			var mi = typeof(Entity).GetProperty("Simple");
+			var p = new BagCollectionPattern();
+			p.Match(mi).Should().Be.False();
+		}
+
+		[Test]
+		public void NotMatchWithByteArrayProperty()
+		{
+			var mi = typeof(Entity).GetProperty("Bytes");
 			var p = new BagCollectionPattern();
 			p.Match(mi).Should().Be.False();
 		}

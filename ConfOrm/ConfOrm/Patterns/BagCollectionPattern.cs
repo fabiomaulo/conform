@@ -19,7 +19,7 @@ namespace ConfOrm.Patterns
 
 		private static bool IsNotSupportedAsBag(Type memberType)
 		{
-			return memberType == typeof(string);
+			return memberType == typeof(string) || memberType == typeof(byte[]);
 		}
 	}
 }
