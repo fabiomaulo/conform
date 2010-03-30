@@ -17,7 +17,7 @@ namespace ConfOrm.Shop.Appliers
 			}
 			Type propertyOrFieldType = subject.GetPropertyOrFieldType();
 			string name = subject.Name;
-			return !name.StartsWith("Date") && !name.EndsWith("Date")
+			return !IsDate(name)
 			       && (propertyOrFieldType == typeof (DateTime) || propertyOrFieldType == typeof (DateTime?));
 		}
 
@@ -31,5 +31,10 @@ namespace ConfOrm.Shop.Appliers
 		}
 
 		#endregion
+
+		protected virtual bool IsDate(string name)
+		{
+			return name.EndsWith("Date") || name.StartsWith("Date");
+		}
 	}
 }
