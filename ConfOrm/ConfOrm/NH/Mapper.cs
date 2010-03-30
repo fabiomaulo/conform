@@ -454,7 +454,10 @@ namespace ConfOrm.NH
 				{
 					MapDictionary(member, memberPath, propertyType, propertiesContainer, propertiesContainerType);
 				}
-				else if (domainInspector.IsArray(property)) {}
+				else if (domainInspector.IsArray(property))
+				{
+					throw new NotSupportedException();
+				}
 				else if (domainInspector.IsList(property))
 				{
 					MapList(member, memberPath, propertyType, propertiesContainer, propertiesContainerType);

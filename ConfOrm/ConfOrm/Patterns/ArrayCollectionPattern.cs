@@ -10,7 +10,7 @@ namespace ConfOrm.Patterns
 		protected override bool MemberMatch(MemberInfo subject)
 		{
 			Type memberType = subject.GetPropertyOrFieldType();
-			return memberType.IsArray;
+			return memberType.IsArray && memberType.GetElementType() != typeof(byte);
 		}
 
 		#endregion

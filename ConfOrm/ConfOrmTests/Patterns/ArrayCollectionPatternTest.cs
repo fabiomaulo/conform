@@ -13,6 +13,7 @@ namespace ConfOrmTests.Patterns
 			private ICollection<string> others;
 			private string[] emails;
 			public string[] NickNames { get; set; }
+			public byte[] Photo { get; set; }
 
 			public ICollection<string> Emails
 			{
@@ -82,6 +83,14 @@ namespace ConfOrmTests.Patterns
 		public void NotMatchWithStringProperty()
 		{
 			var mi = typeof(Entity).GetProperty("Simple");
+			var p = new ArrayCollectionPattern();
+			p.Match(mi).Should().Be.False();
+		}
+
+		[Test]
+		public void NotMatchWithByteArrayProperty()
+		{
+			var mi = typeof(Entity).GetProperty("Photo");
 			var p = new ArrayCollectionPattern();
 			p.Match(mi).Should().Be.False();
 		}
