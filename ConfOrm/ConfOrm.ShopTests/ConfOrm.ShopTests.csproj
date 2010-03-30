@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppliersTests\JoinedSubclassKeyAsRootIdColumnApplierTest.cs" />
     <Compile Include="PatternsTests\UseSetWhenGenericCollectionPatternTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -71,9 +72,6 @@
       <Project>{AC69FE80-5DB0-4A50-AB1A-7D7860C71840}</Project>
       <Name>ConfOrm</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AppliersTests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

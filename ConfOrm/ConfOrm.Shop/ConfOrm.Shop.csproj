@@ -46,6 +46,7 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Appliers\JoinedSubclassKeyAsRootIdColumnApplier.cs" />
     <Compile Include="Patterns\UseSetWhenGenericCollectionPattern.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -54,9 +55,6 @@
       <Project>{AC69FE80-5DB0-4A50-AB1A-7D7860C71840}</Project>
       <Name>ConfOrm</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Appliers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
