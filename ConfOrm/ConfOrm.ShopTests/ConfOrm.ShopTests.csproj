@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppliersTests\JoinedSubclassKeyAsRootIdColumnApplierTest.cs" />
+    <Compile Include="AppliersTests\MsSQL2008DateTimeApplierTest.cs" />
     <Compile Include="PatternsTests\UseSetWhenGenericCollectionPatternTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
