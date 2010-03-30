@@ -24,6 +24,9 @@ namespace ConfOrm.NH
 		public Mapper(IDomainInspector domainInspector, ICustomizersHolder customizerHolder)
 			: this(domainInspector, customizerHolder, new DefaultPatternsAppliersHolder(domainInspector)) {}
 
+		public Mapper(IDomainInspector domainInspector, IPatternsAppliersHolder patternsAppliers)
+			: this(domainInspector, new CustomizersHolder(), patternsAppliers) { }
+
 		public Mapper(IDomainInspector domainInspector, ICustomizersHolder customizerHolder,
 		              IPatternsAppliersHolder patternsAppliers)
 		{
