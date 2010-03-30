@@ -556,7 +556,7 @@ namespace ConfOrm.NH
 			Type dictionaryKeyType = propertyType.DetermineDictionaryKeyType();
 			if (dictionaryKeyType == null)
 			{
-				throw new NotSupportedException(string.Format("Can't determine collection element relation (property{0} in {1})",
+				throw new NotSupportedException(string.Format("Can't determine collection element relation (property {0} in {1})",
 				                                              member.Name, propertiesContainerType));
 			}
 			Type dictionaryValueType = propertyType.DetermineDictionaryValueType();
@@ -617,7 +617,7 @@ namespace ConfOrm.NH
 			Type collectionElementType = propertyType.DetermineCollectionElementType();
 			if (collectionElementType == null)
 			{
-				throw new NotSupportedException(string.Format("Can't determine collection element relation (property{0} in {1})",
+				throw new NotSupportedException(string.Format("Can't determine collection element relation (property {0} in {1})",
 				                                              property.Name, type));
 			}
 			return collectionElementType;
