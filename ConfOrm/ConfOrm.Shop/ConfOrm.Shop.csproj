@@ -50,6 +50,9 @@
     <Compile Include="Appliers\ComponetPropertyColumnNameApplier.cs" />
     <Compile Include="Appliers\DatePropertyByNameApplier.cs" />
     <Compile Include="Appliers\JoinedSubclassKeyAsRootIdColumnApplier.cs" />
+    <Compile Include="Appliers\ManyToManyColumnApplier.cs" />
+    <Compile Include="Appliers\ManyToManyKeyIdColumnApplier.cs" />
+    <Compile Include="Appliers\ManyToManyPattern.cs" />
     <Compile Include="Appliers\MsSQL2008DateTimeApplier.cs" />
     <Compile Include="Patterns\UseSetWhenGenericCollectionPattern.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
