@@ -66,6 +66,7 @@
     <Compile Include="AppliersTests\ManyToManyColumnApplierTest.cs" />
     <Compile Include="AppliersTests\ManyToManyKeyIdColumnApplierTest.cs" />
     <Compile Include="AppliersTests\ManyToManyPatternTest.cs" />
+    <Compile Include="AppliersTests\ManyToOneColumnApplierTest.cs" />
     <Compile Include="AppliersTests\MsSQL2008DateTimeApplierTest.cs" />
     <Compile Include="PatternsTests\UseSetWhenGenericCollectionPatternTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
