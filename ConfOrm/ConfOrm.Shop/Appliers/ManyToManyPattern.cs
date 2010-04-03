@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using ConfOrm.NH;
 
 namespace ConfOrm.Shop.Appliers
 {
-	public class ManyToManyPattern: IPattern<MemberInfo>
+	public class ManyToManyPattern : IPattern<MemberInfo>
 	{
 		private readonly IDomainInspector domainInspector;
 
@@ -30,29 +31,62 @@ namespace ConfOrm.Shop.Appliers
 			{
 				throw new ArgumentNullException("subject");
 			}
-			var propertyType = subject.GetPropertyOrFieldType();
+			Type propertyType = subject.GetPropertyOrFieldType();
 			if (!propertyType.IsGenericCollection())
 			{
 				// can't determine relation for a no generic collection
 				return false;
 			}
 
-			var fromMany = subject.DeclaringType;
+			Type fromMany = subject.DeclaringType;
 			Type cadidateToMany = propertyType.DetermineCollectionElementType();
-			if (cadidateToMany.IsGenericType && typeof(KeyValuePair<,>) == cadidateToMany.GetGenericTypeDefinition())
+			if (cadidateToMany.IsGenericType && typeof (KeyValuePair<,>) == cadidateToMany.GetGenericTypeDefinition())
 			{
 				// many-to-many on map
-				var dictionaryGenericArguments = cadidateToMany.GetGenericArguments();
-				return domainInspector.IsManyToMany(fromMany, dictionaryGenericArguments[1]) || domainInspector.IsManyToMany(fromMany, dictionaryGenericArguments[0]);
+				Type[] dictionaryGenericArguments = cadidateToMany.GetGenericArguments();
+				return domainInspector.IsManyToMany(fromMany, dictionaryGenericArguments[1])
+				       || domainInspector.IsManyToMany(fromMany, dictionaryGenericArguments[0]);
 			}
 			else
 			{
 				// many-to-many on plain collection
-				var toMany = cadidateToMany;
+				Type toMany = cadidateToMany;
 				return domainInspector.IsManyToMany(fromMany, toMany);
 			}
 		}
 
 		#endregion
+
+		protected Type GetContainerEntity(PropertyPath propertyPath)
+		{
+			PropertyPath analizing = propertyPath;
+			while (analizing.PreviousPath != null && !DomainInspector.IsEntity(analizing.LocalMember.ReflectedType))
+			{
+				analizing = analizing.PreviousPath;
+			}
+			return analizing.LocalMember.ReflectedType;
+		}
+
+		protected Relation GetRelation(MemberInfo subject)
+		{
+			Type propertyType = subject.GetPropertyOrFieldType();
+
+			Type fromMany = subject.DeclaringType;
+			Type cadidateToMany = propertyType.DetermineCollectionElementType();
+			if (cadidateToMany.IsGenericType && typeof (KeyValuePair<,>) == cadidateToMany.GetGenericTypeDefinition())
+			{
+				// many-to-many on map
+				Type[] dictionaryGenericArguments = cadidateToMany.GetGenericArguments();
+				return domainInspector.IsManyToMany(fromMany, dictionaryGenericArguments[1])
+				       	? new Relation(fromMany, dictionaryGenericArguments[1])
+				       	: new Relation(fromMany, dictionaryGenericArguments[0]);
+			}
+			else
+			{
+				// many-to-many on plain collection
+				Type toMany = cadidateToMany;
+				return new Relation(fromMany, toMany);
+			}
+		}
 	}
 }

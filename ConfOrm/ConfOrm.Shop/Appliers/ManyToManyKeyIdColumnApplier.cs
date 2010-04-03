@@ -36,15 +36,5 @@ namespace ConfOrm.Shop.Appliers
 			var entityType = GetContainerEntity(subject);
 			return entityType.Name + "Id";
 		}
-
-		protected Type GetContainerEntity(PropertyPath propertyPath)
-		{
-			var analizing = propertyPath;
-			while (analizing.PreviousPath != null && !DomainInspector.IsEntity(analizing.LocalMember.ReflectedType))
-			{
-				analizing = analizing.PreviousPath;
-			}
-			return analizing.LocalMember.ReflectedType;
-		}
 	}
 }
