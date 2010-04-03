@@ -17,6 +17,11 @@ namespace ConfOrm.Shop.Appliers
 			this.domainInspector = domainInspector;
 		}
 
+		protected IDomainInspector DomainInspector
+		{
+			get { return domainInspector; }
+		}
+
 		#region Implementation of IPattern<MemberInfo>
 
 		public bool Match(MemberInfo subject)
