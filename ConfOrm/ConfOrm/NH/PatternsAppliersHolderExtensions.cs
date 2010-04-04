@@ -28,6 +28,13 @@ namespace ConfOrm.NH
 			{
 				patternsAppliersCollection.Add(applier);
 			}
+			else
+			{
+				throw new ArgumentOutOfRangeException("applier",
+				                                      string.Format(
+				                                      	"The IPatternsAppliersHolder does not support appliers of {0}, {1}",
+				                                      	typeof (TSubject).FullName, typeof (TApplyTo).FullName));
+			}
 		}
 
 		private static ICollection<IPatternApplier<TSubject, TApplyTo>> GetCollectionPropertyOf<TSubject, TApplyTo>(IPatternsAppliersHolder source)

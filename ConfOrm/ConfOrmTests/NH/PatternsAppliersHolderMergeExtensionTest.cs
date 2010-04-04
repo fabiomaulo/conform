@@ -151,5 +151,13 @@ namespace ConfOrmTests.NH
 			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<PropertyPath, IManyToManyMapper>();
 			source.ManyToManyPath.Count.Should().Be(1);
 		}
+
+		[Test]
+		public void WhenApplierIsNotSupportedThenThrows()
+		{
+			IPatternsAppliersHolder source = new EmptyPatternsAppliersHolder();
+			var applier = new Mock<IPatternApplier<int, string>>();
+			ActionAssert.Throws<ArgumentOutOfRangeException>(()=>source.Merge(applier.Object));
+		}
 	}
 }
