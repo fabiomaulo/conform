@@ -7,6 +7,8 @@ namespace ConfOrm.NH
 {
 	public static class PatternsAppliersHolderExtensions
 	{
+		private const string NotSupportedApplierExceptionMessageTemplate = "The IPatternsAppliersHolder does not support appliers of {0}, {1}";
+
 		/// <summary>
 		/// Add the <paramref name="applier"/> to the correspondig collection inside the <paramref name="source"/>.
 		/// </summary>
@@ -38,9 +40,8 @@ namespace ConfOrm.NH
 			else
 			{
 				throw new ArgumentOutOfRangeException("applier",
-				                                      string.Format(
-				                                      	"The IPatternsAppliersHolder does not support appliers of {0}, {1}",
-				                                      	typeof (TSubject).FullName, typeof (TApplyTo).FullName));
+				                                      string.Format(NotSupportedApplierExceptionMessageTemplate,
+				                                                    typeof (TSubject).FullName, typeof (TApplyTo).FullName));
 			}
 		}
 
@@ -91,9 +92,8 @@ namespace ConfOrm.NH
 			else
 			{
 				throw new ArgumentOutOfRangeException("applier",
-																							string.Format(
-																								"The IPatternsAppliersHolder does not support appliers of {0}, {1}",
-																								typeof(TSubject).FullName, typeof(TApplyTo).FullName));
+				                                      string.Format(NotSupportedApplierExceptionMessageTemplate,
+				                                                    typeof (TSubject).FullName, typeof (TApplyTo).FullName));
 			}
 		}
 
