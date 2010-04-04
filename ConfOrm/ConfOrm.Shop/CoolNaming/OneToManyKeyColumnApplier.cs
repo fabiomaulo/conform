@@ -1,7 +1,8 @@
 using ConfOrm.Mappers;
 using ConfOrm.NH;
+using ConfOrm.Shop.Appliers;
 
-namespace ConfOrm.Shop.Appliers
+namespace ConfOrm.Shop.CoolNaming
 {
 	public class OneToManyKeyColumnApplier: OneToManyPattern, IPatternApplier<PropertyPath, ICollectionPropertiesMapper>
 	{

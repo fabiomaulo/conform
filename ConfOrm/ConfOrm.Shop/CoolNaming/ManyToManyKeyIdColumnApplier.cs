@@ -1,8 +1,9 @@
 using System;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
+using ConfOrm.Shop.Appliers;
 
-namespace ConfOrm.Shop.Appliers
+namespace ConfOrm.Shop.CoolNaming
 {
 	public class ManyToManyKeyIdColumnApplier: ManyToManyPattern, IPatternApplier<PropertyPath, ICollectionPropertiesMapper>
 	{

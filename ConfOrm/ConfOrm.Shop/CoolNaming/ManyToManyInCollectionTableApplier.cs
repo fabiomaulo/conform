@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
+using ConfOrm.Shop.Appliers;
 
-namespace ConfOrm.Shop.Appliers
+namespace ConfOrm.Shop.CoolNaming
 {
 	public class ManyToManyInCollectionTableApplier : ManyToManyPattern,
 	                                                  IPatternApplier<PropertyPath, ICollectionPropertiesMapper>

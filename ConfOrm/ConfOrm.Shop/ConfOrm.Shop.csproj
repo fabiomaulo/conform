@@ -47,16 +47,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appliers\ComponentMemberDeepPathPattern.cs" />
-    <Compile Include="Appliers\ComponetPropertyColumnNameApplier.cs" />
+    <Compile Include="CoolNaming\ComponetPropertyColumnNameApplier.cs" />
     <Compile Include="Appliers\DatePropertyByNameApplier.cs" />
-    <Compile Include="Appliers\JoinedSubclassKeyAsRootIdColumnApplier.cs" />
-    <Compile Include="Appliers\ManyToManyColumnApplier.cs" />
-    <Compile Include="Appliers\ManyToManyKeyIdColumnApplier.cs" />
+    <Compile Include="CoolNaming\JoinedSubclassKeyAsRootIdColumnApplier.cs" />
+    <Compile Include="CoolNaming\ManyToManyColumnApplier.cs" />
+    <Compile Include="CoolNaming\ManyToManyKeyIdColumnApplier.cs" />
     <Compile Include="Appliers\ManyToManyPattern.cs" />
-    <Compile Include="Appliers\ManyToManyInCollectionTableApplier.cs" />
-    <Compile Include="Appliers\ManyToOneColumnApplier.cs" />
+    <Compile Include="CoolNaming\ManyToManyInCollectionTableApplier.cs" />
+    <Compile Include="CoolNaming\ManyToOneColumnApplier.cs" />
     <Compile Include="Appliers\MsSQL2008DateTimeApplier.cs" />
-    <Compile Include="Appliers\OneToManyKeyColumnApplier.cs" />
+    <Compile Include="CoolNaming\OneToManyKeyColumnApplier.cs" />
     <Compile Include="Appliers\OneToManyPattern.cs" />
     <Compile Include="Patterns\UseSetWhenGenericCollectionPattern.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

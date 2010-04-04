@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using ConfOrm.Mappers;
 using ConfOrm.Shop.Appliers;
+using ConfOrm.Shop.CoolNaming;
 using Moq;
 using NUnit.Framework;
 using SharpTestsEx;

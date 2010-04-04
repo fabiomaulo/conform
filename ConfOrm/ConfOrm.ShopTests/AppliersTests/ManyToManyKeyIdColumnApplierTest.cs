@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
 using ConfOrm.Shop.Appliers;
+using ConfOrm.Shop.CoolNaming;
 using Moq;
 using NUnit.Framework;
 

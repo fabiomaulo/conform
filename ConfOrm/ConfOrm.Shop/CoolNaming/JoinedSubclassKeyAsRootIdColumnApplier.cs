@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using ConfOrm.Mappers;
 
-namespace ConfOrm.Shop.Appliers
+namespace ConfOrm.Shop.CoolNaming
 {
 	public class JoinedSubclassKeyAsRootIdColumnApplier: IPatternApplier<Type, IJoinedSubclassAttributesMapper>
 	{
