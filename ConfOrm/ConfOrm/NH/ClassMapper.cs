@@ -13,6 +13,7 @@ namespace ConfOrm.NH
 		private IVersionMapper versionMapper;
 		private INaturalIdMapper naturalIdMapper;
 		private ICacheMapper cacheMapper;
+		private IDiscriminatorMapper discriminatorMapper;
 
 		public ClassMapper(Type rootClass, HbmMapping mapDoc, MemberInfo idProperty)
 			: base(rootClass, mapDoc)
@@ -60,12 +61,15 @@ namespace ConfOrm.NH
 			mapper(new IdMapper(idProperty, id));
 		}
 
-		public void Discriminator()
+		public void Discriminator(Action<IDiscriminatorMapper> discriminatorMapping)
 		{
-			if (classMapping.discriminator == null)
+			if (discriminatorMapper == null)
 			{
-				classMapping.discriminator = new HbmDiscriminator();
+				var hbmDiscriminator = new HbmDiscriminator();
+				classMapping.discriminator = hbmDiscriminator;
+				discriminatorMapper = new DiscriminatorMapper(hbmDiscriminator);
 			}
+			discriminatorMapping(discriminatorMapper);
 		}
 
 		public void DiscriminatorValue(object value)
@@ -73,7 +77,7 @@ namespace ConfOrm.NH
 			if (value != null)
 			{
 				classMapping.discriminatorvalue = value.ToString();
-				Discriminator();
+				Discriminator(x => { });
 				var valueType = value.GetType();
 				if(valueType != typeof(string))
 				{

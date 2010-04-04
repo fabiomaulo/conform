@@ -23,6 +23,11 @@ namespace ConfOrm.NH.CustomizersImpl
 			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.Id(member, idMapper));
 		}
 
+		public void Discriminator(Action<IDiscriminatorMapper> discriminatorMapping)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Discriminator(discriminatorMapping));
+		}
+
 		public void DiscriminatorValue(object value)
 		{
 			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.DiscriminatorValue(value));

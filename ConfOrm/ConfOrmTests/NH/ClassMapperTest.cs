@@ -68,7 +68,7 @@ namespace ConfOrmTests.NH
 		{
 			var mapdoc = new HbmMapping();
 			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
-			rc.Discriminator();
+			rc.Discriminator(x => { });
 			mapdoc.RootClasses[0].discriminator.Should().Not.Be.Null();
 		}
 
@@ -189,6 +189,15 @@ namespace ConfOrmTests.NH
 			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
 			rc.Cache(ch=> ch.Region("pizza"));
 			mapdoc.RootClasses[0].cache.Should().Not.Be.Null();
+		}
+
+		[Test]
+		public void CallSetDiscriminator()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
+			rc.DiscriminatorValue("X");
+			mapdoc.RootClasses[0].discriminator.Should().Not.Be.Null();
 		}
 
 		[Test]

@@ -8,7 +8,7 @@ namespace ConfOrm.Mappers
 	{
 		void Id(Action<IIdMapper> idMapper);
 		void Id(MemberInfo idProperty, Action<IIdMapper> idMapper);
-		void Discriminator();
+		void Discriminator(Action<IDiscriminatorMapper> discriminatorMapping);
 		void DiscriminatorValue(object value);
 		void Table(string tableName);
 		void Catalog(string catalogName);
@@ -27,6 +27,7 @@ namespace ConfOrm.Mappers
 	{
 		void Id(Action<IIdMapper> idMapper);
 		void Id<TProperty>(Expression<Func<TEntity, TProperty>> idProperty, Action<IIdMapper> idMapper);
+		void Discriminator(Action<IDiscriminatorMapper> discriminatorMapping);
 		void DiscriminatorValue(object value);
 		void Table(string tableName);
 		void Catalog(string catalogName);

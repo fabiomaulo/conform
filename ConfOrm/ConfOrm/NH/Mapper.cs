@@ -331,7 +331,7 @@ namespace ConfOrm.NH
 				});
 			if (domainInspector.IsTablePerClassHierarchy(type))
 			{
-				classMapper.Discriminator();
+				classMapper.Discriminator(x => { });
 			}
 			var persistentProperties = GetPersistentProperties(type, RootClassPropertiesBindingFlags).ToArray();
 			var versionMember = persistentProperties.SingleOrDefault(mi => domainInspector.IsVersion(mi));

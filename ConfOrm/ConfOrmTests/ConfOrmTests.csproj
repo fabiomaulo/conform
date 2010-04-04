@@ -74,6 +74,7 @@
     <Compile Include="NH\ComponentElementMapperTest.cs" />
     <Compile Include="NH\ComponentMapperTest.cs" />
     <Compile Include="NH\ComponentNestedElementMapperTest.cs" />
+    <Compile Include="NH\DiscriminatorMapperTest.cs" />
     <Compile Include="NH\CustomizersHolderTest.cs" />
     <Compile Include="NH\Customizers\CollectionKeyCustomizerTest.cs" />
     <Compile Include="NH\Customizers\CollectionPropertiesCustomizerTest.cs" />
