@@ -90,5 +90,13 @@ namespace ConfOrm.NH
 																								typeof(TSubject).FullName, typeof(TApplyTo).FullName));
 			}
 		}
+
+		public static void ApplyAllMatchs<TSubject, TApplyTo>(this IEnumerable<IPatternApplier<TSubject, TApplyTo>> appliers, TSubject subject, TApplyTo applyTo)
+		{
+			foreach (var patternApplier in appliers.Where(pa => pa.Match(subject)))
+			{
+				patternApplier.Apply(subject, applyTo);
+			}
+		}
 	}
 }
