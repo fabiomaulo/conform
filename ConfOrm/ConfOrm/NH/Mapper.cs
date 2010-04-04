@@ -529,11 +529,12 @@ namespace ConfOrm.NH
 		                    Type propertiesContainerType)
 		{
 			Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, member, propertyType);
-			ICollectionElementRelationMapper cert = DetermineCollectionElementRelationType(member, collectionElementType);
+			ICollectionElementRelationMapper cert = DetermineCollectionElementRelationType(member, propertyPath, collectionElementType);
 			propertiesContainer.Bag(member, collectionPropertiesMapper =>
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					PatternsAppliers.Collection.ApplyAllMatchs(member, collectionPropertiesMapper);
+					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
@@ -543,11 +544,12 @@ namespace ConfOrm.NH
 		                     Type propertiesContainerType)
 		{
 			Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, member, propertyType);
-			ICollectionElementRelationMapper cert = DetermineCollectionElementRelationType(member, collectionElementType);
+			ICollectionElementRelationMapper cert = DetermineCollectionElementRelationType(member, propertyPath, collectionElementType);
 			propertiesContainer.List(member, collectionPropertiesMapper =>
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					PatternsAppliers.Collection.ApplyAllMatchs(member, collectionPropertiesMapper);
+					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
@@ -563,11 +565,12 @@ namespace ConfOrm.NH
 				                                              member.Name, propertiesContainerType));
 			}
 			Type dictionaryValueType = propertyType.DetermineDictionaryValueType();
-			ICollectionElementRelationMapper cert = DetermineCollectionElementRelationType(member, dictionaryValueType);
+			ICollectionElementRelationMapper cert = DetermineCollectionElementRelationType(member, propertyPath, dictionaryValueType);
 			propertiesContainer.Map(member, collectionPropertiesMapper =>
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					PatternsAppliers.Collection.ApplyAllMatchs(member, collectionPropertiesMapper);
+					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
@@ -577,11 +580,12 @@ namespace ConfOrm.NH
 		                    Type propertiesContainerType)
 		{
 			Type collectionElementType = GetCollectionElementTypeOrThrow(propertiesContainerType, member, propertyType);
-			ICollectionElementRelationMapper cert = DetermineCollectionElementRelationType(member, collectionElementType);
+			ICollectionElementRelationMapper cert = DetermineCollectionElementRelationType(member, propertyPath, collectionElementType);
 			propertiesContainer.Set(member, collectionPropertiesMapper =>
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					PatternsAppliers.Collection.ApplyAllMatchs(member, collectionPropertiesMapper);
+					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
@@ -698,14 +702,16 @@ namespace ConfOrm.NH
 		private class ManyToManyRelationMapper : ICollectionElementRelationMapper
 		{
 			private readonly MemberInfo member;
+			private readonly PropertyPath propertyPath;
 			private readonly Type ownerType;
 			private readonly Type collectionElementType;
 			private readonly IDomainInspector domainInspector;
 			private readonly IPatternsAppliersHolder appliers;
 
-			public ManyToManyRelationMapper(MemberInfo member, Type ownerType, Type collectionElementType, IDomainInspector domainInspector, IPatternsAppliersHolder appliers)
+			public ManyToManyRelationMapper(MemberInfo member, PropertyPath propertyPath, Type ownerType, Type collectionElementType, IDomainInspector domainInspector, IPatternsAppliersHolder appliers)
 			{
 				this.member = member;
+				this.propertyPath = propertyPath;
 				this.ownerType = ownerType;
 				this.collectionElementType = collectionElementType;
 				this.domainInspector = domainInspector;
@@ -719,6 +725,7 @@ namespace ConfOrm.NH
 				relation.ManyToMany(x =>
 					{
 						appliers.ManyToMany.ApplyAllMatchs(member, x);
+						appliers.ManyToManyPath.ApplyAllMatchs(propertyPath, x);
 					});
 			}
 
@@ -822,7 +829,7 @@ namespace ConfOrm.NH
 			}
 		}
 
-		protected virtual ICollectionElementRelationMapper DetermineCollectionElementRelationType(MemberInfo property, Type collectionElementType)
+		protected virtual ICollectionElementRelationMapper DetermineCollectionElementRelationType(MemberInfo property, PropertyPath propertyPath, Type collectionElementType)
 		{
 			var ownerType = property.ReflectedType;
 			if (domainInspector.IsOneToMany(ownerType, collectionElementType))
@@ -831,7 +838,7 @@ namespace ConfOrm.NH
 			}
 			else if (domainInspector.IsManyToMany(ownerType, collectionElementType))
 			{
-				return new ManyToManyRelationMapper(property, ownerType, collectionElementType, domainInspector, PatternsAppliers);
+				return new ManyToManyRelationMapper(property, propertyPath, ownerType, collectionElementType, domainInspector, PatternsAppliers);
 			}
 			else if (domainInspector.IsComponent(collectionElementType))
 			{

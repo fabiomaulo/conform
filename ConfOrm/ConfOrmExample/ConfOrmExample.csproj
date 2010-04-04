@@ -91,6 +91,10 @@
     <Compile Include="Domain\Zoo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ConfOrm.Shop\ConfOrm.Shop.csproj">
+      <Project>{C5931D83-9B63-4D5E-80FD-8B2C12621791}</Project>
+      <Name>ConfOrm.Shop</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ConfOrm\ConfOrm.csproj">
       <Project>{AC69FE80-5DB0-4A50-AB1A-7D7860C71840}</Project>
       <Name>ConfOrm</Name>

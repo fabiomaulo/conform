@@ -54,7 +54,7 @@ namespace ConfOrmExample
 			return mapper.CompileMappingFor(Assembly.GetExecutingAssembly().GetTypes().Where(t => t.Namespace == typeof(Animal).Namespace));
 		}
 
-		private static void CustomizeRelations(Mapper mapper)
+		public static void CustomizeRelations(Mapper mapper)
 		{
 			/* TODO: add IDomainInspector.IsOptionalOneToMany to avoid auto OnDelete.Cascade and soft-Cascade actions.
 				IsOptionalOneToMany may come in place using Declared.Explicit in the ORM */

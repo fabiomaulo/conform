@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Xml;
 using System.Xml.Serialization;
 using ConfOrm.NH;
+using ConfOrm.Shop.CoolNaming;
 using ConfOrmExample.Domain;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
@@ -22,10 +23,24 @@ namespace ConfOrmExample
 		}
 
 		[Test, Explicit]
+		public void ShowSingleXmlMappingWithCoolAppliers()
+		{
+			var orm = NHIntegrationTest.GetMappedDomain();
+			var mapper = new Mapper(orm, new CoolPatternsAppliersHolder(orm));
+			NHIntegrationTest.CustomizeRelations(mapper);
+			var mappings = mapper.CompileMappingFor(Assembly.GetExecutingAssembly().GetTypes().Where(t => t.Namespace == typeof(Animal).Namespace));
+
+			var document = Serialize(mappings);
+			File.WriteAllText("MyMapping.hbm.xml", document);
+			Console.Write(document);
+		}
+
+		[Test, Explicit]
 		public void WriteAllXmlMapping()
 		{
 			var orm = NHIntegrationTest.GetMappedDomain();
 			var mapper = new Mapper(orm);
+			NHIntegrationTest.CustomizeRelations(mapper);
 			var mappings = mapper.CompileMappingForEach(Assembly.GetExecutingAssembly().GetTypes().Where(t => t.Namespace == typeof(Animal).Namespace));
 			
 			foreach (var hbmMapping in mappings)
