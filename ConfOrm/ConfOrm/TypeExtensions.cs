@@ -197,5 +197,24 @@ namespace ConfOrm
 		{
 			return source.IsGenericType && typeof(IEnumerable).IsAssignableFrom(source);
 		}
+
+		public static MemberInfo GetFirstPropertyOfType(this Type propertyContainerType, Type propertyType)
+		{
+			return GetFirstPropertyOfType(propertyContainerType, propertyType, BindingFlags.Public | BindingFlags.Instance);
+		}
+
+		public static MemberInfo GetFirstPropertyOfType(this Type propertyContainerType, Type propertyType, BindingFlags bindingFlags)
+		{
+			if (propertyContainerType == null || propertyType == null)
+			{
+				return null;
+			}
+			var propertyInfos = propertyContainerType.GetProperties(bindingFlags);
+			if(propertyInfos == null)
+			{
+				return null;
+			}
+			return propertyInfos.FirstOrDefault(p => p.PropertyType == propertyType);
+		}
 	}
 }
