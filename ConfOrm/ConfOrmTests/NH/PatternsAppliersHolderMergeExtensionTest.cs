@@ -1,0 +1,155 @@
+using System;
+using System.Reflection;
+using ConfOrm;
+using ConfOrm.Mappers;
+using ConfOrm.NH;
+using Moq;
+using NUnit.Framework;
+using SharpTestsEx;
+
+namespace ConfOrmTests.NH
+{
+	public class PatternsAppliersHolderMergeExtensionTest
+	{
+		[Test]
+		public void WhenSourceIsNullThenThrow()
+		{
+			IPatternsAppliersHolder source = null;
+			ActionAssert.Throws<ArgumentNullException>(() => source.Merge<PropertyPath, IPropertyMapper>(null));
+		}
+
+		[Test]
+		public void WhenApplierIsNullThenNotThrow()
+		{
+			IPatternsAppliersHolder source = new EmptyPatternsAppliersHolder();
+			ActionAssert.NotThrow(() => source.Merge<PropertyPath, IPropertyMapper>(null));
+		}
+
+		private IPatternsAppliersHolder GetPatternsAppliersHolderWithApplierAdded<TSubject, TApplyTo>()
+		{
+			IPatternsAppliersHolder source = new EmptyPatternsAppliersHolder();
+			var applier = new Mock<IPatternApplier<TSubject, TApplyTo>>();
+			source.Merge(applier.Object);
+			return source;
+		}
+
+		[Test]
+		public void WhenApplier_TypeClassAttributesMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<Type, IClassAttributesMapper>();
+			source.RootClass.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_TypeJoinedSubclassAttributesMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<Type, IJoinedSubclassAttributesMapper>();
+			source.JoinedSubclass.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_TypeSubclassAttributesMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<Type, ISubclassAttributesMapper>();
+			source.Subclass.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_TypeUnionSubclassAttributesMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<Type, IUnionSubclassAttributesMapper>();
+			source.UnionSubclass.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_MemberInfoIdMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<MemberInfo, IIdMapper>();
+			source.Poid.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_MemberInfoPropertyMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<MemberInfo, IPropertyMapper>();
+			source.Property.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_PropertyPathPropertyMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<PropertyPath, IPropertyMapper>();
+			source.PropertyPath.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_MemberInfoManyToOneMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<MemberInfo, IManyToOneMapper>();
+			source.ManyToOne.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_PropertyPathManyToOneMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<PropertyPath, IManyToOneMapper>();
+			source.ManyToOnePath.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_MemberInfoOneToOneMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<MemberInfo, IOneToOneMapper>();
+			source.OneToOne.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_PropertyPathOneToOneMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<PropertyPath, IOneToOneMapper>();
+			source.OneToOnePath.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_MemberInfoAnyMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<MemberInfo, IAnyMapper>();
+			source.Any.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_PropertyPathAnyMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<PropertyPath, IAnyMapper>();
+			source.AnyPath.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_MemberInfoCollectionPropertiesMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<MemberInfo, ICollectionPropertiesMapper>();
+			source.Collection.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_PropertyPathCollectionPropertiesMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<PropertyPath, ICollectionPropertiesMapper>();
+			source.CollectionPath.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_MemberInfoManyToManyMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<MemberInfo, IManyToManyMapper>();
+			source.ManyToMany.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_PropertyPathManyToManyMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<PropertyPath, IManyToManyMapper>();
+			source.ManyToManyPath.Count.Should().Be(1);
+		}
+	}
+}

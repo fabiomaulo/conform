@@ -13,16 +13,22 @@ namespace ConfOrm.NH
 		ICollection<IPatternApplier<Type, IUnionSubclassAttributesMapper>> UnionSubclass { get; }
 
 		ICollection<IPatternApplier<MemberInfo, IIdMapper>> Poid { get; }
+
 		ICollection<IPatternApplier<MemberInfo, IPropertyMapper>> Property { get; }
-		ICollection<IPatternApplier<MemberInfo, IManyToOneMapper>> ManyToOne { get; }
-		ICollection<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> Collection { get; }
 		ICollection<IPatternApplier<PropertyPath, IPropertyMapper>> PropertyPath { get; }
+
+		ICollection<IPatternApplier<MemberInfo, IManyToOneMapper>> ManyToOne { get; }
 		ICollection<IPatternApplier<PropertyPath, IManyToOneMapper>> ManyToOnePath { get; }
-		ICollection<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>> CollectionPath { get; }
+
 		ICollection<IPatternApplier<MemberInfo, IOneToOneMapper>> OneToOne { get; }
 		ICollection<IPatternApplier<PropertyPath, IOneToOneMapper>> OneToOnePath { get; }
+
 		ICollection<IPatternApplier<MemberInfo, IAnyMapper>> Any { get; }
 		ICollection<IPatternApplier<PropertyPath, IAnyMapper>> AnyPath { get; }
+
+		ICollection<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> Collection { get; }
+		ICollection<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>> CollectionPath { get; }
+
 		ICollection<IPatternApplier<MemberInfo, IManyToManyMapper>> ManyToMany { get; }
 		ICollection<IPatternApplier<PropertyPath, IManyToManyMapper>> ManyToManyPath { get; }
 	}

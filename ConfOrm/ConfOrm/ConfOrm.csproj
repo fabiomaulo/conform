@@ -151,6 +151,7 @@
     <Compile Include="NH\OneToOneMapper.cs" />
     <Compile Include="NH\CustomizersImpl\PersistentClassCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\PropertyContainerCustomizer.cs" />
+    <Compile Include="NH\PatternsAppliersHolderExtensions.cs" />
     <Compile Include="NH\PropertyMapper.cs" />
     <Compile Include="NH\PropertyPath.cs">
       <SubType>Code</SubType>
