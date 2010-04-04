@@ -55,6 +55,8 @@
     <Compile Include="Appliers\ManyToManyPattern.cs" />
     <Compile Include="Appliers\ManyToOneColumnApplier.cs" />
     <Compile Include="Appliers\MsSQL2008DateTimeApplier.cs" />
+    <Compile Include="Appliers\OneToManyKeyColumnApplier.cs" />
+    <Compile Include="Appliers\OneToManyPattern.cs" />
     <Compile Include="Patterns\UseSetWhenGenericCollectionPattern.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

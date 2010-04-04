@@ -33,7 +33,7 @@ namespace ConfOrm.Shop.Appliers
 
 		protected virtual string GetColumnNameForCollectionKey(PropertyPath subject)
 		{
-			var entityType = GetContainerEntity(subject);
+			var entityType = subject.GetContainerEntity(DomainInspector);
 			return entityType.Name + "Id";
 		}
 	}

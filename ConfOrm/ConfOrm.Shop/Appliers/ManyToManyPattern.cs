@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using ConfOrm.NH;
 
 namespace ConfOrm.Shop.Appliers
 {
@@ -56,16 +55,6 @@ namespace ConfOrm.Shop.Appliers
 		}
 
 		#endregion
-
-		protected Type GetContainerEntity(PropertyPath propertyPath)
-		{
-			PropertyPath analizing = propertyPath;
-			while (analizing.PreviousPath != null && !DomainInspector.IsEntity(analizing.LocalMember.ReflectedType))
-			{
-				analizing = analizing.PreviousPath;
-			}
-			return analizing.LocalMember.ReflectedType;
-		}
 
 		protected Relation GetRelation(MemberInfo subject)
 		{

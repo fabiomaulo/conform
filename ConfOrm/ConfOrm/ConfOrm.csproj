@@ -153,6 +153,7 @@
     <Compile Include="NH\PropertyPath.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="NH\PropertyPathExtensions.cs" />
     <Compile Include="NH\SetMapper.cs" />
     <Compile Include="NH\CustomizersImpl\SubclassCustomizer.cs" />
     <Compile Include="NH\SubclassMapper.cs" />
