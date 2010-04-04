@@ -32,7 +32,18 @@ namespace ConfOrm.Shop.CoolNaming
 		private string GetColumnNameForRelation(PropertyPath subject)
 		{
 			var relation = GetRelation(subject.LocalMember);
-			return relation.To.Name + "Id";
+			var fromMany = relation.From;
+			if(!DomainInspector.IsEntity(fromMany))
+			{
+				fromMany = subject.GetContainerEntity(DomainInspector);
+			}
+			var toMany = relation.To;
+			var baseColumnName = toMany.Name + "Id";
+			if (fromMany != toMany)
+			{
+				return baseColumnName;
+			}
+			return subject.ToColumnName() + baseColumnName;
 		}
 
 		#endregion

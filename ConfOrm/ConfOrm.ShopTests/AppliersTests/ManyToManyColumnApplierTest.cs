@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
-using ConfOrm.Shop.Appliers;
 using ConfOrm.Shop.CoolNaming;
 using Moq;
 using NUnit.Framework;
@@ -28,10 +27,23 @@ namespace ConfOrm.ShopTests.AppliersTests
 			public ICollection<MyClass> MyClasses { get; set; }
 		}
 
+		private class Human
+		{
+			public ICollection<Human> Friends { get; set; }
+			public IDictionary<string, Human> Family { get; set; }
+			public Address Address { get; set; }			
+		}
+
+		private class Address
+		{
+			public ICollection<Human> Persons { get; set; }			
+		}
+
 		[Test]
 		public void WhenManyToManyCollectionThenApplyColumnNameByRelatedEntityClass()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsEntity(It.Is<Type>(t => t == typeof(MyClass) || t == typeof(MyBidirect)))).Returns(true);
 			orm.Setup(x => x.IsManyToMany(It.Is<Type>(t => t == typeof(MyClass)), It.Is<Type>(t => t == typeof(MyBidirect)))).Returns(true);
 
 			var pattern = new ManyToManyColumnApplier(orm.Object);
@@ -47,6 +59,7 @@ namespace ConfOrm.ShopTests.AppliersTests
 		public void WhenManyToManyCollectionInsideComponentThenApplyColumnNameByEntityClass()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsEntity(It.Is<Type>(t => t == typeof(MyClass) || t == typeof(MyBidirect)))).Returns(true);
 			orm.Setup(x => x.IsManyToMany(It.Is<Type>(t => t == typeof(MyComponent)), It.Is<Type>(t => t == typeof(MyBidirect)))).Returns(true);
 
 			var pattern = new ManyToManyColumnApplier(orm.Object);
@@ -64,6 +77,7 @@ namespace ConfOrm.ShopTests.AppliersTests
 		public void WhenManyToManyDictionaryThenApplyColumnNameByEntityClass()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsEntity(It.Is<Type>(t => t == typeof(MyClass) || t == typeof(MyBidirect)))).Returns(true);
 			orm.Setup(x => x.IsManyToMany(It.Is<Type>(t => t == typeof(MyClass)), It.Is<Type>(t => t == typeof(MyBidirect)))).Returns(true);
 
 			var pattern = new ManyToManyColumnApplier(orm.Object);
@@ -79,6 +93,7 @@ namespace ConfOrm.ShopTests.AppliersTests
 		public void WhenManyToManyBidirectionalThenApplyColumnNameByEntityClass()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsEntity(It.Is<Type>(t => t == typeof(MyClass) || t == typeof(MyBidirect)))).Returns(true);
 			orm.Setup(x => x.IsManyToMany(It.Is<Type>(t => t == typeof(MyClass)), It.Is<Type>(t => t == typeof(MyBidirect)))).Returns(true);
 			orm.Setup(x => x.IsManyToMany(It.Is<Type>(t => t == typeof(MyBidirect)), It.Is<Type>(t => t == typeof(MyClass)))).Returns(true);
 
@@ -97,5 +112,56 @@ namespace ConfOrm.ShopTests.AppliersTests
 
 			bimayToManyMapper.Verify(x => x.Column(It.Is<string>(columnName => columnName == "MyClassId")));
 		}
+
+		[Test]
+		public void WhenCircularManyToManyCollectionThenApplyColumnNameByPropertyEntityClass()
+		{
+			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsEntity(It.Is<Type>(t => t == typeof(Human)))).Returns(true);
+			orm.Setup(x => x.IsManyToMany(It.Is<Type>(t => t == typeof(Human)), It.Is<Type>(t => t == typeof(Human)))).Returns(true);
+
+			var pattern = new ManyToManyColumnApplier(orm.Object);
+			var path = new PropertyPath(null, ForClass<Human>.Property(x => x.Friends));
+			var mayToManyMapper = new Mock<IManyToManyMapper>();
+
+			pattern.Apply(path, mayToManyMapper.Object);
+
+			mayToManyMapper.Verify(x => x.Column(It.Is<string>(columnName => columnName == "FriendsHumanId")));
+		}
+
+		[Test]
+		public void WhenCircularManyToManyCollectionInsideComponentThenApplyColumnNameByPropertyPathEntityClass()
+		{
+			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsEntity(It.Is<Type>(t => t == typeof(Human)))).Returns(true);
+			orm.Setup(x => x.IsManyToMany(It.Is<Type>(t => t == typeof(Address)), It.Is<Type>(t => t == typeof(Human)))).Returns(true);
+
+			var pattern = new ManyToManyColumnApplier(orm.Object);
+
+			var pathEntity = new PropertyPath(null, ForClass<Human>.Property(x => x.Address));
+			var path = new PropertyPath(pathEntity, ForClass<Address>.Property(x => x.Persons));
+			var mayToManyMapper = new Mock<IManyToManyMapper>();
+
+			pattern.Apply(path, mayToManyMapper.Object);
+
+			mayToManyMapper.Verify(x => x.Column(It.Is<string>(columnName => columnName == "AddressPersonsHumanId")));
+		}
+
+		[Test]
+		public void WhenCircularManyToManyDictionaryThenApplyColumnNameByPropertyEntityClass()
+		{
+			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsEntity(It.Is<Type>(t => t == typeof(Human)))).Returns(true);
+			orm.Setup(x => x.IsManyToMany(It.Is<Type>(t => t == typeof(Human)), It.Is<Type>(t => t == typeof(Human)))).Returns(true);
+
+			var pattern = new ManyToManyColumnApplier(orm.Object);
+			var path = new PropertyPath(null, ForClass<Human>.Property(x => x.Family));
+			var mayToManyMapper = new Mock<IManyToManyMapper>();
+
+			pattern.Apply(path, mayToManyMapper.Object);
+
+			mayToManyMapper.Verify(x => x.Column(It.Is<string>(columnName => columnName == "FamilyHumanId")));
+		}
+
 	}
 }
