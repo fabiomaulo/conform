@@ -64,6 +64,7 @@
     <Compile Include="AppliersTests\DatePropertyByNameApplierTest.cs" />
     <Compile Include="AppliersTests\JoinedSubclassKeyAsRootIdColumnApplierTest.cs" />
     <Compile Include="AppliersTests\ManyToManyColumnApplierTest.cs" />
+    <Compile Include="AppliersTests\ManyToManyInCollectionTableApplierTest.cs" />
     <Compile Include="AppliersTests\ManyToManyKeyIdColumnApplierTest.cs" />
     <Compile Include="AppliersTests\ManyToManyPatternTest.cs" />
     <Compile Include="AppliersTests\ManyToOneColumnApplierTest.cs" />
