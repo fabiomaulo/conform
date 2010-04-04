@@ -170,6 +170,7 @@
     <Compile Include="NH\NaturalIdMapperTest.cs" />
     <Compile Include="NH\OneToOneMapperTest.cs" />
     <Compile Include="NH\PatternsAppliersHolderMergeExtensionTest.cs" />
+    <Compile Include="NH\PatternsAppliersHolderUnionWithExtensionTest.cs" />
     <Compile Include="NH\PropertyMapperTest.cs" />
     <Compile Include="NH\PropertyPathTest.cs" />
     <Compile Include="NH\SubclassMapperTest.cs" />
