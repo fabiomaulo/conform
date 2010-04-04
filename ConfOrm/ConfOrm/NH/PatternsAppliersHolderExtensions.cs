@@ -62,7 +62,7 @@ namespace ConfOrm.NH
 		/// <param name="source">An instance of <see cref="IPatternsAppliersHolder"/>>.</param>
 		/// <param name="applier">The instance of the applier to add.</param>
 		/// <remarks>
-		/// The Replace action is performed removing the all appliers with the same type-name, where exists, and then adding the new applier.
+		/// The Replace action is performed removing all appliers with the same type-name, where exists, and then adding the new applier.
 		/// This method is usefull when you want override a behaviour of an existing applier in an existing <see cref="IPatternsAppliersHolder"/>.
 		/// </remarks>
 		public static void UnionWith<TSubject, TApplyTo>(this IPatternsAppliersHolder source, IPatternApplier<TSubject, TApplyTo> applier)
