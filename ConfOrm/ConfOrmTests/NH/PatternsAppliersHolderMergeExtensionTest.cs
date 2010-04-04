@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using ConfOrm;
 using ConfOrm.Mappers;
@@ -158,6 +159,39 @@ namespace ConfOrmTests.NH
 			IPatternsAppliersHolder source = new EmptyPatternsAppliersHolder();
 			var applier = new Mock<IPatternApplier<int, string>>();
 			ActionAssert.Throws<ArgumentOutOfRangeException>(()=>source.Merge(applier.Object));
+		}
+
+		[Test]
+		public void WhenExistsApplierOfSameTypeThenDoesNotAdd()
+		{
+			IPatternsAppliersHolder source = new EmptyPatternsAppliersHolder();
+			var toAdd = new BidirectionalManyToManyInverseApplier();
+			source.Collection.Add(toAdd);
+			source.Merge(new BidirectionalManyToManyInverseApplier());
+
+			source.Collection.Count.Should().Be(1);
+			source.Collection.Single().Should().Be.SameInstanceAs(toAdd);
+		}
+
+		private class BidirectionalManyToManyInverseApplier : IPatternApplier<MemberInfo, ICollectionPropertiesMapper>
+		{
+			#region Implementation of IPattern<MemberInfo>
+
+			public bool Match(MemberInfo subject)
+			{
+				throw new NotImplementedException();
+			}
+
+			#endregion
+
+			#region Implementation of IPatternApplier<MemberInfo,ICollectionPropertiesMapper>
+
+			public void Apply(MemberInfo subject, ICollectionPropertiesMapper applyTo)
+			{
+				throw new NotImplementedException();
+			}
+
+			#endregion
 		}
 	}
 }

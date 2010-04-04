@@ -14,6 +14,9 @@ namespace ConfOrm.NH
 		/// <typeparam name="TApplyTo">The target of the applier.</typeparam>
 		/// <param name="source">An instance of <see cref="IPatternsAppliersHolder"/>>.</param>
 		/// <param name="applier">The instance of the applier to add.</param>
+		/// <remarks>
+		/// The new applier is added only where does not exists an applier of the same <see cref="Type"/>.
+		/// </remarks>
 		public static void Merge<TSubject, TApplyTo>(this IPatternsAppliersHolder source,IPatternApplier<TSubject, TApplyTo> applier)
 		{
 			if (source == null)
@@ -27,7 +30,10 @@ namespace ConfOrm.NH
 			var patternsAppliersCollection = GetCollectionPropertyOf<TSubject, TApplyTo>(source);
 			if (patternsAppliersCollection != null)
 			{
-				patternsAppliersCollection.Add(applier);
+				if (!patternsAppliersCollection.Any(a => a.GetType() == applier.GetType()))
+				{
+					patternsAppliersCollection.Add(applier);
+				}
 			}
 			else
 			{
