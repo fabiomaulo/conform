@@ -88,7 +88,7 @@ namespace ConfOrmTests.NH
 		}
 
 		[Test, Ignore("Test needed but not implemented.")]
-		public void MergeSholdGetAllPropertiesOfPatternsAppliersHolderOfBothSide()
+		public void MergeShouldGetAllPropertiesOfPatternsAppliersHolderOfBothSide()
 		{
 			// To implement this test I can use DynamicProxy of IPatternsAppliersHolder
 			// with target class EmptyPatternsAppliersHolder and intercept all getters
