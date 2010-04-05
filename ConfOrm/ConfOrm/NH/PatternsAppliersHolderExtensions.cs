@@ -177,5 +177,68 @@ namespace ConfOrm.NH
 				PerformMerge(destination, patternApplier);
 			}
 		}
+
+		/// <summary>
+		/// Union tow instances of <see cref="IPatternsAppliersHolder"/>.
+		/// </summary>
+		/// <param name="first">The main <see cref="IPatternsAppliersHolder"/> to union.</param>
+		/// <param name="second">The second <see cref="IPatternsAppliersHolder"/> to union.</param>
+		/// <returns>A new instance of <see cref="IPatternsAppliersHolder"/> with the result of union.</returns>
+		/// <remarks>
+		/// The rules of this methods are the same of <see cref="UnionWith{TSubject, TApplyTo}"/>.
+		/// The result does not contains duplicated appliers.
+		/// When an applier with the same type-name exists in both side the instance contained in <paramref name="second"/> will be returned.
+		/// </remarks>
+		public static IPatternsAppliersHolder UnionWith(this IPatternsAppliersHolder first, IPatternsAppliersHolder second)
+		{
+			if (first == null)
+			{
+				throw new ArgumentNullException("first");
+			}
+			var result = new EmptyPatternsAppliersHolder();
+			UnionWithPatternsAppliersHolders(first, result);
+			if (second != null)
+			{
+				UnionWithPatternsAppliersHolders(second, result);
+			}
+			return result;
+		}
+
+		private static void UnionWithPatternsAppliersHolders(IPatternsAppliersHolder source, EmptyPatternsAppliersHolder destination)
+		{
+			UnionWithAppliersCollection(source.RootClass, destination.RootClass);
+			UnionWithAppliersCollection(source.JoinedSubclass, destination.JoinedSubclass);
+			UnionWithAppliersCollection(source.Subclass, destination.Subclass);
+			UnionWithAppliersCollection(source.UnionSubclass, destination.UnionSubclass);
+
+			UnionWithAppliersCollection(source.Poid, destination.Poid);
+
+			UnionWithAppliersCollection(source.Property, destination.Property);
+			UnionWithAppliersCollection(source.PropertyPath, destination.PropertyPath);
+
+			UnionWithAppliersCollection(source.ManyToOne, destination.ManyToOne);
+			UnionWithAppliersCollection(source.ManyToOnePath, destination.ManyToOnePath);
+
+			UnionWithAppliersCollection(source.OneToOne, destination.OneToOne);
+			UnionWithAppliersCollection(source.OneToOnePath, destination.OneToOnePath);
+
+			UnionWithAppliersCollection(source.Any, destination.Any);
+			UnionWithAppliersCollection(source.AnyPath, destination.AnyPath);
+
+			UnionWithAppliersCollection(source.Collection, destination.Collection);
+			UnionWithAppliersCollection(source.CollectionPath, destination.CollectionPath);
+
+			UnionWithAppliersCollection(source.ManyToMany, destination.ManyToMany);
+			UnionWithAppliersCollection(source.ManyToManyPath, destination.ManyToManyPath);
+		}
+
+		private static void UnionWithAppliersCollection<TSubject, TApplyTo>(
+			IEnumerable<IPatternApplier<TSubject, TApplyTo>> source, ICollection<IPatternApplier<TSubject, TApplyTo>> destination)
+		{
+			foreach (var patternApplier in source)
+			{
+				PerformUnionWith(destination, patternApplier);
+			}
+		}
 	}
 }
