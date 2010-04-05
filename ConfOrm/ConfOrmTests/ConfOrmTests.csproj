@@ -172,6 +172,7 @@
     <Compile Include="NH\PatternsAppliersHolderMergeExtensionTest.cs" />
     <Compile Include="NH\PatternsAppliersHolderMergeHoldersTest.cs" />
     <Compile Include="NH\PatternsAppliersHolderUnionWithExtensionTest.cs" />
+    <Compile Include="NH\PatternsAppliersHolderUnionWithHoldersTest.cs" />
     <Compile Include="NH\PropertyMapperTest.cs" />
     <Compile Include="NH\PropertyPathTest.cs" />
     <Compile Include="NH\SubclassMapperTest.cs" />

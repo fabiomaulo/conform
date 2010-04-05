@@ -84,15 +84,7 @@ namespace ConfOrm.NH
 			var patternsAppliersCollection = GetCollectionPropertyOf<TSubject, TApplyTo>(source);
 			if (patternsAppliersCollection != null)
 			{
-				var existingAppliers = patternsAppliersCollection.Where(a=> a.GetType().Name == applier.GetType().Name).ToList();
-				if(existingAppliers.Count > 0)
-				{
-					foreach (var existingApplier in existingAppliers)
-					{
-						patternsAppliersCollection.Remove(existingApplier);
-					}
-				}
-				patternsAppliersCollection.Add(applier);
+				PerformUnionWith(patternsAppliersCollection, applier);
 			}
 			else
 			{
@@ -100,6 +92,19 @@ namespace ConfOrm.NH
 				                                      string.Format(NotSupportedApplierExceptionMessageTemplate,
 				                                                    typeof (TSubject).FullName, typeof (TApplyTo).FullName));
 			}
+		}
+
+		private static void PerformUnionWith<TSubject, TApplyTo>(ICollection<IPatternApplier<TSubject, TApplyTo>> destination, IPatternApplier<TSubject, TApplyTo> applier)
+		{
+			var existingAppliers = destination.Where(a => a.GetType().Name == applier.GetType().Name).ToList();
+			if (existingAppliers.Count > 0)
+			{
+				foreach (var existingApplier in existingAppliers)
+				{
+					destination.Remove(existingApplier);
+				}
+			}
+			destination.Add(applier);
 		}
 
 		public static void ApplyAllMatchs<TSubject, TApplyTo>(this IEnumerable<IPatternApplier<TSubject, TApplyTo>> appliers, TSubject subject, TApplyTo applyTo)
