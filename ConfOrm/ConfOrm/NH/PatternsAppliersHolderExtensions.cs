@@ -32,16 +32,21 @@ namespace ConfOrm.NH
 			var patternsAppliersCollection = GetCollectionPropertyOf<TSubject, TApplyTo>(source);
 			if (patternsAppliersCollection != null)
 			{
-				if (!patternsAppliersCollection.Any(a => a.GetType() == applier.GetType()))
-				{
-					patternsAppliersCollection.Add(applier);
-				}
+				PerformMerge(patternsAppliersCollection, applier);
 			}
 			else
 			{
 				throw new ArgumentOutOfRangeException("applier",
 				                                      string.Format(NotSupportedApplierExceptionMessageTemplate,
 				                                                    typeof (TSubject).FullName, typeof (TApplyTo).FullName));
+			}
+		}
+
+		private static void PerformMerge<TSubject, TApplyTo>(ICollection<IPatternApplier<TSubject, TApplyTo>> destination, IPatternApplier<TSubject, TApplyTo> applier)
+		{
+			if (!destination.Any(a => a.GetType() == applier.GetType()))
+			{
+				destination.Add(applier);
 			}
 		}
 
@@ -102,6 +107,69 @@ namespace ConfOrm.NH
 			foreach (var patternApplier in appliers.Where(pa => pa.Match(subject)))
 			{
 				patternApplier.Apply(subject, applyTo);
+			}
+		}
+
+		/// <summary>
+		/// Merge tow instances of <see cref="IPatternsAppliersHolder"/>.
+		/// </summary>
+		/// <param name="first">The main <see cref="IPatternsAppliersHolder"/> to merge.</param>
+		/// <param name="second">The second <see cref="IPatternsAppliersHolder"/> to merge.</param>
+		/// <returns>A new instance of <see cref="IPatternsAppliersHolder"/> with the result of merge.</returns>
+		/// <remarks>
+		/// The rules of this methods are the same of <see cref="Merge{TSubject, TApplyTo}"/>.
+		/// The result does not contains duplicated appliers.
+		/// When an applier of the same <see cref="Type"/> exists in both side the instance contained in <paramref name="first"/> will be returned.
+		/// </remarks>
+		public static IPatternsAppliersHolder Merge(this IPatternsAppliersHolder first, IPatternsAppliersHolder second)
+		{
+			if (first == null)
+			{
+				throw new ArgumentNullException("first");
+			}
+			var result = new EmptyPatternsAppliersHolder();
+			MergePatternsAppliersHolders(first, result);
+			if (second != null)
+			{
+				MergePatternsAppliersHolders(second, result);
+			}
+			return result;
+		}
+
+		private static void MergePatternsAppliersHolders(IPatternsAppliersHolder source, IPatternsAppliersHolder destination)
+		{
+			MergeAppliersCollection(source.RootClass, destination.RootClass);
+			MergeAppliersCollection(source.JoinedSubclass, destination.JoinedSubclass);
+			MergeAppliersCollection(source.Subclass, destination.Subclass);
+			MergeAppliersCollection(source.UnionSubclass, destination.UnionSubclass);
+
+			MergeAppliersCollection(source.Poid, destination.Poid);
+
+			MergeAppliersCollection(source.Property, destination.Property);
+			MergeAppliersCollection(source.PropertyPath, destination.PropertyPath);
+
+			MergeAppliersCollection(source.ManyToOne, destination.ManyToOne);
+			MergeAppliersCollection(source.ManyToOnePath, destination.ManyToOnePath);
+
+			MergeAppliersCollection(source.OneToOne, destination.OneToOne);
+			MergeAppliersCollection(source.OneToOnePath, destination.OneToOnePath);
+
+			MergeAppliersCollection(source.Any, destination.Any);
+			MergeAppliersCollection(source.AnyPath, destination.AnyPath);
+
+			MergeAppliersCollection(source.Collection, destination.Collection);
+			MergeAppliersCollection(source.CollectionPath, destination.CollectionPath);
+
+			MergeAppliersCollection(source.ManyToMany, destination.ManyToMany);
+			MergeAppliersCollection(source.ManyToManyPath, destination.ManyToManyPath);
+		}
+
+		private static void MergeAppliersCollection<TSubject, TApplyTo>(
+			IEnumerable<IPatternApplier<TSubject, TApplyTo>> source, ICollection<IPatternApplier<TSubject, TApplyTo>> destination)
+		{
+			foreach (var patternApplier in source)
+			{
+				PerformMerge(destination, patternApplier);
 			}
 		}
 	}
