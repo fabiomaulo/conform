@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using ConfOrm.Patterns;
 
 namespace ConfOrm.NH
 {
@@ -46,7 +47,12 @@ namespace ConfOrm.NH
 
 		private static void PerformMerge<TSubject, TApplyTo>(ICollection<IPatternApplier<TSubject, TApplyTo>> destination, IPatternApplier<TSubject, TApplyTo> applier)
 		{
-			if (!destination.Any(a => a.GetType() == applier.GetType()))
+			var applierType = applier.GetType();
+			if ((applierType.IsGenericType
+			     &&
+			     (applierType.GetGenericTypeDefinition() == typeof (DelegatedApplier<,>)
+			      || applierType.GetGenericTypeDefinition() == typeof (DelegatedAdvancedApplier<,>)))
+			    || !destination.Any(a => a.GetType() == applierType))
 			{
 				destination.Add(applier);
 			}
