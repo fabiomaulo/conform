@@ -1,9 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Reflection;
-using ConfOrm;
-using ConfOrm.NH;
-using ConfOrm.Patterns;
+using System.Diagnostics;
 using ConfOrmExample.Domain;
 using NHibernate;
 using NHibernate.ByteCode.Castle;
@@ -14,7 +12,6 @@ using NHibernate.Dialect;
 using NHibernate.Driver;
 using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
-using ConfOrm.Mappers;
 
 namespace ConfOrmExample
 {
@@ -45,64 +42,17 @@ namespace ConfOrmExample
 			return configure;
 		}
 
-		public static HbmMapping GetMapping()
+		private HbmMapping GetMapping()
 		{
-			var orm = GetMappedDomain();
-			var mapper = new Mapper(orm);
+			var domainMapper = new DefaultDomainMapper();
+			// un-comment the follow line and comment the previous to run the demo with a different mapper
+			//var domainMapper = new CoolDomainMapper();
 
-			CustomizeRelations(mapper);
-			return mapper.CompileMappingFor(Assembly.GetExecutingAssembly().GetTypes().Where(t => t.Namespace == typeof(Animal).Namespace));
-		}
+			var entities = new List<Type>();
 
-		public static void CustomizeRelations(Mapper mapper)
-		{
-			/* TODO: add IDomainInspector.IsOptionalOneToMany to avoid auto OnDelete.Cascade and soft-Cascade actions.
-				IsOptionalOneToMany may come in place using Declared.Explicit in the ORM */
-			mapper.Class<User>(cm =>
-				{
-					cm.Id(u => u.Id, im => im.Generator(Generators.Foreign<User>(u => u.Human)));
-					cm.OneToOne(u => u.Human, otom => otom.Constrained(true));
-				});
-			mapper.Class<Human>(cm => cm.Bag(human => human.Pets, bagm =>
-				{
-					bagm.Cascade(Cascade.None);
-					bagm.Key(km => km.OnDelete(OnDeleteAction.NoAction));
-				}, cer => { }));
-			mapper.Class<Zoo>(cm =>
-				{
-					cm.Map(zoo => zoo.Mammals, mapm =>
-						{
-							mapm.Cascade(Cascade.None);
-							mapm.Key(km => km.OnDelete(OnDeleteAction.NoAction));
-							mapm.Inverse(false);
-						}, cer => { });
-					cm.Map(zoo => zoo.Animals, mapm =>
-						{
-							mapm.Cascade(Cascade.None);
-							mapm.Key(km => km.OnDelete(OnDeleteAction.NoAction));
-						}, cer => { });
-				});
-		}
+			entities.AddRange(ModuleMappingUtil.RunModuleMapping<NaturalnessModuleMapping>(domainMapper.DomainDefinition, domainMapper.Mapper));
 
-		public static ObjectRelationalMapper GetMappedDomain()
-		{
-			var orm = new ObjectRelationalMapper();
-
-			// Remove one of not required patterns
-			orm.Patterns.ManyToOneRelations.Remove(
-				orm.Patterns.ManyToOneRelations.Single(p => p.GetType() == typeof (OneToOneUnidirectionalToManyToOnePattern)));
-			
-			orm.TablePerClass<Animal>();
-			orm.TablePerClass<User>();
-			orm.TablePerClass<StateProvince>();
-			orm.TablePerClassHierarchy<Zoo>();
-
-			orm.ManyToMany<Human, Human>();
-			orm.OneToOne<User, Human>();
-
-			orm.Patterns.PoidStrategies.Add(new NativePoidPattern());
-
-			return orm;
+			return domainMapper.Mapper.CompileMappingFor(entities);
 		}
 
 		[Test]
@@ -124,6 +74,22 @@ namespace ConfOrmExample
 			new SchemaExport(conf).Create(false, true);
 			Assert.DoesNotThrow(() => conf.BuildSessionFactory());
 			new SchemaExport(conf).Drop(false, true);
+		}
+
+		[Test, Explicit]
+		public void FullMappingProcessPerformance()
+		{
+			// The whole mapping process end when you have the session-factory ready to be used (create the first session)
+			// NOTE: this method does not creates the Schema because it is a simulation of what happen in production
+
+			var timer = Stopwatch.StartNew();
+
+			Configuration conf = ConfigureNHibernate();
+			conf.AddDeserializedMapping(GetMapping(), "Animals_Domain");
+			var sessionFactoryReady = conf.BuildSessionFactory();
+
+			timer.Stop();
+			Console.WriteLine("The whole mapping-process took {0}.{1} seconds.", timer.Elapsed.Seconds,timer.Elapsed.Milliseconds);
 		}
 
 		[Test]

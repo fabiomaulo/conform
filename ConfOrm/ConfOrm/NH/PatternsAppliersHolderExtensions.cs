@@ -16,10 +16,11 @@ namespace ConfOrm.NH
 		/// <typeparam name="TApplyTo">The target of the applier.</typeparam>
 		/// <param name="source">An instance of <see cref="IPatternsAppliersHolder"/>>.</param>
 		/// <param name="applier">The instance of the applier to add.</param>
+		/// <returns>The <paramref name="source"/> instance (to chain 'merge')</returns>
 		/// <remarks>
 		/// The new applier is added only where does not exists an applier of the same <see cref="Type"/>.
 		/// </remarks>
-		public static void Merge<TSubject, TApplyTo>(this IPatternsAppliersHolder source,IPatternApplier<TSubject, TApplyTo> applier)
+		public static IPatternsAppliersHolder Merge<TSubject, TApplyTo>(this IPatternsAppliersHolder source, IPatternApplier<TSubject, TApplyTo> applier)
 		{
 			if (source == null)
 			{
@@ -27,7 +28,7 @@ namespace ConfOrm.NH
 			}
 			if (applier == null)
 			{
-				return;
+				return source;
 			}
 			var patternsAppliersCollection = GetCollectionPropertyOf<TSubject, TApplyTo>(source);
 			if (patternsAppliersCollection != null)
@@ -40,6 +41,7 @@ namespace ConfOrm.NH
 				                                      string.Format(NotSupportedApplierExceptionMessageTemplate,
 				                                                    typeof (TSubject).FullName, typeof (TApplyTo).FullName));
 			}
+			return source;
 		}
 
 		private static void PerformMerge<TSubject, TApplyTo>(ICollection<IPatternApplier<TSubject, TApplyTo>> destination, IPatternApplier<TSubject, TApplyTo> applier)
@@ -67,11 +69,12 @@ namespace ConfOrm.NH
 		/// <typeparam name="TApplyTo">The target of the applier.</typeparam>
 		/// <param name="source">An instance of <see cref="IPatternsAppliersHolder"/>>.</param>
 		/// <param name="applier">The instance of the applier to add.</param>
+		/// <returns>The <paramref name="source"/> instance (to chain 'union')</returns>
 		/// <remarks>
 		/// The Replace action is performed removing all appliers with the same type-name, where exists, and then adding the new applier.
 		/// This method is usefull when you want override a behaviour of an existing applier in an existing <see cref="IPatternsAppliersHolder"/>.
 		/// </remarks>
-		public static void UnionWith<TSubject, TApplyTo>(this IPatternsAppliersHolder source, IPatternApplier<TSubject, TApplyTo> applier)
+		public static IPatternsAppliersHolder UnionWith<TSubject, TApplyTo>(this IPatternsAppliersHolder source, IPatternApplier<TSubject, TApplyTo> applier)
 		{
 			if (source == null)
 			{
@@ -79,7 +82,7 @@ namespace ConfOrm.NH
 			}
 			if (applier == null)
 			{
-				return;
+				return source;
 			}
 			var patternsAppliersCollection = GetCollectionPropertyOf<TSubject, TApplyTo>(source);
 			if (patternsAppliersCollection != null)
@@ -92,6 +95,7 @@ namespace ConfOrm.NH
 				                                      string.Format(NotSupportedApplierExceptionMessageTemplate,
 				                                                    typeof (TSubject).FullName, typeof (TApplyTo).FullName));
 			}
+			return source;
 		}
 
 		private static void PerformUnionWith<TSubject, TApplyTo>(ICollection<IPatternApplier<TSubject, TApplyTo>> destination, IPatternApplier<TSubject, TApplyTo> applier)

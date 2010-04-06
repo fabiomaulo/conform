@@ -1,14 +1,11 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Xml;
 using System.Xml.Serialization;
-using ConfOrm.NH;
-using ConfOrm.Shop.CoolNaming;
-using ConfOrmExample.Domain;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace ConfOrmExample
 {
@@ -17,7 +14,11 @@ namespace ConfOrmExample
 		[Test, Explicit]
 		public void ShowSingleXmlMapping()
 		{
-			var document = Serialize(NHIntegrationTest.GetMapping());
+			var domainMapper = new DefaultDomainMapper();
+			var entities = new List<Type>();
+			entities.AddRange(ModuleMappingUtil.RunModuleMapping<NaturalnessModuleMapping>(domainMapper.DomainDefinition, domainMapper.Mapper));
+
+			var document = Serialize(domainMapper.Mapper.CompileMappingFor(entities));
 			File.WriteAllText("MyMapping.hbm.xml", document);
 			Console.Write(document);
 		}
@@ -25,12 +26,11 @@ namespace ConfOrmExample
 		[Test, Explicit]
 		public void ShowSingleXmlMappingWithCoolAppliers()
 		{
-			var orm = NHIntegrationTest.GetMappedDomain();
-			var mapper = new Mapper(orm, new CoolPatternsAppliersHolder(orm));
-			NHIntegrationTest.CustomizeRelations(mapper);
-			var mappings = mapper.CompileMappingFor(Assembly.GetExecutingAssembly().GetTypes().Where(t => t.Namespace == typeof(Animal).Namespace));
+			var domainMapper = new CoolDomainMapper();
+			var entities = new List<Type>();
+			entities.AddRange(ModuleMappingUtil.RunModuleMapping<NaturalnessModuleMapping>(domainMapper.DomainDefinition, domainMapper.Mapper));
 
-			var document = Serialize(mappings);
+			var document = Serialize(domainMapper.Mapper.CompileMappingFor(entities));
 			File.WriteAllText("MyMapping.hbm.xml", document);
 			Console.Write(document);
 		}
@@ -38,10 +38,11 @@ namespace ConfOrmExample
 		[Test, Explicit]
 		public void WriteAllXmlMapping()
 		{
-			var orm = NHIntegrationTest.GetMappedDomain();
-			var mapper = new Mapper(orm);
-			NHIntegrationTest.CustomizeRelations(mapper);
-			var mappings = mapper.CompileMappingForEach(Assembly.GetExecutingAssembly().GetTypes().Where(t => t.Namespace == typeof(Animal).Namespace));
+			var domainMapper = new DefaultDomainMapper();
+			var entities = new List<Type>();
+			entities.AddRange(ModuleMappingUtil.RunModuleMapping<NaturalnessModuleMapping>(domainMapper.DomainDefinition, domainMapper.Mapper));
+
+			var mappings = domainMapper.Mapper.CompileMappingForEach(entities);
 			
 			foreach (var hbmMapping in mappings)
 			{
