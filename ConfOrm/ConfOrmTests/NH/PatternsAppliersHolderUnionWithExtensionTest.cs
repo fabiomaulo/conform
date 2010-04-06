@@ -4,6 +4,7 @@ using System.Reflection;
 using ConfOrm;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
+using ConfOrm.Patterns;
 using Moq;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -52,6 +53,26 @@ namespace ConfOrmTests.NH
 			source.UnionWith(toAdd);
 			source.Collection.Count.Should().Be(1);
 			source.Collection.Single().Should().Be.SameInstanceAs(toAdd);
+		}
+
+		[Test]
+		public void WhenAddDelegatedApplierThenAlwaysAdd()
+		{
+			IPatternsAppliersHolder source = new EmptyPatternsAppliersHolder();
+			source.Collection.Add(new DelegatedApplier<MemberInfo, ICollectionPropertiesMapper>(x => true, x => { }));
+			source.UnionWith(new DelegatedApplier<MemberInfo, ICollectionPropertiesMapper>(x => true, x => { }));
+
+			source.Collection.Count.Should().Be(2);
+		}
+
+		[Test]
+		public void WhenAddDelegatedAdvancedApplierThenAlwaysAdd()
+		{
+			IPatternsAppliersHolder source = new EmptyPatternsAppliersHolder();
+			source.Collection.Add(new DelegatedAdvancedApplier<MemberInfo, ICollectionPropertiesMapper>(x => true, (x, y) => { }));
+			source.UnionWith(new DelegatedAdvancedApplier<MemberInfo, ICollectionPropertiesMapper>(x => true, (x, y) => { }));
+
+			source.Collection.Count.Should().Be(2);
 		}
 
 		private class BidirectionalManyToManyInverseApplier: IPatternApplier<MemberInfo, ICollectionPropertiesMapper>

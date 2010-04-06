@@ -48,14 +48,18 @@ namespace ConfOrm.NH
 		private static void PerformMerge<TSubject, TApplyTo>(ICollection<IPatternApplier<TSubject, TApplyTo>> destination, IPatternApplier<TSubject, TApplyTo> applier)
 		{
 			var applierType = applier.GetType();
-			if ((applierType.IsGenericType
-			     &&
-			     (applierType.GetGenericTypeDefinition() == typeof (DelegatedApplier<,>)
-			      || applierType.GetGenericTypeDefinition() == typeof (DelegatedAdvancedApplier<,>)))
-			    || !destination.Any(a => a.GetType() == applierType))
+			if (IsDelegatedApplier(applierType) || !destination.Any(a => a.GetType() == applierType))
 			{
 				destination.Add(applier);
 			}
+		}
+
+		private static bool IsDelegatedApplier(Type applierType)
+		{
+			return applierType.IsGenericType
+			       &&
+			       (applierType.GetGenericTypeDefinition() == typeof (DelegatedApplier<,>)
+			        || applierType.GetGenericTypeDefinition() == typeof (DelegatedAdvancedApplier<,>));
 		}
 
 		private static ICollection<IPatternApplier<TSubject, TApplyTo>> GetCollectionPropertyOf<TSubject, TApplyTo>(IPatternsAppliersHolder source)
@@ -106,7 +110,8 @@ namespace ConfOrm.NH
 
 		private static void PerformUnionWith<TSubject, TApplyTo>(ICollection<IPatternApplier<TSubject, TApplyTo>> destination, IPatternApplier<TSubject, TApplyTo> applier)
 		{
-			var existingAppliers = destination.Where(a => a.GetType().Name == applier.GetType().Name).ToList();
+			var applierType = applier.GetType();
+			var existingAppliers = destination.Where(a => a.GetType().Name == applierType.Name && !IsDelegatedApplier(applierType)).ToList();
 			if (existingAppliers.Count > 0)
 			{
 				foreach (var existingApplier in existingAppliers)
