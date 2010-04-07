@@ -29,10 +29,14 @@ namespace ConfOrm.NH
 		ICollection<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> Collection { get; }
 		ICollection<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>> CollectionPath { get; }
 
+		#region Collection Element relations
+
 		ICollection<IPatternApplier<MemberInfo, IManyToManyMapper>> ManyToMany { get; }
 		ICollection<IPatternApplier<PropertyPath, IManyToManyMapper>> ManyToManyPath { get; }
 
 		ICollection<IPatternApplier<MemberInfo, IElementMapper>> Element { get; }
 		ICollection<IPatternApplier<PropertyPath, IElementMapper>> ElementPath { get; }
+
+		#endregion
 	}
 }
