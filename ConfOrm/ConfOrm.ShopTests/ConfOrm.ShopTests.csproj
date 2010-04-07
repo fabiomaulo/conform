@@ -67,6 +67,7 @@
     <Compile Include="AppliersTests\ManyToManyInCollectionTableApplierTest.cs" />
     <Compile Include="AppliersTests\ManyToManyKeyIdColumnApplierTest.cs" />
     <Compile Include="AppliersTests\ManyToManyPatternTest.cs" />
+    <Compile Include="AppliersTests\ManyToManyTableApplierTest.cs" />
     <Compile Include="AppliersTests\ManyToOneColumnApplierTest.cs" />
     <Compile Include="AppliersTests\MsSQL2008DateTimeApplierTest.cs" />
     <Compile Include="AppliersTests\OneToManyKeyColumnApplierTest.cs" />
