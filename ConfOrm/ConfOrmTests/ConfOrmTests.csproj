@@ -170,6 +170,7 @@
     <Compile Include="NH\MapperTests\UnionSubclassPatternsAddition.cs" />
     <Compile Include="NH\MapperTests\VersionPropertyTest.cs" />
     <Compile Include="NH\NaturalIdMapperTest.cs" />
+    <Compile Include="NH\NotFoundModeTest.cs" />
     <Compile Include="NH\OneToOneMapperTest.cs" />
     <Compile Include="NH\PatternsAppliersHolderMergeExtensionTest.cs" />
     <Compile Include="NH\PatternsAppliersHolderMergeHoldersTest.cs" />
