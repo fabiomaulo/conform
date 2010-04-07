@@ -638,11 +638,26 @@ namespace ConfOrm.NH
 
 		private class ElementRelationMapper : ICollectionElementRelationMapper
 		{
+			private readonly MemberInfo member;
+			private readonly PropertyPath propertyPath;
+			private readonly IPatternsAppliersHolder appliers;
+
+			public ElementRelationMapper(MemberInfo member, PropertyPath propertyPath, IPatternsAppliersHolder appliers)
+			{
+				this.member = member;
+				this.propertyPath = propertyPath;
+				this.appliers = appliers;
+			}
+
 			#region Implementation of ICollectionElementRelationMapper
 
 			public void Map(ICollectionElementRelation relation)
 			{
-				relation.Element(em => { });
+				relation.Element(x =>
+					{
+						appliers.Element.ApplyAllMatchs(member, x);
+						appliers.ElementPath.ApplyAllMatchs(propertyPath, x);
+					});
 			}
 
 			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)
@@ -844,7 +859,7 @@ namespace ConfOrm.NH
 			{
 				return new ComponentRelationMapper(ownerType, collectionElementType, domainInspector, PatternsAppliers, customizerHolder);
 			}
-			return new ElementRelationMapper();
+			return new ElementRelationMapper(property, propertyPath, PatternsAppliers);
 		}
 
 		private MemberInfo GetPoidPropertyOrField(Type type)
