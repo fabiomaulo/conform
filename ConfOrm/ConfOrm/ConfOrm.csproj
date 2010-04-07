@@ -67,6 +67,7 @@
     <Compile Include="Mappers\IAnyMapper.cs" />
     <Compile Include="Mappers\IBagPropertiesMapper.cs" />
     <Compile Include="Mappers\ICacheMapper.cs" />
+    <Compile Include="Mappers\IElementMapper.cs" />
     <Compile Include="Mappers\IColumnMapper.cs" />
     <Compile Include="Mappers\IColumnsMapper.cs" />
     <Compile Include="Mappers\IDiscriminatorMapper.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="NH\CustomizersImpl\SetPropertiesCustomizer.cs" />
     <Compile Include="NH\DefaultPatternsAppliersHolder.cs" />
     <Compile Include="NH\DiscriminatorMapper.cs" />
+    <Compile Include="NH\ElementMapper.cs" />
     <Compile Include="NH\EmptyPatternsAppliersHolder.cs" />
     <Compile Include="NH\EntityPropertyMapper.cs" />
     <Compile Include="NH\Generators.cs" />
