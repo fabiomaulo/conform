@@ -55,7 +55,6 @@
     <Compile Include="CoolNaming\ManyToManyKeyIdColumnApplier.cs" />
     <Compile Include="Appliers\ManyToManyPattern.cs" />
     <Compile Include="CoolNaming\ManyToManyInCollectionTableApplier.cs" />
-    <Compile Include="CoolNaming\ManyToManyTableApplier.cs" />
     <Compile Include="CoolNaming\ManyToOneColumnApplier.cs" />
     <Compile Include="Appliers\MsSQL2008DateTimeApplier.cs" />
     <Compile Include="CoolNaming\OneToManyKeyColumnApplier.cs" />
