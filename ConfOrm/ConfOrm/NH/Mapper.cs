@@ -687,7 +687,7 @@ namespace ConfOrm.NH
 
 			public void Map(ICollectionElementRelation relation)
 			{
-				relation.OneToMany();
+				relation.OneToMany(x => { });
 			}
 
 			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)

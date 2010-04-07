@@ -26,7 +26,7 @@ namespace ConfOrmTests.NH
 		{
 			object relationField = null;
 			var hbm = new CollectionElementRelation(typeof(Address), new HbmMapping(), element => relationField = element);
-			hbm.OneToMany();
+			hbm.OneToMany(x => { });
 			relationField.Should().Not.Be.Null().And.Be.OfType<HbmOneToMany>().And.ValueOf.@class.Satisfy(
 				a => !string.IsNullOrEmpty(a));
 		}
@@ -57,6 +57,15 @@ namespace ConfOrmTests.NH
 			var hbm = new CollectionElementRelation(typeof(Address), new HbmMapping(), element => { });
 			bool called = false;
 			hbm.Element(x=> called = true);
+			called.Should().Be.True();
+		}
+
+		[Test]
+		public void WhenMapOneToManyRelationshipThenCallAction()
+		{
+			var hbm = new CollectionElementRelation(typeof(Address), new HbmMapping(), element => { });
+			bool called = false;
+			hbm.OneToMany(x => called = true);
 			called.Should().Be.True();
 		}
 	}

@@ -26,9 +26,10 @@ namespace ConfOrm.NH
 			elementRelationshipAssing(hbm);
 		}
 
-		public void OneToMany()
+		public void OneToMany(Action<IOneToManyMapper> mapping)
 		{
 			var hbm = new HbmOneToMany { @class = collectionElementType.GetShortClassName(mapDoc) };
+			mapping(new OneToManyMapper(collectionElementType, hbm, mapDoc));
 			elementRelationshipAssing(hbm);
 		}
 
