@@ -152,6 +152,7 @@
     <Compile Include="NH\Mapper.cs" />
     <Compile Include="NH\NaturalIdMapper.cs" />
     <Compile Include="NH\NoMemberPropertyMapper.cs" />
+    <Compile Include="NH\OneToManyMapper.cs" />
     <Compile Include="NH\OneToOneMapper.cs" />
     <Compile Include="NH\CustomizersImpl\PersistentClassCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\PropertyContainerCustomizer.cs" />
