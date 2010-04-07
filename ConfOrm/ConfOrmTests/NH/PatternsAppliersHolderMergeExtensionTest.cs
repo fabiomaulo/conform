@@ -155,6 +155,20 @@ namespace ConfOrmTests.NH
 		}
 
 		[Test]
+		public void WhenApplier_MemberInfoElementMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<MemberInfo, IElementMapper>();
+			source.Element.Count.Should().Be(1);
+		}
+
+		[Test]
+		public void WhenApplier_PropertyPathElementMapper_ThenAddToItsCollection()
+		{
+			IPatternsAppliersHolder source = GetPatternsAppliersHolderWithApplierAdded<PropertyPath, IElementMapper>();
+			source.ElementPath.Count.Should().Be(1);
+		}
+
+		[Test]
 		public void WhenApplierIsNotSupportedThenThrows()
 		{
 			IPatternsAppliersHolder source = new EmptyPatternsAppliersHolder();

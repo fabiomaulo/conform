@@ -182,6 +182,9 @@ namespace ConfOrm.NH
 
 			MergeAppliersCollection(source.ManyToMany, destination.ManyToMany);
 			MergeAppliersCollection(source.ManyToManyPath, destination.ManyToManyPath);
+
+			MergeAppliersCollection(source.Element, destination.Element);
+			MergeAppliersCollection(source.ElementPath, destination.ElementPath);
 		}
 
 		private static void MergeAppliersCollection<TSubject, TApplyTo>(
@@ -245,6 +248,9 @@ namespace ConfOrm.NH
 
 			UnionWithAppliersCollection(source.ManyToMany, destination.ManyToMany);
 			UnionWithAppliersCollection(source.ManyToManyPath, destination.ManyToManyPath);
+
+			UnionWithAppliersCollection(source.Element, destination.Element);
+			UnionWithAppliersCollection(source.ElementPath, destination.ElementPath);
 		}
 
 		private static void UnionWithAppliersCollection<TSubject, TApplyTo>(

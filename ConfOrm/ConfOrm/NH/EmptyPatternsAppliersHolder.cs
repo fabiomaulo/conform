@@ -24,6 +24,8 @@ namespace ConfOrm.NH
 		protected List<IPatternApplier<PropertyPath, IAnyMapper>> anyPath;
 		protected List<IPatternApplier<MemberInfo, IManyToManyMapper>> manyToMany;
 		protected List<IPatternApplier<PropertyPath, IManyToManyMapper>> manyToManyPath;
+		protected List<IPatternApplier<MemberInfo, IElementMapper>> element;
+		protected List<IPatternApplier<PropertyPath, IElementMapper>> elementPath;
 
 		public EmptyPatternsAppliersHolder()
 		{
@@ -45,6 +47,8 @@ namespace ConfOrm.NH
 			anyPath = new List<IPatternApplier<PropertyPath, IAnyMapper>>();
 			manyToMany = new List<IPatternApplier<MemberInfo, IManyToManyMapper>>();
 			manyToManyPath = new List<IPatternApplier<PropertyPath, IManyToManyMapper>>();
+			element = new List<IPatternApplier<MemberInfo, IElementMapper>>();
+			elementPath = new List<IPatternApplier<PropertyPath, IElementMapper>>();
 		}
 
 		public ICollection<IPatternApplier<Type, IClassAttributesMapper>> RootClass
@@ -130,6 +134,16 @@ namespace ConfOrm.NH
 		public ICollection<IPatternApplier<PropertyPath, IManyToManyMapper>> ManyToManyPath
 		{
 			get { return manyToManyPath; }
+		}
+
+		public ICollection<IPatternApplier<MemberInfo, IElementMapper>> Element
+		{
+			get { return element; }
+		}
+
+		public ICollection<IPatternApplier<PropertyPath, IElementMapper>> ElementPath
+		{
+			get { return elementPath; }
 		}
 	}
 }
