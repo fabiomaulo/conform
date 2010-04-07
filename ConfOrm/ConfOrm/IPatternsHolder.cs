@@ -9,7 +9,7 @@ namespace ConfOrm
 		ICollection<IPattern<MemberInfo>> Poids { get; }
 		ICollection<IPatternValueGetter<MemberInfo, IPersistentIdStrategy>> PoidStrategies { get; }
 
-		ICollection<IPattern<Type>> Componets { get; }
+		ICollection<IPattern<Type>> Components { get; }
 
 		ICollection<IPattern<MemberInfo>> Sets { get; }
 		ICollection<IPattern<MemberInfo>> Bags { get; }

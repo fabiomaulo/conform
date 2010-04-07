@@ -16,7 +16,7 @@ namespace ConfOrm
 			Bags.Add(new BagCollectionPattern());
 			Lists.Add(new ListCollectionPattern(domainInspector));
 			Arrays.Add(new ArrayCollectionPattern());
-			Componets.Add(new ComponentPattern(domainInspector));
+			Components.Add(new ComponentPattern(domainInspector));
 			Dictionaries.Add(new DictionaryCollectionPattern());
 			Cascades.Add(new BidirectionalOneToManyCascadePattern(domainInspector));
 

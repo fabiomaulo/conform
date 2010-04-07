@@ -805,16 +805,16 @@ namespace ConfOrm.NH
 						propertiesContainer.Component(member, x =>
 							{
 								// Note: for nested-components the Parent discovering is mandatory (recursive nested-component)
-								var componetOwnerType = type;
-								var componetPropertyType = propertyType;
+								var componentOwnerType = type;
+								var componentPropertyType = propertyType;
 
-								var componentProperties = GetPersistentProperties(componetPropertyType);
-								var parentReferenceProperty = componentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == componetOwnerType);
+								var componentProperties = GetPersistentProperties(componentPropertyType);
+								var parentReferenceProperty = componentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == componentOwnerType);
 								if (parentReferenceProperty != null)
 								{
 									x.Parent(parentReferenceProperty);
 								}
-								MapProperties(componetPropertyType, x, componentProperties.Where(pi => pi != parentReferenceProperty));
+								MapProperties(componentPropertyType, x, componentProperties.Where(pi => pi != parentReferenceProperty));
 							});
 					}
 					else

@@ -12,7 +12,7 @@ namespace ConfOrm.NH
 		private readonly Dictionary<PropertyPath, List<Action<ICollectionPropertiesMapper>>> collectionCustomizers =
 			new Dictionary<PropertyPath, List<Action<ICollectionPropertiesMapper>>>();
 
-		private readonly Dictionary<Type, List<Action<IComponentMapper>>> componetClassCustomizers =
+		private readonly Dictionary<Type, List<Action<IComponentMapper>>> componentClassCustomizers =
 			new Dictionary<Type, List<Action<IComponentMapper>>>();
 
 		private readonly Dictionary<Type, List<Action<IJoinedSubclassAttributesMapper>>> joinedClassCustomizers =
@@ -72,7 +72,7 @@ namespace ConfOrm.NH
 
 		public void AddCustomizer(Type type, Action<IComponentMapper> classCustomizer)
 		{
-			AddCustomizer(componetClassCustomizers, type, classCustomizer);
+			AddCustomizer(componentClassCustomizers, type, classCustomizer);
 		}
 
 		public void AddCustomizer(PropertyPath member, Action<IPropertyMapper> propertyCustomizer)
@@ -142,7 +142,7 @@ namespace ConfOrm.NH
 
 		public void InvokeCustomizers(Type type, IComponentMapper mapper)
 		{
-			InvokeCustomizers(componetClassCustomizers, type, mapper);
+			InvokeCustomizers(componentClassCustomizers, type, mapper);
 		}
 
 		public void InvokeCustomizers(PropertyPath member, IPropertyMapper mapper)

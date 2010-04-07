@@ -32,7 +32,7 @@ namespace ConfOrm.Shop.CoolNaming
 			           		new MemberNoSetterToFieldAccessorApplier<IPropertyMapper>(),
 			           		new MemberToFieldAccessorApplier<IPropertyMapper>(),
 			           	};
-			propertyPath = new List<IPatternApplier<PropertyPath, IPropertyMapper>> {new ComponetPropertyColumnNameApplier(),};
+			propertyPath = new List<IPatternApplier<PropertyPath, IPropertyMapper>> {new ComponentPropertyColumnNameApplier(),};
 			collection = new List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>>
 			             	{
 			             		new MemberReadOnlyAccessorApplier<ICollectionPropertiesMapper>(),

@@ -4,7 +4,7 @@ using ConfOrm.Shop.Appliers;
 
 namespace ConfOrm.Shop.CoolNaming
 {
-	public class ComponetPropertyColumnNameApplier : ComponentMemberDeepPathPattern, IPatternApplier<PropertyPath, IPropertyMapper>
+	public class ComponentPropertyColumnNameApplier : ComponentMemberDeepPathPattern, IPatternApplier<PropertyPath, IPropertyMapper>
 	{
 		#region Implementation of IPatternApplier<PropertyPath,IPropertyMapper>
 

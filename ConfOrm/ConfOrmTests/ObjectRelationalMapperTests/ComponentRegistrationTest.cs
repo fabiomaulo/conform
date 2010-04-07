@@ -13,7 +13,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		}
 
 		[Test]
-		public void WhenComponetRegisteredIsRecognized()
+		public void WhenComponentRegisteredIsRecognized()
 		{
 			var mapper = new ObjectRelationalMapper();
 			mapper.Component<AComponent>();

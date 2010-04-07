@@ -12,7 +12,7 @@ namespace ConfOrm
 		private readonly List<IPatternValueGetter<Relation, Cascade?>> cascadePatterns =
 			new List<IPatternValueGetter<Relation, Cascade?>>();
 
-		private readonly List<IPattern<Type>> componetPatterns = new List<IPattern<Type>>();
+		private readonly List<IPattern<Type>> componentPatterns = new List<IPattern<Type>>();
 		private readonly List<IPattern<MemberInfo>> dictionaryPatterns = new List<IPattern<MemberInfo>>();
 		private readonly List<IPattern<MemberInfo>> listPatterns = new List<IPattern<MemberInfo>>();
 
@@ -38,9 +38,9 @@ namespace ConfOrm
 			get { return poidStrategyPatterns; }
 		}
 
-		public ICollection<IPattern<Type>> Componets
+		public ICollection<IPattern<Type>> Components
 		{
-			get { return componetPatterns; }
+			get { return componentPatterns; }
 		}
 
 		public ICollection<IPattern<MemberInfo>> Sets

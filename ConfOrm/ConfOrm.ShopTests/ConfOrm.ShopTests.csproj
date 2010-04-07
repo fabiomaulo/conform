@@ -60,7 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppliersTests\ComponentMemberDeepPathPatternTest.cs" />
-    <Compile Include="AppliersTests\ComponetPropertyColumnNameApplierTest.cs" />
+    <Compile Include="AppliersTests\ComponentPropertyColumnNameApplierTest.cs" />
     <Compile Include="AppliersTests\DatePropertyByNameApplierTest.cs" />
     <Compile Include="AppliersTests\JoinedSubclassKeyAsRootIdColumnApplierTest.cs" />
     <Compile Include="AppliersTests\ManyToManyColumnApplierTest.cs" />

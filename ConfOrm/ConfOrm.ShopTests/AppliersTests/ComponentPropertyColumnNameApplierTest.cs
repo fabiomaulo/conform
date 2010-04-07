@@ -1,13 +1,12 @@
 using ConfOrm.Mappers;
 using ConfOrm.NH;
-using ConfOrm.Shop.Appliers;
 using ConfOrm.Shop.CoolNaming;
 using Moq;
 using NUnit.Framework;
 
 namespace ConfOrm.ShopTests.AppliersTests
 {
-	public class ComponetPropertyColumnNameApplierTest
+	public class ComponentPropertyColumnNameApplierTest
 	{
 		private class MyClass
 		{
@@ -31,7 +30,7 @@ namespace ConfOrm.ShopTests.AppliersTests
 			var level0 = new PropertyPath(null, ForClass<MyClassWithComponent>.Property(x => x.Component1));
 			var level1 = new PropertyPath(level0, ForClass<MyComponent>.Property(x => x.MyNested));
 			var level2 = new PropertyPath(level1, ForClass<MyClass>.Property(x => x.Fake1));
-			var pattern = new ComponetPropertyColumnNameApplier();
+			var pattern = new ComponentPropertyColumnNameApplier();
 			var mapper = new Mock<IPropertyMapper>();
 			
 			pattern.Apply(level2, mapper.Object);

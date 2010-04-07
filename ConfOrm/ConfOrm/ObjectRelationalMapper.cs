@@ -263,7 +263,7 @@ namespace ConfOrm
 
 		public virtual bool IsComponent(Type type)
 		{
-			return (explicitDeclarations.Components.Contains(type) || (Patterns.Componets.Match(type) && !IsEntity(type)))
+			return (explicitDeclarations.Components.Contains(type) || (Patterns.Components.Match(type) && !IsEntity(type)))
 			       && !explicitDeclarations.ComplexTypes.Contains(type);
 		}
 
