@@ -642,7 +642,7 @@ namespace ConfOrm.NH
 
 			public void Map(ICollectionElementRelation relation)
 			{
-				relation.Element();
+				relation.Element(em => { });
 			}
 
 			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)

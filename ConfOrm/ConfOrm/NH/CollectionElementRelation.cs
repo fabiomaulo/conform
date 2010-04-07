@@ -19,9 +19,10 @@ namespace ConfOrm.NH
 
 		#region Implementation of ICollectionElementRelation
 
-		public void Element()
+		public void Element(Action<IElementMapper> mapping)
 		{
-			var hbm = new HbmElement { type1 = collectionElementType.GetNhTypeName() };
+			var hbm = new HbmElement();
+			mapping(new ElementMapper(collectionElementType, hbm));
 			elementRelationshipAssing(hbm);
 		}
 

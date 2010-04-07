@@ -16,7 +16,7 @@ namespace ConfOrmTests.NH
 		{
 			object relationField = null;
 			var hbm = new CollectionElementRelation(typeof(Address), new HbmMapping(), element => relationField = element);
-			hbm.Element();
+			hbm.Element(x => { });
 			relationField.Should().Not.Be.Null().And.Be.OfType<HbmElement>().And.ValueOf.Type.Satisfy(
 				a => !string.IsNullOrEmpty(a.name));
 		}
@@ -49,6 +49,15 @@ namespace ConfOrmTests.NH
 			hbm.Component(comp => { });
 			relationField.Should().Not.Be.Null().And.Be.OfType<HbmCompositeElement>().And.ValueOf.@class.Satisfy(
 				a => !string.IsNullOrEmpty(a));
+		}
+
+		[Test]
+		public void WhenMapElementRelationshipThenCallAction()
+		{
+			var hbm = new CollectionElementRelation(typeof(Address), new HbmMapping(), element => { });
+			bool called = false;
+			hbm.Element(x=> called = true);
+			called.Should().Be.True();
 		}
 	}
 }
