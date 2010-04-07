@@ -37,6 +37,8 @@ namespace ConfOrm.NH
 		ICollection<IPatternApplier<MemberInfo, IElementMapper>> Element { get; }
 		ICollection<IPatternApplier<PropertyPath, IElementMapper>> ElementPath { get; }
 
+		ICollection<IPatternApplier<MemberInfo, IOneToManyMapper>> OneToMany { get; }
+		ICollection<IPatternApplier<PropertyPath, IOneToManyMapper>> OneToManyPath { get; }
 		#endregion
 	}
 }

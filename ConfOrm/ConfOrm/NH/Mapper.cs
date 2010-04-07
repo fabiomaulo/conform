@@ -671,23 +671,31 @@ namespace ConfOrm.NH
 		{
 			private const BindingFlags FlattenHierarchyBindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
 			private readonly MemberInfo member;
+			private readonly PropertyPath propertyPath;
 			private readonly Type ownerType;
 			private readonly Type collectionElementType;
 			private readonly IDomainInspector domainInspector;
+			private readonly IPatternsAppliersHolder appliers;
 
-			public OneToManyRelationMapper(MemberInfo member, Type ownerType, Type collectionElementType, IDomainInspector domainInspector)
+			public OneToManyRelationMapper(MemberInfo member, PropertyPath propertyPath, Type ownerType, Type collectionElementType, IDomainInspector domainInspector, IPatternsAppliersHolder appliers)
 			{
 				this.member = member;
+				this.propertyPath = propertyPath;
 				this.ownerType = ownerType;
 				this.collectionElementType = collectionElementType;
 				this.domainInspector = domainInspector;
+				this.appliers = appliers;
 			}
 
 			#region Implementation of ICollectionElementRelationMapper
 
 			public void Map(ICollectionElementRelation relation)
 			{
-				relation.OneToMany(x => { });
+				relation.OneToMany(x =>
+					{
+						appliers.OneToMany.ApplyAllMatchs(member, x);
+						appliers.OneToManyPath.ApplyAllMatchs(propertyPath, x);
+					});
 			}
 
 			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)
@@ -849,7 +857,7 @@ namespace ConfOrm.NH
 			var ownerType = property.ReflectedType;
 			if (domainInspector.IsOneToMany(ownerType, collectionElementType))
 			{
-				return new OneToManyRelationMapper(property, ownerType, collectionElementType, domainInspector);
+				return new OneToManyRelationMapper(property, propertyPath, ownerType, collectionElementType, domainInspector, PatternsAppliers);
 			}
 			else if (domainInspector.IsManyToMany(ownerType, collectionElementType))
 			{
