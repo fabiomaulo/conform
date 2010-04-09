@@ -13,6 +13,7 @@ namespace ConfOrm.NH
 		ICollection<IPatternApplier<Type, IUnionSubclassAttributesMapper>> UnionSubclass { get; }
 
 		ICollection<IPatternApplier<MemberInfo, IIdMapper>> Poid { get; }
+		ICollection<IPatternApplier<MemberInfo, IVersionMapper>> Version { get; }
 
 		ICollection<IPatternApplier<MemberInfo, IPropertyMapper>> Property { get; }
 		ICollection<IPatternApplier<PropertyPath, IPropertyMapper>> PropertyPath { get; }
