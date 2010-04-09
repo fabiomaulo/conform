@@ -331,7 +331,7 @@ namespace ConfOrm
 			bool areEntities = IsEntity(from) && IsEntity(to);
 			bool isFromComponentToEntity = IsComponent(from) && IsEntity(to);
 			var relation = new Relation(from, to);
-			return (areEntities && explicitDeclarations.ManyToOneRelations.Contains(relation))
+			return explicitDeclarations.ManyToOneRelations.Contains(relation)
 						 || (areEntities && Patterns.ManyToOneRelations.Match(relation)) ||
 			       (areEntities && !IsOneToOne(from, to)
 			        && !explicitDeclarations.ManyToManyRelations.Contains(relation)) || isFromComponentToEntity;
