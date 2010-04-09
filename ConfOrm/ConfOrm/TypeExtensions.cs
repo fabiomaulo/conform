@@ -234,5 +234,33 @@ namespace ConfOrm
 			}
 			return propertyInfos.FirstOrDefault(p => p.PropertyType == propertyType);
 		}
+
+		public static IEnumerable<MemberInfo> GetInterfaceProperties(this Type type)
+		{
+			if (!type.IsInterface)
+			{
+				yield break;
+			}
+
+			var analyzedInterface = new List<Type>();
+			var interfacesQueue = new Queue<Type>();
+			analyzedInterface.Add(type);
+			interfacesQueue.Enqueue(type);
+			while (interfacesQueue.Count > 0)
+			{
+				var subType = interfacesQueue.Dequeue();
+				foreach (var subInterface in
+					subType.GetInterfaces().Where(subInterface => !analyzedInterface.Contains(subInterface)))
+				{
+					analyzedInterface.Add(subInterface);
+					interfacesQueue.Enqueue(subInterface);
+				}
+
+				foreach (var propertyInfo in subType.GetProperties())
+				{
+					yield return propertyInfo;
+				}
+			}
+		}
 	}
 }

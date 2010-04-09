@@ -425,7 +425,7 @@ namespace ConfOrm.NH
 		private IEnumerable<MemberInfo> GetPersistentProperties(Type type, BindingFlags propertiesBindingFlags)
 		{
 			IEnumerable<MemberInfo> properties = type.IsInterface
-			                                     	? GetInterfaceProperties(type)
+			                                     	? type.GetInterfaceProperties()
 			                                     	: type.GetProperties(propertiesBindingFlags);
 			return properties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p));
 		}
@@ -878,37 +878,9 @@ namespace ConfOrm.NH
 		private MemberInfo GetPoidPropertyOrField(Type type)
 		{
 			IEnumerable<MemberInfo> typeMembers = type.IsInterface
-			                                      	? GetInterfaceProperties(type)
+			                                      	? type.GetInterfaceProperties()
 			                                      	: type.GetProperties().Cast<MemberInfo>().Concat(type.GetFields());
 			return typeMembers.FirstOrDefault(mi => domainInspector.IsPersistentId(mi));
-		}
-
-		private IEnumerable<MemberInfo> GetInterfaceProperties(Type type)
-		{
-			if (!type.IsInterface)
-			{
-				yield break;
-			}
-
-			var analyzedInterface = new List<Type>();
-			var interfacesQueue = new Queue<Type>();
-			analyzedInterface.Add(type);
-			interfacesQueue.Enqueue(type);
-			while (interfacesQueue.Count > 0)
-			{
-				var subType = interfacesQueue.Dequeue();
-				foreach (var subInterface in
-					subType.GetInterfaces().Where(subInterface => !analyzedInterface.Contains(subInterface)))
-				{
-					analyzedInterface.Add(subInterface);
-					interfacesQueue.Enqueue(subInterface);
-				}
-
-				foreach (var propertyInfo in subType.GetProperties())
-				{
-					yield return propertyInfo;
-				}
-			}
 		}
 
 		public IEnumerable<HbmMapping> CompileMappingForEach(IEnumerable<Type> types)
