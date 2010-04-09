@@ -337,7 +337,10 @@ namespace ConfOrm.NH
 			var versionMember = persistentProperties.SingleOrDefault(mi => domainInspector.IsVersion(mi));
 			if (versionMember!= null)
 			{
-				classMapper.Version(versionMember, x => { });
+				classMapper.Version(versionMember, versionMapper =>
+					{
+						PatternsAppliers.Version.ApplyAllMatchs(versionMember, versionMapper);
+					});
 			}
 			PatternsAppliers.RootClass.ApplyAllMatchs(type, classMapper);
 			customizerHolder.InvokeCustomizers(type, classMapper);
