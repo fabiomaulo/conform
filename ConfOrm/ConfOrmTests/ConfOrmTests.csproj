@@ -120,6 +120,7 @@
     <Compile Include="NH\MapperTests\HierarchyTablePerClassJumpingTest.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerConcreteClassJumpingImpOfInterfaceTest.cs" />
     <Compile Include="NH\MapperTests\HierarchyTablePerConcreteClassJumpingTest.cs" />
+    <Compile Include="NH\MapperTests\InterfaceAsRootEntityTest.cs" />
     <Compile Include="NH\MapperTests\JoinedSubclassPatternsAddition.cs" />
     <Compile Include="NH\MapperTests\ManyToManyApplierCalling.cs" />
     <Compile Include="NH\MapperTests\ManyToOneRelationAccessorsTest.cs" />
