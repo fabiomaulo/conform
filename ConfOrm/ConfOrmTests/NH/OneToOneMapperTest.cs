@@ -43,8 +43,8 @@ namespace ConfOrmTests.NH
 		public void CanSetAccessor()
 		{
 			var member = typeof(MyClass).GetProperty("Relation");
-			var hbm = new HbmManyToOne();
-			var mapper = new ManyToOneMapper(member, hbm);
+			var hbm = new HbmOneToOne();
+			var mapper = new OneToOneMapper(member, hbm);
 
 			mapper.Access(Accessor.ReadOnly);
 			hbm.Access.Should().Be("readonly");
