@@ -11,12 +11,14 @@ namespace ConfOrm.NH
 	{
 		private readonly MemberInfo member;
 		private readonly HbmManyToOne manyToOne;
+		private readonly HbmMapping mapDoc;
 		private readonly IEntityPropertyMapper entityPropertyMapper;
 
-		public ManyToOneMapper(MemberInfo member, HbmManyToOne manyToOne)
+		public ManyToOneMapper(MemberInfo member, HbmManyToOne manyToOne, HbmMapping mapDoc)
 		{
 			this.member = member;
 			this.manyToOne = manyToOne;
+			this.mapDoc = mapDoc;
 			if (member == null)
 			{
 				this.manyToOne.access = "none";
@@ -32,6 +34,17 @@ namespace ConfOrm.NH
 		}
 
 		#region Implementation of IManyToOneMapper
+
+		public void Class(Type entityType)
+		{
+			if (!member.GetPropertyOrFieldType().IsAssignableFrom(entityType))
+			{
+				throw new ArgumentOutOfRangeException("entityType",
+				                                      string.Format("The type is incompatible; expected assignable to {0}",
+				                                                    member.GetPropertyOrFieldType()));
+			}
+			manyToOne.@class = entityType.GetShortClassName(mapDoc);
+		}
 
 		public void Cascade(Cascade cascadeStyle)
 		{

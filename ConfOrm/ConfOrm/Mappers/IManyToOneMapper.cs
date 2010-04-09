@@ -1,7 +1,18 @@
+using System;
+
 namespace ConfOrm.Mappers
 {
 	public interface IManyToOneMapper : IEntityPropertyMapper, IColumnsMapper
 	{
+		/// <summary>
+		/// Force the many-to-one to a different type than the one of the property.
+		/// </summary>
+		/// <param name="entityType">Mapped entity type.</param>
+		/// <remarks>
+		/// Useful when the property is an interface and you need the mapping to a concrete class mapped as entity.
+		/// </remarks>
+		void Class(Type entityType);
+
 		void Cascade(Cascade cascadeStyle);
 		void NotNullable(bool notnull);
 		void Unique(bool unique);
