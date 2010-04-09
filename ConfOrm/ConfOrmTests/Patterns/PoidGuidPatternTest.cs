@@ -8,6 +8,16 @@ namespace ConfOrmTests.Patterns
 {
 	public class PoidGuidPatternTest
 	{
+		private interface IEntity<TIdentity>
+		{
+			TIdentity GuidProp { get; }
+		}
+
+		private interface IMyEntity : IEntity<Guid>
+		{
+			
+		}
+
 		private class MyClass
 		{
 			public Guid GuidProp { get; set; }
@@ -35,6 +45,14 @@ namespace ConfOrmTests.Patterns
 		{
 			var pattern = new PoidGuidPattern();
 			pattern.Match(null).Should().Be(false);
+		}
+
+		[Test]
+		public void MatchWithGuidMemberOfInheritedInterface()
+		{
+			var pattern = new PoidGuidPattern();
+			pattern.Match(TypeExtensions.DecodeMemberAccessExpression<IMyEntity>(m => m.GuidProp)).Should().Be(true);
+			pattern.Match(TypeExtensions.DecodeMemberAccessExpressionOf<IMyEntity>(m => m.GuidProp)).Should().Be(true);
 		}
 	}
 }

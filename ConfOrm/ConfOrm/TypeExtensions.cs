@@ -77,7 +77,16 @@ namespace ConfOrm
 			{
 				memberOfDeclaringType = ((MemberExpression) expression.Body).Member;
 			}
-			var memberOfReflectType = typeof (TEntity).GetProperty(memberOfDeclaringType.Name, memberOfDeclaringType.GetPropertyOrFieldType());
+			PropertyInfo memberOfReflectType;
+			if (typeof(TEntity).IsInterface)
+			{
+				// Type.GetProperty(string name,Type returnType) does not work properly with interfaces
+				return memberOfDeclaringType;
+			}
+			else
+			{
+				memberOfReflectType = typeof(TEntity).GetProperty(memberOfDeclaringType.Name, memberOfDeclaringType.GetPropertyOrFieldType());
+			}
 			return memberOfReflectType;
 		}
 
@@ -121,7 +130,16 @@ namespace ConfOrm
 			{
 				memberOfDeclaringType = ((MemberExpression)expression.Body).Member;
 			}
-			var memberOfReflectType = typeof(TEntity).GetProperty(memberOfDeclaringType.Name, memberOfDeclaringType.GetPropertyOrFieldType());
+			PropertyInfo memberOfReflectType;
+			if (typeof(TEntity).IsInterface)
+			{
+				// Type.GetProperty(string name,Type returnType) does not work properly with interfaces
+				return memberOfDeclaringType;
+			}
+			else
+			{
+				memberOfReflectType = typeof(TEntity).GetProperty(memberOfDeclaringType.Name, memberOfDeclaringType.GetPropertyOrFieldType());				
+			}
 			return memberOfReflectType;
 		}
 

@@ -135,5 +135,17 @@ namespace ConfOrmTests
 			typeof (MyBaseClass).GetFirstPropertyOfType(typeof (float)).Should().Be.Null();
 			typeof (MyBaseClass).GetFirstPropertyOfType(typeof (double)).Should().Be.Null();
 		}
+
+		private interface IMyEntity : IEntity<Guid>
+		{
+
+		}
+
+		[Test]
+		public void WhenDecodeMemberAccessExpressionOfOnInheritedEntityInterfaceThenDecodeMember()
+		{
+			ConfOrm.TypeExtensions.DecodeMemberAccessExpressionOf<IMyEntity>(m => m.Id).Should().Not.Be.Null();
+			ConfOrm.TypeExtensions.DecodeMemberAccessExpressionOf<IMyEntity, Guid>(m => m.Id).Should().Not.Be.Null();
+		}
 	}
 }
