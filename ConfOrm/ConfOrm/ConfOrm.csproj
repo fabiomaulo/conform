@@ -129,6 +129,7 @@
     <Compile Include="NH\ComponentElementMapper.cs" />
     <Compile Include="NH\ComponentNestedElementMapper.cs" />
     <Compile Include="NH\GeneratorMapper.cs" />
+    <Compile Include="NH\ICandidatePersistentMembersProvider.cs" />
     <Compile Include="NH\ICustomizersHolder.cs" />
     <Compile Include="NH\IPatternsAppliersHolder.cs" />
     <Compile Include="NH\IPersistentClassCustomizer.cs" />
