@@ -17,18 +17,23 @@ namespace ConfOrm.NH
 		private readonly IDomainInspector domainInspector;
 		private readonly ICustomizersHolder customizerHolder;
 		private readonly IPatternsAppliersHolder patternsAppliers;
+		private readonly ICandidatePersistentMembersProvider membersProvider;
 
 		public Mapper(IDomainInspector domainInspector)
-			: this(domainInspector, new CustomizersHolder(), new DefaultPatternsAppliersHolder(domainInspector)) {}
+			: this(
+				domainInspector, new CustomizersHolder(), new DefaultPatternsAppliersHolder(domainInspector),
+				new DefaultCandidatePersistentMembersProvider()) {}
 
 		public Mapper(IDomainInspector domainInspector, ICustomizersHolder customizerHolder)
-			: this(domainInspector, customizerHolder, new DefaultPatternsAppliersHolder(domainInspector)) {}
+			: this(
+				domainInspector, customizerHolder, new DefaultPatternsAppliersHolder(domainInspector),
+				new DefaultCandidatePersistentMembersProvider()) {}
 
 		public Mapper(IDomainInspector domainInspector, IPatternsAppliersHolder patternsAppliers)
-			: this(domainInspector, new CustomizersHolder(), patternsAppliers) { }
+			: this(domainInspector, new CustomizersHolder(), patternsAppliers, new DefaultCandidatePersistentMembersProvider()) {}
 
 		public Mapper(IDomainInspector domainInspector, ICustomizersHolder customizerHolder,
-		              IPatternsAppliersHolder patternsAppliers)
+		              IPatternsAppliersHolder patternsAppliers, ICandidatePersistentMembersProvider membersProvider)
 		{
 			if (domainInspector == null)
 			{
@@ -42,9 +47,14 @@ namespace ConfOrm.NH
 			{
 				throw new ArgumentNullException("patternsAppliers");
 			}
+			if (membersProvider == null)
+			{
+				throw new ArgumentNullException("membersProvider");
+			}
 			this.domainInspector = domainInspector;
 			this.customizerHolder = customizerHolder;
 			this.patternsAppliers = patternsAppliers;
+			this.membersProvider = membersProvider;
 		}
 
 		public void Class<TRootEntity>(Action<IClassMapper<TRootEntity>> customizeAction) where TRootEntity : class
