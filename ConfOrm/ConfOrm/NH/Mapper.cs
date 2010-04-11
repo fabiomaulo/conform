@@ -11,9 +11,6 @@ namespace ConfOrm.NH
 {
 	public class Mapper
 	{
-		internal const BindingFlags SubClassPropertiesBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
-		internal const BindingFlags RootClassPropertiesBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
-		internal const BindingFlags ComponentPropertiesBindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
 		private readonly IDomainInspector domainInspector;
 		private readonly ICustomizersHolder customizerHolder;
 		private readonly IPatternsAppliersHolder patternsAppliers;
@@ -225,17 +222,20 @@ namespace ConfOrm.NH
 		private void MapUnionSubclass(Type type, HbmMapping mapping)
 		{
 			var classMapper = new UnionSubclassMapper(type, mapping);
-			
-			IEnumerable<MemberInfo> propertiesToMap = GetPersistentProperties(type, SubClassPropertiesBindingFlags).ToArray();
+
+			IEnumerable<MemberInfo> candidateProperties = null;
 			if (!domainInspector.IsEntity(type.BaseType))
 			{
 				var baseType = GetEntityBaseType(type);
 				if (baseType != null)
 				{
 					classMapper.Extends(baseType);
-					propertiesToMap = GetSubclassPersistentPropertiesSkipingEntities(type, baseType);
+					candidateProperties = membersProvider.GetSubEntityMembers(type, baseType);
 				}
 			}
+			candidateProperties = candidateProperties ?? membersProvider.GetSubEntityMembers(type, type.BaseType);
+			var propertiesToMap =
+				candidateProperties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p));
 
 			PatternsAppliers.UnionSubclass.ApplyAllMatchs(type, classMapper);
 			customizerHolder.InvokeCustomizers(type, classMapper);
@@ -245,16 +245,19 @@ namespace ConfOrm.NH
 		private void MapSubclass(Type type, HbmMapping mapping)
 		{
 			var classMapper = new SubclassMapper(type, mapping);
-			IEnumerable<MemberInfo> propertiesToMap = GetPersistentProperties(type, SubClassPropertiesBindingFlags).ToArray();
+			IEnumerable<MemberInfo> candidateProperties = null;
 			if (!domainInspector.IsEntity(type.BaseType))
 			{
 				var baseType = GetEntityBaseType(type);
 				if (baseType != null)
 				{
 					classMapper.Extends(baseType);
-					propertiesToMap = GetSubclassPersistentPropertiesSkipingEntities(type, baseType);
+					candidateProperties = membersProvider.GetSubEntityMembers(type, baseType);
 				}
 			}
+			candidateProperties = candidateProperties ?? membersProvider.GetSubEntityMembers(type, type.BaseType);
+			var propertiesToMap =
+				candidateProperties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p));
 
 			PatternsAppliers.Subclass.ApplyAllMatchs(type, classMapper);
 			customizerHolder.InvokeCustomizers(type, classMapper);
@@ -264,7 +267,7 @@ namespace ConfOrm.NH
 		private void MapJoinedSubclass(Type type, HbmMapping mapping)
 		{
 			var classMapper = new JoinedSubclassMapper(type, mapping);
-			IEnumerable<MemberInfo> propertiesToMap = GetPersistentProperties(type, SubClassPropertiesBindingFlags).ToArray();
+			IEnumerable<MemberInfo> candidateProperties = null;
 			if (!domainInspector.IsEntity(type.BaseType))
 			{
 				var baseType = GetEntityBaseType(type);
@@ -272,38 +275,16 @@ namespace ConfOrm.NH
 				{
 					classMapper.Extends(baseType);
 					classMapper.Key(km => km.Column(baseType.Name.ToLowerInvariant() + "_key"));
-					propertiesToMap = GetSubclassPersistentPropertiesSkipingEntities(type, baseType);
+					candidateProperties = membersProvider.GetSubEntityMembers(type, baseType);
 				}
 			}
+			candidateProperties = candidateProperties ?? membersProvider.GetSubEntityMembers(type, type.BaseType);
+			var propertiesToMap =
+				candidateProperties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p));
+
 			PatternsAppliers.JoinedSubclass.ApplyAllMatchs(type, classMapper);
 			customizerHolder.InvokeCustomizers(type, classMapper);
 			MapProperties(type, propertiesToMap, classMapper);
-		}
-
-		private IEnumerable<MemberInfo> GetSubclassPersistentPropertiesSkipingEntities(Type type, Type baseType)
-		{
-			const BindingFlags flattenHierarchyBindingFlag =
-				BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
-			var propertiesOfSubclass = GetPersistentProperties(type, flattenHierarchyBindingFlag);
-			var propertiesOfBaseClass = GetPersistentProperties(baseType, flattenHierarchyBindingFlag);
-			return propertiesOfSubclass.Except(propertiesOfBaseClass, new PropertyNameEqualityComparer());
-		}
-
-		private class PropertyNameEqualityComparer : IEqualityComparer<MemberInfo>
-		{
-			#region Implementation of IEqualityComparer<MemberInfo>
-
-			public bool Equals(MemberInfo x, MemberInfo y)
-			{
-				return x.Name == y.Name;
-			}
-
-			public int GetHashCode(MemberInfo obj)
-			{
-				return obj.Name.GetHashCode();
-			}
-
-			#endregion
 		}
 
 		private Type GetEntityBaseType(Type type)
@@ -322,7 +303,7 @@ namespace ConfOrm.NH
 
 		private void AddRootClassMapping(Type type, HbmMapping mapping)
 		{
-			var poidPropertyOrField = GetPoidPropertyOrField(type);
+			var poidPropertyOrField = membersProvider.GetEntityMembersForPoid(type).FirstOrDefault(mi => domainInspector.IsPersistentId(mi));
 			var classMapper = new ClassMapper(type, mapping, poidPropertyOrField);
 			classMapper.Id(idMapper =>
 				{
@@ -343,7 +324,9 @@ namespace ConfOrm.NH
 			{
 				classMapper.Discriminator(x => { });
 			}
-			var persistentProperties = GetPersistentProperties(type, RootClassPropertiesBindingFlags).ToArray();
+			var persistentProperties =
+				membersProvider.GetRootEntityMembers(type).Where(
+					p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p)).ToArray();
 			var versionMember = persistentProperties.SingleOrDefault(mi => domainInspector.IsVersion(mi));
 			if (versionMember!= null)
 			{
@@ -432,14 +415,6 @@ namespace ConfOrm.NH
 			MapProperties(propertiesContainerType, propertiesToMap, propertiesContainer, null);			
 		}
 
-		private IEnumerable<MemberInfo> GetPersistentProperties(Type type, BindingFlags propertiesBindingFlags)
-		{
-			IEnumerable<MemberInfo> properties = type.IsInterface
-			                                     	? type.GetInterfaceProperties()
-			                                     	: type.GetProperties(propertiesBindingFlags);
-			return properties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p));
-		}
-
 		private void MapProperties(Type propertiesContainerType, IEnumerable<MemberInfo> propertiesToMap,
 		                           IPropertyContainerMapper propertiesContainer, PropertyPath path)
 		{
@@ -499,7 +474,10 @@ namespace ConfOrm.NH
 		{
 			propertiesContainer.Any(member, typeof(int), anyMapper =>
 			{
-				var poidPropertyOrField = GetPoidPropertyOrField(memberPath.GetRootMember().DeclaringType);
+				var poidPropertyOrField =
+					membersProvider.GetEntityMembersForPoid(memberPath.GetRootMember().DeclaringType).FirstOrDefault(
+						mi => domainInspector.IsPersistentId(mi));
+
 				if (poidPropertyOrField != null)
 				{
 					anyMapper.IdType(poidPropertyOrField.GetPropertyOrFieldType());
@@ -529,7 +507,8 @@ namespace ConfOrm.NH
 				{
 					// Note: should, the Parent relation, be managed through DomainInspector ?
 					Type componentType = propertyType;
-					IEnumerable<MemberInfo> persistentProperties = GetPersistentProperties(componentType, ComponentPropertiesBindingFlags);
+					IEnumerable<MemberInfo> persistentProperties =
+						membersProvider.GetComponentMembers(componentType).Where(p => domainInspector.IsPersistentProperty(p));
 					MemberInfo parentReferenceProperty =
 						persistentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == propertiesContainerType);
 					if (parentReferenceProperty != null)
@@ -780,14 +759,18 @@ namespace ConfOrm.NH
 		{
 			private readonly Type ownerType;
 			private readonly Type componentType;
+			private readonly ICandidatePersistentMembersProvider membersProvider;
 			private readonly IDomainInspector domainInspector;
 			private readonly IPatternsAppliersHolder patternsAppliersHolder;
 			private readonly ICustomizersHolder customizersHolder;
 
-			public ComponentRelationMapper(Type ownerType, Type componentType, IDomainInspector domainInspector, IPatternsAppliersHolder patternsAppliersHolder, ICustomizersHolder customizersHolder)
+			public ComponentRelationMapper(Type ownerType, Type componentType,
+			                               ICandidatePersistentMembersProvider membersProvider, IDomainInspector domainInspector,
+			                               IPatternsAppliersHolder patternsAppliersHolder, ICustomizersHolder customizersHolder)
 			{
 				this.ownerType = ownerType;
 				this.componentType = componentType;
+				this.membersProvider = membersProvider;
 				this.domainInspector = domainInspector;
 				this.patternsAppliersHolder = patternsAppliersHolder;
 				this.customizersHolder = customizersHolder;
@@ -817,13 +800,13 @@ namespace ConfOrm.NH
 
 			#endregion
 
-			private IEnumerable<PropertyInfo> GetPersistentProperties(Type type)
+			private IEnumerable<MemberInfo> GetPersistentProperties(Type type)
 			{
-				var properties = type.GetProperties(SubClassPropertiesBindingFlags);
-				return properties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p));
+				var properties = membersProvider.GetComponentMembers(type);
+				return properties.Where(p => domainInspector.IsPersistentProperty(p));
 			}
 
-			private void MapProperties(Type type, IComponentElementMapper propertiesContainer, IEnumerable<PropertyInfo> persistentProperties)
+			private void MapProperties(Type type, IComponentElementMapper propertiesContainer, IEnumerable<MemberInfo> persistentProperties)
 			{
 				// TODO check PropertyPath behaviour when the component is in a collection
 				foreach (var property in persistentProperties)
@@ -880,17 +863,9 @@ namespace ConfOrm.NH
 			}
 			else if (domainInspector.IsComponent(collectionElementType))
 			{
-				return new ComponentRelationMapper(ownerType, collectionElementType, domainInspector, PatternsAppliers, customizerHolder);
+				return new ComponentRelationMapper(ownerType, collectionElementType, membersProvider, domainInspector, PatternsAppliers, customizerHolder);
 			}
 			return new ElementRelationMapper(property, propertyPath, PatternsAppliers);
-		}
-
-		private MemberInfo GetPoidPropertyOrField(Type type)
-		{
-			IEnumerable<MemberInfo> typeMembers = type.IsInterface
-			                                      	? type.GetInterfaceProperties()
-			                                      	: type.GetProperties().Cast<MemberInfo>().Concat(type.GetFields());
-			return typeMembers.FirstOrDefault(mi => domainInspector.IsPersistentId(mi));
 		}
 
 		public IEnumerable<HbmMapping> CompileMappingForEach(IEnumerable<Type> types)
