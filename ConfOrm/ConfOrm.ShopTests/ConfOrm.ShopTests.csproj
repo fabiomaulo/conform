@@ -71,6 +71,7 @@
     <Compile Include="AppliersTests\MsSQL2008DateTimeApplierTest.cs" />
     <Compile Include="AppliersTests\OneToManyKeyColumnApplierTest.cs" />
     <Compile Include="AppliersTests\OneToManyPatternTest.cs" />
+    <Compile Include="PatternsTests\PoidPropertyAsClassNameIdTest.cs" />
     <Compile Include="PatternsTests\UseSetWhenGenericCollectionPatternTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
