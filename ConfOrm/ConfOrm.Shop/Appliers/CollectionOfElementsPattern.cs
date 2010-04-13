@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace ConfOrm.Shop.CoolNaming
+namespace ConfOrm.Shop.Appliers
 {
 	public class CollectionOfElementsPattern : IPattern<MemberInfo>
 	{
