@@ -1,55 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
 
 namespace ConfOrm.Shop.CoolNaming
 {
-	public class CollectionOfElementsKeyColumnApplier: IPatternApplier<PropertyPath, ICollectionPropertiesMapper>
+	public class CollectionOfElementsKeyColumnApplier : CollectionOfElementsPattern, IPatternApplier<PropertyPath, ICollectionPropertiesMapper>
 	{
-				private readonly IDomainInspector domainInspector;
-
-		public CollectionOfElementsKeyColumnApplier(IDomainInspector domainInspector)
-		{
-			if (domainInspector == null)
-			{
-				throw new ArgumentNullException("domainInspector");
-			}
-			this.domainInspector = domainInspector;
-		}
 
 		#region Implementation of IPattern<PropertyPath>
 
+		public CollectionOfElementsKeyColumnApplier(IDomainInspector domainInspector) : base(domainInspector) {}
+
 		public bool Match(PropertyPath subject)
 		{
-			MemberInfo localMember = subject.LocalMember;
-			var memberType = localMember.GetPropertyOrFieldType();
-			if (!memberType.IsGenericCollection())
-			{
-				return false;
-			}
-			var manyType = memberType.DetermineCollectionElementType();
-			if (manyType.IsGenericType && typeof(KeyValuePair<,>) == manyType.GetGenericTypeDefinition())
-			{
-				var mapKey = memberType.DetermineDictionaryKeyType();
-				if(domainInspector.IsManyToMany(localMember.ReflectedType, mapKey))
-				{
-					return false;
-				}
-				var mapValue = memberType.DetermineDictionaryValueType();
-				if (domainInspector.IsManyToMany(localMember.ReflectedType, mapValue) || domainInspector.IsOneToMany(localMember.ReflectedType, mapValue))
-				{
-					return false;
-				}
-				if(domainInspector.IsComponent(mapKey) || domainInspector.IsComponent(mapValue))
-				{
-					return false;
-				}
-			}
-
-			return !domainInspector.IsManyToMany(localMember.ReflectedType, manyType) && !domainInspector.IsOneToMany(localMember.ReflectedType, manyType)
-				&& !domainInspector.IsComponent(manyType);
+			return base.Match(subject.LocalMember);
 		}
 
 		#endregion
@@ -71,7 +34,7 @@ namespace ConfOrm.Shop.CoolNaming
 
 		protected virtual string GetBaseName(PropertyPath subject)
 		{
-			var entity = subject.GetContainerEntity(domainInspector);
+			var entity = subject.GetContainerEntity(DomainInspector);
 			return entity.Name;
 		}
 	}

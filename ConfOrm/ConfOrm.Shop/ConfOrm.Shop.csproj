@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Appliers\ComponentMemberDeepPathPattern.cs" />
     <Compile Include="CoolNaming\CollectionOfElementsKeyColumnApplier.cs" />
+    <Compile Include="CoolNaming\CollectionOfElementsPattern.cs" />
     <Compile Include="CoolNaming\ComponentPropertyColumnNameApplier.cs" />
     <Compile Include="Appliers\DatePropertyByNameApplier.cs" />
     <Compile Include="CoolNaming\CoolPatternsAppliersHolder.cs" />
