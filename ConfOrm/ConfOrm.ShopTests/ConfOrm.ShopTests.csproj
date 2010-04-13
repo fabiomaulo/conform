@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="AppliersTests\CollectionOfElementsKeyColumnApplierTest.cs" />
     <Compile Include="AppliersTests\CollectionOfElementsPatternTest.cs" />
+    <Compile Include="AppliersTests\CollectionOfElementsTableApplierTest.cs" />
     <Compile Include="AppliersTests\ComponentMemberDeepPathPatternTest.cs" />
     <Compile Include="AppliersTests\ComponentPropertyColumnNameApplierTest.cs" />
     <Compile Include="AppliersTests\DatePropertyByNameApplierTest.cs" />
