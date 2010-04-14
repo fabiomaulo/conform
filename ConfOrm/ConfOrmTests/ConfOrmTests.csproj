@@ -83,6 +83,7 @@
     <Compile Include="NH\Customizers\MapPropertiesCustomizerTest.cs" />
     <Compile Include="NH\ElementMapperTest.cs" />
     <Compile Include="NH\FakeUserCollectionType.cs" />
+    <Compile Include="NH\FilterMapperTest.cs" />
     <Compile Include="NH\IdMapperTest.cs" />
     <Compile Include="NH\JoinedSubclassMapperTest.cs" />
     <Compile Include="NH\KeyMapperTest.cs" />

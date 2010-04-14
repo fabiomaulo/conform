@@ -73,6 +73,7 @@
     <Compile Include="Mappers\IDiscriminatorMapper.cs" />
     <Compile Include="Mappers\IEntityAttributesMapper.cs" />
     <Compile Include="Mappers\IEntitySqlsMapper.cs" />
+    <Compile Include="Mappers\IFilterMapper.cs" />
     <Compile Include="Mappers\IListIndexMapper.cs" />
     <Compile Include="Mappers\IListPropertiesMapper.cs" />
     <Compile Include="Mappers\IManyToManyMapper.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="NH\ElementMapper.cs" />
     <Compile Include="NH\EmptyPatternsAppliersHolder.cs" />
     <Compile Include="NH\EntityPropertyMapper.cs" />
+    <Compile Include="NH\FilterMapper.cs" />
     <Compile Include="NH\Generators.cs" />
     <Compile Include="Mappers\IClassMapper.cs" />
     <Compile Include="Mappers\ICollectionElementRelation.cs" />
