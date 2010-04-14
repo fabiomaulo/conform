@@ -73,6 +73,11 @@ namespace ConfOrm.NH.CustomizersImpl
 			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Cache(cacheMapping));
 		}
 
+		public void Filter(string filterName, Action<IFilterMapper> filterMapping)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Filter(filterName, filterMapping));
+		}
+
 		public void EntityName(string value)
 		{
 			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.EntityName(value));

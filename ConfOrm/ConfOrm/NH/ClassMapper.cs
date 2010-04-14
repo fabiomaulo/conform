@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ConfOrm.Mappers;
@@ -141,6 +142,20 @@ namespace ConfOrm.NH
 				cacheMapper = new CacheMapper(hbmCache);
 			}
 			cacheMapping(cacheMapper);
+		}
+
+		public void Filter(string filterName, Action<IFilterMapper> filterMapping)
+		{
+			if (filterMapping == null)
+			{
+				filterMapping = x => { };
+			}
+			var hbmFilter = new HbmFilter();
+			var filterMapper = new FilterMapper(filterName, hbmFilter);
+			filterMapping(filterMapper);
+			var filters = classMapping.filter != null ? classMapping.filter.ToDictionary(f => f.name, f => f): new Dictionary<string, HbmFilter>(1);
+			filters[filterName] = hbmFilter;
+			classMapping.filter = filters.Values.ToArray();
 		}
 
 		#endregion

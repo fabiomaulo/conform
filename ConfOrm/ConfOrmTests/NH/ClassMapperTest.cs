@@ -1,3 +1,4 @@
+using System.Linq;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
@@ -212,6 +213,51 @@ namespace ConfOrmTests.NH
 			hbmCache.Should().Not.Be.Null();
 			hbmCache.region.Should().Be("pizza");
 			hbmCache.usage.Should().Be(HbmCacheUsage.NonstrictReadWrite);
+		}
+
+		[Test]
+		public void CanSetAFilterThroughAction()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
+			rc.Filter("filter1", f => f.Condition("condition1"));
+			mapdoc.RootClasses[0].filter.Length.Should().Be(1);
+			mapdoc.RootClasses[0].filter[0].Satisfy(f => f.name == "filter1" && f.condition == "condition1");
+		}
+
+		[Test]
+		public void CanSetMoreFiltersThroughAction()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
+			rc.Filter("filter1", f => f.Condition("condition1"));
+			rc.Filter("filter2", f => f.Condition("condition2"));
+			mapdoc.RootClasses[0].filter.Length.Should().Be(2);
+			mapdoc.RootClasses[0].filter.Satisfy(filters => filters.Any(f => f.name == "filter1" && f.condition == "condition1"));
+			mapdoc.RootClasses[0].filter.Satisfy(filters => filters.Any(f => f.name == "filter2" && f.condition == "condition2"));
+		}
+
+		[Test]
+		public void WhenSameNameThenOverrideCondition()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
+			rc.Filter("filter1", f => f.Condition("condition1"));
+			rc.Filter("filter2", f => f.Condition("condition2"));
+			rc.Filter("filter1", f => f.Condition("anothercondition1"));
+			mapdoc.RootClasses[0].filter.Length.Should().Be(2);
+			mapdoc.RootClasses[0].filter.Satisfy(filters => filters.Any(f => f.name == "filter1" && f.condition == "anothercondition1"));
+			mapdoc.RootClasses[0].filter.Satisfy(filters => filters.Any(f => f.name == "filter2" && f.condition == "condition2"));
+		}
+
+		[Test]
+		public void WhenActionIsNullThenAddFilterName()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
+			rc.Filter("filter1", null);
+			mapdoc.RootClasses[0].filter.Length.Should().Be(1);
+			mapdoc.RootClasses[0].filter[0].Satisfy(f => f.name == "filter1" && f.condition == null);
 		}
 	}
 }
