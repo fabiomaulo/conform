@@ -79,7 +79,8 @@ namespace ConfOrmTests.NH
 			var mapping = new HbmManyToMany();
 			var mapper = new ManyToManyMapper(typeof(MyClass), mapping);
 			mapper.Columns(cm => cm.Length(50), cm => cm.SqlType("VARCHAR(10)"));
-			ActionAssert.Throws<ConfOrm.MappingException>(() => mapper.Column(cm => cm.Length(50)));
+
+			mapper.Executing(x => x.Column(cm => cm.Length(50))).Throws<ConfOrm.MappingException>();
 		}
 	}
 }
