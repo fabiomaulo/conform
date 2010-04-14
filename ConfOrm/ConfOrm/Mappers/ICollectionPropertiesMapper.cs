@@ -24,6 +24,7 @@ namespace ConfOrm.Mappers
 		void Catalog(string catalogName);
 		void Schema(string schemaName);
 		void Cache(Action<ICacheMapper> cacheMapping);
+		void Filter(string filterName, Action<IFilterMapper> filterMapping);
 	}
 
 	public interface ICollectionPropertiesMapper<TEntity, TElement> where TEntity: class
@@ -44,5 +45,6 @@ namespace ConfOrm.Mappers
 		void Catalog(string catalogName);
 		void Schema(string schemaName);
 		void Cache(Action<ICacheMapper> cacheMapping);
+		void Filter(string filterName, Action<IFilterMapper> filterMapping);
 	}
 }

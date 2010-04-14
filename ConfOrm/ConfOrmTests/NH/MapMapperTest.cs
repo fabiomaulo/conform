@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
@@ -207,6 +208,55 @@ namespace ConfOrmTests.NH
 			hbmCache.Should().Not.Be.Null();
 			hbmCache.region.Should().Be("pizza");
 			hbmCache.usage.Should().Be(HbmCacheUsage.NonstrictReadWrite);
+		}
+
+		[Test]
+		public void CanSetAFilterThroughAction()
+		{
+			var mapdoc = new HbmMapping();
+			var hbm = new HbmMap();
+			var mapper = new MapMapper(typeof(Animal), typeof(Animal), typeof(string), hbm, mapdoc);
+			mapper.Filter("filter1", f => f.Condition("condition1"));
+			hbm.filter.Length.Should().Be(1);
+			hbm.filter[0].Satisfy(f => f.name == "filter1" && f.condition == "condition1");
+		}
+
+		[Test]
+		public void CanSetMoreFiltersThroughAction()
+		{
+			var mapdoc = new HbmMapping();
+			var hbm = new HbmMap();
+			var mapper = new MapMapper(typeof(Animal), typeof(Animal), typeof(string), hbm, mapdoc);
+			mapper.Filter("filter1", f => f.Condition("condition1"));
+			mapper.Filter("filter2", f => f.Condition("condition2"));
+			hbm.filter.Length.Should().Be(2);
+			hbm.filter.Satisfy(filters => filters.Any(f => f.name == "filter1" && f.condition == "condition1"));
+			hbm.filter.Satisfy(filters => filters.Any(f => f.name == "filter2" && f.condition == "condition2"));
+		}
+
+		[Test]
+		public void WhenSameNameThenOverrideCondition()
+		{
+			var mapdoc = new HbmMapping();
+			var hbm = new HbmMap();
+			var mapper = new MapMapper(typeof(Animal), typeof(Animal), typeof(string), hbm, mapdoc);
+			mapper.Filter("filter1", f => f.Condition("condition1"));
+			mapper.Filter("filter2", f => f.Condition("condition2"));
+			mapper.Filter("filter1", f => f.Condition("anothercondition1"));
+			hbm.filter.Length.Should().Be(2);
+			hbm.filter.Satisfy(filters => filters.Any(f => f.name == "filter1" && f.condition == "anothercondition1"));
+			hbm.filter.Satisfy(filters => filters.Any(f => f.name == "filter2" && f.condition == "condition2"));
+		}
+
+		[Test]
+		public void WhenActionIsNullThenAddFilterName()
+		{
+			var mapdoc = new HbmMapping();
+			var hbm = new HbmMap();
+			var mapper = new MapMapper(typeof(Animal), typeof(Animal), typeof(string), hbm, mapdoc);
+			mapper.Filter("filter1", null);
+			hbm.filter.Length.Should().Be(1);
+			hbm.filter[0].Satisfy(f => f.name == "filter1" && f.condition == null);
 		}
 	}
 }

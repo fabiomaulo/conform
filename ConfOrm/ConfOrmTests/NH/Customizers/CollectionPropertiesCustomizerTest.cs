@@ -79,5 +79,22 @@ namespace ConfOrmTests.NH.Customizers
 
 			cacheMapper.Verify(x => x.Region(It.Is<string>(v => v == "static")));
 		}
+
+		[Test]
+		public void InvokeFilter()
+		{
+			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var customizersHolder = new CustomizersHolder();
+			var customizer = new CollectionPropertiesCustomizer<MyClass, MyEle>(propertyPath, customizersHolder);
+			var collectionMapper = new Mock<ISetPropertiesMapper>();
+			var filterMapper = new Mock<IFilterMapper>();
+			collectionMapper.Setup(x => x.Filter(It.IsAny<string>(), It.IsAny<Action<IFilterMapper>>())).Callback<string, Action<IFilterMapper>>(
+				(fn, x) => x.Invoke(filterMapper.Object));
+
+			customizer.Filter("myfilter", x => x.Condition("condition"));
+			customizersHolder.InvokeCustomizers(propertyPath, collectionMapper.Object);
+
+			filterMapper.Verify(x => x.Condition(It.Is<string>(v => v == "condition")));
+		}
 	}
 }

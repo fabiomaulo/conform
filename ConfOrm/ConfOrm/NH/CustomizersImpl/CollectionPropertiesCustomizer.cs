@@ -103,6 +103,11 @@ namespace ConfOrm.NH.CustomizersImpl
 			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.Cache(cacheMapping));
 		}
 
+		public void Filter(string filterName, Action<IFilterMapper> filterMapping)
+		{
+			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.Filter(filterName, filterMapping));
+		}
+
 		#endregion
 	}
 }

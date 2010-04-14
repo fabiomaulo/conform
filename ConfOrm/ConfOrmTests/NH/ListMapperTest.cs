@@ -152,5 +152,50 @@ namespace ConfOrmTests.NH
 			hbmCache.region.Should().Be("pizza");
 			hbmCache.usage.Should().Be(HbmCacheUsage.NonstrictReadWrite);
 		}
+
+		[Test]
+		public void CanSetAFilterThroughAction()
+		{
+			var hbm = new HbmList();
+			var mapper = new ListMapper(typeof(Animal), typeof(Animal), hbm);
+			mapper.Filter("filter1", f => f.Condition("condition1"));
+			hbm.filter.Length.Should().Be(1);
+			hbm.filter[0].Satisfy(f => f.name == "filter1" && f.condition == "condition1");
+		}
+
+		[Test]
+		public void CanSetMoreFiltersThroughAction()
+		{
+			var hbm = new HbmList();
+			var mapper = new ListMapper(typeof(Animal), typeof(Animal), hbm);
+			mapper.Filter("filter1", f => f.Condition("condition1"));
+			mapper.Filter("filter2", f => f.Condition("condition2"));
+			hbm.filter.Length.Should().Be(2);
+			hbm.filter.Satisfy(filters => filters.Any(f => f.name == "filter1" && f.condition == "condition1"));
+			hbm.filter.Satisfy(filters => filters.Any(f => f.name == "filter2" && f.condition == "condition2"));
+		}
+
+		[Test]
+		public void WhenSameNameThenOverrideCondition()
+		{
+			var hbm = new HbmList();
+			var mapper = new ListMapper(typeof(Animal), typeof(Animal), hbm);
+			mapper.Filter("filter1", f => f.Condition("condition1"));
+			mapper.Filter("filter2", f => f.Condition("condition2"));
+			mapper.Filter("filter1", f => f.Condition("anothercondition1"));
+			hbm.filter.Length.Should().Be(2);
+			hbm.filter.Satisfy(filters => filters.Any(f => f.name == "filter1" && f.condition == "anothercondition1"));
+			hbm.filter.Satisfy(filters => filters.Any(f => f.name == "filter2" && f.condition == "condition2"));
+		}
+
+		[Test]
+		public void WhenActionIsNullThenAddFilterName()
+		{
+			var hbm = new HbmList();
+			var mapper = new ListMapper(typeof(Animal), typeof(Animal), hbm);
+			mapper.Filter("filter1", null);
+			hbm.filter.Length.Should().Be(1);
+			hbm.filter[0].Satisfy(f => f.name == "filter1" && f.condition == null);
+		}
 	}
 }

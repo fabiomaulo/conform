@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
@@ -178,6 +180,20 @@ namespace ConfOrm.NH
 				cacheMapper = new CacheMapper(hbmCache);
 			}
 			cacheMapping(cacheMapper);
+		}
+
+		public void Filter(string filterName, Action<IFilterMapper> filterMapping)
+		{
+			if (filterMapping == null)
+			{
+				filterMapping = x => { };
+			}
+			var hbmFilter = new HbmFilter();
+			var filterMapper = new FilterMapper(filterName, hbmFilter);
+			filterMapping(filterMapper);
+			var filters = mapping.filter != null ? mapping.filter.ToDictionary(f => f.name, f => f) : new Dictionary<string, HbmFilter>(1);
+			filters[filterName] = hbmFilter;
+			mapping.filter = filters.Values.ToArray();
 		}
 
 		public void MapKeyManyToMany(Action<IMapKeyManyToManyMapper> mapKeyMapping)
