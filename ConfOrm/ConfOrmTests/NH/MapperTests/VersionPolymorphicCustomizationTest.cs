@@ -14,7 +14,7 @@ namespace ConfOrmTests.NH.MapperTests
 	/// <remarks>
 	/// Integration test
 	/// </remarks>
-	public class VersionPolymorficCustomizationTest
+	public class VersionPolymorphicCustomizationTest
 	{
 		private class Entity
 		{
@@ -41,7 +41,7 @@ namespace ConfOrmTests.NH.MapperTests
 			public string Name { get; set; }
 		}
 
-		[Test, Ignore("Not fixed yet.")]
+		[Test]
 		public void WhenCustomizedBaseClassThenWorkInInherited()
 		{
 			var orm = new ObjectRelationalMapper();
@@ -79,7 +79,7 @@ namespace ConfOrmTests.NH.MapperTests
 			HbmClass hbmMyOtherEntity = mappings.RootClasses.Single(hbm => hbm.Name == "MyOtherEntity");
 			hbmMyOtherEntity.Version.Should().Not.Be.Null();
 			hbmMyOtherEntity.Version.name.Should().Be("UpdatedAt");
-			hbmMyOtherEntity.Version.column1.Should().Be("LastUpdate");
+			hbmMyOtherEntity.Version.Columns.Single().name.Should().Be("LastUpdate");
 			hbmMyOtherEntity.Version.generated.Should().Be(HbmVersionGeneration.Always);
 		}
 	}

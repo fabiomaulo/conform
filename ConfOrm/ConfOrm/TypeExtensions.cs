@@ -23,6 +23,18 @@ namespace ConfOrm
 			}
 		}
 
+		public static IEnumerable<Type> GetHierarchyFromBase(this Type type)
+		{
+			var typeHierarchy = new List<Type>();
+			var analizingType = type;
+			while (analizingType != null && analizingType != typeof(object))
+			{
+				typeHierarchy.Add(analizingType);
+				analizingType = analizingType.BaseType;
+			}
+			return typeHierarchy.AsEnumerable().Reverse();
+		}
+
 		public static Type GetPropertyOrFieldType(this MemberInfo propertyOrField)
 		{
 			if (propertyOrField.MemberType == MemberTypes.Property)

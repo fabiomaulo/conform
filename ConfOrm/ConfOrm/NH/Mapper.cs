@@ -336,7 +336,7 @@ namespace ConfOrm.NH
 					});
 			}
 			PatternsAppliers.RootClass.ApplyAllMatchs(type, classMapper);
-			customizerHolder.InvokeCustomizers(type, classMapper);
+			InvokeClassCustomizers(type, classMapper);
 
 			var naturalIdPropeties = persistentProperties.Where(mi => domainInspector.IsMemberOfNaturalId(mi)).ToArray();
 			if (naturalIdPropeties.Length > 0)
@@ -351,6 +351,20 @@ namespace ConfOrm.NH
 			}
 
 			MapProperties(type, persistentProperties.Where(mi => !domainInspector.IsVersion(mi)).Except(naturalIdPropeties), classMapper);
+		}
+
+		private void InvokeClassCustomizers(Type type, IClassAttributesMapper classMapper)
+		{
+			var typeHierarchy = type.GetHierarchyFromBase();
+			// only apply the polymorphic mapping for no entities:
+			// this is to avoid a possible caos in entity-subclassing:
+			// an example of caos is when a base class has a specific TableName and a subclass does not have a specific name (use the default class name).
+			// I can remove this "limitation", where required, and delegate to the user the responsibility of his caos.
+			foreach (var entityType in typeHierarchy.Where(t => !domainInspector.IsEntity(t)))
+			{
+				customizerHolder.InvokeCustomizers(entityType, classMapper);
+			}
+			customizerHolder.InvokeCustomizers(type, classMapper);
 		}
 
 		private void MapNaturalIdProperties(Type rootEntityType, INaturalIdMapper naturalIdMapper, PropertyInfo property)

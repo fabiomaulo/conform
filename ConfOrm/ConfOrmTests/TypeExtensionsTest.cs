@@ -147,5 +147,12 @@ namespace ConfOrmTests
 			ConfOrm.TypeExtensions.DecodeMemberAccessExpressionOf<IMyEntity>(m => m.Id).Should().Not.Be.Null();
 			ConfOrm.TypeExtensions.DecodeMemberAccessExpressionOf<IMyEntity, Guid>(m => m.Id).Should().Not.Be.Null();
 		}
+
+		[Test]
+		public void TheSequenceOfGetHierarchyFromBaseShouldStartFromBaseClassUpToGivenClass()
+		{
+			// excluding System.Object
+			typeof(MyEntity).GetHierarchyFromBase().Should().Have.SameSequenceAs(typeof(AbstractEntity<int>), typeof(BaseEntity), typeof(MyEntity));
+		}
 	}
 }
