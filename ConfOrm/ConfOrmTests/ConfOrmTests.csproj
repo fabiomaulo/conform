@@ -190,6 +190,7 @@
     <Compile Include="NH\MapperTests\SubclassAppliersCallingTest.cs" />
     <Compile Include="NH\MapperTests\SubclassCustomizerCallingTest.cs" />
     <Compile Include="NH\MapperTests\SubclassPatternsAddition.cs" />
+    <Compile Include="NH\MapperTests\TypeDefTest.cs" />
     <Compile Include="NH\MapperTests\UnidirectionalOneToOneTest.cs" />
     <Compile Include="NH\MapperTests\UnionSubclassAppliersCallingTest.cs" />
     <Compile Include="NH\MapperTests\UnionSubclassCustomizerCallingTest.cs" />
