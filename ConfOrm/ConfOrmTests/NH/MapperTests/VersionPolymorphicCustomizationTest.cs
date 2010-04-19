@@ -56,7 +56,7 @@ namespace ConfOrmTests.NH.MapperTests
 			var mapper = new Mapper(orm);
 
 			// customize base entities
-			mapper.Class<MyEntity>(cm => cm.Version(x => x.Version, vm => vm.Column("Revision")));
+			mapper.Class<VersionedEntity>(cm => cm.Version(x => x.Version, vm => vm.Column("Revision")));
 
 			mapper.Class<TimeVersionedEntity>(cm => cm.Version(x => x.UpdatedAt, vm =>
 				{
