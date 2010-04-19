@@ -269,6 +269,7 @@
     <Compile Include="Patterns\BidirectionalUnaryAssociationPatternTest.cs" />
     <Compile Include="Patterns\ComponentMultiUsagePatternTest.cs" />
     <Compile Include="Patterns\ComponentPatternTest.cs" />
+    <Compile Include="Patterns\CustomUserTypeInCollectionElementApplierTest.cs" />
     <Compile Include="Patterns\DictionaryCollectionPatternTest.cs" />
     <Compile Include="Patterns\HighLowPoidPatternTest.cs" />
     <Compile Include="Patterns\IdentityPoidPatternTest.cs" />

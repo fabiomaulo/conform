@@ -906,22 +906,7 @@ namespace ConfOrm.NH
 		public void TypeDef<TComplex, TUserType>() where TUserType: IUserType
 		{
 			AddPropertyPattern(mi => mi.GetPropertyOrFieldType() == typeof(TComplex), pm => pm.Type<TUserType>());
-			PatternsAppliers.Element.Add(
-				new DelegatedApplier<MemberInfo, IElementMapper>(
-					mi =>
-						{
-							Type collectionElementType = mi.GetPropertyOrFieldType().DetermineCollectionElementType();
-							if(collectionElementType == null)
-							{
-								return false;
-							}
-							if(collectionElementType.IsGenericType && collectionElementType.GetGenericTypeDefinition() == typeof(KeyValuePair<,>))
-							{
-								collectionElementType = collectionElementType.GetGenericArguments()[1];
-							}
-							return collectionElementType == typeof (TComplex);
-						},
-					em => em.Type<TUserType>()));
+			PatternsAppliers.Element.Add(new CustomUserTypeInCollectionElementApplier(typeof(TComplex), typeof(TUserType)));
 		}
 	}
 }
