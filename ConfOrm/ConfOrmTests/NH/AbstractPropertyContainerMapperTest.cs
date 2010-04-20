@@ -27,6 +27,10 @@ namespace ConfOrmTests.NH
 		{
 			public object Reference { get; set; }
 		}
+		private class MyClassWithDictionary
+		{
+			public IDictionary<string, string> Dictionary { get; set; }
+		}
 
 		[Test]
 		public void CantCreateWithoutHbmMapping()
@@ -89,6 +93,22 @@ namespace ConfOrmTests.NH
 			map.Any(typeof(MyClass).GetProperty("Reference"), typeof(int), x => called = true);
 
 			called.Should().Be.True();
+		}
+
+		[Test]
+		public void CallDictionaryMappers()
+		{
+			var properties = new List<object>();
+			var map = new StubPropertyContainerMapper<EntitySimple>(properties);
+			var collectionPropsCalled = false;
+			var keyRelationCalled = false;
+			var elementRelationCalled = false;
+			map.Map(typeof (MyClassWithDictionary).GetProperty("Dictionary"), cp => collectionPropsCalled = true,
+			        km => keyRelationCalled = true, er => elementRelationCalled = true);
+
+			collectionPropsCalled.Should().Be.True();
+			keyRelationCalled.Should().Be.True();
+			elementRelationCalled.Should().Be.True();
 		}
 
 		private class HackPropertyContainerMapper : AbstractPropertyContainerMapper

@@ -58,6 +58,7 @@ namespace ConfOrm.NH
 			Type dictionaryValueType = propertyType.DetermineDictionaryValueType();
 
 			collectionMapping(new MapMapper(container, dictionaryKeyType, dictionaryValueType, hbm, mapDoc));
+			keyMapping(new MapKeyRelation(dictionaryKeyType, hbm, mapDoc));
 			mapping(new CollectionElementRelation(dictionaryValueType, MapDoc, rel => hbm.Item1 = rel));
 			AddProperty(hbm);
 		}
