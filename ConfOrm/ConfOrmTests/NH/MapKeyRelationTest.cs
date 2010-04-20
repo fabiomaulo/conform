@@ -9,6 +9,10 @@ namespace ConfOrmTests.NH
 {
 	public class MapKeyRelationTest
 	{
+		private class MyClass
+		{
+			
+		}
 		[Test]
 		public void CtorProtection()
 		{
@@ -29,6 +33,20 @@ namespace ConfOrmTests.NH
 			mapper.Element(mkm=> { });
 
 			hbmMap.Item.Should().Be.OfType<HbmMapKey>();
+		}
+
+		[Test]
+		public void WhenAssignElementRelationThenAssignType()
+		{
+			var keyType = typeof(string);
+			var hbmMap = new HbmMap();
+			var hbmMapping = new HbmMapping();
+			var mapper = new MapKeyRelation(keyType, hbmMap, hbmMapping);
+			mapper.Element(mkm => { });
+
+			var keyElement = (HbmMapKey)hbmMap.Item;
+			keyElement.Type.name.Should().Not.Be.Null();
+			keyElement.Type.name.Should().Contain("String");
 		}
 
 		[Test]
@@ -147,6 +165,20 @@ namespace ConfOrmTests.NH
 		}
 
 		[Test]
+		public void WhenAssignManyToManyRelationThenAssignClass()
+		{
+			var keyType = typeof(MyClass);
+			var hbmMap = new HbmMap();
+			var hbmMapping = new HbmMapping();
+			var mapper = new MapKeyRelation(keyType, hbmMap, hbmMapping);
+			mapper.ManyToMany(mkm => { });
+
+			var keyElement = (HbmMapKeyManyToMany)hbmMap.Item;
+			keyElement.Class.Should().Not.Be.Null();
+			keyElement.Class.Should().Contain("MyClass");
+		}
+
+		[Test]
 		public void WhenAssignComponentRelationThenUseHbmCompositeMapKeyElement()
 		{
 			var keyType = typeof(string);
@@ -194,6 +226,20 @@ namespace ConfOrmTests.NH
 			});
 
 			parameterCall1.Should().Be.SameInstanceAs(parameterCall2);
+		}
+
+		[Test]
+		public void WhenAssignComponentRelationThenAssignClass()
+		{
+			var keyType = typeof(MyClass);
+			var hbmMap = new HbmMap();
+			var hbmMapping = new HbmMapping();
+			var mapper = new MapKeyRelation(keyType, hbmMap, hbmMapping);
+			mapper.Component(mkm => { });
+
+			var keyElement = (HbmCompositeMapKey)hbmMap.Item;
+			keyElement.Class.Should().Not.Be.Null();
+			keyElement.Class.Should().Contain("MyClass");
 		}
 	}
 }

@@ -36,7 +36,7 @@ namespace ConfOrm.NH
 		{
 			if (mapKeyMapper == null)
 			{
-				var hbm = new HbmMapKey();
+				var hbm = new HbmMapKey { type = dictionaryKeyType.GetNhTypeName() };
 				mapKeyMapper = new MapKeyMapper(hbm);
 			}
 			mapping(mapKeyMapper);
@@ -47,7 +47,7 @@ namespace ConfOrm.NH
 		{
 			if (mapKeyManyToManyMapper == null)
 			{
-				var hbm = new HbmMapKeyManyToMany();
+				var hbm = new HbmMapKeyManyToMany { @class = dictionaryKeyType.GetShortClassName(mapDoc) };
 				mapKeyManyToManyMapper = new MapKeyManyToManyMapper(hbm);
 			}
 			mapping(mapKeyManyToManyMapper);
@@ -58,7 +58,7 @@ namespace ConfOrm.NH
 		{
 			if (componentMapKeyMapper == null)
 			{
-				var hbm = new HbmCompositeMapKey();
+				var hbm = new HbmCompositeMapKey { @class = dictionaryKeyType.GetShortClassName(mapDoc) };
 				componentMapKeyMapper = new ComponentMapKeyMapper(hbm);
 			}
 			mapping(componentMapKeyMapper);
