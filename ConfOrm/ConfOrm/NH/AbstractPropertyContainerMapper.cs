@@ -49,7 +49,8 @@ namespace ConfOrm.NH
 			AddProperty(hbm);
 		}
 
-		public virtual void Map(MemberInfo property, Action<IMapPropertiesMapper> collectionMapping, Action<ICollectionElementRelation> mapping)
+		public virtual void Map(MemberInfo property, Action<IMapPropertiesMapper> collectionMapping,
+		                        Action<IMapKeyRelation> keyMapping, Action<ICollectionElementRelation> mapping)
 		{
 			var hbm = new HbmMap { name = property.Name };
 			var propertyType = property.GetPropertyOrFieldType();

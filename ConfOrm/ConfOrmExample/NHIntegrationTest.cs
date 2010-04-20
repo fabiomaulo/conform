@@ -18,7 +18,7 @@ namespace ConfOrmExample
 	public class NHIntegrationTest
 	{
 		private const string ConnectionString =
-	@"Data Source=localhost\SQLEX2008;Initial Catalog=CONFORMTRY;Integrated Security=True;Pooling=False";
+	@"Data Source=localhost\SQLEXPRESS;Initial Catalog=CONFORMTRY;Integrated Security=True;Pooling=False";
 
 		public Configuration ConfigureNHibernate()
 		{

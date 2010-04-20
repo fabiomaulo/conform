@@ -94,7 +94,8 @@ namespace ConfOrm.NH.CustomizersImpl
 		}
 
 		public void Map<TKey, TElement>(Expression<Func<TEntity, IDictionary<TKey, TElement>>> property,
-																		Action<IMapPropertiesMapper<TEntity, TKey, TElement>> collectionMapping,
+		                                Action<IMapPropertiesMapper<TEntity, TKey, TElement>> collectionMapping,
+		                                Action<IMapKeyRelation<TKey>> keyMapping,
 		                                Action<ICollectionElementRelation<TElement>> mapping)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(property);

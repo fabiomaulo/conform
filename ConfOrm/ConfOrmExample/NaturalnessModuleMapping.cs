@@ -62,12 +62,12 @@ namespace ConfOrmExample
 					mapm.Cascade(Cascade.None);
 					mapm.Key(km => km.OnDelete(OnDeleteAction.NoAction));
 					mapm.Inverse(false);
-				}, cer => { });
+				}, x=> { }, cer => { });
 				cm.Map(zoo => zoo.Animals, mapm =>
 				{
 					mapm.Cascade(Cascade.None);
 					mapm.Key(km => km.OnDelete(OnDeleteAction.NoAction));
-				}, cer => { });
+				}, x => { }, cer => { });
 			});
 		}
 

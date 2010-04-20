@@ -82,7 +82,7 @@ namespace ConfOrmTests.NH.MapperTests
 				x.Bag(mc => mc.Bag, pm => bagCalled = true, pm => { });
 				x.List(mc => mc.List, pm => listCalled = true, pm => { });
 				x.Set(mc => mc.Set, pm => setCalled = true, pm => { });
-				x.Map(mc => mc.Map, pm => mapCalled = true, pm => { });
+				x.Map(mc => mc.Map, pm => mapCalled = true, y => { }, pm => { });
 				x.ManyToOne(mc => mc.ManyToOne, pm => manyToOneCalled = true);
 				x.OneToOne(mc => mc.OneToOne, pm => oneToOneCalled = true);
 			});

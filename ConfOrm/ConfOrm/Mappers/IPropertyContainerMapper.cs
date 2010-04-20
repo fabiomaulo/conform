@@ -17,7 +17,8 @@ namespace ConfOrm.Mappers
 		                    Action<ICollectionElementRelation> mapping);
 
 		void Map(MemberInfo property, Action<IMapPropertiesMapper> collectionMapping,
-		                         Action<ICollectionElementRelation> mapping);
+		         Action<IMapKeyRelation> keyMapping,
+		         Action<ICollectionElementRelation> mapping);
 	}
 
 	public interface IPropertyContainerMapper<TEntity> : IPlainPropertyContainerMapper<TEntity> where TEntity : class
@@ -31,8 +32,10 @@ namespace ConfOrm.Mappers
 		void List<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
 											 Action<IListPropertiesMapper<TEntity, TElement>> collectionMapping,
 											 Action<ICollectionElementRelation<TElement>> mapping);
+
 		void Map<TKey, TElement>(Expression<Func<TEntity, IDictionary<TKey, TElement>>> property,
-											 Action<IMapPropertiesMapper<TEntity, TKey, TElement>> collectionMapping,
-											 Action<ICollectionElementRelation<TElement>> mapping);
+		                         Action<IMapPropertiesMapper<TEntity, TKey, TElement>> collectionMapping,
+		                         Action<IMapKeyRelation<TKey>> keyMapping,
+		                         Action<ICollectionElementRelation<TElement>> mapping);
 	}
 }

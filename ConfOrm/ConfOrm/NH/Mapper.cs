@@ -582,7 +582,7 @@ namespace ConfOrm.NH
 					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
-				}, cert.Map);
+				}, x=> { }, cert.Map);
 		}
 
 		private void MapSet(MemberInfo member, PropertyPath propertyPath, Type propertyType, IPropertyContainerMapper propertiesContainer,
