@@ -84,6 +84,7 @@
     <Compile Include="CoolNaming\OneToManyKeyColumnApplier.cs" />
     <Compile Include="Appliers\OneToManyPattern.cs" />
     <Compile Include="Patterns\PoidPropertyAsClassNameId.cs" />
+    <Compile Include="Patterns\UseBagWhenGenericListPattern.cs" />
     <Compile Include="Patterns\UseSetWhenGenericCollectionPattern.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
