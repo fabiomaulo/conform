@@ -113,6 +113,7 @@
     <Compile Include="NH\AccessorPropertyMapper.cs" />
     <Compile Include="NH\AnyMapper.cs" />
     <Compile Include="NH\CacheMapper.cs" />
+    <Compile Include="NH\ComponentMapKeyMapper.cs" />
     <Compile Include="NH\CustomizersImpl\BagPropertiesCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\ClassCustomizer.cs" />
     <Compile Include="NH\ColumnMapper.cs" />
@@ -166,6 +167,8 @@
     <Compile Include="NH\ManyToManyMapper.cs" />
     <Compile Include="NH\ManyToOneMapper.cs" />
     <Compile Include="NH\MapKeyManyToManyMapper.cs" />
+    <Compile Include="NH\MapKeyMapper.cs" />
+    <Compile Include="NH\MapKeyRelation.cs" />
     <Compile Include="NH\MapMapper.cs" />
     <Compile Include="MappingException.cs" />
     <Compile Include="NH\AbstractPropertyContainerMapper.cs" />

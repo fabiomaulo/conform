@@ -1,3 +1,4 @@
+using System;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
 
@@ -25,5 +26,20 @@ namespace ConfOrm.NH
 		}
 
 		#endregion
+
+		public void Column(Action<IColumnMapper> columnMapper)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Columns(params Action<IColumnMapper>[] columnMapper)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Column(string name)
+		{
+			mapping.column = name;
+		}
 	}
 }

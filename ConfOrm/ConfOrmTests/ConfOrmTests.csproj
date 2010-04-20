@@ -113,6 +113,9 @@
     <Compile Include="NH\ListMapperTest.cs" />
     <Compile Include="NH\ManyToManyMapperTest.cs" />
     <Compile Include="NH\ManyToOneMapperTest.cs" />
+    <Compile Include="NH\MapKeyManyToManyMapperTest.cs" />
+    <Compile Include="NH\MapKeyMapperTest.cs" />
+    <Compile Include="NH\MapKeyRelationTest.cs" />
     <Compile Include="NH\MapMapperTest.cs" />
     <Compile Include="NH\MapperTests\AnyAppliersCallingTest.cs" />
     <Compile Include="NH\MapperTests\AnyMappingCustomization.cs" />
