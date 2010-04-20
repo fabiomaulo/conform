@@ -88,6 +88,7 @@
     <Compile Include="Mappers\IAnyMapper.cs" />
     <Compile Include="Mappers\IBagPropertiesMapper.cs" />
     <Compile Include="Mappers\ICacheMapper.cs" />
+    <Compile Include="Mappers\IComponentMapKeyMapper.cs" />
     <Compile Include="Mappers\IElementMapper.cs" />
     <Compile Include="Mappers\IColumnMapper.cs" />
     <Compile Include="Mappers\IColumnsMapper.cs" />
@@ -98,6 +99,8 @@
     <Compile Include="Mappers\IListIndexMapper.cs" />
     <Compile Include="Mappers\IListPropertiesMapper.cs" />
     <Compile Include="Mappers\IManyToManyMapper.cs" />
+    <Compile Include="Mappers\IMapKeyMapper.cs" />
+    <Compile Include="Mappers\IMapKeyRelation.cs" />
     <Compile Include="Mappers\INaturalIdMapper.cs" />
     <Compile Include="Mappers\IOneToManyMapper.cs" />
     <Compile Include="Mappers\IPlainPropertyContainerMapper.cs" />
