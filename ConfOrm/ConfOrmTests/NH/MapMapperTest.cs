@@ -110,18 +110,6 @@ namespace ConfOrmTests.NH
 		}
 
 		[Test]
-		public void WhenMapKeyManyToManyThenKeyIsMapKeyManyToManyWithClassAssigned()
-		{
-			var mapdoc = new HbmMapping();
-			var hbm = new HbmMap();
-			var mapper = new MapMapper(typeof(Animal), typeof(Animal), typeof(string), hbm, mapdoc);
-			mapper.MapKeyManyToMany(x => { });
-			hbm.Item.Should().Not.Be.Null().And.Be.OfType<HbmMapKeyManyToMany>();
-			var mapKey = (HbmMapKeyManyToMany) hbm.Item;
-			mapKey.Class.Should().Contain(typeof(Animal).Name);
-		}
-
-		[Test]
 		public void WhenMapKeyTypeIsNotPrimitiveTypeThenKeyIsMapKeyManyToManyWithClassAssigned()
 		{
 			var mapdoc = new HbmMapping();
@@ -130,27 +118,6 @@ namespace ConfOrmTests.NH
 			hbm.Item.Should().Not.Be.Null().And.Be.OfType<HbmMapKeyManyToMany>();
 			var mapKey = (HbmMapKeyManyToMany)hbm.Item;
 			mapKey.Class.Should().Contain(typeof(Animal).Name);
-		}
-
-		[Test]
-		public void CallMapKeyManyToManyMapper()
-		{
-			var mapdoc = new HbmMapping();
-			var hbm = new HbmMap();
-			var mapper = new MapMapper(typeof(Animal), typeof(Animal), typeof(string), hbm, mapdoc);
-			var mkmmCalled = false;
-			mapper.MapKeyManyToMany(x => mkmmCalled = true);
-			mkmmCalled.Should().Be.True();
-		}
-
-		[Test]
-		public void CanSetMapKeyManyToManyProperty()
-		{
-			var mapdoc = new HbmMapping();
-			var hbm = new HbmMap();
-			var mapper = new MapMapper(typeof(Animal), typeof(Animal), typeof(string), hbm, mapdoc);
-			mapper.MapKeyManyToMany(x => x.ForeignKey("pizza"));
-			hbm.Item.Should().Be.OfType<HbmMapKeyManyToMany>().And.ValueOf.foreignkey.Should().Be("pizza");
 		}
 
 		[Test]

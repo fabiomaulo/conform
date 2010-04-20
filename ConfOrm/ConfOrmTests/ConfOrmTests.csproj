@@ -102,7 +102,6 @@
     <Compile Include="NH\Customizers\CollectionKeyCustomizerTest.cs" />
     <Compile Include="NH\Customizers\CollectionPropertiesCustomizerTest.cs" />
     <Compile Include="NH\Customizers\ListPropertiesCustomizerTest.cs" />
-    <Compile Include="NH\Customizers\MapPropertiesCustomizerTest.cs" />
     <Compile Include="NH\ElementMapperTest.cs" />
     <Compile Include="NH\FakeUserCollectionType.cs" />
     <Compile Include="NH\FilterMapperTest.cs" />
