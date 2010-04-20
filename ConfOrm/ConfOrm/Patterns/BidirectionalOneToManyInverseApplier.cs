@@ -3,9 +3,9 @@ using ConfOrm.Mappers;
 
 namespace ConfOrm.Patterns
 {
-	public class BidirectionalOneToManyApplier : BidirectionalOneToManyMemberPattern, IPatternApplier<MemberInfo, ICollectionPropertiesMapper>
+	public class BidirectionalOneToManyInverseApplier : BidirectionalOneToManyMemberPattern, IPatternApplier<MemberInfo, ICollectionPropertiesMapper>
 	{
-		public BidirectionalOneToManyApplier(IDomainInspector domainInspector) : base(domainInspector) {}
+		public BidirectionalOneToManyInverseApplier(IDomainInspector domainInspector) : base(domainInspector) {}
 
 		#region Implementation of IPatternApplier<MemberInfo,ICollectionPropertiesMapper>
 

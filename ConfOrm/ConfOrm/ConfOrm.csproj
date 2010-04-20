@@ -208,7 +208,7 @@
     <Compile Include="Patterns\BidirectionalManyToManyInverseApplier.cs" />
     <Compile Include="Patterns\BidirectionalManyToManyPattern.cs" />
     <Compile Include="Patterns\BidirectionalManyToManyTableApplier.cs" />
-    <Compile Include="Patterns\BidirectionalOneToManyApplier.cs" />
+    <Compile Include="Patterns\BidirectionalOneToManyInverseApplier.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyMemberPattern.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyOnDeleteConstraintApplier.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyPattern.cs" />

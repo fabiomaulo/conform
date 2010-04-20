@@ -36,7 +36,7 @@ namespace ConfOrm.NH
 			                             		new MemberReadOnlyAccessorApplier<ICollectionPropertiesMapper>(),
 			                             		new MemberNoSetterToFieldAccessorApplier<ICollectionPropertiesMapper>(),
 			                             		new MemberToFieldAccessorApplier<ICollectionPropertiesMapper>(),
-			                             		new BidirectionalOneToManyApplier(domainInspector),
+			                             		new BidirectionalOneToManyInverseApplier(domainInspector),
 			                             		new BidirectionalOneToManyOnDeleteConstraintApplier(domainInspector),
 			                             		new BidirectionalManyToManyTableApplier(domainInspector),
 																			new BidirectionalManyToManyInverseApplier(domainInspector),
