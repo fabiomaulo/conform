@@ -65,5 +65,18 @@ namespace ConfOrmTests.NH
 
 			concreteCollectionMapper.Verify(x => x.BatchSize(It.Is<int>(v => v == 10)), Times.Once());
 		}
+
+		[Test]
+		public void InvokeCustomizerOfCollectionElementRelation()
+		{
+			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var customizersHolder = new CustomizersHolder();
+			var elementMapper = new Mock<IElementMapper>();
+
+			customizersHolder.AddCustomizer(propertyPath, (IElementMapper x) => x.Length(10));
+			customizersHolder.InvokeCustomizers(propertyPath, elementMapper.Object);
+
+			elementMapper.Verify(x => x.Length(It.Is<int>(v => v == 10)), Times.Once());
+		}
 	}
 }

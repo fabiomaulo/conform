@@ -21,6 +21,21 @@ namespace ConfOrm.NH
 		void AddCustomizer(PropertyPath member, Action<IListPropertiesMapper> propertyCustomizer);
 		void AddCustomizer(PropertyPath member, Action<IMapPropertiesMapper> propertyCustomizer);
 		void AddCustomizer(PropertyPath member, Action<ICollectionPropertiesMapper> propertyCustomizer);
+		
+		#region Collection Element relations
+
+		//void AddCustomizer(PropertyPath member, Action<IManyToManyMapper> collectionRelationManyToManyCustomizer);
+		void AddCustomizer(PropertyPath member, Action<IElementMapper> collectionRelationElementCustomizer);
+		//void AddCustomizer(PropertyPath member, Action<IOneToManyMapper> collectionRelationOneToManyCustomizer);
+
+		#endregion
+
+		#region Dictionary key relations
+
+		//void AddCustomizer(PropertyPath member, Action<IMapKeyManyToManyMapper> mapKeyManyToManyCustomizer);
+		//void AddCustomizer(PropertyPath member, Action<IMapKeyMapper> mapKeyElementCustomizer);
+
+		#endregion
 
 		void InvokeCustomizers(Type type, IClassAttributesMapper mapper);
 		void InvokeCustomizers(Type type, ISubclassAttributesMapper mapper);
@@ -37,5 +52,20 @@ namespace ConfOrm.NH
 		void InvokeCustomizers(PropertyPath member, IBagPropertiesMapper mapper);
 		void InvokeCustomizers(PropertyPath member, IListPropertiesMapper mapper);
 		void InvokeCustomizers(PropertyPath member, IMapPropertiesMapper mapper);
+
+		#region Collection Element relations invokers
+
+		//void InvokeCustomizers(PropertyPath member, IManyToManyMapper mapper);
+		void InvokeCustomizers(PropertyPath member, IElementMapper mapper);
+		//void InvokeCustomizers(PropertyPath member, IOneToManyMapper mapper);
+
+		#endregion
+
+		#region Dictionary key relations
+
+		//void InvokeCustomizers(PropertyPath member, IMapKeyManyToManyMapper mapper);
+		//void InvokeCustomizers(PropertyPath member, IMapKeyMapper mapper);
+
+		#endregion
 	}
 }

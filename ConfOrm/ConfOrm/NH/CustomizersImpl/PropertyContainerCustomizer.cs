@@ -79,8 +79,11 @@ namespace ConfOrm.NH.CustomizersImpl
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(property);
 			collectionMapping(new BagPropertiesCustomizer<TEntity, TElement>(new PropertyPath(null, member), CustomizersHolder));
+			mapping(new CollectionElementRelationCustomizer<TElement>(new PropertyPath(PropertyPath, member), CustomizersHolder));
+
 			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
 			collectionMapping(new BagPropertiesCustomizer<TEntity, TElement>(new PropertyPath(null, memberOf), CustomizersHolder));
+			mapping(new CollectionElementRelationCustomizer<TElement>(new PropertyPath(PropertyPath, memberOf), CustomizersHolder));
 		}
 
 		public void List<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,

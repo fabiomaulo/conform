@@ -117,6 +117,8 @@
     <Compile Include="NH\CustomizersImpl\BagPropertiesCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\ClassCustomizer.cs" />
     <Compile Include="NH\ColumnMapper.cs" />
+    <Compile Include="NH\CustomizersImpl\CollectionElementCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\CollectionElementRelationCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\CollectionKeyCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\CollectionPropertiesCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\ComponentCustomizer.cs" />

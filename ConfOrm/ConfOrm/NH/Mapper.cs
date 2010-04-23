@@ -650,12 +650,14 @@ namespace ConfOrm.NH
 			private readonly MemberInfo member;
 			private readonly PropertyPath propertyPath;
 			private readonly IPatternsAppliersHolder appliers;
+			private readonly ICustomizersHolder customizersHolder;
 
-			public ElementRelationMapper(MemberInfo member, PropertyPath propertyPath, IPatternsAppliersHolder appliers)
+			public ElementRelationMapper(MemberInfo member, PropertyPath propertyPath, IPatternsAppliersHolder appliers, ICustomizersHolder customizersHolder)
 			{
 				this.member = member;
 				this.propertyPath = propertyPath;
 				this.appliers = appliers;
+				this.customizersHolder = customizersHolder;
 			}
 
 			#region Implementation of ICollectionElementRelationMapper
@@ -666,6 +668,7 @@ namespace ConfOrm.NH
 					{
 						appliers.Element.ApplyAllMatchs(member, x);
 						appliers.ElementPath.ApplyAllMatchs(propertyPath, x);
+						customizersHolder.InvokeCustomizers(propertyPath, x);
 					});
 			}
 
@@ -880,7 +883,7 @@ namespace ConfOrm.NH
 			{
 				return new ComponentRelationMapper(ownerType, collectionElementType, membersProvider, domainInspector, PatternsAppliers, customizerHolder);
 			}
-			return new ElementRelationMapper(property, propertyPath, PatternsAppliers);
+			return new ElementRelationMapper(property, propertyPath, PatternsAppliers, customizerHolder);
 		}
 
 		public IEnumerable<HbmMapping> CompileMappingForEach(IEnumerable<Type> types)
