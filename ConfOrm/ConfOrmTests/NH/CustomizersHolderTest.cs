@@ -78,5 +78,18 @@ namespace ConfOrmTests.NH
 
 			elementMapper.Verify(x => x.Length(It.Is<int>(v => v == 10)), Times.Once());
 		}
+
+		[Test]
+		public void InvokeCustomizerOfCollectionOneToManyRelation()
+		{
+			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var customizersHolder = new CustomizersHolder();
+			var elementMapper = new Mock<IOneToManyMapper>();
+
+			customizersHolder.AddCustomizer(propertyPath, (IOneToManyMapper x) => x.NotFound(NotFoundMode.Ignore));
+			customizersHolder.InvokeCustomizers(propertyPath, elementMapper.Object);
+
+			elementMapper.Verify(x => x.NotFound(It.Is<NotFoundMode>(v => v == NotFoundMode.Ignore)), Times.Once());
+		}
 	}
 }
