@@ -9,9 +9,17 @@ namespace ConfOrmTests.NH
 {
 	public class OneToManyMapperTest
 	{
-		private class MyClass
+		private interface IMyInterface
 		{
 			
+		}
+		private class MyClass: IMyInterface
+		{
+			
+		}
+		private class Whatever
+		{
+
 		}
 
 		[Test]
@@ -19,13 +27,13 @@ namespace ConfOrmTests.NH
 		{
 			// relation using entity-name
 			var hbm = new HbmOneToMany();
-			ActionAssert.NotThrow(()=>new OneToManyMapper(null, hbm, null));
+			Executing.This(() => new OneToManyMapper(null, hbm, null)).Should().NotThrow();
 		}
 
 		[Test]
 		public void WhenNoHbmThenThrow()
 		{
-			ActionAssert.Throws<ArgumentNullException>(() => new OneToManyMapper(null, null, null));
+			Executing.This(() => new OneToManyMapper(null, null, null)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]
@@ -43,6 +51,35 @@ namespace ConfOrmTests.NH
 			var mapper = new OneToManyMapper(typeof(MyClass), hbm, null);
 			mapper.NotFound(NotFoundMode.Ignore);
 			hbm.NotFoundMode.Should().Be(HbmNotFoundMode.Ignore);
+		}
+
+		[Test]
+		public void CanForceClassRelation()
+		{
+			var hbm = new HbmOneToMany();
+			var mapper = new OneToManyMapper(typeof(IMyInterface), hbm, null);
+
+			mapper.Class(typeof(MyClass));
+
+			hbm.Class.Should().Contain("MyClass").And.Not.Contain("IMyInterface");
+		}
+
+		[Test]
+		public void WhenForceClassRelationToIncompatibleTypeThenThrows()
+		{
+			var hbm = new HbmOneToMany();
+			var mapper = new OneToManyMapper(typeof(IMyInterface), hbm, null);
+
+			Executing.This(() => mapper.Class(typeof(Whatever))).Should().Throw<ArgumentOutOfRangeException>();
+		}
+
+		[Test]
+		public void CanAssignEntityName()
+		{
+			var hbm = new HbmOneToMany();
+			var mapper = new OneToManyMapper(typeof(MyClass), hbm, null);
+			mapper.EntityName("myname");
+			hbm.EntityName.Should().Be("myname");
 		}
 	}
 }
