@@ -91,5 +91,18 @@ namespace ConfOrmTests.NH
 
 			elementMapper.Verify(x => x.NotFound(It.Is<NotFoundMode>(v => v == NotFoundMode.Ignore)), Times.Once());
 		}
+
+		[Test]
+		public void InvokeCustomizerOfCollectionManyToManyRelation()
+		{
+			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var customizersHolder = new CustomizersHolder();
+			var elementMapper = new Mock<IManyToManyMapper>();
+
+			customizersHolder.AddCustomizer(propertyPath, (IManyToManyMapper x) => x.Column("pizza"));
+			customizersHolder.InvokeCustomizers(propertyPath, elementMapper.Object);
+
+			elementMapper.Verify(x => x.Column(It.Is<string>(v => v == "pizza")), Times.Once());
+		}
 	}
 }

@@ -24,7 +24,7 @@ namespace ConfOrm.NH
 		
 		#region Collection Element relations
 
-		//void AddCustomizer(PropertyPath member, Action<IManyToManyMapper> collectionRelationManyToManyCustomizer);
+		void AddCustomizer(PropertyPath member, Action<IManyToManyMapper> collectionRelationManyToManyCustomizer);
 		void AddCustomizer(PropertyPath member, Action<IElementMapper> collectionRelationElementCustomizer);
 		void AddCustomizer(PropertyPath member, Action<IOneToManyMapper> collectionRelationOneToManyCustomizer);
 
@@ -55,7 +55,7 @@ namespace ConfOrm.NH
 
 		#region Collection Element relations invokers
 
-		//void InvokeCustomizers(PropertyPath member, IManyToManyMapper mapper);
+		void InvokeCustomizers(PropertyPath member, IManyToManyMapper mapper);
 		void InvokeCustomizers(PropertyPath member, IElementMapper mapper);
 		void InvokeCustomizers(PropertyPath member, IOneToManyMapper mapper);
 
