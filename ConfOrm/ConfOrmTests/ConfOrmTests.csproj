@@ -97,6 +97,7 @@
     <Compile Include="NH\ComponentNestedElementMapperTest.cs" />
     <Compile Include="NH\Customizers\ClassCustomizerTest.cs" />
     <Compile Include="NH\Customizers\CollectionElementCustomizerTest.cs" />
+    <Compile Include="NH\Customizers\OneToManyCustomizerTest.cs" />
     <Compile Include="NH\DefaultCandidatePersistentMembersProviderTest.cs" />
     <Compile Include="NH\DiscriminatorMapperTest.cs" />
     <Compile Include="NH\CustomizersHolderTest.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="NH\MapperTests\ManyToOneRelationAccessorsTest.cs" />
     <Compile Include="NH\MapperTests\NaturalIdTest.cs" />
     <Compile Include="NH\MapperTests\OneToManyAppliersCalling.cs" />
+    <Compile Include="NH\MapperTests\OneToManyCustomizersCallingTest.cs" />
     <Compile Include="NH\MapperTests\OneToOneRelationAccessorsTest.cs" />
     <Compile Include="NH\MapperTests\PatternsAppliersOnCollectionCallingTest.cs" />
     <Compile Include="NH\MapperTests\RootClassPatternsAddition.cs" />

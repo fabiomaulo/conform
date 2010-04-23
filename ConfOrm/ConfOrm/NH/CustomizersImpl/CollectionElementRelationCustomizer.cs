@@ -22,7 +22,8 @@ namespace ConfOrm.NH.CustomizersImpl
 
 		public void OneToMany(Action<IOneToManyMapper> mapping)
 		{
-			throw new NotImplementedException();
+			var oneToManyCustomizer = new OneToManyCustomizer(propertyPath, customizersHolder);
+			mapping(oneToManyCustomizer);
 		}
 
 		public void ManyToMany(Action<IManyToManyMapper> mapping)
