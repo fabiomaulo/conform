@@ -69,8 +69,11 @@ namespace ConfOrm.NH.CustomizersImpl
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(property);
 			collectionMapping(new SetPropertiesCustomizer<TEntity, TElement>(new PropertyPath(null, member), CustomizersHolder));
+			mapping(new CollectionElementRelationCustomizer<TElement>(new PropertyPath(PropertyPath, member), CustomizersHolder));
+
 			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
 			collectionMapping(new SetPropertiesCustomizer<TEntity, TElement>(new PropertyPath(null, memberOf), CustomizersHolder));
+			mapping(new CollectionElementRelationCustomizer<TElement>(new PropertyPath(PropertyPath, member), CustomizersHolder));
 		}
 
 		public void Bag<TElement>(Expression<Func<TEntity, IEnumerable<TElement>>> property,
@@ -92,8 +95,11 @@ namespace ConfOrm.NH.CustomizersImpl
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(property);
 			collectionMapping(new ListPropertiesCustomizer<TEntity, TElement>(new PropertyPath(null, member), CustomizersHolder));
+			mapping(new CollectionElementRelationCustomizer<TElement>(new PropertyPath(PropertyPath, member), CustomizersHolder));
+
 			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
 			collectionMapping(new ListPropertiesCustomizer<TEntity, TElement>(new PropertyPath(null, memberOf), CustomizersHolder));
+			mapping(new CollectionElementRelationCustomizer<TElement>(new PropertyPath(PropertyPath, member), CustomizersHolder));
 		}
 
 		public void Map<TKey, TElement>(Expression<Func<TEntity, IDictionary<TKey, TElement>>> property,
@@ -103,8 +109,11 @@ namespace ConfOrm.NH.CustomizersImpl
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(property);
 			collectionMapping(new MapPropertiesCustomizer<TEntity, TKey, TElement>(new PropertyPath(null, member), CustomizersHolder));
+			mapping(new CollectionElementRelationCustomizer<TElement>(new PropertyPath(PropertyPath, member), CustomizersHolder));
+
 			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
 			collectionMapping(new MapPropertiesCustomizer<TEntity, TKey, TElement>(new PropertyPath(null, memberOf), CustomizersHolder));
+			mapping(new CollectionElementRelationCustomizer<TElement>(new PropertyPath(PropertyPath, member), CustomizersHolder));
 		}
 	}
 }

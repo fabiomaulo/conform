@@ -15,6 +15,7 @@ namespace ConfOrmTests.NH.MapperTests
 		{
 			public int Id { get; set; }
 			public ICollection<string> PetsNames { get; set; }
+			public IDictionary<string, string > Pets { get; set; }
 		}
 
 		private Mock<IDomainInspector> GetBaseMockedDomainInspector()
@@ -30,13 +31,56 @@ namespace ConfOrmTests.NH.MapperTests
 		}
 
 		[Test]
-		public void WhenRegisteredApplierForBagThenCallApplyForMemberInfo()
+		public void WhenRegisteredCustomizerForBagThenCallElementMapperAction()
 		{
 			var orm = GetBaseMockedDomainInspector();
 			orm.Setup(x => x.IsBag(It.Is<MemberInfo>(m => m == ForClass<Person>.Property(p => p.PetsNames)))).Returns(true);
 			var called = false;
 			var mapper = new Mapper(orm.Object);
 			mapper.Class<Person>(cm=> cm.Bag(person=> person.PetsNames, cpm=> { }, cerm=> cerm.Element(em=> called = true)));
+
+			mapper.CompileMappingFor(new[] { typeof(Person) });
+
+			called.Should().Be.True();
+		}
+
+		[Test]
+		public void WhenRegisteredCustomizerForSetThenCallElementMapperAction()
+		{
+			var orm = GetBaseMockedDomainInspector();
+			orm.Setup(x => x.IsSet(It.Is<MemberInfo>(m => m == ForClass<Person>.Property(p => p.PetsNames)))).Returns(true);
+			var called = false;
+			var mapper = new Mapper(orm.Object);
+			mapper.Class<Person>(cm => cm.Set(person => person.PetsNames, cpm => { }, cerm => cerm.Element(em => called = true)));
+
+			mapper.CompileMappingFor(new[] { typeof(Person) });
+
+			called.Should().Be.True();
+		}
+
+		[Test]
+		public void WhenRegisteredCustomizerForListThenCallElementMapperAction()
+		{
+			var orm = GetBaseMockedDomainInspector();
+			orm.Setup(x => x.IsList(It.Is<MemberInfo>(m => m == ForClass<Person>.Property(p => p.PetsNames)))).Returns(true);
+			var called = false;
+			var mapper = new Mapper(orm.Object);
+			mapper.Class<Person>(cm => cm.List(person => person.PetsNames, cpm => { }, cerm => cerm.Element(em => called = true)));
+
+			mapper.CompileMappingFor(new[] { typeof(Person) });
+
+			called.Should().Be.True();
+		}
+
+		[Test]
+		public void WhenRegisteredCustomizerForDictionaryThenCallElementMapperAction()
+		{
+			var orm = GetBaseMockedDomainInspector();
+			orm.Setup(x => x.IsDictionary(It.Is<MemberInfo>(m => m == ForClass<Person>.Property(p => p.Pets)))).Returns(true);
+			var called = false;
+			var mapper = new Mapper(orm.Object);
+			mapper.Class<Person>(
+				cm => cm.Map(person => person.Pets, cpm => { }, mkrm => { }, cerm => cerm.Element(em => called = true)));
 
 			mapper.CompileMappingFor(new[] { typeof(Person) });
 
