@@ -4,5 +4,8 @@ namespace ConfOrm.Mappers
 {
 	public interface IManyToManyMapper: IColumnsMapper
 	{
+		void Class(Type entityType);
+		void EntityName(string entityName);
+		void NotFound(NotFoundMode mode);
 	}
 }

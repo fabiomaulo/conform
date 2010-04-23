@@ -28,7 +28,8 @@ namespace ConfOrm.NH.CustomizersImpl
 
 		public void ManyToMany(Action<IManyToManyMapper> mapping)
 		{
-			throw new NotImplementedException();
+			var manyToManyCustomizer = new ManyToManyCustomizer(propertyPath, customizersHolder);
+			mapping(manyToManyCustomizer);
 		}
 
 		public void Component(Action<IComponentElementMapper<TElement>> mapping)

@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using ConfOrm.Mappers;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
@@ -8,14 +10,23 @@ namespace ConfOrmTests.NH
 {
 	public class ManyToManyMapperTest
 	{
-		private class MyClass
+		private interface IMyInterface
 		{
+
+		}
+		private class MyClass : IMyInterface
+		{
+
+		}
+		private class Whatever
+		{
+
 		}
 		[Test]
 		public void WhenSetDifferentColumnNameThenSetTheName()
 		{
 			var mapping = new HbmManyToMany();
-			var mapper = new ManyToManyMapper(typeof(MyClass), mapping);
+			var mapper = new ManyToManyMapper(typeof(MyClass), mapping, null);
 			mapper.Column(cm => cm.Name("pepe"));
 
 			mapping.Columns.Should().Have.Count.EqualTo(1);
@@ -26,7 +37,7 @@ namespace ConfOrmTests.NH
 		public void WhenSetDefaultColumnNameThenDoesNotSetTheName()
 		{
 			var mapping = new HbmManyToMany();
-			var mapper = new ManyToManyMapper(typeof(MyClass), mapping);
+			var mapper = new ManyToManyMapper(typeof(MyClass), mapping, null);
 			mapper.Column(cm => cm.Name("MyClass"));
 			mapping.column.Should().Be.Null();
 			mapping.Columns.Should().Be.Empty();
@@ -36,7 +47,7 @@ namespace ConfOrmTests.NH
 		public void WhenSetColumnValuesThenAddColumnTag()
 		{
 			var mapping = new HbmManyToMany();
-			var mapper = new ManyToManyMapper(typeof(MyClass), mapping);
+			var mapper = new ManyToManyMapper(typeof(MyClass), mapping, null);
 			mapper.Column(cm =>
 			{
 				cm.SqlType("VARCHAR(3)");
@@ -50,7 +61,7 @@ namespace ConfOrmTests.NH
 		public void WhenSetMultiColumnsValuesThenAddColumns()
 		{
 			var mapping = new HbmManyToMany();
-			var mapper = new ManyToManyMapper(typeof(MyClass), mapping);
+			var mapper = new ManyToManyMapper(typeof(MyClass), mapping, null);
 			mapper.Columns(cm =>
 			{
 				cm.Name("column1");
@@ -67,7 +78,7 @@ namespace ConfOrmTests.NH
 		public void WhenSetMultiColumnsValuesThenAutoassignColumnNames()
 		{
 			var mapping = new HbmManyToMany();
-			var mapper = new ManyToManyMapper(typeof(MyClass), mapping);
+			var mapper = new ManyToManyMapper(typeof(MyClass), mapping, null);
 			mapper.Columns(cm => cm.Length(50), cm => cm.SqlType("VARCHAR(10)"));
 			mapping.Columns.Should().Have.Count.EqualTo(2);
 			mapping.Columns.All(cm => cm.name.Satisfy(n => !string.IsNullOrEmpty(n)));
@@ -77,10 +88,48 @@ namespace ConfOrmTests.NH
 		public void AfterSetMultiColumnsCantSetSimpleColumn()
 		{
 			var mapping = new HbmManyToMany();
-			var mapper = new ManyToManyMapper(typeof(MyClass), mapping);
+			var mapper = new ManyToManyMapper(typeof(MyClass), mapping, null);
 			mapper.Columns(cm => cm.Length(50), cm => cm.SqlType("VARCHAR(10)"));
 
 			mapper.Executing(x => x.Column(cm => cm.Length(50))).Throws<ConfOrm.MappingException>();
+		}
+
+		[Test]
+		public void CanAssignNotFoundMode()
+		{
+			var mapping = new HbmManyToMany();
+			var mapper = new ManyToManyMapper(typeof(MyClass), mapping, null);
+			mapper.NotFound(NotFoundMode.Ignore);
+			mapping.NotFoundMode.Should().Be(HbmNotFoundMode.Ignore);
+		}
+
+		[Test]
+		public void CanForceClassRelation()
+		{
+			var mapping = new HbmManyToMany();
+			var mapper = new ManyToManyMapper(typeof(MyClass), mapping, null);
+
+			mapper.Class(typeof(MyClass));
+
+			mapping.Class.Should().Contain("MyClass").And.Not.Contain("IMyInterface");
+		}
+
+		[Test]
+		public void WhenForceClassRelationToIncompatibleTypeThenThrows()
+		{
+			var mapping = new HbmManyToMany();
+			var mapper = new ManyToManyMapper(typeof(MyClass), mapping, null);
+
+			Executing.This(() => mapper.Class(typeof(Whatever))).Should().Throw<ArgumentOutOfRangeException>();
+		}
+
+		[Test]
+		public void CanAssignEntityName()
+		{
+			var mapping = new HbmManyToMany();
+			var mapper = new ManyToManyMapper(typeof(MyClass), mapping, null);
+			mapper.EntityName("myname");
+			mapping.EntityName.Should().Be("myname");
 		}
 	}
 }

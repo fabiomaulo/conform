@@ -6,12 +6,13 @@ using NHibernate.Cfg.MappingSchema;
 
 namespace ConfOrm.NH
 {
-	public class ManyToManyMapper: IManyToManyMapper
+	public class ManyToManyMapper : IManyToManyMapper
 	{
 		private readonly Type elementType;
 		private readonly HbmManyToMany manyToMany;
+		private readonly HbmMapping mapDoc;
 
-		public ManyToManyMapper(Type elementType, HbmManyToMany manyToMany)
+		public ManyToManyMapper(Type elementType, HbmManyToMany manyToMany, HbmMapping mapDoc)
 		{
 			if (elementType == null)
 			{
@@ -23,6 +24,7 @@ namespace ConfOrm.NH
 			}
 			this.elementType = elementType;
 			this.manyToMany = manyToMany;
+			this.mapDoc = mapDoc;
 		}
 
 		#region Implementation of IColumnsMapper
@@ -35,18 +37,18 @@ namespace ConfOrm.NH
 			}
 			HbmColumn hbm = manyToMany.Columns.SingleOrDefault();
 			hbm = hbm
-						??
-						new HbmColumn
-						{
-							name = manyToMany.column,
-							unique = manyToMany.unique,
-							uniqueSpecified = manyToMany.unique,
-						};
-			var defaultColumnName = elementType.Name;
+			      ??
+			      new HbmColumn
+			      	{
+			      		name = manyToMany.column,
+			      		unique = manyToMany.unique,
+			      		uniqueSpecified = manyToMany.unique,
+			      	};
+			string defaultColumnName = elementType.Name;
 			columnMapper(new ColumnMapper(hbm, defaultColumnName));
 			if (ColumnTagIsRequired(hbm))
 			{
-				manyToMany.Items = new[] { hbm };
+				manyToMany.Items = new[] {hbm};
 				ResetColumnPlainValues();
 			}
 			else
@@ -54,6 +56,26 @@ namespace ConfOrm.NH
 				manyToMany.column = defaultColumnName == null || !defaultColumnName.Equals(hbm.name) ? hbm.name : null;
 				manyToMany.unique = hbm.unique;
 			}
+		}
+
+		public void Columns(params Action<IColumnMapper>[] columnMapper)
+		{
+			ResetColumnPlainValues();
+			int i = 1;
+			var columns = new List<HbmColumn>(columnMapper.Length);
+			foreach (var action in columnMapper)
+			{
+				var hbm = new HbmColumn();
+				string defaultColumnName = elementType.Name + i++;
+				action(new ColumnMapper(hbm, defaultColumnName));
+				columns.Add(hbm);
+			}
+			manyToMany.Items = columns.ToArray();
+		}
+
+		public void Column(string name)
+		{
+			Column(x => x.Name(name));
 		}
 
 		private bool ColumnTagIsRequired(HbmColumn hbm)
@@ -68,24 +90,33 @@ namespace ConfOrm.NH
 			manyToMany.unique = false;
 		}
 
-		public void Columns(params Action<IColumnMapper>[] columnMapper)
+		#endregion
+
+		#region IManyToManyMapper Members
+
+		public void Class(Type entityType)
 		{
-			ResetColumnPlainValues();
-			int i = 1;
-			var columns = new List<HbmColumn>(columnMapper.Length);
-			foreach (var action in columnMapper)
+			if (!elementType.IsAssignableFrom(entityType))
 			{
-				var hbm = new HbmColumn();
-				var defaultColumnName = elementType.Name + i++;
-				action(new ColumnMapper(hbm, defaultColumnName));
-				columns.Add(hbm);
+				throw new ArgumentOutOfRangeException("entityType",
+				                                      string.Format("The type is incompatible; expected assignable to {0}",
+				                                                    elementType));
 			}
-			manyToMany.Items = columns.ToArray();
+			manyToMany.@class = entityType.GetShortClassName(mapDoc);
 		}
 
-		public void Column(string name)
+		public void EntityName(string entityName)
 		{
-			Column(x => x.Name(name));
+			manyToMany.entityname = entityName;
+		}
+
+		public void NotFound(NotFoundMode mode)
+		{
+			if (mode == null)
+			{
+				return;
+			}
+			manyToMany.notfound = mode.ToHbm();
 		}
 
 		#endregion
