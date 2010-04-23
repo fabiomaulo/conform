@@ -32,8 +32,8 @@ namespace ConfOrm.NH
 
 		#region Dictionary key relations
 
-		//void AddCustomizer(PropertyPath member, Action<IMapKeyManyToManyMapper> mapKeyManyToManyCustomizer);
-		//void AddCustomizer(PropertyPath member, Action<IMapKeyMapper> mapKeyElementCustomizer);
+		void AddCustomizer(PropertyPath member, Action<IMapKeyManyToManyMapper> mapKeyManyToManyCustomizer);
+		void AddCustomizer(PropertyPath member, Action<IMapKeyMapper> mapKeyElementCustomizer);
 
 		#endregion
 
@@ -63,8 +63,8 @@ namespace ConfOrm.NH
 
 		#region Dictionary key relations
 
-		//void InvokeCustomizers(PropertyPath member, IMapKeyManyToManyMapper mapper);
-		//void InvokeCustomizers(PropertyPath member, IMapKeyMapper mapper);
+		void InvokeCustomizers(PropertyPath member, IMapKeyManyToManyMapper mapper);
+		void InvokeCustomizers(PropertyPath member, IMapKeyMapper mapper);
 
 		#endregion
 	}

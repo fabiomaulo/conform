@@ -12,6 +12,7 @@ namespace ConfOrmTests.NH
 		private class MyClass
 		{
 			public IEnumerable<int> MyCollection { get; set; }
+			public IDictionary<string, int> MyDictionary { get; set; }
 		}
 
 		[Test]
@@ -100,6 +101,32 @@ namespace ConfOrmTests.NH
 			var elementMapper = new Mock<IManyToManyMapper>();
 
 			customizersHolder.AddCustomizer(propertyPath, (IManyToManyMapper x) => x.Column("pizza"));
+			customizersHolder.InvokeCustomizers(propertyPath, elementMapper.Object);
+
+			elementMapper.Verify(x => x.Column(It.Is<string>(v => v == "pizza")), Times.Once());
+		}
+
+		[Test]
+		public void InvokeCustomizerOfDictionaryKeyManyToManyRelation()
+		{
+			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyDictionary));
+			var customizersHolder = new CustomizersHolder();
+			var elementMapper = new Mock<IMapKeyManyToManyMapper>();
+
+			customizersHolder.AddCustomizer(propertyPath, (IMapKeyManyToManyMapper x) => x.Column("pizza"));
+			customizersHolder.InvokeCustomizers(propertyPath, elementMapper.Object);
+
+			elementMapper.Verify(x => x.Column(It.Is<string>(v => v == "pizza")), Times.Once());
+		}
+
+		[Test]
+		public void InvokeCustomizerOfDictionaryKeyElementRelation()
+		{
+			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyDictionary));
+			var customizersHolder = new CustomizersHolder();
+			var elementMapper = new Mock<IMapKeyMapper>();
+
+			customizersHolder.AddCustomizer(propertyPath, (IMapKeyMapper x) => x.Column("pizza"));
 			customizersHolder.InvokeCustomizers(propertyPath, elementMapper.Object);
 
 			elementMapper.Verify(x => x.Column(It.Is<string>(v => v == "pizza")), Times.Once());
