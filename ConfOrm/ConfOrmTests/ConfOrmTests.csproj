@@ -155,6 +155,7 @@
     <Compile Include="NH\MapperTests\ManyToManyApplierCalling.cs" />
     <Compile Include="NH\MapperTests\ManyToManyCustomizersCallingTest.cs" />
     <Compile Include="NH\MapperTests\ManyToOneRelationAccessorsTest.cs" />
+    <Compile Include="NH\MapperTests\MapKeyRelationTest.cs" />
     <Compile Include="NH\MapperTests\NaturalIdTest.cs" />
     <Compile Include="NH\MapperTests\OneToManyAppliersCalling.cs" />
     <Compile Include="NH\MapperTests\OneToManyCustomizersCallingTest.cs" />

@@ -573,8 +573,11 @@ namespace ConfOrm.NH
 				throw new NotSupportedException(string.Format("Can't determine collection element relation (property {0} in {1})",
 				                                              member.Name, propertiesContainerType));
 			}
+			IMapKeyRelationMapper mkrm = DetermineMapKeyRelationType(member, propertyPath, dictionaryKeyType);
+
 			Type dictionaryValueType = propertyType.DetermineDictionaryValueType();
 			ICollectionElementRelationMapper cert = DetermineCollectionElementRelationType(member, propertyPath, dictionaryValueType);
+			
 			propertiesContainer.Map(member, collectionPropertiesMapper =>
 				{
 					cert.MapCollectionProperties(collectionPropertiesMapper);
@@ -582,7 +585,7 @@ namespace ConfOrm.NH
 					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
-				}, x=> { }, cert.Map);
+				}, mkrm.Map, cert.Map);
 		}
 
 		private void MapSet(MemberInfo member, PropertyPath propertyPath, Type propertyType, IPropertyContainerMapper propertiesContainer,
@@ -637,6 +640,11 @@ namespace ConfOrm.NH
 				                                              property.Name, type));
 			}
 			return collectionElementType;
+		}
+
+		protected interface IMapKeyRelationMapper
+		{
+			void Map(IMapKeyRelation relation);
 		}
 
 		protected interface ICollectionElementRelationMapper
@@ -884,6 +892,123 @@ namespace ConfOrm.NH
 				return new ComponentRelationMapper(ownerType, collectionElementType, membersProvider, domainInspector, PatternsAppliers, customizerHolder);
 			}
 			return new ElementRelationMapper(property, propertyPath, PatternsAppliers, customizerHolder);
+		}
+
+		private IMapKeyRelationMapper DetermineMapKeyRelationType(MemberInfo member, PropertyPath propertyPath, Type dictionaryKeyType)
+		{
+			var ownerType = member.ReflectedType;
+			if (domainInspector.IsManyToMany(ownerType, dictionaryKeyType) || domainInspector.IsOneToMany(ownerType, dictionaryKeyType))
+			{
+				// OneToMany is not possible as map-key so we map it as many-to-many instead ignore the case
+				return new KeyManyToManyRelationMapper(member, propertyPath, ownerType, dictionaryKeyType, domainInspector, PatternsAppliers);
+			}
+			if (domainInspector.IsComponent(dictionaryKeyType))
+			{
+				return new KeyComponentRelationMapper(ownerType, dictionaryKeyType, membersProvider, domainInspector, PatternsAppliers, customizerHolder);
+			}
+			return new KeyElementRelationMapper(member, propertyPath, PatternsAppliers, customizerHolder);
+		}
+
+		private class KeyElementRelationMapper : IMapKeyRelationMapper
+		{
+			private readonly MemberInfo member;
+			private readonly PropertyPath propertyPath;
+			private readonly IPatternsAppliersHolder patternsAppliersHolder;
+			private readonly ICustomizersHolder customizersHolder;
+
+			public KeyElementRelationMapper(MemberInfo member, PropertyPath propertyPath, IPatternsAppliersHolder patternsAppliersHolder, ICustomizersHolder customizersHolder)
+			{
+				this.member = member;
+				this.propertyPath = propertyPath;
+				this.patternsAppliersHolder = patternsAppliersHolder;
+				this.customizersHolder = customizersHolder;
+			}
+
+			public void Map(IMapKeyRelation relation)
+			{
+				relation.Element(x=>
+				                 	{
+				                 		customizersHolder.InvokeCustomizers(propertyPath, x);
+				                 	});
+			}
+		}
+
+		private class KeyComponentRelationMapper : IMapKeyRelationMapper
+		{
+			private readonly Type ownerType;
+			private readonly Type dictionaryKeyType;
+			private readonly ICandidatePersistentMembersProvider membersProvider;
+			private readonly IDomainInspector domainInspector;
+			private readonly IPatternsAppliersHolder patternsAppliersHolder;
+			private readonly ICustomizersHolder customizersHolder;
+
+			public KeyComponentRelationMapper(Type ownerType, Type dictionaryKeyType, ICandidatePersistentMembersProvider membersProvider, IDomainInspector domainInspector, IPatternsAppliersHolder patternsAppliersHolder, ICustomizersHolder customizersHolder)
+			{
+				this.ownerType = ownerType;
+				this.dictionaryKeyType = dictionaryKeyType;
+				this.membersProvider = membersProvider;
+				this.domainInspector = domainInspector;
+				this.patternsAppliersHolder = patternsAppliersHolder;
+				this.customizersHolder = customizersHolder;
+			}
+
+			public void Map(IMapKeyRelation relation)
+			{
+				relation.Component(x =>
+				{
+					var persistentProperties = GetPersistentProperties(dictionaryKeyType);
+
+					MapProperties(dictionaryKeyType, x, persistentProperties);
+				});
+			}
+
+			private IEnumerable<MemberInfo> GetPersistentProperties(Type type)
+			{
+				var properties = membersProvider.GetComponentMembers(type);
+				return properties.Where(p => domainInspector.IsPersistentProperty(p));
+			}
+
+			private void MapProperties(Type type, IComponentMapKeyMapper propertiesContainer, IEnumerable<MemberInfo> persistentProperties)
+			{
+				foreach (var property in persistentProperties)
+				{
+					var member = property;
+					var propertyType = property.GetPropertyOrFieldType();
+					if (domainInspector.IsManyToOne(type, propertyType))
+					{
+						propertiesContainer.ManyToOne(member, manyToOneMapper =>{});
+					}
+					else
+					{
+						propertiesContainer.Property(member, propertyMapper =>{});
+					}
+				}
+			}
+		}
+
+		private class KeyManyToManyRelationMapper : IMapKeyRelationMapper
+		{
+			private readonly MemberInfo member;
+			private readonly PropertyPath propertyPath;
+			private readonly Type ownerType;
+			private readonly Type dictionaryKeyType;
+			private readonly IDomainInspector domainInspector;
+			private readonly IPatternsAppliersHolder patternsAppliers;
+
+			public KeyManyToManyRelationMapper(MemberInfo member, PropertyPath propertyPath, Type ownerType, Type dictionaryKeyType, IDomainInspector domainInspector, IPatternsAppliersHolder patternsAppliers)
+			{
+				this.member = member;
+				this.propertyPath = propertyPath;
+				this.ownerType = ownerType;
+				this.dictionaryKeyType = dictionaryKeyType;
+				this.domainInspector = domainInspector;
+				this.patternsAppliers = patternsAppliers;
+			}
+
+			public void Map(IMapKeyRelation relation)
+			{
+				relation.ManyToMany(x=>{});
+			}
 		}
 
 		public IEnumerable<HbmMapping> CompileMappingForEach(IEnumerable<Type> types)

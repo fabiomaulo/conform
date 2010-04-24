@@ -19,14 +19,14 @@ namespace ConfOrm.NH
 			get { return compositeMapKeyMapping; }
 		}
 
-		public void Property(MemberInfo property, Action<IPropertyMapper> mapping)
+		public void Property(MemberInfo property, Action<IKeyPropertyMapper> mapping)
 		{
-			throw new NotImplementedException();
+			
 		}
 
-		public void ManyToOne(MemberInfo property, Action<IManyToOneMapper> mapping)
+		public void ManyToOne(MemberInfo property, Action<IKeyManyToOneMapper> mapping)
 		{
-			throw new NotImplementedException();
+			
 		}
 	}
 }
