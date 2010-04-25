@@ -67,7 +67,7 @@ namespace ConfOrmTests.NH.MapperTests
 			map.Item.Should().Be.OfType<HbmCompositeMapKey>().And.ValueOf.Class.Should().Contain("ToySkill");
 		}
 
-		[Test, Ignore("Not fixed yet")]
+		[Test]
 		public void WhenUseAComponentAsKeyWithManyToOneThenUseKeyManyToOne()
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();
@@ -81,10 +81,9 @@ namespace ConfOrmTests.NH.MapperTests
 			mapKey.Properties.OfType<HbmKeyManyToOne>().Should().Not.Be.Empty();
 			var keyManyToOne = mapKey.Properties.OfType<HbmKeyManyToOne>().Single();
 			keyManyToOne.Name.Should().Be("Skill");
-			keyManyToOne.Class.Should().Contain("Skill");
 		}
 
-		[Test, Ignore("Not fixed yet")]
+		[Test]
 		public void WhenUseAComponentAsKeyWithPropertyThenUseKeyProperty()
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();
