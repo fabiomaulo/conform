@@ -110,6 +110,7 @@
     <Compile Include="NH\FilterMapperTest.cs" />
     <Compile Include="NH\IdMapperTest.cs" />
     <Compile Include="NH\JoinedSubclassMapperTest.cs" />
+    <Compile Include="NH\KeyManyToOneMapperTest.cs" />
     <Compile Include="NH\KeyMapperTest.cs" />
     <Compile Include="NH\KeyPropertyMapperTest.cs" />
     <Compile Include="NH\LazyRelationTest.cs" />
