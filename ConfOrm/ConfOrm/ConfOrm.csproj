@@ -169,6 +169,7 @@
     <Compile Include="NH\IPersistentClassCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\JoinedSubclassCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\JoinedSubclassKeyCustomizer.cs" />
+    <Compile Include="NH\KeyPropertyMapper.cs" />
     <Compile Include="NH\ListIndexMapper.cs" />
     <Compile Include="NH\ManyToManyMapper.cs" />
     <Compile Include="NH\ManyToOneMapper.cs" />
