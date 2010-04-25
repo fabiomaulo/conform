@@ -976,11 +976,19 @@ namespace ConfOrm.NH
 					var propertyType = property.GetPropertyOrFieldType();
 					if (domainInspector.IsManyToOne(type, propertyType))
 					{
-						propertiesContainer.ManyToOne(member, manyToOneMapper =>{});
+						propertiesContainer.ManyToOne(member, manyToOneMapper =>
+						                                      	{
+																											patternsAppliersHolder.ManyToOne.ApplyAllMatchs(member, manyToOneMapper);
+																											customizersHolder.InvokeCustomizers(new PropertyPath(null, member), manyToOneMapper);
+						                                      	});
 					}
 					else
 					{
-						propertiesContainer.Property(member, propertyMapper =>{});
+						propertiesContainer.Property(member, propertyMapper =>
+						                                     	{
+																										patternsAppliersHolder.Property.ApplyAllMatchs(member, propertyMapper);
+																										customizersHolder.InvokeCustomizers(new PropertyPath(null, member), propertyMapper);
+						                                     	});
 					}
 				}
 			}
