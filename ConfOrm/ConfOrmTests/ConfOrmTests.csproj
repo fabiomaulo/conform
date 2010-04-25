@@ -93,6 +93,7 @@
     <Compile Include="NH\CollectionElementRelationTest.cs" />
     <Compile Include="NH\ColumnMapperTest.cs" />
     <Compile Include="NH\ComponentElementMapperTest.cs" />
+    <Compile Include="NH\ComponentMapKeyMapperTest.cs" />
     <Compile Include="NH\ComponentMapperTest.cs" />
     <Compile Include="NH\ComponentNestedElementMapperTest.cs" />
     <Compile Include="NH\Customizers\ClassCustomizerTest.cs" />

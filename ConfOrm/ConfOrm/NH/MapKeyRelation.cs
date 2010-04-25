@@ -58,8 +58,8 @@ namespace ConfOrm.NH
 		{
 			if (componentMapKeyMapper == null)
 			{
-				var hbm = new HbmCompositeMapKey { @class = dictionaryKeyType.GetShortClassName(mapDoc) };
-				componentMapKeyMapper = new ComponentMapKeyMapper(hbm);
+				var hbm = new HbmCompositeMapKey();
+				componentMapKeyMapper = new ComponentMapKeyMapper(dictionaryKeyType, hbm, mapDoc);
 			}
 			mapping(componentMapKeyMapper);
 			mapMapping.Item = componentMapKeyMapper.CompositeMapKeyMapping;
