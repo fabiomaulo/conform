@@ -108,12 +108,16 @@ namespace ConfOrm.NH.CustomizersImpl
 		                                Action<ICollectionElementRelation<TElement>> mapping)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(property);
-			collectionMapping(new MapPropertiesCustomizer<TEntity, TKey, TElement>(new PropertyPath(null, member), CustomizersHolder));
-			mapping(new CollectionElementRelationCustomizer<TElement>(new PropertyPath(PropertyPath, member), CustomizersHolder));
+			var memberPath = new PropertyPath(PropertyPath, member);
+			collectionMapping(new MapPropertiesCustomizer<TEntity, TKey, TElement>(memberPath, CustomizersHolder));
+			keyMapping(new MapKeyRelationCustomizer<TKey>(memberPath, CustomizersHolder));
+			mapping(new CollectionElementRelationCustomizer<TElement>(memberPath, CustomizersHolder));
 
 			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
-			collectionMapping(new MapPropertiesCustomizer<TEntity, TKey, TElement>(new PropertyPath(null, memberOf), CustomizersHolder));
-			mapping(new CollectionElementRelationCustomizer<TElement>(new PropertyPath(PropertyPath, member), CustomizersHolder));
+			var memberOfPath = new PropertyPath(PropertyPath, memberOf);
+			collectionMapping(new MapPropertiesCustomizer<TEntity, TKey, TElement>(memberOfPath, CustomizersHolder));
+			keyMapping(new MapKeyRelationCustomizer<TKey>(memberOfPath, CustomizersHolder));
+			mapping(new CollectionElementRelationCustomizer<TElement>(memberOfPath, CustomizersHolder));
 		}
 	}
 }

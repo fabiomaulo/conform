@@ -125,6 +125,10 @@
     <Compile Include="NH\CustomizersHolder.cs" />
     <Compile Include="NH\CustomizersImpl\ListPropertiesCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\ManyToManyCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\MapKeyManyToManyCustomizer.cs" />
+    <Compile Include="NH\CustomizersImpl\MapKeyRelationCustomizer.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="NH\CustomizersImpl\MapPropertiesCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\OneToManyCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\SetPropertiesCustomizer.cs" />

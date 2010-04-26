@@ -900,7 +900,7 @@ namespace ConfOrm.NH
 			if (domainInspector.IsManyToMany(ownerType, dictionaryKeyType) || domainInspector.IsOneToMany(ownerType, dictionaryKeyType))
 			{
 				// OneToMany is not possible as map-key so we map it as many-to-many instead ignore the case
-				return new KeyManyToManyRelationMapper(member, propertyPath, PatternsAppliers);
+				return new KeyManyToManyRelationMapper(member, propertyPath, PatternsAppliers, customizerHolder);
 			}
 			if (domainInspector.IsComponent(dictionaryKeyType))
 			{
@@ -999,12 +999,14 @@ namespace ConfOrm.NH
 			private readonly MemberInfo member;
 			private readonly PropertyPath propertyPath;
 			private readonly IPatternsAppliersHolder patternsAppliers;
+			private readonly ICustomizersHolder customizersHolder;
 
-			public KeyManyToManyRelationMapper(MemberInfo member, PropertyPath propertyPath, IPatternsAppliersHolder patternsAppliers)
+			public KeyManyToManyRelationMapper(MemberInfo member, PropertyPath propertyPath, IPatternsAppliersHolder patternsAppliers, ICustomizersHolder customizersHolder)
 			{
 				this.member = member;
 				this.propertyPath = propertyPath;
 				this.patternsAppliers = patternsAppliers;
+				this.customizersHolder = customizersHolder;
 			}
 
 			public void Map(IMapKeyRelation relation)
@@ -1013,6 +1015,7 @@ namespace ConfOrm.NH
 				                    	{
 																patternsAppliers.MapKeyManyToMany.ApplyAllMatchs(member, x);
 																patternsAppliers.MapKeyManyToManyPath.ApplyAllMatchs(propertyPath, x);
+																customizersHolder.InvokeCustomizers(propertyPath, x);
 				                    	});
 			}
 		}
