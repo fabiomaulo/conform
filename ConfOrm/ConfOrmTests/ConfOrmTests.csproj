@@ -99,6 +99,7 @@
     <Compile Include="NH\Customizers\ClassCustomizerTest.cs" />
     <Compile Include="NH\Customizers\CollectionElementCustomizerTest.cs" />
     <Compile Include="NH\Customizers\ManyToManyCustomizerTest.cs" />
+    <Compile Include="NH\Customizers\MapKeyCustomizerTest.cs" />
     <Compile Include="NH\Customizers\OneToManyCustomizerTest.cs" />
     <Compile Include="NH\DefaultCandidatePersistentMembersProviderTest.cs" />
     <Compile Include="NH\DiscriminatorMapperTest.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="NH\MapperTests\MapKeyRelationAppliersCalling\MapKeyRelationAppliersCallingTest.cs" />
     <Compile Include="NH\MapperTests\MapKeyRelationCustomizersCalling\MapKeyComponentRelationCustomizersCallingTest.cs" />
     <Compile Include="NH\MapperTests\MapKeyRelationCustomizersCalling\MapKeyManyToManyRelationCustomizersCallingTest.cs" />
+    <Compile Include="NH\MapperTests\MapKeyRelationCustomizersCalling\MapKeyRelationCustomizersCallingTest.cs" />
     <Compile Include="NH\MapperTests\MapKeyRelationTest.cs" />
     <Compile Include="NH\MapperTests\NaturalIdTest.cs" />
     <Compile Include="NH\MapperTests\OneToManyAppliersCalling.cs" />
