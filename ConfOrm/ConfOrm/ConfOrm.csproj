@@ -235,6 +235,7 @@
     <Compile Include="Patterns\ComponentMultiUsagePattern.cs" />
     <Compile Include="Patterns\ComponentPattern.cs" />
     <Compile Include="Patterns\CustomUserTypeInCollectionElementApplier.cs" />
+    <Compile Include="Patterns\CustomUserTypeInDictionaryKeyApplier.cs" />
     <Compile Include="Patterns\DelegatedAdvancedApplier.cs" />
     <Compile Include="Patterns\DelegatedApplier.cs" />
     <Compile Include="Patterns\DictionaryCollectionPattern.cs" />

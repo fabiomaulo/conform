@@ -37,12 +37,28 @@ namespace ConfOrm.NH
 
 		public void Type(IType persistentType)
 		{
-			throw new NotImplementedException();
+			if (persistentType != null)
+			{
+				hbmMapKey.type = persistentType.Name;
+			}
 		}
 
 		public void Type<TPersistentType>() where TPersistentType : IUserType
 		{
-			throw new NotImplementedException();
+			Type(typeof(TPersistentType));
+		}
+
+		public void Type(Type persistentType)
+		{
+			if (persistentType == null)
+			{
+				throw new ArgumentNullException("persistentType");
+			}
+			if (!typeof(IUserType).IsAssignableFrom(persistentType))
+			{
+				throw new ArgumentOutOfRangeException("persistentType", "Expected type implementing IUserType");
+			}
+			hbmMapKey.type = persistentType.AssemblyQualifiedName;
 		}
 
 		public void Length(int length)

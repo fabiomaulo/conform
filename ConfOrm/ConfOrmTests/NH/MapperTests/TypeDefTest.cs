@@ -150,7 +150,7 @@ namespace ConfOrmTests.NH.MapperTests
 			elementRelation.type1.Should().Contain("MonetaryAmountUserType");
 		}
 
-		[Test, Ignore("Not fixed yet")]
+		[Test]
 		public void WhenUserTypeUsedInMapKeyThenApplyUserType()
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();

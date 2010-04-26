@@ -1049,6 +1049,7 @@ namespace ConfOrm.NH
 		{
 			AddPropertyPattern(mi => mi.GetPropertyOrFieldType() == typeof(TComplex), pm => pm.Type<TUserType>());
 			PatternsAppliers.Element.Add(new CustomUserTypeInCollectionElementApplier(typeof(TComplex), typeof(TUserType)));
+			PatternsAppliers.MapKey.Add(new CustomUserTypeInDictionaryKeyApplier(typeof(TComplex), typeof(TUserType)));
 		}
 	}
 }
