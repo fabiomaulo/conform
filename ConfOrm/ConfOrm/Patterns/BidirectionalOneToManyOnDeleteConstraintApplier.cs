@@ -27,6 +27,10 @@ namespace ConfOrm.Patterns
 			{
 				return false;
 			}
+			if (!DomainInspector.IsEntity(many))
+			{
+				return false;
+			}
 			return base.Match(new Relation(one, many));
 		}
 

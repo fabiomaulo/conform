@@ -280,6 +280,7 @@
     <Compile Include="Patterns\BagCollectionPatternTest.cs" />
     <Compile Include="Patterns\BidirectionalManyToManyPatternTest.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyMemberPatternTest.cs" />
+    <Compile Include="Patterns\BidirectionalOneToManyOnDeleteConstraintApplierTest.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyPatternCircularTest.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyPatternGenericCircularTest.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyPatternTest.cs" />
