@@ -159,6 +159,7 @@
     <Compile Include="NH\MapperTests\ManyToManyCustomizersCallingTest.cs" />
     <Compile Include="NH\MapperTests\ManyToOneRelationAccessorsTest.cs" />
     <Compile Include="NH\MapperTests\MapKeyRelationAppliersCalling\MapKeyComponentRelationAppliersCallingTest.cs" />
+    <Compile Include="NH\MapperTests\MapKeyRelationAppliersCalling\MapKeyManyToManyRelationAppliersCallingTest.cs" />
     <Compile Include="NH\MapperTests\MapKeyRelationAppliersCalling\MapKeyRelationAppliersCallingTest.cs" />
     <Compile Include="NH\MapperTests\MapKeyRelationCustomizersCallingTest.cs" />
     <Compile Include="NH\MapperTests\MapKeyRelationTest.cs" />

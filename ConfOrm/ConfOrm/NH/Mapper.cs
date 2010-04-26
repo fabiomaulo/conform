@@ -1017,7 +1017,11 @@ namespace ConfOrm.NH
 
 			public void Map(IMapKeyRelation relation)
 			{
-				relation.ManyToMany(x=>{});
+				relation.ManyToMany(x=>
+				                    	{
+																patternsAppliers.MapKeyManyToMany.ApplyAllMatchs(member, x);
+																patternsAppliers.MapKeyManyToManyPath.ApplyAllMatchs(propertyPath, x);
+				                    	});
 			}
 		}
 
