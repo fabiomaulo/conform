@@ -30,6 +30,12 @@ namespace ConfOrm.NH
 		protected List<IPatternApplier<PropertyPath, IOneToManyMapper>> oneToManyPath;
 		protected List<IPatternApplier<MemberInfo, IVersionMapper>> version;
 
+		protected List<IPatternApplier<MemberInfo, IMapKeyManyToManyMapper>> mapKeyManyToMany;
+		protected List<IPatternApplier<PropertyPath, IMapKeyManyToManyMapper>> mapKeyManyToManyPath;
+
+		protected List<IPatternApplier<MemberInfo, IMapKeyMapper>> mapKey;
+		protected List<IPatternApplier<PropertyPath, IMapKeyMapper>> mapKeyPath;
+
 		public EmptyPatternsAppliersHolder()
 		{
 			rootClass = new List<IPatternApplier<Type, IClassAttributesMapper>>();
@@ -55,6 +61,11 @@ namespace ConfOrm.NH
 			oneToMany = new List<IPatternApplier<MemberInfo, IOneToManyMapper>>();
 			oneToManyPath = new List<IPatternApplier<PropertyPath, IOneToManyMapper>>();
 			version = new List<IPatternApplier<MemberInfo, IVersionMapper>>();
+
+			mapKey = new List<IPatternApplier<MemberInfo, IMapKeyMapper>>();
+			mapKeyPath = new List<IPatternApplier<PropertyPath, IMapKeyMapper>>();
+			mapKeyManyToMany = new List<IPatternApplier<MemberInfo, IMapKeyManyToManyMapper>>();
+			mapKeyManyToManyPath = new List<IPatternApplier<PropertyPath, IMapKeyManyToManyMapper>>();
 		}
 
 		public ICollection<IPatternApplier<Type, IClassAttributesMapper>> RootClass
@@ -165,6 +176,26 @@ namespace ConfOrm.NH
 		public ICollection<IPatternApplier<PropertyPath, IOneToManyMapper>> OneToManyPath
 		{
 			get { return oneToManyPath; }
+		}
+
+		public ICollection<IPatternApplier<MemberInfo, IMapKeyManyToManyMapper>> MapKeyManyToMany
+		{
+			get { return mapKeyManyToMany; }
+		}
+
+		public ICollection<IPatternApplier<PropertyPath, IMapKeyManyToManyMapper>> MapKeyManyToManyPath
+		{
+			get { return mapKeyManyToManyPath; }
+		}
+
+		public ICollection<IPatternApplier<MemberInfo, IMapKeyMapper>> MapKey
+		{
+			get { return mapKey; }
+		}
+
+		public ICollection<IPatternApplier<PropertyPath, IMapKeyMapper>> MapKeyPath
+		{
+			get { return mapKeyPath; }
 		}
 	}
 }

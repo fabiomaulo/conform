@@ -158,7 +158,8 @@
     <Compile Include="NH\MapperTests\ManyToManyApplierCalling.cs" />
     <Compile Include="NH\MapperTests\ManyToManyCustomizersCallingTest.cs" />
     <Compile Include="NH\MapperTests\ManyToOneRelationAccessorsTest.cs" />
-    <Compile Include="NH\MapperTests\MapKeyRelationAppliersCallingTest.cs" />
+    <Compile Include="NH\MapperTests\MapKeyRelationAppliersCalling\MapKeyComponentRelationAppliersCallingTest.cs" />
+    <Compile Include="NH\MapperTests\MapKeyRelationAppliersCalling\MapKeyRelationAppliersCallingTest.cs" />
     <Compile Include="NH\MapperTests\MapKeyRelationCustomizersCallingTest.cs" />
     <Compile Include="NH\MapperTests\MapKeyRelationTest.cs" />
     <Compile Include="NH\MapperTests\NaturalIdTest.cs" />

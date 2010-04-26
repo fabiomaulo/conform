@@ -928,7 +928,9 @@ namespace ConfOrm.NH
 			{
 				relation.Element(x=>
 				                 	{
-				                 		customizersHolder.InvokeCustomizers(propertyPath, x);
+														patternsAppliersHolder.MapKey.ApplyAllMatchs(member, x);
+														patternsAppliersHolder.MapKeyPath.ApplyAllMatchs(propertyPath, x);
+														customizersHolder.InvokeCustomizers(propertyPath, x);
 				                 	});
 			}
 		}

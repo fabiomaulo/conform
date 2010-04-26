@@ -41,5 +41,15 @@ namespace ConfOrm.NH
 		ICollection<IPatternApplier<MemberInfo, IOneToManyMapper>> OneToMany { get; }
 		ICollection<IPatternApplier<PropertyPath, IOneToManyMapper>> OneToManyPath { get; }
 		#endregion
+
+		#region Dictionary key relations
+
+		ICollection<IPatternApplier<MemberInfo, IMapKeyManyToManyMapper>> MapKeyManyToMany { get; }
+		ICollection<IPatternApplier<PropertyPath, IMapKeyManyToManyMapper>> MapKeyManyToManyPath { get; }
+
+		ICollection<IPatternApplier<MemberInfo, IMapKeyMapper>> MapKey { get; }
+		ICollection<IPatternApplier<PropertyPath, IMapKeyMapper>> MapKeyPath { get; }
+
+		#endregion
 	}
 }
