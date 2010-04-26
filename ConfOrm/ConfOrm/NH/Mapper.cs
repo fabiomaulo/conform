@@ -883,11 +883,11 @@ namespace ConfOrm.NH
 			{
 				return new OneToManyRelationMapper(property, propertyPath, ownerType, collectionElementType, domainInspector, PatternsAppliers);
 			}
-			else if (domainInspector.IsManyToMany(ownerType, collectionElementType))
+			if (domainInspector.IsManyToMany(ownerType, collectionElementType))
 			{
 				return new ManyToManyRelationMapper(property, propertyPath, ownerType, collectionElementType, domainInspector, PatternsAppliers);
 			}
-			else if (domainInspector.IsComponent(collectionElementType))
+			if (domainInspector.IsComponent(collectionElementType))
 			{
 				return new ComponentRelationMapper(ownerType, collectionElementType, membersProvider, domainInspector, PatternsAppliers, customizerHolder);
 			}
@@ -900,11 +900,11 @@ namespace ConfOrm.NH
 			if (domainInspector.IsManyToMany(ownerType, dictionaryKeyType) || domainInspector.IsOneToMany(ownerType, dictionaryKeyType))
 			{
 				// OneToMany is not possible as map-key so we map it as many-to-many instead ignore the case
-				return new KeyManyToManyRelationMapper(member, propertyPath, ownerType, dictionaryKeyType, domainInspector, PatternsAppliers);
+				return new KeyManyToManyRelationMapper(member, propertyPath, PatternsAppliers);
 			}
 			if (domainInspector.IsComponent(dictionaryKeyType))
 			{
-				return new KeyComponentRelationMapper(ownerType, dictionaryKeyType, membersProvider, domainInspector, PatternsAppliers, customizerHolder);
+				return new KeyComponentRelationMapper(dictionaryKeyType, membersProvider, domainInspector, PatternsAppliers, customizerHolder);
 			}
 			return new KeyElementRelationMapper(member, propertyPath, PatternsAppliers, customizerHolder);
 		}
@@ -937,16 +937,14 @@ namespace ConfOrm.NH
 
 		private class KeyComponentRelationMapper : IMapKeyRelationMapper
 		{
-			private readonly Type ownerType;
 			private readonly Type dictionaryKeyType;
 			private readonly ICandidatePersistentMembersProvider membersProvider;
 			private readonly IDomainInspector domainInspector;
 			private readonly IPatternsAppliersHolder patternsAppliersHolder;
 			private readonly ICustomizersHolder customizersHolder;
 
-			public KeyComponentRelationMapper(Type ownerType, Type dictionaryKeyType, ICandidatePersistentMembersProvider membersProvider, IDomainInspector domainInspector, IPatternsAppliersHolder patternsAppliersHolder, ICustomizersHolder customizersHolder)
+			public KeyComponentRelationMapper(Type dictionaryKeyType, ICandidatePersistentMembersProvider membersProvider, IDomainInspector domainInspector, IPatternsAppliersHolder patternsAppliersHolder, ICustomizersHolder customizersHolder)
 			{
-				this.ownerType = ownerType;
 				this.dictionaryKeyType = dictionaryKeyType;
 				this.membersProvider = membersProvider;
 				this.domainInspector = domainInspector;
@@ -1000,18 +998,12 @@ namespace ConfOrm.NH
 		{
 			private readonly MemberInfo member;
 			private readonly PropertyPath propertyPath;
-			private readonly Type ownerType;
-			private readonly Type dictionaryKeyType;
-			private readonly IDomainInspector domainInspector;
 			private readonly IPatternsAppliersHolder patternsAppliers;
 
-			public KeyManyToManyRelationMapper(MemberInfo member, PropertyPath propertyPath, Type ownerType, Type dictionaryKeyType, IDomainInspector domainInspector, IPatternsAppliersHolder patternsAppliers)
+			public KeyManyToManyRelationMapper(MemberInfo member, PropertyPath propertyPath, IPatternsAppliersHolder patternsAppliers)
 			{
 				this.member = member;
 				this.propertyPath = propertyPath;
-				this.ownerType = ownerType;
-				this.dictionaryKeyType = dictionaryKeyType;
-				this.domainInspector = domainInspector;
 				this.patternsAppliers = patternsAppliers;
 			}
 
