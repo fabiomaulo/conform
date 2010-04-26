@@ -9,9 +9,9 @@ using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace ConfOrmTests.NH.MapperTests
+namespace ConfOrmTests.NH.MapperTests.MapKeyRelationCustomizersCalling
 {
-	public class MapKeyRelationCustomizersCallingTest
+	public class MapKeyComponentRelationCustomizersCallingTest
 	{
 		private class Entity
 		{
