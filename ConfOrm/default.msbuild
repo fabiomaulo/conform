@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootDir>$(MSBuildProjectDirectory)</RootDir>
+    <DeployFolder>$(RootDir)\Build</DeployFolder>
+    <ExternalLibFolder>$(RootDir)\Lib</ExternalLibFolder>
+  </PropertyGroup>
+  
+  <ItemGroup Label="Extra files to deploy">
+    <ExtraFiles Include="$(RootDir)\LGPL_3.0.txt" />
+  </ItemGroup>
+  
+  <ItemGroup Label="NHibernate dependencies">
+    <NHibernateFiles Include="$(RootDir)\Lib\NHibernate.dll" />
+    <NHibernateFiles Include="$(RootDir)\Lib\Iesi.Collections.dll" />
+    <NHibernateFiles Include="$(RootDir)\Lib\Antlr3.Runtime.dll" />
+    <NHibernateFiles Include="$(RootDir)\Lib\Remotion.Data.Linq.dll" />
+    <NHibernateFiles Include="$(RootDir)\Lib\log4net.dll" />
+  </ItemGroup>
+
+  <Target Name = "Build" DependsOnTargets="RunBuild;CopyAllFilesToBuild"/>
+
+  <Target Name="RunBuild">
+    <MSBuild Projects="$(RootDir)\ConfOrm\ConfOrm.csproj" Targets="Clean;Build" >
+      <Output ItemName="OutputFiles" TaskParameter="TargetOutputs"/>
+    </MSBuild>
+    <MSBuild Projects="$(RootDir)\ConfOrm.Shop\ConfOrm.Shop.csproj" Targets="Clean;Build" >
+      <Output ItemName="OutputFiles" TaskParameter="TargetOutputs"/>
+    </MSBuild>
+  </Target>
+
+  <Target Name="CopyAllFilesToBuild" DependsOnTargets="MakeBuildDirectory;CopyOutputsToBin;CopyExtraFiles;CopyNHibernateLibsToBin"/>
+
+  <Target Name="MakeBuildDirectory">
+    <MakeDir Directories="$(DeployFolder)" />
+  </Target>
+
+  <Target Name="CopyOutputsToBin">
+    <Copy SourceFiles="@(OutputFiles)"
+      DestinationFiles="@(OutputFiles->'$(DeployFolder)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+  <Target Name="CopyExtraFiles">
+    <Copy SourceFiles="@(ExtraFiles)" DestinationFolder="$(DeployFolder)" />
+  </Target>
+
+  <Target Name="CopyNHibernateLibsToBin">
+    <Copy SourceFiles="@(NHibernateFiles)" DestinationFolder="$(DeployFolder)" />
+  </Target>
+  
+</Project>

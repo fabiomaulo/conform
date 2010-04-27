@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B52F6815-60D7-48F3-B62F-3B3997B0939C}"
 	ProjectSection(SolutionItems) = preProject
+		build.bat = build.bat
+		default.msbuild = default.msbuild
 		LGPL_3.0.txt = LGPL_3.0.txt
 	EndProjectSection
 EndProject
