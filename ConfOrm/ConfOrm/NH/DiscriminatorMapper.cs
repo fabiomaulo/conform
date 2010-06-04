@@ -3,7 +3,6 @@ using System.Linq;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Type;
-using NHibernate.UserTypes;
 
 namespace ConfOrm.NH
 {
@@ -77,7 +76,12 @@ namespace ConfOrm.NH
 			}
 		}
 
-		public void Type<TPersistentType>() where TPersistentType : IUserType
+		public void Type(IDiscriminatorType persistentType)
+		{
+			Type(persistentType.GetType());
+		}
+
+		public void Type<TPersistentType>() where TPersistentType : IDiscriminatorType
 		{
 			Type(typeof(TPersistentType));
 		}
@@ -88,9 +92,9 @@ namespace ConfOrm.NH
 			{
 				throw new ArgumentNullException("persistentType");
 			}
-			if (!typeof(IUserType).IsAssignableFrom(persistentType))
+			if (!typeof(IDiscriminatorType).IsAssignableFrom(persistentType))
 			{
-				throw new ArgumentOutOfRangeException("persistentType", "Expected type implementing IUserType");
+				throw new ArgumentOutOfRangeException("persistentType", "Expected type implementing IDiscriminatorType");
 			}
 			discriminatorMapping.type = persistentType.AssemblyQualifiedName;
 		}

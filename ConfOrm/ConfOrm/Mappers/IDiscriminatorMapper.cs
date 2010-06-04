@@ -1,6 +1,5 @@
 using System;
 using NHibernate.Type;
-using NHibernate.UserTypes;
 
 namespace ConfOrm.Mappers
 {
@@ -9,7 +8,8 @@ namespace ConfOrm.Mappers
 		void Column(string column);
 		void Column(Action<IColumnMapper> columnMapper);
 		void Type(IType persistentType);
-		void Type<TPersistentType>() where TPersistentType : IUserType;
+		void Type(IDiscriminatorType persistentType);
+		void Type<TPersistentType>() where TPersistentType : IDiscriminatorType;
 		void Type(Type persistentType);
 		void Formula(string formula);
 		void Force(bool force);

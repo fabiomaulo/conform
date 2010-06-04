@@ -2,6 +2,7 @@ using System;
 using ConfOrm.NH;
 using NHibernate;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Type;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -122,12 +123,21 @@ Line2";
 		}
 
 		[Test]
-		public void WhenSetTypeByIUserTypeThenSetTypeName()
+		public void WhenSetTypeByIDiscriminatorThenSetTypeName()
 		{
 			var hbmDiscriminator = new HbmDiscriminator();
 			var mapper = new DiscriminatorMapper(hbmDiscriminator);
-			mapper.Type<MyType>();
-			hbmDiscriminator.type.Should().Contain("MyType");
+			mapper.Type(NHibernateUtil.String);
+			hbmDiscriminator.type.Should().Contain("String");
+		}
+
+		[Test]
+		public void WhenSetTypeByGenericMethodThenSetTypeName()
+		{
+			var hbmDiscriminator = new HbmDiscriminator();
+			var mapper = new DiscriminatorMapper(hbmDiscriminator);
+			mapper.Type<EnumStringType<MyEnum>>();
+			hbmDiscriminator.type.Should().Contain(typeof(EnumStringType<MyEnum>).FullName);
 		}
 
 		[Test]
@@ -228,6 +238,13 @@ Line2";
 			mapper.Column(cm => cm.Unique(true));
 			hbmDiscriminator.formula.Should().Be.Null();
 			hbmDiscriminator.Item.Should().Be.OfType<HbmColumn>();
+		}
+
+		private enum MyEnum
+		{
+			One,
+			Two,
+			Three
 		}
 	}
 }
