@@ -86,6 +86,7 @@
     <Compile Include="AppliersTests\ComponentMemberDeepPathPatternTest.cs" />
     <Compile Include="AppliersTests\ComponentPropertyColumnNameApplierTest.cs" />
     <Compile Include="AppliersTests\DatePropertyByNameApplierTest.cs" />
+    <Compile Include="AppliersTests\EnumPropertyAsStringApplierTest.cs" />
     <Compile Include="AppliersTests\JoinedSubclassKeyAsRootIdColumnApplierTest.cs" />
     <Compile Include="AppliersTests\ManyToManyColumnApplierTest.cs" />
     <Compile Include="AppliersTests\ManyToManyInCollectionTableApplierTest.cs" />
