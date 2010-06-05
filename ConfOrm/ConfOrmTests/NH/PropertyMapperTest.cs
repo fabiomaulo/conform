@@ -1,11 +1,13 @@
 using System;
 using System.Linq;
 using System.Data;
+using ConfOrm;
 using ConfOrm.NH;
 using NHibernate;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Properties;
 using NHibernate.SqlTypes;
+using NHibernate.Type;
 using NHibernate.UserTypes;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -14,10 +16,15 @@ namespace ConfOrmTests.NH
 {
 	public class PropertyMapperTest
 	{
+		private enum MyEnum
+		{
+			One
+		}
 		private class MyClass
 		{
 			public string Autoproperty { get; set; }
-			public string ReadOnly { get { return "";}}
+			public string ReadOnly { get { return ""; } }
+			public MyEnum EnumProp { get; set; }
 		}
 
 		[Test]
@@ -79,6 +86,18 @@ namespace ConfOrmTests.NH
 			mapper.Type<MyType>(null);
 
 			mapping.Type.name.Should().Contain("MyType");
+			mapping.type.Should().Be.Null();
+		}
+
+		[Test]
+		public void WhenSetTypeByITypeTypeThenSetType()
+		{
+			var member = ForClass<MyClass>.Property(c=> c.EnumProp);
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+			mapper.Type<EnumStringType<MyEnum>>();
+
+			mapping.Type.name.Should().Contain(typeof(EnumStringType<MyEnum>).FullName);
 			mapping.type.Should().Be.Null();
 		}
 

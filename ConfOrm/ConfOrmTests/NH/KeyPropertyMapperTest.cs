@@ -1,9 +1,11 @@
 using System;
 using System.Linq;
+using ConfOrm;
 using ConfOrm.NH;
 using NHibernate;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Properties;
+using NHibernate.Type;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -11,10 +13,15 @@ namespace ConfOrmTests.NH
 {
 	public class KeyPropertyMapperTest
 	{
-				private class MyClass
+		private enum MyEnum
+		{
+			One
+		}
+		private class MyClass
 		{
 			public string Autoproperty { get; set; }
-			public string ReadOnly { get { return "";}}
+			public string ReadOnly { get { return ""; } }
+			public MyEnum EnumProp { get; set; }
 		}
 
 		[Test]
@@ -87,6 +94,18 @@ namespace ConfOrmTests.NH
 			var mapper = new KeyPropertyMapper(member, mapping);
 			mapper.Executing(m=> m.Type(typeof(object), null)).Throws<ArgumentOutOfRangeException>();
 			mapper.Executing(m => m.Type(null, null)).Throws<ArgumentNullException>();
+		}
+
+		[Test]
+		public void WhenSetTypeByITypeTypeThenSetType()
+		{
+			var member = ForClass<MyClass>.Property(c => c.EnumProp);
+			var mapping = new HbmKeyProperty();
+			var mapper = new KeyPropertyMapper(member, mapping);
+			mapper.Type<EnumStringType<MyEnum>>();
+
+			mapping.Type.name.Should().Contain(typeof(EnumStringType<MyEnum>).FullName);
+			mapping.type.Should().Be.Null();
 		}
 
 		[Test]

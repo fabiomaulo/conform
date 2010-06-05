@@ -62,12 +62,12 @@ namespace ConfOrm.NH
 			}
 		}
 
-		public void Type<TPersistentType>() where TPersistentType : IUserType
+		public void Type<TPersistentType>()
 		{
 			Type(typeof (TPersistentType), null);
 		}
 
-		public void Type<TPersistentType>(object parameters) where TPersistentType : IUserType
+		public void Type<TPersistentType>(object parameters)
 		{
 			Type(typeof(TPersistentType), parameters);
 		}
@@ -78,9 +78,9 @@ namespace ConfOrm.NH
 			{
 				throw new ArgumentNullException("persistentType");
 			}
-			if (!typeof(IUserType).IsAssignableFrom(persistentType))
+			if (!typeof(IUserType).IsAssignableFrom(persistentType) && !typeof(IType).IsAssignableFrom(persistentType))
 			{
-				throw new ArgumentOutOfRangeException("persistentType", "Expected type implementing IUserType");
+				throw new ArgumentOutOfRangeException("persistentType", "Expected type implementing IUserType or IType.");
 			}
 			if (parameters != null)
 			{
