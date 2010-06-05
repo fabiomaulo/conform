@@ -37,12 +37,12 @@ namespace ConfOrm.NH.CustomizersImpl
 			CustomizersHolder.AddCustomizer(propertyPath, (IElementMapper e) => e.Type(persistentType));
 		}
 
-		public void Type<TPersistentType>() where TPersistentType : IUserType
+		public void Type<TPersistentType>()
 		{
 			CustomizersHolder.AddCustomizer(propertyPath, (IElementMapper e) => e.Type<TPersistentType>());
 		}
 
-		public void Type<TPersistentType>(object parameters) where TPersistentType : IUserType
+		public void Type<TPersistentType>(object parameters)
 		{
 			CustomizersHolder.AddCustomizer(propertyPath, (IElementMapper e) => e.Type<TPersistentType>(parameters));
 		}

@@ -5,6 +5,7 @@ using ConfOrm.NH;
 using NHibernate;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.SqlTypes;
+using NHibernate.Type;
 using NHibernate.UserTypes;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -13,6 +14,10 @@ namespace ConfOrmTests.NH
 {
 	public class ElementMapperTest
 	{
+		private enum MyEnum
+		{
+			One
+		}
 		[Test]
 		public void WhenCreatedMustHaveAllParametersValid()
 		{
@@ -27,6 +32,15 @@ namespace ConfOrmTests.NH
 			var elementMapping = new HbmElement();
 			var mapper = new ElementMapper(typeof(string), elementMapping);
 			elementMapping.type1.Should().Be("String");
+		}
+
+		[Test]
+		public void WhenCreatedWithEnumThenNoAutoAssignType()
+		{
+			// Note: the responsibility of the type name is delegated to NHibernate: NHibernateUtil.Enum(typeClass)
+			var elementMapping = new HbmElement();
+			new ElementMapper(typeof(MyEnum), elementMapping);
+			elementMapping.type1.Should().Not.Be.Empty();
 		}
 
 		[Test]
@@ -48,6 +62,16 @@ namespace ConfOrmTests.NH
 
 			mapping.Type.name.Should().Contain("MyType");
 			mapping.type.Should().Be.Null();
+		}
+
+		[Test]
+		public void WhenSetTypeByNotFormalITypeThenSetTypeFullName()
+		{
+			var mapping = new HbmElement();
+			var mapper = new ElementMapper(typeof(string), mapping);
+			mapper.Type<EnumStringType<MyEnum>>();
+
+			mapping.Type.name.Should().Contain(typeof(EnumStringType<MyEnum>).FullName);
 		}
 
 		[Test]
