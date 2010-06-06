@@ -4,7 +4,7 @@ using ConfOrm.Shop.Appliers;
 
 namespace ConfOrm.Shop.CoolNaming
 {
-	public class CollectionOfElementsTableApplier : CollectionOfElementsPattern, IPatternApplier<PropertyPath, ICollectionPropertiesMapper>
+	public class CollectionOfElementsTableApplier : CollectionOfElementsOnlyPattern, IPatternApplier<PropertyPath, ICollectionPropertiesMapper>
 	{
 		public CollectionOfElementsTableApplier(IDomainInspector domainInspector) : base(domainInspector) {}
 

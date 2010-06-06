@@ -9,7 +9,7 @@ using SharpTestsEx;
 
 namespace ConfOrm.ShopTests.AppliersTests
 {
-	public class CollectionOfElementsPatternTest
+	public class CollectionOfElementsOnlyPatternTest
 	{
 		private class MyClass
 		{
@@ -38,7 +38,7 @@ namespace ConfOrm.ShopTests.AppliersTests
 		public void WhenNoGenericCollectionThenNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
-			var pattern = new CollectionOfElementsPattern(orm.Object);
+			var pattern = new CollectionOfElementsOnlyPattern(orm.Object);
 			pattern.Match(ForClass<MyClass>.Property(p => p.Something)).Should().Be.False();
 		}
 
@@ -46,7 +46,7 @@ namespace ConfOrm.ShopTests.AppliersTests
 		public void WhenRelationIsOneToManyThenNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
-			var pattern = new CollectionOfElementsPattern(orm.Object);
+			var pattern = new CollectionOfElementsOnlyPattern(orm.Object);
 			orm.Setup(x => x.IsOneToMany(It.Is<Type>(t => t == typeof(MyClass)), It.Is<Type>(t => t == typeof(MyRelated)))).Returns(true);
 
 			pattern.Match(ForClass<MyClass>.Property(p => p.Relateds)).Should().Be.False();
@@ -56,7 +56,7 @@ namespace ConfOrm.ShopTests.AppliersTests
 		public void WhenRelationIsManyToManyThenNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
-			var pattern = new CollectionOfElementsPattern(orm.Object);
+			var pattern = new CollectionOfElementsOnlyPattern(orm.Object);
 			orm.Setup(x => x.IsManyToMany(It.Is<Type>(t => t == typeof(MyClass)), It.Is<Type>(t => t == typeof(MyRelated)))).Returns(true);
 
 			pattern.Match(ForClass<MyClass>.Property(p => p.Relateds)).Should().Be.False();
@@ -66,7 +66,7 @@ namespace ConfOrm.ShopTests.AppliersTests
 		public void WhenRelationIsOneToManyInsideComponentThenNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
-			var pattern = new CollectionOfElementsPattern(orm.Object);
+			var pattern = new CollectionOfElementsOnlyPattern(orm.Object);
 			orm.Setup(x => x.IsOneToMany(It.Is<Type>(t => t == typeof(MyComponent)), It.Is<Type>(t => t == typeof(MyRelated)))).Returns(true);
 
 			pattern.Match(ForClass<MyComponent>.Property(p => p.Relateds)).Should().Be.False();
@@ -76,7 +76,7 @@ namespace ConfOrm.ShopTests.AppliersTests
 		public void WhenRelationIsOneToManyForMapValueThenNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
-			var pattern = new CollectionOfElementsPattern(orm.Object);
+			var pattern = new CollectionOfElementsOnlyPattern(orm.Object);
 			orm.Setup(x => x.IsOneToMany(It.Is<Type>(t => t == typeof(MyClass)), It.Is<Type>(t => t == typeof(MyRelated)))).Returns(true);
 
 			pattern.Match(ForClass<MyClass>.Property(p => p.MapRelationOnValue)).Should().Be.False();
@@ -86,7 +86,7 @@ namespace ConfOrm.ShopTests.AppliersTests
 		public void WhenRelationIsOneToManyForMapKeyThenNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
-			var pattern = new CollectionOfElementsPattern(orm.Object);
+			var pattern = new CollectionOfElementsOnlyPattern(orm.Object);
 			orm.Setup(x => x.IsManyToMany(It.Is<Type>(t => t == typeof(MyClass)), It.Is<Type>(t => t == typeof(MyRelated)))).Returns(true);
 
 			pattern.Match(ForClass<MyClass>.Property(p => p.MapRelationOnKey)).Should().Be.False();
@@ -96,7 +96,7 @@ namespace ConfOrm.ShopTests.AppliersTests
 		public void WhenNoRelationBetweenEntitiesThenMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
-			var pattern = new CollectionOfElementsPattern(orm.Object);
+			var pattern = new CollectionOfElementsOnlyPattern(orm.Object);
 
 			pattern.Match(ForClass<MyClass>.Property(p => p.Strings)).Should().Be.True();
 			pattern.Match(ForClass<MyClass>.Property(p => p.MapOfStrings)).Should().Be.True();
@@ -106,7 +106,7 @@ namespace ConfOrm.ShopTests.AppliersTests
 		public void WhenNoRelationWithComponentThenMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
-			var pattern = new CollectionOfElementsPattern(orm.Object);
+			var pattern = new CollectionOfElementsOnlyPattern(orm.Object);
 
 			pattern.Match(ForClass<MyComponent>.Property(p => p.Strings)).Should().Be.True();
 		}

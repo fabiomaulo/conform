@@ -4,11 +4,11 @@ using System.Reflection;
 
 namespace ConfOrm.Shop.Appliers
 {
-	public class CollectionOfElementsPattern : IPattern<MemberInfo>
+	public class CollectionOfElementsOnlyPattern : IPattern<MemberInfo>
 	{
 		private readonly IDomainInspector domainInspector;
 
-		public CollectionOfElementsPattern(IDomainInspector domainInspector)
+		public CollectionOfElementsOnlyPattern(IDomainInspector domainInspector)
 		{
 			if (domainInspector == null)
 			{
