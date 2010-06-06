@@ -9,18 +9,24 @@ namespace ConfOrm.Patterns
 
 		#region Implementation of IPattern<MemberInfo>
 
-		public bool Match(MemberInfo subject)
+		public virtual bool Match(MemberInfo subject)
 		{
-			var propertyType = subject.GetPropertyOrFieldType();
-			Type many = propertyType.DetermineCollectionElementType();
-			Type one = subject.DeclaringType;
-			if (many == null)
-			{
-				return false;
-			}
-			return base.Match(new Relation(one, many));
+			var relation = GetRelation(subject);
+			return relation != null && base.Match(relation);
 		}
 
 		#endregion
+
+		protected Relation GetRelation(MemberInfo collectionMember)
+		{
+			var propertyType = collectionMember.GetPropertyOrFieldType();
+			Type many = propertyType.DetermineCollectionElementType();
+			Type one = collectionMember.ReflectedType;
+			if (many == null)
+			{
+				return null;
+			}
+			return new Relation(one, many);
+		}
 	}
 }

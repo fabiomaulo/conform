@@ -18,7 +18,7 @@ namespace ConfOrm
 			Arrays.Add(new ArrayCollectionPattern());
 			Components.Add(new ComponentPattern(domainInspector));
 			Dictionaries.Add(new DictionaryCollectionPattern());
-			Cascades.Add(new BidirectionalOneToManyCascadePattern(domainInspector));
+			//Cascades.Add(new BidirectionalOneToManyCascadePattern(domainInspector));
 
 			PoidStrategies.Add(new HighLowPoidPattern());
 			PoidStrategies.Add(new GuidOptimizedPoidPattern());

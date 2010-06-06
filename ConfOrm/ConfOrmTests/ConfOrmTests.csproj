@@ -233,7 +233,6 @@
     <Compile Include="NH\UnionSubclassMapperTest.cs" />
     <Compile Include="NH\VersionMapperTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\AnyIntegrationTest.cs" />
-    <Compile Include="ObjectRelationalMapperTests\BidirectionalOneToManyCascadeCircularTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\GenericBaseEntityWithPoperties.cs" />
     <Compile Include="ObjectRelationalMapperTests\HeterogeneousAssociationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\HierarchyClassExclusionTest.cs" />
