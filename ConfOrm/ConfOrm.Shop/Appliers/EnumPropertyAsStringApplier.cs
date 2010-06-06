@@ -1,4 +1,3 @@
-using System;
 using System.Reflection;
 using ConfOrm.Mappers;
 using NHibernate.Type;
@@ -14,12 +13,7 @@ namespace ConfOrm.Shop.Appliers
 				return false;
 			}
 			var memberType = subject.GetPropertyOrFieldType();
-			if(memberType.IsGenericType && memberType.GetGenericTypeDefinition() == typeof(Nullable<>))
-			{
-				var typeOfNullable = memberType.GetGenericArguments()[0];
-				return typeOfNullable.IsEnum;
-			}
-			return memberType.IsEnum;
+			return memberType.IsEnumOrNullableEnum();
 		}
 
 		public void Apply(MemberInfo subject, IPropertyMapper applyTo)

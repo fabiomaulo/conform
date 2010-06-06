@@ -274,5 +274,19 @@ namespace ConfOrm
 				}
 			}
 		}
+
+		public static bool IsEnumOrNullableEnum(this Type type)
+		{
+			if (type == null)
+			{
+				return false;
+			}
+			if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+			{
+				var typeOfNullable = type.GetGenericArguments()[0];
+				return typeOfNullable.IsEnum;
+			}
+			return type.IsEnum;
+		}
 	}
 }
