@@ -1,6 +1,8 @@
 using System.Linq;
 using ConfOrm.NH;
+using NHibernate;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Type;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -8,6 +10,11 @@ namespace ConfOrmTests.NH
 {
 	public class MapKeyMapperTest
 	{
+		private enum MyEnum
+		{
+			One
+		}
+
 		[Test]
 		public void CatSetColumnByName()
 		{
@@ -112,6 +119,36 @@ namespace ConfOrmTests.NH
 			mapping.Items.Should().Be.Null();
 			mapping.column.Should().Be("pizza");
 			mapping.length.Should().Be("50");
+		}
+
+		[Test]
+		public void WhenSetTypeByITypeThenSetTypeName()
+		{
+			var mapping = new HbmMapKey();
+			var mapper = new MapKeyMapper(mapping);
+			mapper.Type(NHibernateUtil.String);
+
+			mapping.Type.name.Should().Be.EqualTo("String");
+		}
+
+		[Test]
+		public void WhenSetTypeByIUserTypeThenSetTypeName()
+		{
+			var mapping = new HbmMapKey();
+			var mapper = new MapKeyMapper(mapping);
+			mapper.Type<MyType>();
+
+			mapping.Type.name.Should().Contain("MyType");
+		}
+
+		[Test]
+		public void WhenSetTypeByITypeTypeThenSetType()
+		{
+			var mapping = new HbmMapKey();
+			var mapper = new MapKeyMapper(mapping);
+			mapper.Type<EnumStringType<MyEnum>>();
+
+			mapping.Type.name.Should().Contain(typeof(EnumStringType<MyEnum>).FullName);
 		}
 	}
 }

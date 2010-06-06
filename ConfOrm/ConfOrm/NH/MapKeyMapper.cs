@@ -91,7 +91,7 @@ namespace ConfOrm.NH
 			}
 		}
 
-		public void Type<TPersistentType>() where TPersistentType : IUserType
+		public void Type<TPersistentType>()
 		{
 			Type(typeof(TPersistentType));
 		}
@@ -102,9 +102,9 @@ namespace ConfOrm.NH
 			{
 				throw new ArgumentNullException("persistentType");
 			}
-			if (!typeof(IUserType).IsAssignableFrom(persistentType))
+			if (!typeof(IUserType).IsAssignableFrom(persistentType) && !typeof(IType).IsAssignableFrom(persistentType))
 			{
-				throw new ArgumentOutOfRangeException("persistentType", "Expected type implementing IUserType");
+				throw new ArgumentOutOfRangeException("persistentType", "Expected type implementing IUserType or IType.");
 			}
 			hbmMapKey.type = persistentType.AssemblyQualifiedName;
 		}

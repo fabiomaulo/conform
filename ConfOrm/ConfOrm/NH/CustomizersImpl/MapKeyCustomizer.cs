@@ -36,7 +36,7 @@ namespace ConfOrm.NH.CustomizersImpl
 			customizersHolder.AddCustomizer(propertyPath, (IMapKeyMapper x) => x.Type(persistentType));
 		}
 
-		public void Type<TPersistentType>() where TPersistentType : IUserType
+		public void Type<TPersistentType>()
 		{
 			customizersHolder.AddCustomizer(propertyPath, (IMapKeyMapper x) => x.Type<TPersistentType>());
 		}
