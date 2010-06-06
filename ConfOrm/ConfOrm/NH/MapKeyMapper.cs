@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Type;
@@ -22,17 +24,63 @@ namespace ConfOrm.NH
 
 		public void Column(Action<IColumnMapper> columnMapper)
 		{
-			throw new NotImplementedException();
+			if (hbmMapKey.Columns.Count() > 1)
+			{
+				throw new MappingException("Multi-columns property can't be mapped through singlr-column API.");
+			}
+			HbmColumn hbm = hbmMapKey.Columns.SingleOrDefault();
+			hbm = hbm
+						??
+						new HbmColumn
+						{
+							name = hbmMapKey.column,
+							length = hbmMapKey.length,
+						};
+			var defaultColumnName = "mapKey";
+			columnMapper(new ColumnMapper(hbm, defaultColumnName));
+			if (ColumnTagIsRequired(hbm))
+			{
+				hbmMapKey.Items = new[] { hbm };
+				ResetColumnPlainValues();
+			}
+			else
+			{
+				hbmMapKey.column = !defaultColumnName.Equals(hbm.name) ? hbm.name : null;
+				hbmMapKey.length = hbm.length;
+			}
+		}
+
+		private void ResetColumnPlainValues()
+		{
+			hbmMapKey.column = null;
+			hbmMapKey.length = null;
+		}
+
+		private bool ColumnTagIsRequired(HbmColumn hbm)
+		{
+			return hbm.precision != null || hbm.scale != null || hbm.notnull || hbm.unique
+						 || hbm.uniquekey != null || hbm.sqltype != null || hbm.index != null || hbm.@default != null
+						 || hbm.check != null;
 		}
 
 		public void Columns(params Action<IColumnMapper>[] columnMapper)
 		{
-			throw new NotImplementedException();
+			ResetColumnPlainValues();
+			int i = 1;
+			var columns = new List<HbmColumn>(columnMapper.Length);
+			foreach (var action in columnMapper)
+			{
+				var hbm = new HbmColumn();
+				var defaultColumnName = "mapKey" + i++;
+				action(new ColumnMapper(hbm, defaultColumnName));
+				columns.Add(hbm);
+			}
+			hbmMapKey.Items = columns.ToArray();
 		}
 
 		public void Column(string name)
 		{
-			hbmMapKey.column = name;
+			Column(x => x.Name(name));
 		}
 
 		public void Type(IType persistentType)
@@ -63,7 +111,7 @@ namespace ConfOrm.NH
 
 		public void Length(int length)
 		{
-			hbmMapKey.length = length.ToString();
+			Column(x => x.Length(length));
 		}
 	}
 }
