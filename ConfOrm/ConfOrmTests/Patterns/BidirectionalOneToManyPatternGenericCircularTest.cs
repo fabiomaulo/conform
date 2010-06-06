@@ -30,16 +30,16 @@ namespace ConfOrmTests.Patterns
 		public void WhenCircularThenOneToManyMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
-			var pattern = new BidirectionalOneToManyCascadePattern(orm.Object);
-			pattern.Match(new RelationOn(typeof(ConcreteNode), subnodesProperty, typeof(ConcreteNode))).Should().Be.True();
+			var pattern = new BidirectionalOneToManyCascadeApplier(orm.Object);
+			pattern.Match(subnodesProperty).Should().Be.True();
 		}
 
 		[Test]
 		public void WhenCircularThenManyToOneNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
-			var pattern = new BidirectionalOneToManyCascadePattern(orm.Object);
-			pattern.Match(new RelationOn(typeof(ConcreteNode), parentProperty, typeof(ConcreteNode))).Should().Be.False();
+			var pattern = new BidirectionalOneToManyCascadeApplier(orm.Object);
+			pattern.Match(parentProperty).Should().Be.False();
 		}
 	}
 }

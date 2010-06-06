@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using ConfOrm;
+using ConfOrm.Mappers;
 using ConfOrm.Patterns;
 using Moq;
 using NUnit.Framework;
@@ -33,40 +34,43 @@ namespace ConfOrmTests.Patterns
 		public void WhenCircularThenOneToManyMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
-			var pattern = new BidirectionalOneToManyCascadePattern(orm.Object);
-			pattern.Match(new RelationOn(typeof(Node), subnodesProperty, typeof(Node))).Should().Be.True();
+			var pattern = new BidirectionalOneToManyCascadeApplier(orm.Object);
+			pattern.Match(subnodesProperty).Should().Be.True();
 		}
 
 		[Test]
 		public void WhenCircularThenManyToOneNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
-			var pattern = new BidirectionalOneToManyCascadePattern(orm.Object);
-			pattern.Match(new RelationOn(typeof(Node), parentProperty, typeof(Node))).Should().Be.False();
+			var pattern = new BidirectionalOneToManyCascadeApplier(orm.Object);
+			pattern.Match(parentProperty).Should().Be.False();
 		}
 
 		[Test]
 		public void WhenNoCircularThenOneToManyMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
-			var pattern = new BidirectionalOneToManyCascadePattern(orm.Object);
-			pattern.Match(new Relation(typeof(Parent), typeof(Child))).Should().Be.True();
+			var pattern = new BidirectionalOneToManyCascadeApplier(orm.Object);
+			pattern.Match(ForClass<Parent>.Property(p=> p.Children)).Should().Be.True();
 		}
 
 		[Test]
 		public void WhenNoCircularThenManyToOneNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
-			var pattern = new BidirectionalOneToManyCascadePattern(orm.Object);
-			pattern.Match(new Relation(typeof(Child), typeof(Parent))).Should().Be.False();
+			var pattern = new BidirectionalOneToManyCascadeApplier(orm.Object);
+			pattern.Match(ForClass<Child>.Property(c=> c.Parent)).Should().Be.False();
 		}
 
 		[Test]
 		public void ApplyAlwaysReturnCascade()
 		{
 			var orm = new Mock<IDomainInspector>();
-			var pattern = new BidirectionalOneToManyCascadePattern(orm.Object);
-			pattern.Get(null).Satisfy(c => c.HasValue && c.Value.Has(Cascade.All) && c.Value.Has(Cascade.DeleteOrphans));
+			var pattern = new BidirectionalOneToManyCascadeApplier(orm.Object);
+			var collectionMapping = new Mock<ICollectionPropertiesMapper>();
+
+			pattern.Apply(null, collectionMapping.Object);
+			collectionMapping.Verify(cm=> cm.Cascade(It.Is<Cascade>(cascade=> cascade.Has(Cascade.All) && cascade.Has(Cascade.DeleteOrphans))));
 		}
 	}
 }
