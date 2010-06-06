@@ -34,20 +34,7 @@ namespace ConfOrm.Shop.Appliers
 			var manyType = memberType.DetermineCollectionElementType();
 			if (manyType.IsGenericType && typeof(KeyValuePair<,>) == manyType.GetGenericTypeDefinition())
 			{
-				var mapKey = memberType.DetermineDictionaryKeyType();
-				if (domainInspector.IsManyToMany(subject.ReflectedType, mapKey))
-				{
-					return false;
-				}
-				var mapValue = memberType.DetermineDictionaryValueType();
-				if (domainInspector.IsManyToMany(subject.ReflectedType, mapValue) || domainInspector.IsOneToMany(subject.ReflectedType, mapValue))
-				{
-					return false;
-				}
-				if (domainInspector.IsComponent(mapKey) || domainInspector.IsComponent(mapValue))
-				{
-					return false;
-				}
+				if (!IsDictionaryOfElements(subject, memberType)) return false;
 			}
 
 			return !domainInspector.IsManyToMany(subject.ReflectedType, manyType) && !domainInspector.IsOneToMany(subject.ReflectedType, manyType)
@@ -55,5 +42,22 @@ namespace ConfOrm.Shop.Appliers
 		}
 
 		#endregion
+
+		protected virtual bool IsDictionaryOfElements(MemberInfo subject, Type memberType)
+		{
+			return KeyIsElement(memberType, subject) && ValueIsElement(memberType, subject);
+		}
+
+		protected virtual bool ValueIsElement(Type memberType, MemberInfo subject)
+		{
+			var mapValue = memberType.DetermineDictionaryValueType();
+			return !domainInspector.IsManyToMany(subject.ReflectedType, mapValue) && !domainInspector.IsOneToMany(subject.ReflectedType, mapValue) && !domainInspector.IsComponent(mapValue);
+		}
+
+		protected virtual bool KeyIsElement(Type memberType, MemberInfo subject)
+		{
+			var mapKey = memberType.DetermineDictionaryKeyType();
+			return !domainInspector.IsManyToMany(subject.ReflectedType, mapKey) && !domainInspector.IsComponent(mapKey);
+		}
 	}
 }
