@@ -38,6 +38,7 @@ namespace ConfOrm.Shop.CoolNaming
 			             		new MemberReadOnlyAccessorApplier<ICollectionPropertiesMapper>(),
 			             		new MemberNoSetterToFieldAccessorApplier<ICollectionPropertiesMapper>(),
 			             		new MemberToFieldAccessorApplier<ICollectionPropertiesMapper>(),
+			             		new BidirectionalOneToManyCascadeApplier(domainInspector),
 			             		new BidirectionalOneToManyInverseApplier(domainInspector),
 			             		new BidirectionalOneToManyOnDeleteConstraintApplier(domainInspector),
 			             		new BidirectionalManyToManyInverseApplier(domainInspector),
