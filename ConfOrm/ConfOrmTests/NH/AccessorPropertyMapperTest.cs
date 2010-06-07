@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
+using Iesi.Collections.Generic;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -38,6 +40,24 @@ namespace ConfOrmTests.NH
 			}
 
 		}
+
+		private class Movement<TDetail>
+		{
+			private ISet<TDetail> _details;
+			public IEnumerable<TDetail> Details
+			{
+				get { return _details; }
+			}
+		}
+
+		private class MovementDetail<TMovement>
+		{
+			public TMovement Movement { get; set; }
+		}
+
+		private class Income : Movement<IncomeDetail> { }
+
+		private class IncomeDetail : MovementDetail<Income> { }
 
 		[Test]
 		public void WhenNoMemberThenAccessNone()
@@ -132,6 +152,17 @@ namespace ConfOrmTests.NH
 			mapper.Access(Accessor.ReadOnly);
 
 			accessValue.Should().Be.EqualTo("readonly");
+		}
+
+		[Test]
+		public void WhenMapPropertyWithFieldOnBaseClassThenChooseRigthFieldAccessor()
+		{
+			string accessValue = null;
+			var mapper = new AccessorPropertyMapper(typeof(Income), "Details", x => accessValue = x);
+
+			mapper.Access(Accessor.Field);
+
+			accessValue.Should().Be.EqualTo("field.camelcase-underscore");
 		}
 	}
 }

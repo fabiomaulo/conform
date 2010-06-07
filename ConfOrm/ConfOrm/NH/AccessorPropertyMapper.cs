@@ -127,9 +127,18 @@ namespace ConfOrm.NH
 		private string GetNamingFieldStrategy()
 		{
 			KeyValuePair<string, IFieldNamingStrategy> pair =
-				fieldNamningStrategies.FirstOrDefault(
-					p => declaringType.GetField(p.Value.GetFieldName(propertyName), FieldBindingFlag) != null);
+				fieldNamningStrategies.FirstOrDefault(p => GetField(declaringType, p.Value.GetFieldName(propertyName)) != null);
 			return pair.Key;
+		}
+
+		private static MemberInfo GetField(Type type, string fieldName)
+		{
+			if (type == typeof (object) || type == null)
+			{
+				return null;
+			}
+			MemberInfo member = type.GetField(fieldName, FieldBindingFlag) ?? GetField(type.BaseType, fieldName);
+			return member;
 		}
 	}
 }
