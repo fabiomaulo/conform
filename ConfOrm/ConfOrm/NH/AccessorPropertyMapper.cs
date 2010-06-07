@@ -70,10 +70,10 @@ namespace ConfOrm.NH
 					setAccessor("property");
 					break;
 				case Accessor.Field:
-					string patialFieldNamingStrategyName = GetNamingFieldStrategy();
-					if (patialFieldNamingStrategyName != null)
+					string partialFieldNamingStrategyName = GetNamingFieldStrategy();
+					if (partialFieldNamingStrategyName != null)
 					{
-						setAccessor("field." + patialFieldNamingStrategyName);
+						setAccessor("field." + partialFieldNamingStrategyName);
 					}
 					else
 					{
@@ -81,10 +81,10 @@ namespace ConfOrm.NH
 					}
 					break;
 				case Accessor.NoSetter:
-					string patialNoSetterNamingStrategyName = GetNamingFieldStrategy();
-					if (patialNoSetterNamingStrategyName != null)
+					string partialNoSetterNamingStrategyName = GetNamingFieldStrategy();
+					if (partialNoSetterNamingStrategyName != null)
 					{
-						setAccessor("nosetter." + patialNoSetterNamingStrategyName);
+						setAccessor("nosetter." + partialNoSetterNamingStrategyName);
 					}
 					else
 					{
