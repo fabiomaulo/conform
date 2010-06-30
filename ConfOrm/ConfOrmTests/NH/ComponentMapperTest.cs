@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ConfOrm.Mappers;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
@@ -22,7 +23,13 @@ namespace ConfOrmTests.NH
 		}
 		private class Address
 		{
-			public Person Parent { get; set; }
+			private Person parent;
+			public Person Parent
+			{
+				get { return parent; }
+				set { parent = value; }
+			}
+
 			public string Street { get; set; }
 		}
 
@@ -45,6 +52,16 @@ namespace ConfOrmTests.NH
 			mapper.Parent(typeof (Address).GetProperty("Parent"));
 			component.Parent.Should().Not.Be.Null();
 			component.Parent.name.Should().Be.EqualTo("Parent");
+		}
+
+		[Test]
+		public void CanSetParentAccessor()
+		{
+			var mapdoc = new HbmMapping();
+			var component = new HbmComponent();
+			var mapper = new ComponentMapper(component, typeof(Name), mapdoc);
+			mapper.Parent(typeof(Address).GetProperty("Parent"), pm=> pm.Access(Accessor.Field));
+			component.Parent.access.Should().Contain("field");
 		}
 	}
 }

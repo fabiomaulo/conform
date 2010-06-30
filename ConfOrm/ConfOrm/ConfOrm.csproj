@@ -103,6 +103,7 @@
     <Compile Include="Mappers\IMapKeyRelation.cs" />
     <Compile Include="Mappers\INaturalIdMapper.cs" />
     <Compile Include="Mappers\IOneToManyMapper.cs" />
+    <Compile Include="Mappers\IParentMapper.cs" />
     <Compile Include="Mappers\IPlainPropertyContainerMapper.cs" />
     <Compile Include="Mappers\ISetPropertiesMapper.cs" />
     <Compile Include="Mappers\IVersionMapper.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="NH\OneToOneMapper.cs" />
     <Compile Include="NH\CustomizersImpl\PersistentClassCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\PropertyContainerCustomizer.cs" />
+    <Compile Include="NH\ParentMapper.cs" />
     <Compile Include="NH\PatternsAppliersHolderExtensions.cs" />
     <Compile Include="NH\PropertyMapper.cs" />
     <Compile Include="NH\PropertyPath.cs">

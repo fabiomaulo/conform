@@ -14,8 +14,13 @@ namespace ConfOrm.NH.CustomizersImpl
 
 		public void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent) where TProperty : class
 		{
+			Parent(parent, x=> { });
+		}
+
+		public void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent, Action<IParentMapper> parentMapping) where TProperty : class
+		{
 			MemberInfo member = TypeExtensions.DecodeMemberAccessExpression(parent);
-			CustomizersHolder.AddCustomizer(typeof (TComponent), m => m.Parent(member));
+			CustomizersHolder.AddCustomizer(typeof(TComponent), m => m.Parent(member, parentMapping));
 		}
 
 		#endregion
