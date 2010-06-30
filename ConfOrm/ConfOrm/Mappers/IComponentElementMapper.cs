@@ -7,6 +7,7 @@ namespace ConfOrm.Mappers
 	public interface IComponentElementMapper
 	{
 		void Parent(MemberInfo parent);
+		void Parent(MemberInfo parent, Action<IParentMapper> parentMapping);
 
 		void Property(MemberInfo property, Action<IPropertyMapper> mapping);
 
@@ -18,6 +19,7 @@ namespace ConfOrm.Mappers
 	public interface IComponentElementMapper<TComponent>
 	{
 		void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent) where TProperty : class;
+		void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent, Action<IParentMapper> parentMapping) where TProperty : class;
 
 		void Property<TProperty>(Expression<Func<TComponent, TProperty>> property, Action<IPropertyMapper> mapping);
 
