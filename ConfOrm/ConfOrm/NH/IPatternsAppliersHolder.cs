@@ -11,6 +11,7 @@ namespace ConfOrm.NH
 		ICollection<IPatternApplier<Type, IJoinedSubclassAttributesMapper>> JoinedSubclass { get; }
 		ICollection<IPatternApplier<Type, ISubclassAttributesMapper>> Subclass { get; }
 		ICollection<IPatternApplier<Type, IUnionSubclassAttributesMapper>> UnionSubclass { get; }
+		ICollection<IPatternApplier<Type, IComponentAttributesMapper>> Component	{ get; }
 
 		ICollection<IPatternApplier<MemberInfo, IIdMapper>> Poid { get; }
 		ICollection<IPatternApplier<MemberInfo, IVersionMapper>> Version { get; }

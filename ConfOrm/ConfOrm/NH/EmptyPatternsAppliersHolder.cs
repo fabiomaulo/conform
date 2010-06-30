@@ -35,6 +35,7 @@ namespace ConfOrm.NH
 
 		protected List<IPatternApplier<MemberInfo, IMapKeyMapper>> mapKey;
 		protected List<IPatternApplier<PropertyPath, IMapKeyMapper>> mapKeyPath;
+		protected ICollection<IPatternApplier<Type, IComponentAttributesMapper>> component;
 
 		public EmptyPatternsAppliersHolder()
 		{
@@ -42,6 +43,8 @@ namespace ConfOrm.NH
 			joinedSubclass = new List<IPatternApplier<Type, IJoinedSubclassAttributesMapper>>();
 			subclass = new List<IPatternApplier<Type, ISubclassAttributesMapper>>();
 			unionSubclass = new List<IPatternApplier<Type, IUnionSubclassAttributesMapper>>();
+			component = new List<IPatternApplier<Type, IComponentAttributesMapper>>();
+
 			poid = new List<IPatternApplier<MemberInfo, IIdMapper>>();
 			property = new List<IPatternApplier<MemberInfo, IPropertyMapper>>();
 			collection = new List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>>();
@@ -86,6 +89,11 @@ namespace ConfOrm.NH
 		public ICollection<IPatternApplier<Type, IUnionSubclassAttributesMapper>> UnionSubclass
 		{
 			get { return unionSubclass; }
+		}
+
+		public ICollection<IPatternApplier<Type, IComponentAttributesMapper>> Component
+		{
+			get { return component; }
 		}
 
 		public ICollection<IPatternApplier<MemberInfo, IIdMapper>> Poid
