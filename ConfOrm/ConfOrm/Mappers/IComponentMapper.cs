@@ -4,16 +4,23 @@ using System.Reflection;
 
 namespace ConfOrm.Mappers
 {
-	public interface IComponentMapper : IPropertyContainerMapper
+	public interface IComponentAttributesMapper
 	{
 		void Parent(MemberInfo parent);
-		void Parent(MemberInfo parent, Action<IParentMapper> parentMapping);
+		void Parent(MemberInfo parent, Action<IParentMapper> parentMapping);		
 	}
 
-	public interface IComponentMapper<TComponent> : IPropertyContainerMapper<TComponent> where TComponent : class
+	public interface IComponentMapper : IComponentAttributesMapper, IPropertyContainerMapper
+	{
+	}
+
+	public interface IComponentAttributesMapper<TComponent> where TComponent : class
 	{
 		void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent) where TProperty : class;
 		void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent, Action<IParentMapper> parentMapping) where TProperty : class;
 	}
 
+	public interface IComponentMapper<TComponent> : IComponentAttributesMapper<TComponent>, IPropertyContainerMapper<TComponent> where TComponent : class
+	{
+	}
 }
