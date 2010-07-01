@@ -74,5 +74,23 @@ namespace ConfOrmTests.NH.MapperTests
 			hbmComponent.Parent.name.Should().Be("Parent");
 			hbmComponent.Parent.access.Should().Be("field.camelcase-underscore");
 		}
+
+		[Test, Ignore("Not supported yet")]
+		public void WhenCustomizeComponentParentAccessThenApplyCustomizationToMappingForCompositeElement()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+
+			var domainInspector = orm.Object;
+			var mapper = new Mapper(domainInspector);
+
+			mapper.Component<MyComponent>(ca => ca.Parent(mycomponent => mycomponent.Parent, pm => pm.Access(Accessor.Field)));
+			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(MyClass) });
+
+			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("MyClass"));
+			var hbmBag = (HbmBag)rc.Properties.First(p => p.Name == "Components");
+			var hbmCompositeElement = (HbmCompositeElement)hbmBag.ElementRelationship;
+			hbmCompositeElement.Parent.name.Should().Be("Parent");
+			hbmCompositeElement.Parent.access.Should().Be("field.camelcase-underscore");
+		}
 	}
 }
