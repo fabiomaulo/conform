@@ -79,6 +79,12 @@ namespace ConfOrm.NH
 			customizeAction(customizer);
 		}
 
+		public void Component<TComponent>(Action<IComponentMapper<TComponent>> customizeAction) where TComponent : class
+		{
+			var customizer = new ComponentCustomizer<TComponent>(customizerHolder);
+			customizeAction(customizer);
+		}
+
 		public void Customize<TPersistent>(Action<IPersistentClassCustomizer<TPersistent>> customizeAction ) where TPersistent: class
 		{
 			var customizer = new PersistentClassCustomizer<TPersistent>(customizerHolder);
@@ -518,7 +524,7 @@ namespace ConfOrm.NH
 		private void MapComponent(MemberInfo member, PropertyPath memberPath, Type propertyType, IBasePlainPropertyContainerMapper propertiesContainer,
 		                          Type propertiesContainerType)
 		{
-			propertiesContainer.Component(member, x =>
+			propertiesContainer.Component(member, componentMapper =>
 				{
 					// Note: should, the Parent relation, be managed through DomainInspector ?
 					Type componentType = propertyType;
@@ -528,9 +534,12 @@ namespace ConfOrm.NH
 						persistentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == propertiesContainerType);
 					if (parentReferenceProperty != null)
 					{
-						x.Parent(parentReferenceProperty);
+						componentMapper.Parent(parentReferenceProperty);
 					}
-					MapProperties(propertyType, persistentProperties.Where(pi => pi != parentReferenceProperty), x, memberPath);
+
+					customizerHolder.InvokeCustomizers(componentType, componentMapper);
+
+					MapProperties(propertyType, persistentProperties.Where(pi => pi != parentReferenceProperty), componentMapper, memberPath);
 				});
 		}
 

@@ -8,6 +8,7 @@ namespace ConfOrm.NH.CustomizersImpl
 	public class ComponentCustomizer<TComponent> : PropertyContainerCustomizer<TComponent>, IComponentMapper<TComponent>
 		where TComponent : class
 	{
+		public ComponentCustomizer(ICustomizersHolder customizersHolder) : base(customizersHolder, null) { }
 		public ComponentCustomizer(ICustomizersHolder customizersHolder, PropertyPath propertyPath) : base(customizersHolder, propertyPath) { }
 
 		#region Implementation of IComponentMapper<TComponent>
