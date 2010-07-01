@@ -169,6 +169,7 @@
     <Compile Include="NH\MapperTests\MapKeyRelationCustomizersCalling\MapKeyRelationCustomizersCallingTest.cs" />
     <Compile Include="NH\MapperTests\MapKeyRelationTest.cs" />
     <Compile Include="NH\MapperTests\NaturalIdTest.cs" />
+    <Compile Include="NH\MapperTests\NestedComponentAttributesCustomizationTest.cs" />
     <Compile Include="NH\MapperTests\OneToManyAppliersCalling.cs" />
     <Compile Include="NH\MapperTests\OneToManyCustomizersCallingTest.cs" />
     <Compile Include="NH\MapperTests\OneToOneRelationAccessorsTest.cs" />
