@@ -4,11 +4,8 @@ using System.Reflection;
 
 namespace ConfOrm.Mappers
 {
-	public interface IComponentElementMapper
+	public interface IComponentElementMapper: IComponentAttributesMapper
 	{
-		void Parent(MemberInfo parent);
-		void Parent(MemberInfo parent, Action<IParentMapper> parentMapping);
-
 		void Property(MemberInfo property, Action<IPropertyMapper> mapping);
 
 		void Component(MemberInfo property, Action<IComponentElementMapper> mapping);
@@ -16,11 +13,8 @@ namespace ConfOrm.Mappers
 		void ManyToOne(MemberInfo property, Action<IManyToOneMapper> mapping);
 	}
 
-	public interface IComponentElementMapper<TComponent>
+	public interface IComponentElementMapper<TComponent> : IComponentAttributesMapper<TComponent>
 	{
-		void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent) where TProperty : class;
-		void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent, Action<IParentMapper> parentMapping) where TProperty : class;
-
 		void Property<TProperty>(Expression<Func<TComponent, TProperty>> property, Action<IPropertyMapper> mapping);
 
 		void Component<TNestedComponent>(Expression<Func<TComponent, TNestedComponent>> property,

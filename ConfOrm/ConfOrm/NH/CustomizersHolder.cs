@@ -12,8 +12,8 @@ namespace ConfOrm.NH
 		private readonly Dictionary<PropertyPath, List<Action<ICollectionPropertiesMapper>>> collectionCustomizers =
 			new Dictionary<PropertyPath, List<Action<ICollectionPropertiesMapper>>>();
 
-		private readonly Dictionary<Type, List<Action<IComponentMapper>>> componentClassCustomizers =
-			new Dictionary<Type, List<Action<IComponentMapper>>>();
+		private readonly Dictionary<Type, List<Action<IComponentAttributesMapper>>> componentClassCustomizers =
+			new Dictionary<Type, List<Action<IComponentAttributesMapper>>>();
 
 		private readonly Dictionary<Type, List<Action<IJoinedSubclassAttributesMapper>>> joinedClassCustomizers =
 			new Dictionary<Type, List<Action<IJoinedSubclassAttributesMapper>>>();
@@ -85,7 +85,7 @@ namespace ConfOrm.NH
 			AddCustomizer(unionClassCustomizers, type, classCustomizer);
 		}
 
-		public void AddCustomizer(Type type, Action<IComponentMapper> classCustomizer)
+		public void AddCustomizer(Type type, Action<IComponentAttributesMapper> classCustomizer)
 		{
 			AddCustomizer(componentClassCustomizers, type, classCustomizer);
 		}
@@ -180,7 +180,7 @@ namespace ConfOrm.NH
 			InvokeCustomizers(unionClassCustomizers, type, mapper);
 		}
 
-		public void InvokeCustomizers(Type type, IComponentMapper mapper)
+		public void InvokeCustomizers(Type type, IComponentAttributesMapper mapper)
 		{
 			InvokeCustomizers(componentClassCustomizers, type, mapper);
 		}

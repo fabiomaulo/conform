@@ -34,7 +34,8 @@ namespace ConfOrm.NH.CustomizersImpl
 
 		public void Component(Action<IComponentElementMapper<TElement>> mapping)
 		{
-			throw new NotImplementedException();
+			var componetElementCustomizer = new ComponentElementCustomizer<TElement>(propertyPath, customizersHolder);
+			mapping(componetElementCustomizer);
 		}
 	}
 }

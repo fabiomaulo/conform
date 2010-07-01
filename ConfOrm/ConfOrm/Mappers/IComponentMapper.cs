@@ -14,7 +14,7 @@ namespace ConfOrm.Mappers
 	{
 	}
 
-	public interface IComponentAttributesMapper<TComponent> where TComponent : class
+	public interface IComponentAttributesMapper<TComponent>
 	{
 		void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent) where TProperty : class;
 		void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent, Action<IParentMapper> parentMapping) where TProperty : class;

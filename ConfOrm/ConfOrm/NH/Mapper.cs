@@ -825,6 +825,7 @@ namespace ConfOrm.NH
 						{
 							x.Parent(parentReferenceProperty);
 						}
+						customizersHolder.InvokeCustomizers(componentType, x);
 						MapProperties(componentType, x, persistentProperties.Where(pi => pi != parentReferenceProperty));
 					});
 			}

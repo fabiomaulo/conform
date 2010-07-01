@@ -75,7 +75,7 @@ namespace ConfOrmTests.NH.MapperTests
 			hbmComponent.Parent.access.Should().Be("field.camelcase-underscore");
 		}
 
-		[Test, Ignore("Not supported yet")]
+		[Test]
 		public void WhenCustomizeComponentParentAccessThenApplyCustomizationToMappingForCompositeElement()
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();
@@ -85,6 +85,28 @@ namespace ConfOrmTests.NH.MapperTests
 
 			mapper.Component<MyComponent>(ca => ca.Parent(mycomponent => mycomponent.Parent, pm => pm.Access(Accessor.Field)));
 			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(MyClass) });
+
+			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("MyClass"));
+			var hbmBag = (HbmBag)rc.Properties.First(p => p.Name == "Components");
+			var hbmCompositeElement = (HbmCompositeElement)hbmBag.ElementRelationship;
+			hbmCompositeElement.Parent.name.Should().Be("Parent");
+			hbmCompositeElement.Parent.access.Should().Be("field.camelcase-underscore");
+		}
+
+		[Test]
+		public void WhenCustomizeComponentParentAccessThroughCollectionThenApplyCustomizationToMappingForCompositeElement()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+
+			var domainInspector = orm.Object;
+			var mapper = new Mapper(domainInspector);
+
+			mapper.Class<MyClass>(
+				ca =>
+				ca.Bag(mycomponent => mycomponent.Components, x => { },
+				       cer => cer.Component(c => c.Parent(mycomponent => mycomponent.Parent, pa => pa.Access(Accessor.Field)))));
+
+			HbmMapping mapping = mapper.CompileMappingFor(new[] {typeof (MyClass)});
 
 			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("MyClass"));
 			var hbmBag = (HbmBag)rc.Properties.First(p => p.Name == "Components");

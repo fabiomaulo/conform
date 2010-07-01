@@ -124,6 +124,7 @@
     <Compile Include="NH\CustomizersImpl\CollectionPropertiesCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\ComponentCustomizer.cs" />
     <Compile Include="NH\CustomizersHolder.cs" />
+    <Compile Include="NH\CustomizersImpl\ComponentElementCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\ListPropertiesCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\ManyToManyCustomizer.cs" />
     <Compile Include="NH\CustomizersImpl\MapKeyCustomizer.cs" />
