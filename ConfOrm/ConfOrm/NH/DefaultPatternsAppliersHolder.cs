@@ -76,6 +76,11 @@ namespace ConfOrm.NH
 			manyToMany = new List<IPatternApplier<MemberInfo, IManyToManyMapper>>
 			             	{new BidirectionalManyToManyColumnApplier(),};
 			manyToManyPath = new List<IPatternApplier<PropertyPath, IManyToManyMapper>>();
+			componentParent = new List<IPatternApplier<MemberInfo, IComponentParentMapper>>
+			                  	{
+			                  		new MemberNoSetterToFieldAccessorApplier<IComponentParentMapper>(),
+			                  		new MemberToFieldAccessorApplier<IComponentParentMapper>(),
+			                  	};
 		}
 	}
 }

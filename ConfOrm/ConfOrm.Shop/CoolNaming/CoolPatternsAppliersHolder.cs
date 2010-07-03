@@ -81,6 +81,11 @@ namespace ConfOrm.Shop.CoolNaming
 			manyToMany = new List<IPatternApplier<MemberInfo, IManyToManyMapper>>();
 			manyToManyPath = new List<IPatternApplier<PropertyPath, IManyToManyMapper>>
 			                 	{new ManyToManyColumnApplier(domainInspector),};
+			componentParent = new List<IPatternApplier<MemberInfo, IComponentParentMapper>>
+			                  	{
+			                  		new MemberNoSetterToFieldAccessorApplier<IComponentParentMapper>(),
+			                  		new MemberToFieldAccessorApplier<IComponentParentMapper>(),
+			                  	};
 		}
 	}
 }

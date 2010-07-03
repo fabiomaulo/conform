@@ -20,7 +20,12 @@ namespace ConfOrmTests.NH.MapperTests
 
 		private class Name
 		{
-			public Person Owner { get; set; }
+			private Person owner;
+			public Person Owner
+			{
+				get { return owner; }
+			}
+
 			public string First { get; set; }
 			public string Last { get; set; }
 		}
@@ -52,6 +57,7 @@ namespace ConfOrmTests.NH.MapperTests
 			HbmMapping mapping = GetMapping(domainInspector);
 
 			VerifyMappingContainsClassWithComponentAndParent(mapping);
+			ByDefaultShouldAssignTheAccessorForParentProperty(mapping);
 		}
 
 		private void VerifyMappingContainsClassWithComponentAndParent(HbmMapping mapping)
@@ -66,6 +72,16 @@ namespace ConfOrmTests.NH.MapperTests
 			component.Properties.Select(p => p.Name).Should().Have.SameValuesAs("First", "Last");
 			component.Parent.Should().Not.Be.Null();
 			component.Parent.name.Should().Be.EqualTo("Owner");
+		}
+
+		private void ByDefaultShouldAssignTheAccessorForParentProperty(HbmMapping mapping)
+		{
+			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Person"));
+			var relation = rc.Properties.First(p => p.Name == "Name");
+			var component = (HbmComponent)relation;
+			component.Parent.Should().Not.Be.Null();
+			component.Parent.name.Should().Be.EqualTo("Owner");
+			component.Parent.access.Should().Contain("camelcase");
 		}
 	}
 }
