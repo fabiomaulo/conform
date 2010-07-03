@@ -536,7 +536,7 @@ namespace ConfOrm.NH
 					{
 						componentMapper.Parent(parentReferenceProperty);
 					}
-
+					patternsAppliers.Component.ApplyAllMatchs(componentType, componentMapper);
 					customizerHolder.InvokeCustomizers(componentType, componentMapper);
 
 					MapProperties(propertyType, persistentProperties.Where(pi => pi != parentReferenceProperty), componentMapper, memberPath);
@@ -825,6 +825,7 @@ namespace ConfOrm.NH
 						{
 							x.Parent(parentReferenceProperty);
 						}
+						patternsAppliersHolder.Component.ApplyAllMatchs(componentType, x);
 						customizersHolder.InvokeCustomizers(componentType, x);
 						MapProperties(componentType, x, persistentProperties.Where(pi => pi != parentReferenceProperty));
 					});
@@ -871,6 +872,7 @@ namespace ConfOrm.NH
 								{
 									x.Parent(parentReferenceProperty);
 								}
+								patternsAppliersHolder.Component.ApplyAllMatchs(componentPropertyType, x);
 								customizersHolder.InvokeCustomizers(componentPropertyType, x);
 								MapProperties(componentPropertyType, x, componentProperties.Where(pi => pi != parentReferenceProperty));
 							});

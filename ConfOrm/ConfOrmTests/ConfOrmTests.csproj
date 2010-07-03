@@ -146,6 +146,7 @@
     <Compile Include="NH\MapperTests\BidirectionalOneToOnePrimaryKeyAssociationTest.cs" />
     <Compile Include="NH\MapperTests\CascadeManyToOneTest.cs" />
     <Compile Include="NH\MapperTests\CascadeOneToOneTest.cs" />
+    <Compile Include="NH\MapperTests\ComponentAppliersCallingTest.cs" />
     <Compile Include="NH\MapperTests\ComponentAttributesCustomizationTest.cs" />
     <Compile Include="NH\MapperTests\ComponentPolymorphismTest.cs" />
     <Compile Include="NH\MapperTests\ElementsApplierCalling.cs" />
