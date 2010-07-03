@@ -534,7 +534,10 @@ namespace ConfOrm.NH
 						persistentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == propertiesContainerType);
 					if (parentReferenceProperty != null)
 					{
-						componentMapper.Parent(parentReferenceProperty);
+						componentMapper.Parent(parentReferenceProperty,
+						                       componentParentMapper =>
+						                       patternsAppliers.ComponentParent.ApplyAllMatchs(parentReferenceProperty,
+						                                                                       componentParentMapper));
 					}
 					patternsAppliers.Component.ApplyAllMatchs(componentType, componentMapper);
 					customizerHolder.InvokeCustomizers(componentType, componentMapper);
@@ -823,7 +826,10 @@ namespace ConfOrm.NH
 							persistentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == ownerType);
 						if (parentReferenceProperty != null)
 						{
-							x.Parent(parentReferenceProperty);
+							x.Parent(parentReferenceProperty,
+							         componentParentMapper =>
+							         patternsAppliersHolder.ComponentParent.ApplyAllMatchs(parentReferenceProperty,
+							                                                               componentParentMapper));
 						}
 						patternsAppliersHolder.Component.ApplyAllMatchs(componentType, x);
 						customizersHolder.InvokeCustomizers(componentType, x);
@@ -870,7 +876,10 @@ namespace ConfOrm.NH
 								var parentReferenceProperty = componentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == componentOwnerType);
 								if (parentReferenceProperty != null)
 								{
-									x.Parent(parentReferenceProperty);
+									x.Parent(parentReferenceProperty,
+									         componentParentMapper =>
+									         patternsAppliersHolder.ComponentParent.ApplyAllMatchs(parentReferenceProperty,
+									                                                               componentParentMapper));
 								}
 								patternsAppliersHolder.Component.ApplyAllMatchs(componentPropertyType, x);
 								customizersHolder.InvokeCustomizers(componentPropertyType, x);

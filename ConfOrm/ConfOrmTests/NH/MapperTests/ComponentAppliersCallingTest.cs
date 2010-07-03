@@ -68,5 +68,27 @@ namespace ConfOrmTests.NH.MapperTests
 			applier.Verify(x => x.Match(It.Is<Type>(mi => mi == typeof(MyNestedComponent))), Times.Exactly(2));
 			applier.Verify(x => x.Apply(It.Is<Type>(mi => mi == typeof(MyNestedComponent)), It.Is<IComponentAttributesMapper>(cm => cm != null)), Times.Exactly(2));
 		}
+
+		[Test]
+		public void VerifyParentAppliersCalling()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+			var mapper = new Mapper(orm.Object);
+
+			var parentApplier = new Mock<IPatternApplier<MemberInfo, IComponentParentMapper>>();
+			var myClassParentProperty = ForClass<MyComponent>.Property(mc => mc.Parent);
+			var myNestedParentProperty = ForClass<MyNestedComponent>.Property(mc => mc.Parent);
+			parentApplier.Setup(x => x.Match(myClassParentProperty)).Returns(true);
+			parentApplier.Setup(x => x.Match(myNestedParentProperty)).Returns(true);
+
+			mapper.PatternsAppliers.ComponentParent.Add(parentApplier.Object);
+			mapper.CompileMappingFor(new[] { typeof(MyClass) });
+
+			parentApplier.Verify(x => x.Match(It.Is<MemberInfo>(mi => mi == myClassParentProperty)), Times.Exactly(2));
+			parentApplier.Verify(x => x.Apply(It.Is<MemberInfo>(mi => mi == myClassParentProperty), It.Is<IComponentParentMapper>(cm => cm != null)), Times.Exactly(2));
+
+			parentApplier.Verify(x => x.Match(It.Is<MemberInfo>(mi => mi == myNestedParentProperty)), Times.Exactly(2));
+			parentApplier.Verify(x => x.Apply(It.Is<MemberInfo>(mi => mi == myNestedParentProperty), It.Is<IComponentParentMapper>(cm => cm != null)), Times.Exactly(2));
+		}
 	}
 }
