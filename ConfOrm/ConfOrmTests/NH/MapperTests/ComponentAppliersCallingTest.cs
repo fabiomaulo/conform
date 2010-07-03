@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using ConfOrm;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
 using Moq;
-using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
-using SharpTestsEx;
 
 namespace ConfOrmTests.NH.MapperTests
 {
