@@ -11,7 +11,7 @@ namespace ConfOrm.NH
 		private readonly HbmNestedCompositeElement component;
 		private readonly Type componentType;
 		protected readonly HbmMapping mapDoc;
-		private IParentMapper parentMapper;
+		private IComponentParentMapper parentMapper;
 
 		public ComponentNestedElementMapper(Type componentType, HbmMapping mapDoc, HbmNestedCompositeElement component)
 		{
@@ -27,7 +27,7 @@ namespace ConfOrm.NH
 			Parent(parent, x => { });
 		}
 
-		public void Parent(MemberInfo parent, Action<IParentMapper> parentMapping)
+		public void Parent(MemberInfo parent, Action<IComponentParentMapper> parentMapping)
 		{
 			if (parent == null)
 			{
@@ -72,14 +72,14 @@ namespace ConfOrm.NH
 			component.Items = component.Items == null ? toAdd : component.Items.Concat(toAdd).ToArray();
 		}
 
-		private IParentMapper GetParentMapper(MemberInfo parent)
+		private IComponentParentMapper GetParentMapper(MemberInfo parent)
 		{
 			if (parentMapper != null)
 			{
 				return parentMapper;
 			}
 			component.parent = new HbmParent();
-			return parentMapper = new ParentMapper(component.parent, parent);
+			return parentMapper = new ComponentParentMapper(component.parent, parent);
 		}
 	}
 }

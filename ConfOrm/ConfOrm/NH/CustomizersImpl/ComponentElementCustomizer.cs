@@ -22,7 +22,7 @@ namespace ConfOrm.NH.CustomizersImpl
 			customizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper x) => x.Parent(member));
 		}
 
-		public void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent, Action<IParentMapper> parentMapping) where TProperty : class
+		public void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent, Action<IComponentParentMapper> parentMapping) where TProperty : class
 		{
 			MemberInfo member = TypeExtensions.DecodeMemberAccessExpression(parent);
 			customizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper x) => x.Parent(member, parentMapping));

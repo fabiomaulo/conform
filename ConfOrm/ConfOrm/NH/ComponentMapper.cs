@@ -8,7 +8,7 @@ namespace ConfOrm.NH
 {
 	public class ComponentMapper : AbstractPropertyContainerMapper, IComponentMapper
 	{
-		private ParentMapper parentMapper;
+		private ComponentParentMapper parentMapper;
 		private readonly HbmComponent component;
 
 		public ComponentMapper(HbmComponent component, Type componentType, HbmMapping mapDoc) : base(componentType, mapDoc)
@@ -38,7 +38,7 @@ namespace ConfOrm.NH
 			Parent(parent, x=> { });
 		}
 
-		public void Parent(MemberInfo parent, Action<IParentMapper> parentMapping)
+		public void Parent(MemberInfo parent, Action<IComponentParentMapper> parentMapping)
 		{
 			if (parent == null)
 			{
@@ -50,14 +50,14 @@ namespace ConfOrm.NH
 
 		#endregion
 
-		private IParentMapper GetParentMapper(MemberInfo parent)
+		private IComponentParentMapper GetParentMapper(MemberInfo parent)
 		{
 			if (parentMapper != null)
 			{
 				return parentMapper;
 			}
 			component.parent = new HbmParent();
-			return parentMapper = new ParentMapper(component.parent, parent);
+			return parentMapper = new ComponentParentMapper(component.parent, parent);
 		}
 	}
 }

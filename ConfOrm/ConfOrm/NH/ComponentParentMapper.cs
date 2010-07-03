@@ -5,11 +5,11 @@ using NHibernate.Cfg.MappingSchema;
 
 namespace ConfOrm.NH
 {
-	public class ParentMapper: IParentMapper
+	public class ComponentParentMapper: IComponentParentMapper
 	{
 		private readonly AccessorPropertyMapper accessorPropertyMapper;
 
-		public ParentMapper(HbmParent parent, MemberInfo member)
+		public ComponentParentMapper(HbmParent parent, MemberInfo member)
 		{
 			if (member == null)
 			{
