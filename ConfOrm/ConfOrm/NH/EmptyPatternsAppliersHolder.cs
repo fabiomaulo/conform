@@ -35,7 +35,8 @@ namespace ConfOrm.NH
 
 		protected List<IPatternApplier<MemberInfo, IMapKeyMapper>> mapKey;
 		protected List<IPatternApplier<PropertyPath, IMapKeyMapper>> mapKeyPath;
-		protected ICollection<IPatternApplier<Type, IComponentAttributesMapper>> component;
+		protected List<IPatternApplier<Type, IComponentAttributesMapper>> component;
+		protected List<IPatternApplier<MemberInfo, IComponentParentMapper>> componentParent;
 
 		public EmptyPatternsAppliersHolder()
 		{
@@ -49,6 +50,7 @@ namespace ConfOrm.NH
 			property = new List<IPatternApplier<MemberInfo, IPropertyMapper>>();
 			collection = new List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>>();
 			propertyPath = new List<IPatternApplier<PropertyPath, IPropertyMapper>>();
+			componentParent = new List<IPatternApplier<MemberInfo, IComponentParentMapper>>();
 
 			collectionPath = new List<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>>();
 			manyToOne = new List<IPatternApplier<MemberInfo, IManyToOneMapper>>();
@@ -134,6 +136,11 @@ namespace ConfOrm.NH
 		public ICollection<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>> CollectionPath
 		{
 			get { return collectionPath; }
+		}
+
+		public ICollection<IPatternApplier<MemberInfo, IComponentParentMapper>> ComponentParent
+		{
+			get { return componentParent; }
 		}
 
 		public ICollection<IPatternApplier<MemberInfo, IOneToOneMapper>> OneToOne
