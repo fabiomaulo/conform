@@ -161,6 +161,7 @@
     <Compile Include="NH\MapperTests\JoinedSubclassPatternsAddition.cs" />
     <Compile Include="NH\MapperTests\ManyToManyApplierCalling.cs" />
     <Compile Include="NH\MapperTests\ManyToManyCustomizersCallingTest.cs" />
+    <Compile Include="NH\MapperTests\ManyToManyCustomizersInvocationTest.cs" />
     <Compile Include="NH\MapperTests\ManyToOneRelationAccessorsTest.cs" />
     <Compile Include="NH\MapperTests\MapKeyRelationAppliersCalling\MapKeyComponentRelationAppliersCallingTest.cs" />
     <Compile Include="NH\MapperTests\MapKeyRelationAppliersCalling\MapKeyManyToManyRelationAppliersCallingTest.cs" />
