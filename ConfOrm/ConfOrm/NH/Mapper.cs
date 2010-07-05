@@ -708,8 +708,9 @@ namespace ConfOrm.NH
 			private readonly Type collectionElementType;
 			private readonly IDomainInspector domainInspector;
 			private readonly IPatternsAppliersHolder appliers;
+			private readonly ICustomizersHolder customizersHolder;
 
-			public OneToManyRelationMapper(MemberInfo member, PropertyPath propertyPath, Type ownerType, Type collectionElementType, IDomainInspector domainInspector, IPatternsAppliersHolder appliers)
+			public OneToManyRelationMapper(MemberInfo member, PropertyPath propertyPath, Type ownerType, Type collectionElementType, IDomainInspector domainInspector, IPatternsAppliersHolder appliers, ICustomizersHolder customizersHolder)
 			{
 				this.member = member;
 				this.propertyPath = propertyPath;
@@ -717,6 +718,7 @@ namespace ConfOrm.NH
 				this.collectionElementType = collectionElementType;
 				this.domainInspector = domainInspector;
 				this.appliers = appliers;
+				this.customizersHolder = customizersHolder;
 			}
 
 			#region Implementation of ICollectionElementRelationMapper
@@ -727,6 +729,7 @@ namespace ConfOrm.NH
 					{
 						appliers.OneToMany.ApplyAllMatchs(member, x);
 						appliers.OneToManyPath.ApplyAllMatchs(propertyPath, x);
+						customizersHolder.InvokeCustomizers(propertyPath, x);
 					});
 			}
 
@@ -906,7 +909,7 @@ namespace ConfOrm.NH
 			var ownerType = property.ReflectedType;
 			if (domainInspector.IsOneToMany(ownerType, collectionElementType))
 			{
-				return new OneToManyRelationMapper(property, propertyPath, ownerType, collectionElementType, domainInspector, PatternsAppliers);
+				return new OneToManyRelationMapper(property, propertyPath, ownerType, collectionElementType, domainInspector, PatternsAppliers, customizerHolder);
 			}
 			if (domainInspector.IsManyToMany(ownerType, collectionElementType))
 			{
