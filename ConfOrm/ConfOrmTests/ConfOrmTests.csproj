@@ -319,6 +319,7 @@
     <Compile Include="RelationOnTest.cs" />
     <Compile Include="RelationTest.cs" />
     <Compile Include="TypeExtensionsTest.cs" />
+    <Compile Include="WorkingWithInterfaces\NoMappedInterfaceManyToManyTest.cs" />
     <Compile Include="WorkingWithInterfaces\NoMappedInterfaceManyToOneTest.cs" />
   </ItemGroup>
   <ItemGroup>

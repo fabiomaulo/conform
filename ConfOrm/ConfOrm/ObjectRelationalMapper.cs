@@ -342,8 +342,7 @@ namespace ConfOrm
 
 		public virtual bool IsManyToMany(Type role1, Type role2)
 		{
-			return IsEntity(role1) && IsEntity(role2)
-			       && explicitDeclarations.ManyToManyRelations.Contains(new Relation(role1, role2));
+			return explicitDeclarations.ManyToManyRelations.Contains(new Relation(role1, role2));
 		}
 
 		public virtual bool IsMasterManyToMany(Type from, Type to)

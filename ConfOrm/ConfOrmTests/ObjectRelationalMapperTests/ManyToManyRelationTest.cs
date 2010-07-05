@@ -16,21 +16,23 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			public int Id { get; set; }
 		}
 
-		[Test]
-		public void WhenNotRegisteredAsEntityNotRecognizeRelation()
-		{
-			var mapper = new ObjectRelationalMapper();
-			mapper.ManyToMany<AEntity, BEntity>();
-			mapper.IsManyToMany(typeof(AEntity), typeof(BEntity)).Should().Be.False();
-		}
+		// Commented because a ManyToMany can be between an entity and an interface not explicit mapped as entity
+		//[Test]
+		//public void WhenNotRegisteredAsEntityNotRecognizeRelation()
+		//{
+		//  var mapper = new ObjectRelationalMapper();
+		//  mapper.ManyToMany<AEntity, BEntity>();
+		//  mapper.IsManyToMany(typeof(AEntity), typeof(BEntity)).Should().Be.False();
+		//}
 
-		[Test]
-		public void WhenNotRegisteredAsEntityNotRecognizeInverseRelation()
-		{
-			var mapper = new ObjectRelationalMapper();
-			mapper.ManyToMany<AEntity, BEntity>();
-			mapper.IsManyToMany(typeof(BEntity), typeof(AEntity)).Should().Be.False();
-		}
+		// Commented because a ManyToMany can be between an entity and an interface not explicit mapped as entity
+		//[Test]
+		//public void WhenNotRegisteredAsEntityNotRecognizeInverseRelation()
+		//{
+		//  var mapper = new ObjectRelationalMapper();
+		//  mapper.ManyToMany<AEntity, BEntity>();
+		//  mapper.IsManyToMany(typeof(BEntity), typeof(AEntity)).Should().Be.False();
+		//}
 
 		[Test]
 		public void WhenExplicitRegisteredRecognizeRelation()
