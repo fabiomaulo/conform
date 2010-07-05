@@ -26,13 +26,14 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		//  mapper.IsManyToOne(typeof(AEntity), typeof(BEntity)).Should().Be.False();
 		//}
 
-		[Test]
-		public void WhenNotRegisteredAsEntityNotRecognizeInverseRelation()
-		{
-			var mapper = new ObjectRelationalMapper();
-			mapper.ManyToOne<AEntity, BEntity>();
-			mapper.IsOneToMany(typeof(BEntity), typeof(AEntity)).Should().Be.False();
-		}
+		// Commented because a OneToMany can be between an entity and an interface not explicit mapped as entity
+		//[Test]
+		//public void WhenNotRegisteredAsEntityNotRecognizeInverseRelation()
+		//{
+		//  var mapper = new ObjectRelationalMapper();
+		//  mapper.ManyToOne<AEntity, BEntity>();
+		//  mapper.IsOneToMany(typeof(BEntity), typeof(AEntity)).Should().Be.False();
+		//}
 
 		[Test]
 		public void WhenExplicitRegisteredRecognizeRelation()

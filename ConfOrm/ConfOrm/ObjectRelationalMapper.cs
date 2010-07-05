@@ -353,7 +353,7 @@ namespace ConfOrm
 
 		public virtual bool IsOneToMany(Type from, Type to)
 		{
-			if (IsEntity(to) && explicitDeclarations.OneToManyRelations.Contains(new Relation(from, to)))
+			if (explicitDeclarations.OneToManyRelations.Contains(new Relation(from, to)))
 			{
 				return true;
 			}
