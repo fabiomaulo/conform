@@ -328,11 +328,14 @@ namespace ConfOrm
 
 		public virtual bool IsManyToOne(Type from, Type to)
 		{
+			var relation = new Relation(from, to);
+			if(explicitDeclarations.ManyToOneRelations.Contains(relation))
+			{
+				return true;
+			}
 			bool areEntities = IsEntity(from) && IsEntity(to);
 			bool isFromComponentToEntity = IsComponent(from) && IsEntity(to);
-			var relation = new Relation(from, to);
-			return explicitDeclarations.ManyToOneRelations.Contains(relation)
-						 || (areEntities && Patterns.ManyToOneRelations.Match(relation)) ||
+			return (areEntities && Patterns.ManyToOneRelations.Match(relation)) ||
 			       (areEntities && !IsOneToOne(from, to)
 			        && !explicitDeclarations.ManyToManyRelations.Contains(relation)) || isFromComponentToEntity;
 		}
