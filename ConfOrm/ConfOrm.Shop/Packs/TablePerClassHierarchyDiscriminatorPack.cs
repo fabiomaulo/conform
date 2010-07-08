@@ -6,7 +6,7 @@ using ConfOrm.Shop.Subclassing;
 
 namespace ConfOrm.Shop.Packs
 {
-	public class TablePerClassHierarchyDiscriminatorPack : EmptyPatternsAppliersHolder
+	public partial class TablePerClassHierarchyDiscriminatorPack : EmptyPatternsAppliersHolder
 	{
 		public TablePerClassHierarchyDiscriminatorPack(IDomainInspector domainInspector)
 		{
