@@ -93,6 +93,7 @@
     <Compile Include="Patterns\UseBagWhenGenericListPattern.cs" />
     <Compile Include="Patterns\UseSetWhenGenericCollectionPattern.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Subclassing\DiscriminatorColumnNameApplier.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConfOrm\ConfOrm.csproj">
