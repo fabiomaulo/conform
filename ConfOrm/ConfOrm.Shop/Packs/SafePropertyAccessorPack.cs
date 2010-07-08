@@ -6,9 +6,9 @@ using ConfOrm.Patterns;
 
 namespace ConfOrm.Shop.Packs
 {
-	public class AutoAccessFieldPack : EmptyPatternsAppliersHolder
+	public class SafePropertyAccessorPack : EmptyPatternsAppliersHolder
 	{
-		public AutoAccessFieldPack()
+		public SafePropertyAccessorPack()
 		{
 			poid = new List<IPatternApplier<MemberInfo, IIdMapper>>
 			       	{
@@ -49,6 +49,11 @@ namespace ConfOrm.Shop.Packs
 			      		new MemberNoSetterToFieldAccessorApplier<IAnyMapper>(),
 			      		new MemberToFieldAccessorApplier<IAnyMapper>()
 			      	};
+			componentParent = new List<IPatternApplier<MemberInfo, IComponentParentMapper>>
+			                  	{
+			                  		new MemberNoSetterToFieldAccessorApplier<IComponentParentMapper>(),
+			                  		new MemberToFieldAccessorApplier<IComponentParentMapper>(),
+			                  	};
 		}
 	}
 }
