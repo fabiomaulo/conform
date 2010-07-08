@@ -89,6 +89,7 @@
     <Compile Include="CoolNaming\OneToManyKeyColumnApplier.cs" />
     <Compile Include="Appliers\OneToManyPattern.cs" />
     <Compile Include="Packs\SafePropertyAccessorPack.cs" />
+    <Compile Include="Packs\TablePerClassHierarchyDiscriminatorPack.cs" />
     <Compile Include="Patterns\PoidPropertyAsClassNameId.cs" />
     <Compile Include="Patterns\UseBagWhenGenericListPattern.cs" />
     <Compile Include="Patterns\UseSetWhenGenericCollectionPattern.cs" />
