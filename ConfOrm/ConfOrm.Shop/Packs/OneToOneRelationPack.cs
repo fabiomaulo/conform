@@ -16,6 +16,7 @@ namespace ConfOrm.Shop.Packs
 			       	};
 			manyToOne = new List<IPatternApplier<MemberInfo, IManyToOneMapper>>
 			            	{
+			            		new BidirectionalForeignKeyAssociationManyToOneApplier(domainInspector),
 			            		new UnidirectionalOneToOneUniqueCascadeApplier(domainInspector)
 			            	};
 			oneToOne = new List<IPatternApplier<MemberInfo, IOneToOneMapper>>
