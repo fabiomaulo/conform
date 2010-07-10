@@ -162,6 +162,7 @@ namespace ConfOrm.NH
 			MergeAppliersCollection(source.JoinedSubclass, destination.JoinedSubclass);
 			MergeAppliersCollection(source.Subclass, destination.Subclass);
 			MergeAppliersCollection(source.UnionSubclass, destination.UnionSubclass);
+			MergeAppliersCollection(source.Component, destination.Component);
 
 			MergeAppliersCollection(source.Poid, destination.Poid);
 			MergeAppliersCollection(source.Version, destination.Version);
@@ -181,11 +182,22 @@ namespace ConfOrm.NH
 			MergeAppliersCollection(source.Collection, destination.Collection);
 			MergeAppliersCollection(source.CollectionPath, destination.CollectionPath);
 
+			MergeAppliersCollection(source.ComponentParent, destination.ComponentParent);
+
 			MergeAppliersCollection(source.ManyToMany, destination.ManyToMany);
 			MergeAppliersCollection(source.ManyToManyPath, destination.ManyToManyPath);
 
 			MergeAppliersCollection(source.Element, destination.Element);
 			MergeAppliersCollection(source.ElementPath, destination.ElementPath);
+
+			MergeAppliersCollection(source.OneToMany, destination.OneToMany);
+			MergeAppliersCollection(source.OneToManyPath, destination.OneToManyPath);
+
+			MergeAppliersCollection(source.MapKeyManyToMany, destination.MapKeyManyToMany);
+			MergeAppliersCollection(source.MapKeyManyToManyPath, destination.MapKeyManyToManyPath);
+
+			MergeAppliersCollection(source.MapKey, destination.MapKey);
+			MergeAppliersCollection(source.MapKeyPath, destination.MapKeyPath);
 		}
 
 		private static void MergeAppliersCollection<TSubject, TApplyTo>(
@@ -229,6 +241,7 @@ namespace ConfOrm.NH
 			UnionWithAppliersCollection(source.JoinedSubclass, destination.JoinedSubclass);
 			UnionWithAppliersCollection(source.Subclass, destination.Subclass);
 			UnionWithAppliersCollection(source.UnionSubclass, destination.UnionSubclass);
+			UnionWithAppliersCollection(source.Component, destination.Component);
 
 			UnionWithAppliersCollection(source.Poid, destination.Poid);
 			UnionWithAppliersCollection(source.Version, destination.Version);
@@ -248,11 +261,22 @@ namespace ConfOrm.NH
 			UnionWithAppliersCollection(source.Collection, destination.Collection);
 			UnionWithAppliersCollection(source.CollectionPath, destination.CollectionPath);
 
+			UnionWithAppliersCollection(source.ComponentParent, destination.ComponentParent);
+
 			UnionWithAppliersCollection(source.ManyToMany, destination.ManyToMany);
 			UnionWithAppliersCollection(source.ManyToManyPath, destination.ManyToManyPath);
 
 			UnionWithAppliersCollection(source.Element, destination.Element);
 			UnionWithAppliersCollection(source.ElementPath, destination.ElementPath);
+
+			UnionWithAppliersCollection(source.OneToMany, destination.OneToMany);
+			UnionWithAppliersCollection(source.OneToManyPath, destination.OneToManyPath);
+
+			UnionWithAppliersCollection(source.MapKeyManyToMany, destination.MapKeyManyToMany);
+			UnionWithAppliersCollection(source.MapKeyManyToManyPath, destination.MapKeyManyToManyPath);
+
+			UnionWithAppliersCollection(source.MapKey, destination.MapKey);
+			UnionWithAppliersCollection(source.MapKeyPath, destination.MapKeyPath);
 		}
 
 		private static void UnionWithAppliersCollection<TSubject, TApplyTo>(
