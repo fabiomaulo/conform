@@ -79,6 +79,7 @@
     <Compile Include="CoolNaming\ComponentPropertyColumnNameApplier.cs" />
     <Compile Include="Appliers\DatePropertyByNameApplier.cs" />
     <Compile Include="CoolNaming\CoolPatternsAppliersHolder.cs" />
+    <Compile Include="CoolNaming\CoolTablesAndColumnsNamingPack.cs" />
     <Compile Include="CoolNaming\JoinedSubclassKeyAsRootIdColumnApplier.cs" />
     <Compile Include="CoolNaming\ManyToManyColumnApplier.cs" />
     <Compile Include="CoolNaming\ManyToManyKeyIdColumnApplier.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Appliers\MsSQL2008DateTimeApplier.cs" />
     <Compile Include="CoolNaming\OneToManyKeyColumnApplier.cs" />
     <Compile Include="Appliers\OneToManyPattern.cs" />
+    <Compile Include="Packs\BidirectionalManyToManyRelationPack.cs" />
     <Compile Include="Packs\BidirectionalOneToManyRelationPack.cs" />
     <Compile Include="Packs\OneToOneRelationPack.cs" />
     <Compile Include="Packs\TablePerClassPack.cs" />
