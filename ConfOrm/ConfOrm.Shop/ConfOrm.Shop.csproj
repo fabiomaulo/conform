@@ -91,6 +91,7 @@
     <Compile Include="Appliers\OneToManyPattern.cs" />
     <Compile Include="Packs\BidirectionalManyToManyRelationPack.cs" />
     <Compile Include="Packs\BidirectionalOneToManyRelationPack.cs" />
+    <Compile Include="Packs\EnumAsStringPack.cs" />
     <Compile Include="Packs\OneToOneRelationPack.cs" />
     <Compile Include="Packs\TablePerClassPack.cs" />
     <Compile Include="Packs\SafePropertyAccessorPack.cs" />
