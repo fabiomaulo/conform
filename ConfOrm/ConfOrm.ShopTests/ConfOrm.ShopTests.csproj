@@ -80,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppliersTests\CollectionOfComponentsKeyColumnApplierTest.cs" />
     <Compile Include="AppliersTests\CollectionOfComponentsPatternTest.cs" />
     <Compile Include="AppliersTests\CollectionOfElementsKeyColumnApplierTest.cs" />
     <Compile Include="AppliersTests\CollectionOfElementsOnlyPatternTest.cs" />

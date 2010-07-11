@@ -74,6 +74,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Appliers\EnumPropertyAsStringApplier.cs" />
+    <Compile Include="CoolNaming\CollectionOfComponentsKeyColumnApplier.cs" />
     <Compile Include="CoolNaming\CollectionOfElementsKeyColumnApplier.cs" />
     <Compile Include="Appliers\CollectionOfElementsOnlyPattern.cs" />
     <Compile Include="CoolNaming\CollectionOfElementsTableApplier.cs" />
