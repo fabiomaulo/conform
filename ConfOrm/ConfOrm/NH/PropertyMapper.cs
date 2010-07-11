@@ -110,6 +110,7 @@ namespace ConfOrm.NH
 			{
 				throw new MappingException("Multi-columns property can't be mapped through singlr-column API.");
 			}
+			propertyMapping.formula = null;
 			HbmColumn hbm = propertyMapping.Columns.SingleOrDefault();
 			hbm = hbm
 			      ??
@@ -157,6 +158,7 @@ namespace ConfOrm.NH
 			propertyMapping.unique = false;
 			propertyMapping.uniquekey = null;
 			propertyMapping.index = null;
+			propertyMapping.formula = null;
 		}
 
 		public void Columns(params Action<IColumnMapper>[] columnMapper)
@@ -212,6 +214,26 @@ namespace ConfOrm.NH
 		public void Index(string indexName)
 		{
 			Column(x => x.Index(indexName));
+		}
+
+		public void Formula(string formula)
+		{
+			if (formula == null)
+			{
+				return;
+			}
+
+			ResetColumnPlainValues();
+			propertyMapping.Items = null;
+			var formulaLines = formula.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+			if (formulaLines.Length > 1)
+			{
+				propertyMapping.Items = new[] {new HbmFormula {Text = formulaLines}};
+			}
+			else
+			{
+				propertyMapping.formula = formula;
+			}
 		}
 
 		#endregion

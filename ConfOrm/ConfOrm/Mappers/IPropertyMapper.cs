@@ -16,5 +16,6 @@ namespace ConfOrm.Mappers
 		void Unique(bool unique);
 		void UniqueKey(string uniquekeyName);
 		void Index(string indexName);
+		void Formula(string formula);
 	}
 }

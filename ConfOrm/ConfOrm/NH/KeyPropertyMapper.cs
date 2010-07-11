@@ -205,6 +205,11 @@ namespace ConfOrm.NH
 			Column(x => x.Index(indexName));
 		}
 
+		public void Formula(string formula)
+		{
+			// formula is not supported by HbmKeyProperty
+		}
+
 		#endregion
 	}
 }
