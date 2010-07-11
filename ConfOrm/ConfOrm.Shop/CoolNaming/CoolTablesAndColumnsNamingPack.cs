@@ -29,6 +29,8 @@ namespace ConfOrm.Shop.CoolNaming
 			                 		new OneToManyKeyColumnApplier(domainInspector),
 			                 		new CollectionOfElementsTableApplier(domainInspector),
 			                 		new CollectionOfElementsKeyColumnApplier(domainInspector),
+													new CollectionOfComponentsTableApplier(domainInspector),
+													new CollectionOfComponentsKeyColumnApplier(domainInspector),
 			                 	};
 			manyToOnePath = new List<IPatternApplier<PropertyPath, IManyToOneMapper>>
 			                	{

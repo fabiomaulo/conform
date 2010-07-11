@@ -51,6 +51,8 @@ namespace ConfOrm.Shop.CoolNaming
 			                 		new OneToManyKeyColumnApplier(domainInspector),
 													new CollectionOfElementsTableApplier(domainInspector),
 													new CollectionOfElementsKeyColumnApplier(domainInspector),
+													new CollectionOfComponentsTableApplier(domainInspector),
+													new CollectionOfComponentsKeyColumnApplier(domainInspector),
 			                 	};
 			manyToOne = new List<IPatternApplier<MemberInfo, IManyToOneMapper>>
 			            	{
