@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="AppliersTests\CollectionOfComponentsKeyColumnApplierTest.cs" />
     <Compile Include="AppliersTests\CollectionOfComponentsPatternTest.cs" />
+    <Compile Include="AppliersTests\CollectionOfComponentsTableApplierTest.cs" />
     <Compile Include="AppliersTests\CollectionOfElementsKeyColumnApplierTest.cs" />
     <Compile Include="AppliersTests\CollectionOfElementsOnlyPatternTest.cs" />
     <Compile Include="AppliersTests\CollectionOfElementsPatternTest.cs" />
