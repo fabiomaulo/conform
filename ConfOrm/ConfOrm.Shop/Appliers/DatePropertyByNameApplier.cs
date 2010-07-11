@@ -33,7 +33,7 @@ namespace ConfOrm.Shop.Appliers
 
 		protected virtual bool IsDate(string name)
 		{
-			return name.EndsWith("Date") || name.StartsWith("Date");
+			return name.EndsWith("Date") || name.StartsWith("Date") || name.EndsWith("Day") || name.EndsWith("day") || name.StartsWith("Day");
 		}
 	}
 }

@@ -18,6 +18,8 @@ namespace ConfOrm.ShopTests.AppliersTests
 			public DateTime? CreatedAt { get; set; }
 			public DateTime BirthDate { get; set; }
 			public DateTime? DateOfExpiration { get; set; }
+			public DateTime Birthday { get; set; }
+			public DateTime? DayOfExpiration { get; set; }
 		}
 
 		[Test]
@@ -65,5 +67,18 @@ namespace ConfOrm.ShopTests.AppliersTests
 			propertyMapper.Verify(x => x.Type(It.Is<IType>(t => t == NHibernateUtil.Date)));
 		}
 
+		[Test]
+		public void WhenMemberIsDateTimeEndingWithDayThenMatch()
+		{
+			var applier = new DatePropertyByNameApplier();
+			applier.Match(ForClass<MyClass>.Property(x => x.Birthday)).Should().Be.True();
+		}
+
+		[Test]
+		public void WhenMemberIsDateTimeStartingWithDayThenMatch()
+		{
+			var applier = new DatePropertyByNameApplier();
+			applier.Match(ForClass<MyClass>.Property(x => x.DayOfExpiration)).Should().Be.True();
+		}
 	}
 }
