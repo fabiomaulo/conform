@@ -1,5 +1,4 @@
 using NHibernate.Type;
-using NHibernate.UserTypes;
 
 namespace ConfOrm.Mappers
 {
@@ -14,5 +13,6 @@ namespace ConfOrm.Mappers
 		void Scale(short scale);
 		void NotNullable(bool notnull);
 		void Unique(bool unique);
+		void Formula(string formula);
 	}
 }

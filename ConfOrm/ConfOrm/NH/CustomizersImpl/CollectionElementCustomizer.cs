@@ -76,5 +76,10 @@ namespace ConfOrm.NH.CustomizersImpl
 		{
 			CustomizersHolder.AddCustomizer(propertyPath, (IElementMapper e) => e.Unique(unique));
 		}
+
+		public void Formula(string formula)
+		{
+			CustomizersHolder.AddCustomizer(propertyPath, (IElementMapper e) => e.Formula(formula));
+		}
 	}
 }
