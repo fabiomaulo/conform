@@ -12,9 +12,9 @@ namespace ConfOrmTests.NH.MapperTests
 		[Test]
 		public void CtorProtection()
 		{
-			ActionAssert.Throws<ArgumentNullException>(() => new Mapper(null));
+			Executing.This(() => new Mapper(null)).Should().Throw<ArgumentNullException>();
 			var inspector = new Mock<IDomainInspector>();
-			ActionAssert.NotThrow(() => new Mapper(inspector.Object));
+			Executing.This(() => new Mapper(inspector.Object)).Should().NotThrow();
 		}
 
 		[Test]
@@ -22,7 +22,7 @@ namespace ConfOrmTests.NH.MapperTests
 		{
 			var inspector = new Mock<IDomainInspector>();
 			var mapper=  new Mapper(inspector.Object);
-			ActionAssert.Throws<ArgumentNullException>(() => mapper.CompileMappingFor(null));
+			Executing.This(() => mapper.CompileMappingFor(null)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]
