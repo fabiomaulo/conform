@@ -35,6 +35,7 @@ namespace ConfOrm.NH
 			{
 				throw new MappingException("Multi-columns property can't be mapped through single-column API.");
 			}
+			manyToMany.formula = null;
 			HbmColumn hbm = manyToMany.Columns.SingleOrDefault();
 			hbm = hbm
 			      ??
@@ -88,6 +89,7 @@ namespace ConfOrm.NH
 		{
 			manyToMany.column = null;
 			manyToMany.unique = false;
+			manyToMany.formula = null;
 		}
 
 		#endregion
@@ -117,6 +119,26 @@ namespace ConfOrm.NH
 				return;
 			}
 			manyToMany.notfound = mode.ToHbm();
+		}
+
+		public void Formula(string formula)
+		{
+			if (formula == null)
+			{
+				return;
+			}
+
+			ResetColumnPlainValues();
+			manyToMany.Items = null;
+			var formulaLines = formula.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+			if (formulaLines.Length > 1)
+			{
+				manyToMany.Items = new[] { new HbmFormula { Text = formulaLines } };
+			}
+			else
+			{
+				manyToMany.formula = formula;
+			}
 		}
 
 		#endregion

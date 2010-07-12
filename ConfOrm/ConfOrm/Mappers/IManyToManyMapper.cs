@@ -7,5 +7,6 @@ namespace ConfOrm.Mappers
 		void Class(Type entityType);
 		void EntityName(string entityName);
 		void NotFound(NotFoundMode mode);
+		void Formula(string formula);
 	}
 }

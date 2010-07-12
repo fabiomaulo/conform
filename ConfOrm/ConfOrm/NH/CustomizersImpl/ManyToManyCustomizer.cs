@@ -43,5 +43,10 @@ namespace ConfOrm.NH.CustomizersImpl
 		{
 			customizersHolder.AddCustomizer(propertyPath, (IManyToManyMapper x) => x.NotFound(mode));
 		}
+
+		public void Formula(string formula)
+		{
+			customizersHolder.AddCustomizer(propertyPath, (IManyToManyMapper x) => x.Formula(formula));			
+		}
 	}
 }
