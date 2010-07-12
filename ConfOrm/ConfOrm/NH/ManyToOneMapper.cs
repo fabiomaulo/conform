@@ -77,6 +77,26 @@ namespace ConfOrm.NH
 			manyToOne.fetchSpecified = manyToOne.fetch == HbmFetchMode.Join;
 		}
 
+		public void Formula(string formula)
+		{
+			if (formula == null)
+			{
+				return;
+			}
+
+			ResetColumnPlainValues();
+			manyToOne.Items = null;
+			var formulaLines = formula.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+			if (formulaLines.Length > 1)
+			{
+				manyToOne.Items = new[] { new HbmFormula { Text = formulaLines } };
+			}
+			else
+			{
+				manyToOne.formula = formula;
+			}
+		}
+
 		#endregion
 
 		#region Implementation of IAccessorPropertyMapper
@@ -101,6 +121,7 @@ namespace ConfOrm.NH
 			{
 				throw new MappingException("Multi-columns property can't be mapped through single-column API.");
 			}
+			manyToOne.formula = null;
 			HbmColumn hbm = manyToOne.Columns.SingleOrDefault();
 			hbm = hbm
 						??
@@ -140,6 +161,7 @@ namespace ConfOrm.NH
 			manyToOne.unique = false;
 			manyToOne.uniquekey = null;
 			manyToOne.index = null;
+			manyToOne.formula = null;
 		}
 
 		public void Columns(params Action<IColumnMapper>[] columnMapper)

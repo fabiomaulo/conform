@@ -76,6 +76,11 @@ namespace ConfOrm.NH
 			// not supported by HbmKeyManyToOne
 		}
 
+		public void Formula(string formula)
+		{
+			// not supported by HbmKeyManyToOne
+		}
+
 		#endregion
 
 		#region Implementation of IAccessorPropertyMapper

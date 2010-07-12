@@ -19,5 +19,6 @@ namespace ConfOrm.Mappers
 		void UniqueKey(string uniquekeyName);
 		void Index(string indexName);
 		void Fetch(FetchMode fetchMode);
+		void Formula(string formula);
 	}
 }
