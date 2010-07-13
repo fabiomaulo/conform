@@ -210,6 +210,16 @@ namespace ConfOrm.NH
 			// formula is not supported by HbmKeyProperty
 		}
 
+		public void Update(bool consideredInUpdateQuery)
+		{
+			// update is not supported by HbmKeyProperty
+		}
+
+		public void Insert(bool consideredInInsertQuery)
+		{
+			// insert is not supported by HbmKeyProperty
+		}
+
 		#endregion
 	}
 }

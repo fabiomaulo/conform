@@ -17,5 +17,7 @@ namespace ConfOrm.Mappers
 		void UniqueKey(string uniquekeyName);
 		void Index(string indexName);
 		void Formula(string formula);
+		void Update(bool consideredInUpdateQuery);
+		void Insert(bool consideredInInsertQuery);
 	}
 }

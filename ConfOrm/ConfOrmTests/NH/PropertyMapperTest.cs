@@ -244,6 +244,38 @@ namespace ConfOrmTests.NH
 			mapping.uniquekey.Should().Be("AA");
 			mapping.index.Should().Be("II");
 		}
+
+		[Test]
+		public void WhenSetUpdateThenSetAttributes()
+		{
+			var member = ForClass<MyClass>.Property(x=> x.ReadOnly);
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+
+			mapper.Update(true);
+			mapping.update.Should().Be.True();
+			mapping.updateSpecified.Should().Be.True();
+
+			mapper.Update(false);
+			mapping.update.Should().Be.False();
+			mapping.updateSpecified.Should().Be.False();
+		}
+
+		[Test]
+		public void WhenSetInsertThenSetAttributes()
+		{
+			var member = ForClass<MyClass>.Property(x => x.ReadOnly);
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+
+			mapper.Insert(true);
+			mapping.insert.Should().Be.True();
+			mapping.insertSpecified.Should().Be.True();
+
+			mapper.Insert(false);
+			mapping.insert.Should().Be.False();
+			mapping.insertSpecified.Should().Be.False();
+		}
 	}
 
 	public class MyType: IUserType
