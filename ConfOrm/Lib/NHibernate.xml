@@ -10898,7 +10898,7 @@
             Add arbitrary IProjections to query
             </summary>
         </member>
-        <member name="M:NHibernate.IQueryOver`2.SelectList(System.Func{NHibernate.Criterion.Lambda.QueryOverProjectionBuilder{`1},NHibernate.Criterion.Lambda.QueryOverProjectionBuilder{`1}})">
+        <member name="M:NHibernate.IQueryOver`2.SelectList(System.Func{NHibernate.Criterion.Lambda.QueryOverProjectionBuilder{`0},NHibernate.Criterion.Lambda.QueryOverProjectionBuilder{`0}})">
             <summary>
             Create a list of projections using a projection builder
             </summary>
@@ -11191,6 +11191,54 @@
         <member name="P:NHibernate.IQueryOver`2.WithSubquery">
             <summary>
             Add a subquery expression
+            </summary>
+        </member>
+        <member name="M:NHibernate.Criterion.RestrictionExtensions.IsLike(System.String,System.String)">
+            <summary>
+            Apply a "like" restriction in a QueryOver expression
+            Note: throws an exception outside of a QueryOver expression
+            </summary>
+        </member>
+        <member name="M:NHibernate.Criterion.RestrictionExtensions.IsLike(System.String,System.String,NHibernate.Criterion.MatchMode)">
+            <summary>
+            Apply a "like" restriction in a QueryOver expression
+            Note: throws an exception outside of a QueryOver expression
+            </summary>
+        </member>
+        <member name="M:NHibernate.Criterion.RestrictionExtensions.IsLike(System.String,System.String,NHibernate.Criterion.MatchMode,System.Nullable{System.Char})">
+            <summary>
+            Apply a "like" restriction in a QueryOver expression
+            Note: throws an exception outside of a QueryOver expression
+            </summary>
+        </member>
+        <member name="M:NHibernate.Criterion.RestrictionExtensions.IsInsensitiveLike(System.String,System.String)">
+            <summary>
+            Apply a "like" restriction in a QueryOver expression
+            Note: throws an exception outside of a QueryOver expression
+            </summary>
+        </member>
+        <member name="M:NHibernate.Criterion.RestrictionExtensions.IsInsensitiveLike(System.String,System.String,NHibernate.Criterion.MatchMode)">
+            <summary>
+            Apply a "like" restriction in a QueryOver expression
+            Note: throws an exception outside of a QueryOver expression
+            </summary>
+        </member>
+        <member name="M:NHibernate.Criterion.RestrictionExtensions.IsIn(System.Object,System.Object[])">
+            <summary>
+            Apply an "in" constraint to the named property 
+            Note: throws an exception outside of a QueryOver expression
+            </summary>
+        </member>
+        <member name="M:NHibernate.Criterion.RestrictionExtensions.IsIn(System.Object,System.Collections.ICollection)">
+            <summary>
+            Apply an "in" constraint to the named property 
+            Note: throws an exception outside of a QueryOver expression
+            </summary>
+        </member>
+        <member name="M:NHibernate.Criterion.RestrictionExtensions.IsBetween(System.Object,System.Object)">
+            <summary>
+            Apply a "between" constraint to the named property
+            Note: throws an exception outside of a QueryOver expression
             </summary>
         </member>
         <member name="T:NHibernate.Criterion.SelectSubqueryExpression">
@@ -26174,6 +26222,11 @@
             Converts lambda expressions to NHibernate criterion/order
             </summary>
         </member>
+        <member name="M:NHibernate.Impl.ExpressionProcessor.FindValue(System.Linq.Expressions.Expression)">
+            <summary>
+            Invoke the expression to extract its runtime value
+            </summary>
+        </member>
         <member name="M:NHibernate.Impl.ExpressionProcessor.FindMemberExpression(System.Linq.Expressions.Expression)">
             <summary>
             Retrieves the name of the property from a member expression
@@ -26251,6 +26304,13 @@
             <param name="subqueryType">type of subquery</param>
             <param name="expression">lambda expression to convert</param>
             <returns>NHibernate.ICriterion.AbstractCriterion</returns>
+        </member>
+        <member name="M:NHibernate.Impl.ExpressionProcessor.RegisterCustomMethodCall(System.Linq.Expressions.Expression{System.Func{System.Boolean}},System.Func{System.Linq.Expressions.MethodCallExpression,NHibernate.Criterion.ICriterion})">
+            <summary>
+            Register a custom method for use in a QueryOver expression
+            </summary>
+            <param name="function">Lambda expression demonstrating call of custom method</param>
+            <param name="functionProcessor">function to convert MethodCallExpression to ICriterion</param>
         </member>
         <member name="M:NHibernate.Impl.ExpressionQueryImpl.ExpandParameters(System.Collections.Generic.IDictionary{System.String,NHibernate.Engine.TypedValue})">
             <summary> 
