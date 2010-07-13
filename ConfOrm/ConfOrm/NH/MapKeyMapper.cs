@@ -28,6 +28,7 @@ namespace ConfOrm.NH
 			{
 				throw new MappingException("Multi-columns property can't be mapped through singlr-column API.");
 			}
+			hbmMapKey.formula = null;
 			HbmColumn hbm = hbmMapKey.Columns.SingleOrDefault();
 			hbm = hbm
 						??
@@ -54,6 +55,7 @@ namespace ConfOrm.NH
 		{
 			hbmMapKey.column = null;
 			hbmMapKey.length = null;
+			hbmMapKey.formula = null;
 		}
 
 		private bool ColumnTagIsRequired(HbmColumn hbm)
@@ -112,6 +114,26 @@ namespace ConfOrm.NH
 		public void Length(int length)
 		{
 			Column(x => x.Length(length));
+		}
+
+		public void Formula(string formula)
+		{
+			if (formula == null)
+			{
+				return;
+			}
+
+			ResetColumnPlainValues();
+			hbmMapKey.Items = null;
+			var formulaLines = formula.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+			if (formulaLines.Length > 1)
+			{
+				hbmMapKey.Items = new[] { new HbmFormula { Text = formulaLines } };
+			}
+			else
+			{
+				hbmMapKey.formula = formula;
+			}
 		}
 	}
 }

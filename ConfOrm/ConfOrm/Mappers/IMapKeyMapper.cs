@@ -9,5 +9,6 @@ namespace ConfOrm.Mappers
 		void Type<TPersistentType>();
 		void Type(Type persistentType);
 		void Length(int length);
+		void Formula(string formula);
 	}
 }

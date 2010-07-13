@@ -50,5 +50,10 @@ namespace ConfOrm.NH.CustomizersImpl
 		{
 			customizersHolder.AddCustomizer(propertyPath, (IMapKeyMapper x) => x.Length(length));
 		}
+
+		public void Formula(string formula)
+		{
+			customizersHolder.AddCustomizer(propertyPath, (IMapKeyMapper x) => x.Formula(formula));
+		}
 	}
 }

@@ -86,6 +86,7 @@
     <Compile Include="Mappers\ElementMapperWithFormulaTest.cs" />
     <Compile Include="Mappers\ManyToManyMapperWithFormulaTest.cs" />
     <Compile Include="Mappers\ManyToOneMapperWithFormulaTest.cs" />
+    <Compile Include="Mappers\MapKeyMapperWithFormulaTest.cs" />
     <Compile Include="Mappers\VersionGenerationTest.cs" />
     <Compile Include="NH\AbstractPropertyContainerMapperTest.cs" />
     <Compile Include="NH\AccessorPropertyMapperTest.cs" />
