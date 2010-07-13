@@ -78,5 +78,27 @@ namespace ConfOrm.NH
 
 			oneToOne.propertyref = propertyInTheOtherSide.Name;
 		}
+
+		public void Formula(string formula)
+		{
+			if (formula == null)
+			{
+				oneToOne.formula = null;
+				oneToOne.formula1 = null;
+				return;
+			}
+
+			var formulaLines = formula.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+			if (formulaLines.Length > 1)
+			{
+				oneToOne.formula = new[] { new HbmFormula { Text = formulaLines } };
+				oneToOne.formula1 = null;
+			}
+			else
+			{
+				oneToOne.formula1 = formula;
+				oneToOne.formula = null;
+			}
+		}
 	}
 }

@@ -8,5 +8,6 @@ namespace ConfOrm.Mappers
 		void Lazy(LazyRelation lazyRelation);
 		void Constrained(bool value);
 		void PropertyReference(MemberInfo propertyInTheOtherSide);
+		void Formula(string formula);
 	}
 }

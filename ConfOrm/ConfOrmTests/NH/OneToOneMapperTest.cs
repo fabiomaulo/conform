@@ -100,5 +100,45 @@ namespace ConfOrmTests.NH
 
 			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.PropertyReference(typeof(Array).GetProperty("Length")));
 		}
+
+
+		[Test]
+		public void CanSetFormula()
+		{
+			var member = ForClass<MyClass>.Property(c => c.Relation);
+			var mapping = new HbmOneToOne();
+			var mapper = new OneToOneMapper(member, mapping);
+
+			mapper.Formula("SomeFormula");
+			mapping.formula1.Should().Be("SomeFormula");
+		}
+
+		[Test]
+		public void WhenSetFormulaWithNullThenSetFormulaWithNull()
+		{
+			var member = ForClass<MyClass>.Property(c => c.Relation);
+			var mapping = new HbmOneToOne();
+			var mapper = new OneToOneMapper(member, mapping);
+			mapper.Formula(null);
+			mapping.formula.Should().Be.Null();
+			mapping.formula1.Should().Be.Null();
+		}
+
+		[Test]
+		public void WhenSetFormulaWithMultipleLinesThenSetFormulaNode()
+		{
+			var member = ForClass<MyClass>.Property(c => c.Relation);
+			var mapping = new HbmOneToOne();
+			var mapper = new OneToOneMapper(member, mapping);
+			var formula = @"Line1
+Line2";
+			mapper.Formula(formula);
+			mapping.formula1.Should().Be.Null();
+			var hbmFormula = mapping.formula.First();
+			hbmFormula.Text.Length.Should().Be(2);
+			hbmFormula.Text[0].Should().Be("Line1");
+			hbmFormula.Text[1].Should().Be("Line2");
+			mapping.formula1.Should().Be.Null();
+		}
 	}
 }
