@@ -252,13 +252,9 @@ namespace ConfOrmTests.NH
 			var mapping = new HbmProperty();
 			var mapper = new PropertyMapper(member, mapping);
 
-			mapper.Update(true);
-			mapping.update.Should().Be.True();
-			mapping.updateSpecified.Should().Be.True();
-
 			mapper.Update(false);
 			mapping.update.Should().Be.False();
-			mapping.updateSpecified.Should().Be.False();
+			mapping.updateSpecified.Should().Be.True();
 		}
 
 		[Test]
@@ -268,13 +264,9 @@ namespace ConfOrmTests.NH
 			var mapping = new HbmProperty();
 			var mapper = new PropertyMapper(member, mapping);
 
-			mapper.Insert(true);
-			mapping.insert.Should().Be.True();
-			mapping.insertSpecified.Should().Be.True();
-
 			mapper.Insert(false);
 			mapping.insert.Should().Be.False();
-			mapping.insertSpecified.Should().Be.False();
+			mapping.insertSpecified.Should().Be.True();
 		}
 	}
 

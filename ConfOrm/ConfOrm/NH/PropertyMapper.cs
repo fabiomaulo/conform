@@ -238,12 +238,14 @@ namespace ConfOrm.NH
 
 		public void Update(bool consideredInUpdateQuery)
 		{
-			propertyMapping.update = propertyMapping.updateSpecified = consideredInUpdateQuery;
+			propertyMapping.update = consideredInUpdateQuery;
+			propertyMapping.updateSpecified = !consideredInUpdateQuery;
 		}
 
 		public void Insert(bool consideredInInsertQuery)
 		{
-			propertyMapping.insert = propertyMapping.insertSpecified = consideredInInsertQuery;
+			propertyMapping.insert = consideredInInsertQuery;
+			propertyMapping.insertSpecified = !consideredInInsertQuery;
 		}
 
 		#endregion
