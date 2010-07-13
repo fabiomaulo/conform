@@ -33,5 +33,10 @@ namespace ConfOrm.NH.CustomizersImpl
 		{
 			customizersHolder.AddCustomizer(propertyPath, (IMapKeyManyToManyMapper x) => x.ForeignKey(foreignKeyName));
 		}
+
+		public void Formula(string formula)
+		{
+			customizersHolder.AddCustomizer(propertyPath, (IMapKeyManyToManyMapper x) => x.Formula(formula));
+		}
 	}
 }
