@@ -131,5 +131,21 @@ namespace ConfOrmTests.NH
 			mapper.EntityName("myname");
 			mapping.EntityName.Should().Be("myname");
 		}
+
+		[Test]
+		public void CanSetLazyness()
+		{
+			var mapping = new HbmManyToMany();
+			var mapper = new ManyToManyMapper(typeof(MyClass), mapping, null);
+
+			mapper.Lazy(LazyRelation.NoProxy);
+			mapping.lazy.Should().Be(HbmRestrictedLaziness.False);
+
+			mapper.Lazy(LazyRelation.NoLazy);
+			mapping.lazy.Should().Be(HbmRestrictedLaziness.False);
+
+			mapper.Lazy(LazyRelation.Proxy);
+			mapping.lazy.Should().Be(HbmRestrictedLaziness.Proxy);
+		}
 	}
 }

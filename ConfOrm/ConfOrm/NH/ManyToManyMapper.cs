@@ -141,6 +141,27 @@ namespace ConfOrm.NH
 			}
 		}
 
+		public void Lazy(LazyRelation lazyRelation)
+		{
+			switch (lazyRelation.ToHbm())
+			{
+				case HbmLaziness.False:
+					manyToMany.lazy = HbmRestrictedLaziness.False;
+					manyToMany.lazySpecified = true;
+					break;
+				case HbmLaziness.Proxy:
+					manyToMany.lazy = HbmRestrictedLaziness.Proxy;
+					manyToMany.lazySpecified = true;
+					break;
+				case HbmLaziness.NoProxy:
+					manyToMany.lazy = HbmRestrictedLaziness.False;
+					manyToMany.lazySpecified = true;
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+		}
+
 		#endregion
 	}
 }

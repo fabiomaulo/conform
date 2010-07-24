@@ -48,5 +48,10 @@ namespace ConfOrm.NH.CustomizersImpl
 		{
 			customizersHolder.AddCustomizer(propertyPath, (IManyToManyMapper x) => x.Formula(formula));			
 		}
+
+		public void Lazy(LazyRelation lazyRelation)
+		{
+			customizersHolder.AddCustomizer(propertyPath, (IManyToManyMapper x) => x.Lazy(lazyRelation));
+		}
 	}
 }
