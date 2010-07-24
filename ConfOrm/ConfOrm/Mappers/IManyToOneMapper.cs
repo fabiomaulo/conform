@@ -20,5 +20,6 @@ namespace ConfOrm.Mappers
 		void Index(string indexName);
 		void Fetch(FetchMode fetchMode);
 		void Formula(string formula);
+		void Lazy(LazyRelation lazyRelation);
 	}
 }

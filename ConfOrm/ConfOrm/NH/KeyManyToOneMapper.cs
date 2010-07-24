@@ -81,6 +81,27 @@ namespace ConfOrm.NH
 			// not supported by HbmKeyManyToOne
 		}
 
+		public void Lazy(LazyRelation lazyRelation)
+		{
+			switch (lazyRelation.ToHbm())
+			{
+				case HbmLaziness.False:
+					manyToOne.lazy = HbmRestrictedLaziness.False;
+					manyToOne.lazySpecified = true;
+					break;
+				case HbmLaziness.Proxy:
+					manyToOne.lazy = HbmRestrictedLaziness.Proxy;
+					manyToOne.lazySpecified = true;
+					break;
+				case HbmLaziness.NoProxy:
+					manyToOne.lazy = HbmRestrictedLaziness.False;
+					manyToOne.lazySpecified = true;
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+		}
+
 		#endregion
 
 		#region Implementation of IAccessorPropertyMapper

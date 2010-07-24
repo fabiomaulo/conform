@@ -97,6 +97,12 @@ namespace ConfOrm.NH
 			}
 		}
 
+		public void Lazy(LazyRelation lazyRelation)
+		{
+			manyToOne.lazy = lazyRelation.ToHbm();
+			manyToOne.lazySpecified = manyToOne.lazy != HbmLaziness.Proxy;
+		}
+
 		#endregion
 
 		#region Implementation of IAccessorPropertyMapper

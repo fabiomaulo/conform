@@ -253,5 +253,17 @@ namespace ConfOrmTests.NH
 
 			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.Class(typeof (Whatever)));
 		}
+
+		[Test]
+		public void CanSetLazyness()
+		{
+			var hbmMapping = new HbmMapping();
+			var member = typeof(MyClass).GetProperty("TheOtherRelation");
+			var mapping = new HbmManyToOne();
+			var mapper = new ManyToOneMapper(member, mapping, hbmMapping);
+			mapper.Lazy(LazyRelation.NoProxy);
+			mapping.Lazy.Should().Have.Value();
+			mapping.Lazy.Should().Be(HbmLaziness.NoProxy);
+		}
 	}
 }

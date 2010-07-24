@@ -186,5 +186,26 @@ namespace ConfOrmTests.NH
 
 			mapper.Executing(m=> m.Class(typeof(Whatever))).Throws<ArgumentOutOfRangeException>();
 		}
+
+		[Test]
+		public void CanSetLazyness()
+		{
+			var hbmMapping = new HbmMapping();
+			var member = typeof(MyComponent).GetProperty("TheOtherRelation");
+			var mapping = new HbmKeyManyToOne();
+			var mapper = new KeyManyToOneMapper(member, mapping, hbmMapping);
+			
+			mapper.Lazy(LazyRelation.NoProxy);
+			mapping.Lazy.Should().Have.Value();
+			mapping.Lazy.Should().Be(HbmRestrictedLaziness.False);
+
+			mapper.Lazy(LazyRelation.NoLazy);
+			mapping.Lazy.Should().Have.Value();
+			mapping.Lazy.Should().Be(HbmRestrictedLaziness.False);
+
+			mapper.Lazy(LazyRelation.Proxy);
+			mapping.Lazy.Should().Have.Value();
+			mapping.Lazy.Should().Be(HbmRestrictedLaziness.Proxy);
+		}
 	}
 }
