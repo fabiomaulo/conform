@@ -19,5 +19,6 @@ namespace ConfOrm.Mappers
 		void Formula(string formula);
 		void Update(bool consideredInUpdateQuery);
 		void Insert(bool consideredInInsertQuery);
+		void Lazy(bool isLazy);
 	}
 }

@@ -248,6 +248,11 @@ namespace ConfOrm.NH
 			propertyMapping.insertSpecified = !consideredInInsertQuery;
 		}
 
+		public void Lazy(bool isLazy)
+		{
+			propertyMapping.lazy = isLazy;
+		}
+
 		#endregion
 	}
 }

@@ -268,6 +268,18 @@ namespace ConfOrmTests.NH
 			mapping.insert.Should().Be.False();
 			mapping.insertSpecified.Should().Be.True();
 		}
+
+		[Test]
+		public void WhenSetLazyThenSetAttributes()
+		{
+			var member = ForClass<MyClass>.Property(x => x.ReadOnly);
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+
+			mapper.Lazy(true);
+			mapping.lazy.Should().Be.True();
+			mapping.IsLazyProperty.Should().Be.True();
+		}
 	}
 
 	public class MyType: IUserType

@@ -220,6 +220,11 @@ namespace ConfOrm.NH
 			// insert is not supported by HbmKeyProperty
 		}
 
+		public void Lazy(bool isLazy)
+		{
+			// lazy is not supported by HbmKeyProperty
+		}
+
 		#endregion
 	}
 }
