@@ -27,7 +27,7 @@ namespace ConfOrm.Mappers
 		void Filter(string filterName, Action<IFilterMapper> filterMapping);
 	}
 
-	public interface ICollectionPropertiesMapper<TEntity, TElement> where TEntity: class
+	public interface ICollectionPropertiesMapper<TEntity, TElement> : IEntityPropertyMapper where TEntity : class
 	{
 		void Inverse(bool value);
 		void Mutable(bool value);
