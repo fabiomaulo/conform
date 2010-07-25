@@ -28,6 +28,16 @@ namespace ConfOrm.NH.CustomizersImpl
 			customizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper x) => x.Parent(member, parentMapping));
 		}
 
+		public void Update(bool consideredInUpdateQuery)
+		{
+			customizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper x) => x.Update(consideredInUpdateQuery));
+		}
+
+		public void Insert(bool consideredInInsertQuery)
+		{
+			customizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper x) => x.Insert(consideredInInsertQuery));
+		}
+
 		public void Property<TProperty>(Expression<Func<TComponent, TProperty>> property, Action<IPropertyMapper> mapping)
 		{
 			MemberInfo member = TypeExtensions.DecodeMemberAccessExpression(property);

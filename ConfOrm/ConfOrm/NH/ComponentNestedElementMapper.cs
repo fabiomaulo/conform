@@ -37,6 +37,16 @@ namespace ConfOrm.NH
 			parentMapping(mapper);
 		}
 
+		public void Update(bool consideredInUpdateQuery)
+		{
+			// not supported by HbmNestedCompositeElement
+		}
+
+		public void Insert(bool consideredInInsertQuery)
+		{
+			// not supported by HbmNestedCompositeElement
+		}
+
 		public void Property(MemberInfo property, Action<IPropertyMapper> mapping)
 		{
 			var hbmProperty = new HbmProperty { name = property.Name };

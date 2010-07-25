@@ -63,5 +63,28 @@ namespace ConfOrmTests.NH
 			mapper.Parent(typeof(Address).GetProperty("Parent"), pm=> pm.Access(Accessor.Field));
 			component.Parent.access.Should().Contain("field");
 		}
+
+
+		[Test]
+		public void CanSetUpdate()
+		{
+			var mapdoc = new HbmMapping();
+			var component = new HbmComponent();
+			var mapper = new ComponentMapper(component, typeof(Name), mapdoc);
+
+			mapper.Update(false);
+			component.update.Should().Be.False();
+		}
+
+		[Test]
+		public void CanSetInsert()
+		{
+			var mapdoc = new HbmMapping();
+			var component = new HbmComponent();
+			var mapper = new ComponentMapper(component, typeof(Name), mapdoc);
+
+			mapper.Insert(false);
+			component.insert.Should().Be.False();
+		}
 	}
 }

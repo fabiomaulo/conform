@@ -48,6 +48,16 @@ namespace ConfOrm.NH
 			parentMapping(mapper);
 		}
 
+		public void Update(bool consideredInUpdateQuery)
+		{
+			component.update = consideredInUpdateQuery;
+		}
+
+		public void Insert(bool consideredInInsertQuery)
+		{
+			component.insert = consideredInInsertQuery;
+		}
+
 		#endregion
 
 		private IComponentParentMapper GetParentMapper(MemberInfo parent)

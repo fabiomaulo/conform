@@ -7,7 +7,9 @@ namespace ConfOrm.Mappers
 	public interface IComponentAttributesMapper
 	{
 		void Parent(MemberInfo parent);
-		void Parent(MemberInfo parent, Action<IComponentParentMapper> parentMapping);		
+		void Parent(MemberInfo parent, Action<IComponentParentMapper> parentMapping);
+		void Update(bool consideredInUpdateQuery);
+		void Insert(bool consideredInInsertQuery);
 	}
 
 	public interface IComponentMapper : IComponentAttributesMapper, IPropertyContainerMapper
@@ -18,6 +20,8 @@ namespace ConfOrm.Mappers
 	{
 		void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent) where TProperty : class;
 		void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent, Action<IComponentParentMapper> parentMapping) where TProperty : class;
+		void Update(bool consideredInUpdateQuery);
+		void Insert(bool consideredInInsertQuery);
 	}
 
 	public interface IComponentMapper<TComponent> : IComponentAttributesMapper<TComponent>, IPropertyContainerMapper<TComponent> where TComponent : class

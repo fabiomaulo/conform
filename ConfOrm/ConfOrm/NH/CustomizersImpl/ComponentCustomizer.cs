@@ -24,6 +24,16 @@ namespace ConfOrm.NH.CustomizersImpl
 			CustomizersHolder.AddCustomizer(typeof(TComponent), m => m.Parent(member, parentMapping));
 		}
 
+		public void Update(bool consideredInUpdateQuery)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper m) => m.Update(consideredInUpdateQuery));
+		}
+
+		public void Insert(bool consideredInInsertQuery)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper m) => m.Insert(consideredInInsertQuery));
+		}
+
 		#endregion
 	}
 }
