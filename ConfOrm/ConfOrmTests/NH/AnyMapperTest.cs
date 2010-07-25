@@ -275,5 +275,27 @@ namespace ConfOrmTests.NH
 			ActionAssert.Throws<ArgumentException>(mapper.IdType<string>);
 			ActionAssert.Throws<ArgumentException>(()=> mapper.IdType(NHibernateUtil.String));
 		}
+
+		[Test]
+		public void CanSetUpdate()
+		{
+			var hbmMapping = new HbmMapping();
+			var hbmAny = new HbmAny();
+			var mapper = new AnyMapper(null, typeof(int), hbmAny, hbmMapping);
+
+			mapper.Update(false);
+			hbmAny.update.Should().Be.False();
+		}
+
+		[Test]
+		public void CanSetInsert()
+		{
+			var hbmMapping = new HbmMapping();
+			var hbmAny = new HbmAny();
+			var mapper = new AnyMapper(null, typeof(int), hbmAny, hbmMapping);
+
+			mapper.Insert(false);
+			hbmAny.insert.Should().Be.False();
+		}
 	}
 }

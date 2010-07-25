@@ -192,6 +192,16 @@ namespace ConfOrm.NH
 			any.lazy = isLazy;
 		}
 
+		public void Update(bool consideredInUpdateQuery)
+		{
+			any.update = consideredInUpdateQuery;
+		}
+
+		public void Insert(bool consideredInInsertQuery)
+		{
+			any.insert = consideredInInsertQuery;
+		}
+
 		#endregion
 	}
 }

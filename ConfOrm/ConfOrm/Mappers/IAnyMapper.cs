@@ -26,5 +26,7 @@ namespace ConfOrm.Mappers
 		void Cascade(Cascade cascadeStyle);
 		void Index(string indexName);
 		void Lazy(bool isLazy);
+		void Update(bool consideredInUpdateQuery);
+		void Insert(bool consideredInInsertQuery);
 	}
 }
