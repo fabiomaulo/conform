@@ -12,7 +12,7 @@ namespace ConfOrm.NH
 		private readonly IAccessorPropertyMapper accessorMapper;
 		private readonly HbmId hbmId;
 
-		private class NoMemberPropertyMapper : IEntityPropertyMapper
+		private class NoMemberPropertyMapper : IAccessorPropertyMapper
 		{
 			public void Access(Accessor accessor) { }
 

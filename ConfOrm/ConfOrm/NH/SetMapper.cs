@@ -191,6 +191,11 @@ namespace ConfOrm.NH
 			entityPropertyMapper.Access(accessorType);
 		}
 
+		public void OptimisticLock(bool takeInConsiderationForOptimisticLock)
+		{
+			mapping.optimisticlock = takeInConsiderationForOptimisticLock;
+		}
+
 		#endregion
 	}
 }

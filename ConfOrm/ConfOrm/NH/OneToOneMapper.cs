@@ -50,6 +50,11 @@ namespace ConfOrm.NH
 			entityPropertyMapper.Access(accessorType);
 		}
 
+		public void OptimisticLock(bool takeInConsiderationForOptimisticLock)
+		{
+			// not supported by HbmOneToOne
+		}
+
 		#endregion
 
 		public void Lazy(LazyRelation lazyRelation)

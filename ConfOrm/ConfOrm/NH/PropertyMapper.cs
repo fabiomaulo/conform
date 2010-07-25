@@ -49,6 +49,11 @@ namespace ConfOrm.NH
 			entityPropertyMapper.Access(accessorType);
 		}
 
+		public void OptimisticLock(bool takeInConsiderationForOptimisticLock)
+		{
+			propertyMapping.optimisticlock = takeInConsiderationForOptimisticLock;
+		}
+
 		#endregion
 
 		#region Implementation of IPropertyMapper

@@ -126,6 +126,11 @@ namespace ConfOrm.NH
 			entityPropertyMapper.Access(accessorType);
 		}
 
+		public void OptimisticLock(bool takeInConsiderationForOptimisticLock)
+		{
+			// not supported by HbmKeyManyToOne
+		}
+
 		#endregion
 
 		#region Implementation of IColumnsMapper
