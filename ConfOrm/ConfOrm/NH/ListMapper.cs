@@ -12,7 +12,7 @@ namespace ConfOrm.NH
 	{
 		private readonly KeyMapper keyMapper;
 		private readonly HbmList mapping;
-		private readonly IEntityPropertyMapper entityPropertyMapper;
+		private readonly IAccessorPropertyMapper entityPropertyMapper;
 		private readonly IListIndexMapper listIndexMapper;
 		private ICacheMapper cacheMapper;
 
@@ -41,7 +41,7 @@ namespace ConfOrm.NH
 			var listIndex = new HbmListIndex();
 			mapping.Item = listIndex;
 			listIndexMapper = new ListIndexMapper(ownerType, listIndex);
-			entityPropertyMapper = new EntityPropertyMapper(ownerType, mapping.Name, x => mapping.access = x);
+			entityPropertyMapper = new AccessorPropertyMapper(ownerType, mapping.Name, x => mapping.access = x);
 		}
 
 		public Type OwnerType { get; private set; }

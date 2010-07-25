@@ -13,7 +13,7 @@ namespace ConfOrm.NH
 		private readonly KeyMapper keyMapper;
 		private readonly HbmMap mapping;
 		private readonly HbmMapping mapDoc;
-		private readonly IEntityPropertyMapper entityPropertyMapper;
+		private readonly IAccessorPropertyMapper entityPropertyMapper;
 		private ICacheMapper cacheMapper;
 
 		public MapMapper(Type ownerType, Type keyType, Type valueType, HbmMap mapping, HbmMapping mapDoc)
@@ -53,7 +53,7 @@ namespace ConfOrm.NH
 			{
 				mapping.Item = new HbmMapKeyManyToMany { @class = KeyType.GetShortClassName(mapDoc) };
 			}
-			entityPropertyMapper = new EntityPropertyMapper(ownerType, mapping.Name, x => mapping.access = x);
+			entityPropertyMapper = new AccessorPropertyMapper(ownerType, mapping.Name, x => mapping.access = x);
 		}
 
 		public Type OwnerType { get; private set; }

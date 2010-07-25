@@ -13,7 +13,7 @@ namespace ConfOrm.NH
 	{
 		private readonly MemberInfo member;
 		private readonly HbmVersion versionMapping;
-		private readonly EntityPropertyMapper entityPropertyMapper;
+		private readonly IAccessorPropertyMapper entityPropertyMapper;
 
 		public VersionMapper(MemberInfo member, HbmVersion hbmVersion)
 		{
@@ -28,7 +28,7 @@ namespace ConfOrm.NH
 			this.member = member;
 			versionMapping = hbmVersion;
 			versionMapping.name = member.Name;
-			entityPropertyMapper = new EntityPropertyMapper(member.DeclaringType, member.Name, x => versionMapping.access = x);
+			entityPropertyMapper = new AccessorPropertyMapper(member.DeclaringType, member.Name, x => versionMapping.access = x);
 		}
 
 		#region Implementation of IColumnsMapper

@@ -9,7 +9,7 @@ namespace ConfOrm.NH
 {
 	public class KeyManyToOneMapper : IManyToOneMapper
 	{
-		private readonly IEntityPropertyMapper entityPropertyMapper;
+		private readonly IAccessorPropertyMapper entityPropertyMapper;
 		private readonly HbmKeyManyToOne manyToOne;
 		private readonly HbmMapping mapDoc;
 		private readonly MemberInfo member;
@@ -29,7 +29,7 @@ namespace ConfOrm.NH
 			}
 			else
 			{
-				entityPropertyMapper = new EntityPropertyMapper(member.DeclaringType, member.Name, x => manyToOne.access = x);
+				entityPropertyMapper = new AccessorPropertyMapper(member.DeclaringType, member.Name, x => manyToOne.access = x);
 			}
 		}
 

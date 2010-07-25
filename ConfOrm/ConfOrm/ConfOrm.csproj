@@ -140,7 +140,6 @@
     <Compile Include="NH\DiscriminatorMapper.cs" />
     <Compile Include="NH\ElementMapper.cs" />
     <Compile Include="NH\EmptyPatternsAppliersHolder.cs" />
-    <Compile Include="NH\EntityPropertyMapper.cs" />
     <Compile Include="NH\FilterMapper.cs" />
     <Compile Include="NH\Generators.cs" />
     <Compile Include="Mappers\IClassMapper.cs" />

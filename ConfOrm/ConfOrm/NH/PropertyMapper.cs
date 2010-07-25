@@ -13,7 +13,7 @@ namespace ConfOrm.NH
 	{
 		private readonly MemberInfo member;
 		private readonly HbmProperty propertyMapping;
-		private readonly IEntityPropertyMapper entityPropertyMapper;
+		private readonly IAccessorPropertyMapper entityPropertyMapper;
 
 		public PropertyMapper(MemberInfo member, HbmProperty propertyMapping)
 		{
@@ -33,7 +33,7 @@ namespace ConfOrm.NH
 			}
 			else
 			{
-				entityPropertyMapper = new EntityPropertyMapper(member.DeclaringType, member.Name, x => propertyMapping.access = x);
+				entityPropertyMapper = new AccessorPropertyMapper(member.DeclaringType, member.Name, x => propertyMapping.access = x);
 			}
 		}
 

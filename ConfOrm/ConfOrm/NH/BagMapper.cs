@@ -12,7 +12,7 @@ namespace ConfOrm.NH
 	{
 		private readonly KeyMapper keyMapper;
 		private readonly HbmBag mapping;
-		private readonly IEntityPropertyMapper entityPropertyMapper;
+		private readonly IAccessorPropertyMapper entityPropertyMapper;
 		private ICacheMapper cacheMapper;
 
 		public BagMapper(Type ownerType, Type elementType, HbmBag mapping)
@@ -37,7 +37,7 @@ namespace ConfOrm.NH
 				mapping.key = new HbmKey();
 			}
 			keyMapper = new KeyMapper(ownerType, mapping.Key);
-			entityPropertyMapper = new EntityPropertyMapper(ownerType, mapping.Name, x => mapping.access = x);
+			entityPropertyMapper = new AccessorPropertyMapper(ownerType, mapping.Name, x => mapping.access = x);
 		}
 
 		public Type OwnerType { get; private set; }

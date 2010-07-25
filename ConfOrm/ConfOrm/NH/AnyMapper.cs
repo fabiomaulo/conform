@@ -15,7 +15,7 @@ namespace ConfOrm.NH
 		private readonly Type foreignIdType;
 		private readonly HbmAny any;
 		private readonly HbmMapping mapDoc;
-		private readonly IEntityPropertyMapper entityPropertyMapper;
+		private readonly IAccessorPropertyMapper entityPropertyMapper;
 		private readonly ColumnMapper idColumnMapper;
 		private readonly ColumnMapper classColumnMapper;
 
@@ -35,7 +35,7 @@ namespace ConfOrm.NH
 			}
 			else
 			{
-				entityPropertyMapper = new EntityPropertyMapper(member.DeclaringType, member.Name, x => any.access = x);
+				entityPropertyMapper = new AccessorPropertyMapper(member.DeclaringType, member.Name, x => any.access = x);
 			}
 			if (foreignIdType == null)
 			{
