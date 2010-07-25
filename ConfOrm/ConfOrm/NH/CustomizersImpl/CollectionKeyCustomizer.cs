@@ -35,6 +35,11 @@ namespace ConfOrm.NH.CustomizersImpl
 			CustomizersHolder.AddCustomizer(propertyPath, (ICollectionPropertiesMapper m) => m.Key(x => x.PropertyRef(member)));
 		}
 
+		public void Update(bool consideredInUpdateQuery)
+		{
+			CustomizersHolder.AddCustomizer(propertyPath, (ICollectionPropertiesMapper m) => m.Key(x => x.Update(consideredInUpdateQuery)));
+		}
+
 		#endregion
 	}
 }

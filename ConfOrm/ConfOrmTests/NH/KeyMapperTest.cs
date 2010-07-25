@@ -76,5 +76,20 @@ namespace ConfOrmTests.NH
 			var km = new KeyMapper(typeof(Animal), hbm);
 			ActionAssert.Throws<ArgumentOutOfRangeException>(() => km.PropertyRef(ForClass<B>.Property(x => x.Name)));
 		}
+
+		[Test]
+		public void AssignUpdate()
+		{
+			var hbm = new HbmKey();
+			var km = new KeyMapper(typeof(Animal), hbm);
+
+			km.Update(false);
+			hbm.update.Should().Be.False();
+			hbm.updateSpecified.Should().Be.True();
+
+			km.Update(true);
+			hbm.update.Should().Be.True();
+			hbm.updateSpecified.Should().Be.True();
+		}
 	}
 }

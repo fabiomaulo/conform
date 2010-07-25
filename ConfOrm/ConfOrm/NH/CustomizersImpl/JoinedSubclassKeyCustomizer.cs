@@ -32,6 +32,11 @@ namespace ConfOrm.NH.CustomizersImpl
 			CustomizersHolder.AddCustomizer(typeof(TEntity), (IJoinedSubclassAttributesMapper m) => m.Key(x => x.PropertyRef(member)));
 		}
 
+		public void Update(bool consideredInUpdateQuery)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IJoinedSubclassAttributesMapper m) => m.Key(x => x.Update(consideredInUpdateQuery)));
+		}
+
 		#endregion
 	}
 }

@@ -15,6 +15,7 @@ namespace ConfOrm.Mappers
 		void Column(string columnName);
 		void OnDelete(OnDeleteAction deleteAction);
 		void PropertyRef(MemberInfo property);
+		void Update(bool consideredInUpdateQuery);
 	}
 
 	public interface IKeyMapper<TEntity> where TEntity: class
@@ -22,5 +23,6 @@ namespace ConfOrm.Mappers
 		void Column(string columnName);
 		void OnDelete(OnDeleteAction deleteAction);
 		void PropertyRef<TProperty>(Expression<Func<TEntity, TProperty>> propertyGetter);
+		void Update(bool consideredInUpdateQuery);
 	}
 }

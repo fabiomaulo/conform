@@ -60,6 +60,12 @@ namespace ConfOrm.NH
 			mapping.propertyref = property.Name;
 		}
 
+		public void Update(bool consideredInUpdateQuery)
+		{
+			mapping.update = consideredInUpdateQuery;
+			mapping.updateSpecified = true;
+		}
+
 		#endregion
 	}
 }
