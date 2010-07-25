@@ -3,7 +3,7 @@ using ConfOrm.Mappers;
 
 namespace ConfOrm.NH
 {
-	public class NoMemberPropertyMapper : IEntityPropertyMapper
+	public class NoMemberPropertyMapper : IAccessorPropertyMapper
 	{
 		public void Access(Accessor accessor) { }
 
