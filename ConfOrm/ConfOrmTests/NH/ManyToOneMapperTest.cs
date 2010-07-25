@@ -265,5 +265,29 @@ namespace ConfOrmTests.NH
 			mapping.Lazy.Should().Have.Value();
 			mapping.Lazy.Should().Be(HbmLaziness.NoProxy);
 		}
+
+		[Test]
+		public void CanSetUpdate()
+		{
+			var hbmMapping = new HbmMapping();
+			var member = typeof(MyClass).GetProperty("Relation");
+			var hbm = new HbmManyToOne();
+			var mapper = new ManyToOneMapper(member, hbm, hbmMapping);
+
+			mapper.Update(false);
+			hbm.update.Should().Be.False();
+		}
+
+		[Test]
+		public void CanSetInsert()
+		{
+			var hbmMapping = new HbmMapping();
+			var member = typeof(MyClass).GetProperty("Relation");
+			var hbm = new HbmManyToOne();
+			var mapper = new ManyToOneMapper(member, hbm, hbmMapping);
+
+			mapper.Insert(false);
+			hbm.insert.Should().Be.False();
+		}
 	}
 }

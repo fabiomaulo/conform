@@ -103,6 +103,16 @@ namespace ConfOrm.NH
 			manyToOne.lazySpecified = manyToOne.lazy != HbmLaziness.Proxy;
 		}
 
+		public void Update(bool consideredInUpdateQuery)
+		{
+			manyToOne.update = consideredInUpdateQuery;
+		}
+
+		public void Insert(bool consideredInInsertQuery)
+		{
+			manyToOne.insert = consideredInInsertQuery;
+		}
+
 		#endregion
 
 		#region Implementation of IAccessorPropertyMapper

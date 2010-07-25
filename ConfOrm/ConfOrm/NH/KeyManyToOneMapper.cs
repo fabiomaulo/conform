@@ -102,6 +102,16 @@ namespace ConfOrm.NH
 			}
 		}
 
+		public void Update(bool consideredInUpdateQuery)
+		{
+			// not supported by HbmKeyManyToOne
+		}
+
+		public void Insert(bool consideredInInsertQuery)
+		{
+			// not supported by HbmKeyManyToOne
+		}
+
 		#endregion
 
 		#region Implementation of IAccessorPropertyMapper

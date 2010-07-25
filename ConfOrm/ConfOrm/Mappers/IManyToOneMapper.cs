@@ -21,5 +21,7 @@ namespace ConfOrm.Mappers
 		void Fetch(FetchMode fetchMode);
 		void Formula(string formula);
 		void Lazy(LazyRelation lazyRelation);
+		void Update(bool consideredInUpdateQuery);
+		void Insert(bool consideredInInsertQuery);
 	}
 }
