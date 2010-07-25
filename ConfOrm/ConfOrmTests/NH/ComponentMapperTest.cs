@@ -86,5 +86,16 @@ namespace ConfOrmTests.NH
 			mapper.Insert(false);
 			component.insert.Should().Be.False();
 		}
+
+		[Test]
+		public void CanSetLazy()
+		{
+			var mapdoc = new HbmMapping();
+			var component = new HbmComponent();
+			var mapper = new ComponentMapper(component, typeof(Name), mapdoc);
+
+			mapper.Lazy(true);
+			component.lazy.Should().Be.True();
+		}
 	}
 }

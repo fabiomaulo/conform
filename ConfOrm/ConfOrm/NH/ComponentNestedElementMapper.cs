@@ -47,6 +47,11 @@ namespace ConfOrm.NH
 			// not supported by HbmNestedCompositeElement
 		}
 
+		public void Lazy(bool isLazy)
+		{
+			// not supported by HbmNestedCompositeElement
+		}
+
 		public void Property(MemberInfo property, Action<IPropertyMapper> mapping)
 		{
 			var hbmProperty = new HbmProperty { name = property.Name };

@@ -58,6 +58,11 @@ namespace ConfOrm.NH
 			component.insert = consideredInInsertQuery;
 		}
 
+		public void Lazy(bool isLazy)
+		{
+			component.lazy = isLazy;
+		}
+
 		#endregion
 
 		private IComponentParentMapper GetParentMapper(MemberInfo parent)

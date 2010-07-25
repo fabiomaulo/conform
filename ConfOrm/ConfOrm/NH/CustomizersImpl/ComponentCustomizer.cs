@@ -34,6 +34,11 @@ namespace ConfOrm.NH.CustomizersImpl
 			CustomizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper m) => m.Insert(consideredInInsertQuery));
 		}
 
+		public void Lazy(bool isLazy)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper m) => m.Lazy(isLazy));
+		}
+
 		#endregion
 	}
 }

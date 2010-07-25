@@ -38,6 +38,11 @@ namespace ConfOrm.NH.CustomizersImpl
 			customizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper x) => x.Insert(consideredInInsertQuery));
 		}
 
+		public void Lazy(bool isLazy)
+		{
+			customizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper x) => x.Lazy(isLazy));
+		}
+
 		public void Property<TProperty>(Expression<Func<TComponent, TProperty>> property, Action<IPropertyMapper> mapping)
 		{
 			MemberInfo member = TypeExtensions.DecodeMemberAccessExpression(property);
