@@ -40,5 +40,20 @@ namespace ConfOrm.NH.CustomizersImpl
 		}
 
 		#endregion
+
+		public void Access(Accessor accessor)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper m) => m.Access(accessor));
+		}
+
+		public void Access(Type accessorType)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper m) => m.Access(accessorType));
+		}
+
+		public void OptimisticLock(bool takeInConsiderationForOptimisticLock)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper m) => m.OptimisticLock(takeInConsiderationForOptimisticLock));
+		}
 	}
 }

@@ -66,5 +66,20 @@ namespace ConfOrm.NH.CustomizersImpl
 			MemberInfo memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
 			customizersHolder.AddCustomizer(new PropertyPath(propertyPath, memberOf), mapping);
 		}
+
+		public void Access(Accessor accessor)
+		{
+			customizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper x) => x.Access(accessor));
+		}
+
+		public void Access(Type accessorType)
+		{
+			customizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper x) => x.Access(accessorType));
+		}
+
+		public void OptimisticLock(bool takeInConsiderationForOptimisticLock)
+		{
+			customizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper x) => x.OptimisticLock(takeInConsiderationForOptimisticLock));
+		}
 	}
 }

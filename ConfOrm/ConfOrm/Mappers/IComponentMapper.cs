@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace ConfOrm.Mappers
 {
-	public interface IComponentAttributesMapper
+	public interface IComponentAttributesMapper : IEntityPropertyMapper
 	{
 		void Parent(MemberInfo parent);
 		void Parent(MemberInfo parent, Action<IComponentParentMapper> parentMapping);
@@ -17,7 +17,7 @@ namespace ConfOrm.Mappers
 	{
 	}
 
-	public interface IComponentAttributesMapper<TComponent>
+	public interface IComponentAttributesMapper<TComponent> : IEntityPropertyMapper
 	{
 		void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent) where TProperty : class;
 		void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent, Action<IComponentParentMapper> parentMapping) where TProperty : class;

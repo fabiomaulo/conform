@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using ConfOrm;
+using ConfOrm.Mappers;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
@@ -23,6 +25,14 @@ namespace ConfOrmTests.NH
 
 		private class Number
 		{
+			public Address Parent { get; set; }
+			public int Block { get; set; }
+			public int Dir { get; set; }
+			public Number2 NestNumber { get; set; }
+		}
+
+		private class Number2
+		{
 			public int Block { get; set; }
 			public int Dir { get; set; }
 		}
@@ -32,7 +42,7 @@ namespace ConfOrmTests.NH
 		{
 			var mapdoc = new HbmMapping();
 			var component = new HbmNestedCompositeElement();
-			var mapper = new ComponentNestedElementMapper(typeof(Address), mapdoc, component);
+			var mapper = new ComponentNestedElementMapper(typeof(Number), mapdoc, component, ForClass<Address>.Property(a=> a.Number));
 			mapper.Parent(typeof(Address).GetProperty("Parent"));
 			component.Parent.Should().Not.Be.Null();
 			component.Parent.name.Should().Be.EqualTo("Parent");
@@ -43,10 +53,13 @@ namespace ConfOrmTests.NH
 		{
 			var mapdoc = new HbmMapping();
 			var component = new HbmNestedCompositeElement();
-			var mapper = new ComponentNestedElementMapper(typeof(Address), mapdoc, component);
-			mapper.Property(typeof(Address).GetProperty("Street"), x => { });
-			component.Properties.Should().Have.Count.EqualTo(1);
-			component.Properties.First().Name.Should().Be.EqualTo("Street");
+			var mapper = new ComponentNestedElementMapper(typeof(Number), mapdoc, component, ForClass<Address>.Property(a => a.Number));
+			
+			mapper.Property(ForClass<Number>.Property(a => a.Block), x => { });
+			mapper.Property(ForClass<Number>.Property(a => a.Dir), x => { });
+
+			component.Properties.Should().Have.Count.EqualTo(2);
+			component.Properties.Select(cp => cp.Name).Should().Have.SameValuesAs("Block", "Dir");
 		}
 
 		[Test]
@@ -54,9 +67,9 @@ namespace ConfOrmTests.NH
 		{
 			var mapdoc = new HbmMapping();
 			var component = new HbmNestedCompositeElement();
-			var mapper = new ComponentNestedElementMapper(typeof(Address), mapdoc, component);
+			var mapper = new ComponentNestedElementMapper(typeof(Number), mapdoc, component, ForClass<Address>.Property(a => a.Number));
 			var called = false;
-			mapper.Property(typeof(Address).GetProperty("Street"), x => called = true);
+			mapper.Property(ForClass<Number>.Property(a => a.Block), x => called = true);
 			called.Should().Be.True();
 		}
 
@@ -65,8 +78,8 @@ namespace ConfOrmTests.NH
 		{
 			var mapdoc = new HbmMapping();
 			var component = new HbmNestedCompositeElement();
-			var mapper = new ComponentNestedElementMapper(typeof(Address), mapdoc, component);
-			mapper.ManyToOne(typeof(Address).GetProperty("Parent"), x => { });
+			var mapper = new ComponentNestedElementMapper(typeof(Number), mapdoc, component, ForClass<Address>.Property(a => a.Number));
+			mapper.ManyToOne(ForClass<Number>.Property(a => a.Parent), x => { });
 			component.Properties.Should().Have.Count.EqualTo(1);
 			component.Properties.First().Name.Should().Be.EqualTo("Parent");
 			component.Properties.First().Should().Be.OfType<HbmManyToOne>();
@@ -77,10 +90,10 @@ namespace ConfOrmTests.NH
 		{
 			var mapdoc = new HbmMapping();
 			var component = new HbmNestedCompositeElement();
-			var mapper = new ComponentNestedElementMapper(typeof(Address), mapdoc, component);
-			mapper.Component(typeof(Address).GetProperty("Number"), x => { });
+			var mapper = new ComponentNestedElementMapper(typeof(Number2), mapdoc, component, ForClass<Number>.Property(a => a.NestNumber));
+			mapper.Component(ForClass<Number>.Property(a => a.NestNumber), x => { });
 			component.Properties.Should().Have.Count.EqualTo(1);
-			component.Properties.First().Name.Should().Be.EqualTo("Number");
+			component.Properties.First().Name.Should().Be.EqualTo("NestNumber");
 			component.Properties.First().Should().Be.OfType<HbmNestedCompositeElement>();
 		}
 
@@ -89,11 +102,20 @@ namespace ConfOrmTests.NH
 		{
 			var mapdoc = new HbmMapping();
 			var component = new HbmNestedCompositeElement();
-			var mapper = new ComponentNestedElementMapper(typeof(Address), mapdoc, component);
+			var mapper = new ComponentNestedElementMapper(typeof(Number2), mapdoc, component, ForClass<Number>.Property(a => a.NestNumber));
 			var called = false;
-			mapper.Component(typeof(Address).GetProperty("Number"), x => called = true);
+			mapper.Component(ForClass<Number>.Property(a => a.NestNumber), x => called = true);
 			called.Should().Be.True();
 		}
 
+		[Test]
+		public void CanSetComponentAccessor()
+		{
+			var mapdoc = new HbmMapping();
+			var component = new HbmNestedCompositeElement();
+			var mapper = new ComponentNestedElementMapper(typeof(Number), mapdoc, component, ForClass<Address>.Property(a => a.Number));
+			mapper.Access(Accessor.Field);
+			component.access.Should().Contain("field");
+		}
 	}
 }

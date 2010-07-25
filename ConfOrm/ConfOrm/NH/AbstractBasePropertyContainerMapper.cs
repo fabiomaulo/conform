@@ -49,7 +49,7 @@ namespace ConfOrm.NH
 		public virtual void Component(MemberInfo property, Action<IComponentMapper> mapping)
 		{
 			var hbm = new HbmComponent { name = property.Name };
-			mapping(new ComponentMapper(hbm, property.GetPropertyOrFieldType(), MapDoc));
+			mapping(new ComponentMapper(hbm, property.GetPropertyOrFieldType(), property, MapDoc));
 			AddProperty(hbm);
 		}
 

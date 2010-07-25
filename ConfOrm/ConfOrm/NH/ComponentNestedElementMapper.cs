@@ -12,12 +12,14 @@ namespace ConfOrm.NH
 		private readonly Type componentType;
 		protected readonly HbmMapping mapDoc;
 		private IComponentParentMapper parentMapper;
+		private readonly IAccessorPropertyMapper accessorPropertyMapper;
 
-		public ComponentNestedElementMapper(Type componentType, HbmMapping mapDoc, HbmNestedCompositeElement component)
+		public ComponentNestedElementMapper(Type componentType, HbmMapping mapDoc, HbmNestedCompositeElement component, MemberInfo declaringComponentMember)
 		{
 			this.componentType = componentType;
 			this.mapDoc = mapDoc;
 			this.component = component;
+			accessorPropertyMapper = new AccessorPropertyMapper(declaringComponentMember.DeclaringType, declaringComponentMember.Name, x => component.access = x);
 		}
 
 		#region Implementation of IComponentElementMapper
@@ -64,7 +66,7 @@ namespace ConfOrm.NH
 			var nestedComponentType = property.GetPropertyOrFieldType();
 			var hbm = new HbmNestedCompositeElement
 			          	{name = property.Name, @class = nestedComponentType.GetShortClassName(mapDoc)};
-			mapping(new ComponentNestedElementMapper(nestedComponentType, mapDoc, hbm));
+			mapping(new ComponentNestedElementMapper(nestedComponentType, mapDoc, hbm, property));
 			AddProperty(hbm);
 		}
 
@@ -95,6 +97,21 @@ namespace ConfOrm.NH
 			}
 			component.parent = new HbmParent();
 			return parentMapper = new ComponentParentMapper(component.parent, parent);
+		}
+
+		public void Access(Accessor accessor)
+		{
+			accessorPropertyMapper.Access(accessor);
+		}
+
+		public void Access(Type accessorType)
+		{
+			accessorPropertyMapper.Access(accessorType);
+		}
+
+		public void OptimisticLock(bool takeInConsiderationForOptimisticLock)
+		{
+			// not supported by HbmNestedCompositeElement
 		}
 	}
 }

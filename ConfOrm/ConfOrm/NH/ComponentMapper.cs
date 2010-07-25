@@ -10,11 +10,14 @@ namespace ConfOrm.NH
 	{
 		private ComponentParentMapper parentMapper;
 		private readonly HbmComponent component;
+		private readonly IAccessorPropertyMapper accessorPropertyMapper;
 
-		public ComponentMapper(HbmComponent component, Type componentType, HbmMapping mapDoc) : base(componentType, mapDoc)
+		public ComponentMapper(HbmComponent component, Type componentType, MemberInfo declaringTypeMember, HbmMapping mapDoc)
+			: base(componentType, mapDoc)
 		{
 			this.component = component;
 			component.@class = componentType.GetShortClassName(mapDoc);
+			accessorPropertyMapper = new AccessorPropertyMapper(declaringTypeMember.DeclaringType, declaringTypeMember.Name, x => component.access = x);
 		}
 
 		#region Overrides of AbstractPropertyContainerMapper
@@ -73,6 +76,21 @@ namespace ConfOrm.NH
 			}
 			component.parent = new HbmParent();
 			return parentMapper = new ComponentParentMapper(component.parent, parent);
+		}
+
+		public void Access(Accessor accessor)
+		{
+			accessorPropertyMapper.Access(accessor);
+		}
+
+		public void Access(Type accessorType)
+		{
+			accessorPropertyMapper.Access(accessorType);
+		}
+
+		public void OptimisticLock(bool takeInConsiderationForOptimisticLock)
+		{
+			component.optimisticlock = takeInConsiderationForOptimisticLock;
 		}
 	}
 }

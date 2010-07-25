@@ -64,7 +64,7 @@ namespace ConfOrm.NH
 			var nestedComponentType = property.GetPropertyOrFieldType();
 			var hbm = new HbmNestedCompositeElement
 			          	{name = property.Name, @class = nestedComponentType.GetShortClassName(mapDoc)};
-			mapping(new ComponentNestedElementMapper(nestedComponentType, mapDoc, hbm));
+			mapping(new ComponentNestedElementMapper(nestedComponentType, mapDoc, hbm, property));
 			AddProperty(hbm);
 		}
 
@@ -95,6 +95,21 @@ namespace ConfOrm.NH
 			}
 			component.parent = new HbmParent();
 			return parentMapper = new ComponentParentMapper(component.parent, parent);
+		}
+
+		public void Access(Accessor accessor)
+		{
+			// not supported by HbmCompositeElement
+		}
+
+		public void Access(Type accessorType)
+		{
+			// not supported by HbmCompositeElement
+		}
+
+		public void OptimisticLock(bool takeInConsiderationForOptimisticLock)
+		{
+			// not supported by HbmCompositeElement
 		}
 	}
 }
