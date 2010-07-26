@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ConfOrm;
+using ConfOrm.Mappers;
 using ConfOrm.NH;
 using Moq;
 using NHibernate.Cfg.MappingSchema;
@@ -11,7 +12,7 @@ using SharpTestsEx;
 
 namespace ConfOrmTests.NH.MapperTests
 {
-	public class ComponentPropertyAccessorTest
+	public class ComponentPropertyAccessorCustomizationTest
 	{
 		private class MyClass
 		{
@@ -50,47 +51,48 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsTablePerClass(It.IsAny<Type>())).Returns(true);
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
 			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
-			orm.Setup(m => m.IsBag(It.Is<MemberInfo>(mi => mi == ForClass<MyClass>.Property(mc=> mc.Components)))).Returns(true);
+			orm.Setup(m => m.IsBag(It.Is<MemberInfo>(mi => mi == ForClass<MyClass>.Property(mc => mc.Components)))).Returns(true);
 			orm.Setup(m => m.IsComponent(It.Is<Type>(t => t == typeof(ComponentLevel0)))).Returns(true);
 			orm.Setup(m => m.IsComponent(It.Is<Type>(t => t == typeof(ComponentLevel1)))).Returns(true);
 			return orm;
 		}
 
-		private HbmMapping GetMapping(IDomainInspector domainInspector)
-		{
-			var mapper = new Mapper(domainInspector);
-			return mapper.CompileMappingFor(new[] { typeof(MyClass) });
-		}
-
 		[Test]
-		public void WhenComponentDoesNotHaveSetterThenMapToFieldByDefault()
+		public void WhenCustomizeAccessorForComponentThenMapToField()
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();
 
 			var domainInspector = orm.Object;
-			HbmMapping mapping = GetMapping(domainInspector);
+			var mapper = new Mapper(domainInspector);
 
+			mapper.Class<MyClass>(cm=> cm.Component(myclass=> myclass.ComponentLevel0, compo=> compo.Access(Accessor.Field)));
+			
+			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(MyClass) });
 			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("MyClass"));
 			var relation = rc.Properties.First(p => p.Name == "ComponentLevel0");
 			relation.Should().Be.OfType<HbmComponent>();
 			var component = (HbmComponent)relation;
-			component.access.Should().Contain("nosetter");
+			component.access.Should().Contain("field");
 		}
 
 		[Test]
-		public void WhenNestedCompositeElementDoesNotHaveSetterThenMapToFieldByDefault()
+		public void WhenCustomizeNestedCompositeElementAccessorThenMapToField()
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();
 
 			var domainInspector = orm.Object;
-			HbmMapping mapping = GetMapping(domainInspector);
+			var mapper = new Mapper(domainInspector);
 
+			mapper.Component<ComponentLevel0>(cm => cm.Component(myclass => myclass.ComponentLevel1, compo => compo.Access(Accessor.Field)));
+
+			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(MyClass) });
 			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("MyClass"));
-			var collection = (HbmBag) rc.Properties.First(p => p.Name == "Components");
+			var collection = (HbmBag)rc.Properties.First(p => p.Name == "Components");
 			var relation = (HbmCompositeElement)collection.ElementRelationship;
 			relation.Should().Be.OfType<HbmCompositeElement>();
 			var component = (HbmNestedCompositeElement)relation.Properties.First(p => p.Name == "ComponentLevel1");
-			component.access.Should().Contain("nosetter");
+			component.access.Should().Contain("field");
 		}
+
 	}
 }
