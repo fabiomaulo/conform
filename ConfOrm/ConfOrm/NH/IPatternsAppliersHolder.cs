@@ -52,6 +52,8 @@ namespace ConfOrm.NH
 
 		ICollection<IPatternApplier<MemberInfo, IMapKeyMapper>> MapKey { get; }
 		ICollection<IPatternApplier<PropertyPath, IMapKeyMapper>> MapKeyPath { get; }
+		ICollection<IPatternApplier<MemberInfo, IComponentAttributesMapper>> ComponentProperty { get; }
+		ICollection<IPatternApplier<PropertyPath, IComponentAttributesMapper>> ComponentPropertyPath { get; }
 
 		#endregion
 	}

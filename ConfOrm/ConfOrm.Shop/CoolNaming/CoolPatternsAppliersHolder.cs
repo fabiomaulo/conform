@@ -88,6 +88,12 @@ namespace ConfOrm.Shop.CoolNaming
 			                  		new MemberNoSetterToFieldAccessorApplier<IComponentParentMapper>(),
 			                  		new MemberToFieldAccessorApplier<IComponentParentMapper>(),
 			                  	};
+			componentProperty = new List<IPatternApplier<MemberInfo, IComponentAttributesMapper>>
+			                    	{
+			                    		new MemberReadOnlyAccessorApplier<IComponentAttributesMapper>(),
+			                    		new MemberNoSetterToFieldAccessorApplier<IComponentAttributesMapper>(),
+			                    		new MemberToFieldAccessorApplier<IComponentAttributesMapper>()
+			                    	};
 		}
 	}
 }

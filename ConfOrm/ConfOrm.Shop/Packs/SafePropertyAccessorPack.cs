@@ -54,6 +54,12 @@ namespace ConfOrm.Shop.Packs
 			                  		new MemberNoSetterToFieldAccessorApplier<IComponentParentMapper>(),
 			                  		new MemberToFieldAccessorApplier<IComponentParentMapper>(),
 			                  	};
+			componentProperty = new List<IPatternApplier<MemberInfo, IComponentAttributesMapper>>
+			                    	{
+			                    		new MemberReadOnlyAccessorApplier<IComponentAttributesMapper>(),
+			                    		new MemberNoSetterToFieldAccessorApplier<IComponentAttributesMapper>(),
+			                    		new MemberToFieldAccessorApplier<IComponentAttributesMapper>()
+			                    	};
 		}
 	}
 }

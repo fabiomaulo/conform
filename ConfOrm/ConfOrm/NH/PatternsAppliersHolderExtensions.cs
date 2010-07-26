@@ -163,6 +163,8 @@ namespace ConfOrm.NH
 			MergeAppliersCollection(source.Subclass, destination.Subclass);
 			MergeAppliersCollection(source.UnionSubclass, destination.UnionSubclass);
 			MergeAppliersCollection(source.Component, destination.Component);
+			MergeAppliersCollection(source.ComponentProperty, destination.ComponentProperty);
+			MergeAppliersCollection(source.ComponentPropertyPath, destination.ComponentPropertyPath);
 
 			MergeAppliersCollection(source.Poid, destination.Poid);
 			MergeAppliersCollection(source.Version, destination.Version);
@@ -242,6 +244,8 @@ namespace ConfOrm.NH
 			UnionWithAppliersCollection(source.Subclass, destination.Subclass);
 			UnionWithAppliersCollection(source.UnionSubclass, destination.UnionSubclass);
 			UnionWithAppliersCollection(source.Component, destination.Component);
+			UnionWithAppliersCollection(source.ComponentProperty, destination.ComponentProperty);
+			UnionWithAppliersCollection(source.ComponentPropertyPath, destination.ComponentPropertyPath);
 
 			UnionWithAppliersCollection(source.Poid, destination.Poid);
 			UnionWithAppliersCollection(source.Version, destination.Version);

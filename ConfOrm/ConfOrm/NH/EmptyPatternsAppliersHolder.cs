@@ -36,6 +36,8 @@ namespace ConfOrm.NH
 		protected List<IPatternApplier<MemberInfo, IMapKeyMapper>> mapKey;
 		protected List<IPatternApplier<PropertyPath, IMapKeyMapper>> mapKeyPath;
 		protected List<IPatternApplier<Type, IComponentAttributesMapper>> component;
+		protected List<IPatternApplier<MemberInfo, IComponentAttributesMapper>> componentProperty;
+		protected List<IPatternApplier<PropertyPath, IComponentAttributesMapper>> componentPropertyPath;
 		protected List<IPatternApplier<MemberInfo, IComponentParentMapper>> componentParent;
 
 		public EmptyPatternsAppliersHolder()
@@ -45,6 +47,8 @@ namespace ConfOrm.NH
 			subclass = new List<IPatternApplier<Type, ISubclassAttributesMapper>>();
 			unionSubclass = new List<IPatternApplier<Type, IUnionSubclassAttributesMapper>>();
 			component = new List<IPatternApplier<Type, IComponentAttributesMapper>>();
+			componentProperty = new List<IPatternApplier<MemberInfo, IComponentAttributesMapper>>();
+			componentPropertyPath = new List<IPatternApplier<PropertyPath, IComponentAttributesMapper>>();
 
 			poid = new List<IPatternApplier<MemberInfo, IIdMapper>>();
 			property = new List<IPatternApplier<MemberInfo, IPropertyMapper>>();
@@ -96,6 +100,16 @@ namespace ConfOrm.NH
 		public ICollection<IPatternApplier<Type, IComponentAttributesMapper>> Component
 		{
 			get { return component; }
+		}
+
+		public ICollection<IPatternApplier<MemberInfo, IComponentAttributesMapper>> ComponentProperty
+		{
+			get { return componentProperty; }
+		}
+
+		public ICollection<IPatternApplier<PropertyPath, IComponentAttributesMapper>> ComponentPropertyPath
+		{
+			get { return componentPropertyPath; }
 		}
 
 		public ICollection<IPatternApplier<MemberInfo, IIdMapper>> Poid
