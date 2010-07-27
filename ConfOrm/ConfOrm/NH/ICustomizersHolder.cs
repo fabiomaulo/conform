@@ -21,6 +21,7 @@ namespace ConfOrm.NH
 		void AddCustomizer(PropertyPath member, Action<IListPropertiesMapper> propertyCustomizer);
 		void AddCustomizer(PropertyPath member, Action<IMapPropertiesMapper> propertyCustomizer);
 		void AddCustomizer(PropertyPath member, Action<ICollectionPropertiesMapper> propertyCustomizer);
+		void AddCustomizer(PropertyPath member, Action<IComponentAttributesMapper> propertyCustomizer);
 		
 		#region Collection Element relations
 
@@ -52,6 +53,7 @@ namespace ConfOrm.NH
 		void InvokeCustomizers(PropertyPath member, IBagPropertiesMapper mapper);
 		void InvokeCustomizers(PropertyPath member, IListPropertiesMapper mapper);
 		void InvokeCustomizers(PropertyPath member, IMapPropertiesMapper mapper);
+		void InvokeCustomizers(PropertyPath member, IComponentAttributesMapper mapper);
 
 		#region Collection Element relations invokers
 

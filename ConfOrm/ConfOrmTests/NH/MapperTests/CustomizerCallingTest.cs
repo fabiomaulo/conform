@@ -23,6 +23,7 @@ namespace ConfOrmTests.NH.MapperTests
 			public IDictionary<string, MyOneToManyRelated> Map { get; set; }
 			public MyManyToOneRelated ManyToOne { get; set; }
 			public MyOneToOneRelated OneToOne { get; set; }
+			public MyComponent Component { get; set; }
 			public object Any { get; set; }
 		}
 		private class MyManyToOneRelated
@@ -37,15 +38,19 @@ namespace ConfOrmTests.NH.MapperTests
 		{
 			public int Id { get; set; }
 		}
+		private class MyComponent
+		{
+		}
 
 		private Mock<IDomainInspector> GetMockedDomainInspector()
 		{
 			var orm = new Mock<IDomainInspector>();
-			orm.Setup(m => m.IsEntity(It.IsAny<Type>())).Returns(true);
+			orm.Setup(m => m.IsEntity(It.Is<Type>(t=> t != typeof(MyComponent)))).Returns(true);
 			orm.Setup(m => m.IsRootEntity(It.IsAny<Type>())).Returns(true);
 			orm.Setup(m => m.IsTablePerClass(It.IsAny<Type>())).Returns(true);
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
 			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
+			orm.Setup(m => m.IsComponent(It.Is<Type>(t => t == typeof(MyComponent)))).Returns(true);
 			orm.Setup(m => m.IsBag(It.Is<MemberInfo>(p => p == typeof(MyClass).GetProperty("Bag")))).Returns(true);
 			orm.Setup(m => m.IsList(It.Is<MemberInfo>(p => p == typeof(MyClass).GetProperty("List")))).Returns(true);
 			orm.Setup(m => m.IsSet(It.Is<MemberInfo>(p => p == typeof(MyClass).GetProperty("Set")))).Returns(true);
@@ -69,6 +74,7 @@ namespace ConfOrmTests.NH.MapperTests
 			bool manyToOneCalled = false;
 			bool oneToOneCalled = false;
 			bool anyCalled = false;
+			bool componentCalled = false;
 
 			mapper.Customize<MyClass>(x =>
 				{
@@ -80,6 +86,7 @@ namespace ConfOrmTests.NH.MapperTests
 					x.ManyToOne(mc => mc.ManyToOne, pm => manyToOneCalled = true);
 					x.OneToOne(mc => mc.OneToOne, pm => oneToOneCalled = true);
 					x.Any(mc => mc.Any, pm => anyCalled = true);
+					x.Component(mc => mc.Component, pm => componentCalled = true);
 				});
 
 			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(MyClass) });
@@ -91,6 +98,7 @@ namespace ConfOrmTests.NH.MapperTests
 			manyToOneCalled.Should().Be.True();
 			oneToOneCalled.Should().Be.True();
 			anyCalled.Should().Be.True();
+			componentCalled.Should().Be.True();
 		}
 	}
 }

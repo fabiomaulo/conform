@@ -63,6 +63,9 @@ namespace ConfOrm.NH
 		private readonly Dictionary<PropertyPath, List<Action<IMapKeyMapper>>> mapKeyElementCustomizers =
 			new Dictionary<PropertyPath, List<Action<IMapKeyMapper>>>();
 
+		private readonly Dictionary<PropertyPath, List<Action<IComponentAttributesMapper>>> componentPropertyCustomizers =
+			new Dictionary<PropertyPath, List<Action<IComponentAttributesMapper>>>();
+
 		#region ICustomizersHolder Members
 
 		public void AddCustomizer(Type type, Action<IClassAttributesMapper> classCustomizer)
@@ -133,6 +136,11 @@ namespace ConfOrm.NH
 		public void AddCustomizer(PropertyPath member, Action<ICollectionPropertiesMapper> propertyCustomizer)
 		{
 			AddCustomizer(collectionCustomizers, member, propertyCustomizer);
+		}
+
+		public void AddCustomizer(PropertyPath member, Action<IComponentAttributesMapper> propertyCustomizer)
+		{
+			AddCustomizer(componentPropertyCustomizers, member, propertyCustomizer);
 		}
 
 		public void AddCustomizer(PropertyPath member, Action<IManyToManyMapper> collectionRelationManyToManyCustomizer)
@@ -227,6 +235,11 @@ namespace ConfOrm.NH
 		{
 			InvokeCustomizers(collectionCustomizers, member, mapper);
 			InvokeCustomizers(mapCustomizers, member, mapper);
+		}
+
+		public void InvokeCustomizers(PropertyPath member, IComponentAttributesMapper mapper)
+		{
+			InvokeCustomizers(componentPropertyCustomizers, member, mapper);
 		}
 
 		public void InvokeCustomizers(PropertyPath member, IManyToManyMapper mapper)

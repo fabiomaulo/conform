@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 using ConfOrm.Mappers;
 
 namespace ConfOrm.NH.CustomizersImpl
@@ -54,6 +55,14 @@ namespace ConfOrm.NH.CustomizersImpl
 			customizersHolder.AddCustomizer(new PropertyPath(null, member), mapping);
 			var memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
 			customizersHolder.AddCustomizer(new PropertyPath(null, memberOf), mapping);
+		}
+
+		public void Component<TProperty>(Expression<Func<TPersistent, TProperty>> property, Action<IComponentAttributesMapper<TProperty>> mapping) where TProperty : class
+		{
+			MemberInfo member = TypeExtensions.DecodeMemberAccessExpression(property);
+			mapping(new ComponentCustomizer<TProperty>(customizersHolder, new PropertyPath(null, member)));
+			MemberInfo memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
+			mapping(new ComponentCustomizer<TProperty>(customizersHolder, new PropertyPath(null, memberOf)));
 		}
 
 		#endregion

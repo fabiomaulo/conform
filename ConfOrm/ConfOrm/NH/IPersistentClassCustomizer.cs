@@ -15,5 +15,8 @@ namespace ConfOrm.NH
 		void Collection<TElement>(Expression<Func<TPersistent, IEnumerable<TElement>>> property,
 											 Action<ICollectionPropertiesMapper<TPersistent, TElement>> collectionMapping);
 		void Any<TProperty>(Expression<Func<TPersistent, TProperty>> property, Action<IAnyMapper> mapping) where TProperty : class;
+
+		void Component<TComponent>(Expression<Func<TPersistent, TComponent>> property,
+															 Action<IComponentAttributesMapper<TComponent>> mapping) where TComponent : class;
 	}
 }

@@ -21,39 +21,51 @@ namespace ConfOrm.NH.CustomizersImpl
 		public void Parent<TProperty>(Expression<Func<TComponent, TProperty>> parent, Action<IComponentParentMapper> parentMapping) where TProperty : class
 		{
 			MemberInfo member = TypeExtensions.DecodeMemberAccessExpression(parent);
-			CustomizersHolder.AddCustomizer(typeof(TComponent), m => m.Parent(member, parentMapping));
+			AddCustomizer(m => m.Parent(member, parentMapping));
 		}
 
 		public void Update(bool consideredInUpdateQuery)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper m) => m.Update(consideredInUpdateQuery));
+			AddCustomizer(m => m.Update(consideredInUpdateQuery));
 		}
 
 		public void Insert(bool consideredInInsertQuery)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper m) => m.Insert(consideredInInsertQuery));
+			AddCustomizer(m => m.Insert(consideredInInsertQuery));
 		}
 
 		public void Lazy(bool isLazy)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper m) => m.Lazy(isLazy));
+			AddCustomizer(m => m.Lazy(isLazy));
 		}
 
 		#endregion
 
 		public void Access(Accessor accessor)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper m) => m.Access(accessor));
+			AddCustomizer(m => m.Access(accessor));
 		}
 
 		public void Access(Type accessorType)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper m) => m.Access(accessorType));
+			AddCustomizer(m => m.Access(accessorType));
 		}
 
 		public void OptimisticLock(bool takeInConsiderationForOptimisticLock)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TComponent), (IComponentAttributesMapper m) => m.OptimisticLock(takeInConsiderationForOptimisticLock));
+			AddCustomizer(m => m.OptimisticLock(takeInConsiderationForOptimisticLock));
+		}
+
+		private void AddCustomizer(Action<IComponentAttributesMapper> classCustomizer)
+		{
+			if (PropertyPath == null)
+			{
+				CustomizersHolder.AddCustomizer(typeof(TComponent), classCustomizer);
+			}
+			else
+			{
+				CustomizersHolder.AddCustomizer(PropertyPath, classCustomizer);				
+			}
 		}
 	}
 }
