@@ -8,6 +8,8 @@
   
   <ItemGroup Label="Extra files to deploy">
     <ExtraFiles Include="$(RootDir)\LGPL_3.0.txt" />
+    <ExtraFiles Include="$(RootDir)\ConfOrm\ConfOrm.snk" />
+    <ExtraFiles Include="$(RootDir)\ConfOrm.Shop\ConfOrm.Shop.snk" />
   </ItemGroup>
   
   <ItemGroup Label="NHibernate dependencies">
