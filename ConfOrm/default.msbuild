@@ -15,7 +15,6 @@
     <NHibernateFiles Include="$(RootDir)\Lib\Iesi.Collections.dll" />
     <NHibernateFiles Include="$(RootDir)\Lib\Antlr3.Runtime.dll" />
     <NHibernateFiles Include="$(RootDir)\Lib\Remotion.Data.Linq.dll" />
-    <NHibernateFiles Include="$(RootDir)\Lib\log4net.dll" />
   </ItemGroup>
 
   <Target Name = "Build" DependsOnTargets="RunBuild;CopyAllFilesToBuild"/>
