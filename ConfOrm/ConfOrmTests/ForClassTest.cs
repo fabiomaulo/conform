@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Reflection;
 using ConfOrm;
 using Iesi.Collections.Generic;
@@ -13,6 +15,7 @@ namespace ConfOrmTests
 		{
 			private int privateField;
 			public int Prop { get; set; }
+			private int PrivateProp { get; set; }
 		}
 
 		private class Movement<TDetail>
@@ -22,6 +25,8 @@ namespace ConfOrmTests
 			{
 				get { return _details; }
 			}
+
+			private int PrivateProp { get; set; }
 		}
 
 		private class MovementDetail<TMovement>
@@ -36,7 +41,8 @@ namespace ConfOrmTests
 		[Test]
 		public void WhenNullPropertyThenReturnNull()
 		{
-			ForClass<MyClass>.Property(null).Should().Be.Null();
+			ForClass<MyClass>.Property((Expression<Func<MyClass, object>>)null).Should().Be.Null();
+			ForClass<MyClass>.Property((string)null).Should().Be.Null();
 		}
 
 		[Test]
@@ -61,6 +67,18 @@ namespace ConfOrmTests
 		public void WhenFieldIsDeclaredInBaseClassThenReturnMember()
 		{
 			ForClass<Income>.Field("_details").Should().Be(typeof(Movement<IncomeDetail>).GetField("_details", BindingFlags.Instance | BindingFlags.NonPublic));
+		}
+
+		[Test]
+		public void WhenPrivatePropThenReturnMember()
+		{
+			ForClass<MyClass>.Property("PrivateProp").Should().Be(typeof(MyClass).GetProperty("PrivateProp", BindingFlags.Instance | BindingFlags.NonPublic));
+		}
+
+		[Test]
+		public void WhenPrivatePropIsDeclaredInBaseClassThenReturnMember()
+		{
+			ForClass<Income>.Property("PrivateProp").Should().Be(typeof(Movement<IncomeDetail>).GetProperty("PrivateProp", BindingFlags.Instance | BindingFlags.NonPublic));
 		}
 	}
 }

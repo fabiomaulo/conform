@@ -37,5 +37,25 @@ namespace ConfOrm
 			MemberInfo member = type.GetField(fieldName, DefaultFlags) ?? GetField(type.BaseType, fieldName);
 			return member;
 		}
+
+		public static MemberInfo Property(string propertyName)
+		{
+			if (propertyName == null)
+			{
+				return null;
+			}
+
+			return GetProperty(typeof(T), propertyName);
+		}
+
+		private static MemberInfo GetProperty(Type type, string propertyName)
+		{
+			if (type == typeof(object) || type == null)
+			{
+				return null;
+			}
+			MemberInfo member = type.GetProperty(propertyName, DefaultFlags) ?? GetProperty(type.BaseType, propertyName);
+			return member;
+		}
 	}
 }
