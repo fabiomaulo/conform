@@ -99,5 +99,69 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			var collection = (HbmBag)relation;
 			collection.Cascade.Satisfy(c => string.IsNullOrEmpty(c));
 		}
+
+		[Test]
+		public void WhenOrmCascadeDoesNotIncludeDeleteNorDeleteOrhphanThenNotApplyOndeleteCascade()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Parent>();
+			orm.TablePerClass<Child>();
+			orm.ManyToOne<Child, Parent>();
+			orm.Cascade<Parent, Child>(Cascade.Persist | Cascade.ReAttach);
+			HbmMapping mapping = GetMapping(orm);
+
+			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Parent"));
+			var relation = rc.Properties.First(p => p.Name == "Children");
+			var collection = (HbmBag)relation;
+			collection.Key.ondelete.Should().Be(HbmOndelete.Noaction);
+		}
+
+		[Test]
+		public void WhenOrmCascadeIncludesDeleteThenApplyOndeleteCascade()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Parent>();
+			orm.TablePerClass<Child>();
+			orm.ManyToOne<Child, Parent>();
+			orm.Cascade<Parent, Child>(Cascade.Persist | Cascade.ReAttach | Cascade.Remove);
+			HbmMapping mapping = GetMapping(orm);
+
+			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Parent"));
+			var relation = rc.Properties.First(p => p.Name == "Children");
+			var collection = (HbmBag)relation;
+			collection.Key.ondelete.Should().Be(HbmOndelete.Cascade);
+		}
+
+		[Test]
+		public void WhenOrmCascadeIncludesDeleteOrphansThenApplyOndeleteCascade()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Parent>();
+			orm.TablePerClass<Child>();
+			orm.ManyToOne<Child, Parent>();
+			orm.Cascade<Parent, Child>(Cascade.Persist | Cascade.ReAttach | Cascade.Remove);
+			HbmMapping mapping = GetMapping(orm);
+
+			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Parent"));
+			var relation = rc.Properties.First(p => p.Name == "Children");
+			var collection = (HbmBag)relation;
+			collection.Key.ondelete.Should().Be(HbmOndelete.Cascade);
+		}
+
+		[Test]
+		public void WhenOrmCascadeIsAllThenApplyOndeleteCascade()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Parent>();
+			orm.TablePerClass<Child>();
+			orm.ManyToOne<Child, Parent>();
+			orm.Cascade<Parent, Child>(Cascade.All);
+			HbmMapping mapping = GetMapping(orm);
+
+			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Parent"));
+			var relation = rc.Properties.First(p => p.Name == "Children");
+			var collection = (HbmBag)relation;
+			collection.Key.ondelete.Should().Be(HbmOndelete.Cascade);
+		}
 	}
 }
