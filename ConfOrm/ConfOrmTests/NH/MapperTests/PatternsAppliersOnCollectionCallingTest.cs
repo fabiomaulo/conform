@@ -95,6 +95,36 @@ namespace ConfOrmTests.NH.MapperTests
 		}
 
 		[Test]
+		public void CallSpecificAppliersOnBagPath()
+		{
+			var patternAppliers = new EmptyPatternsAppliersHolder();
+
+			var applier = new Mock<IPatternApplier<PropertyPath, IBagPropertiesMapper>>();
+			applier.Setup(x => x.Match(It.IsAny<PropertyPath>())).Returns(true);
+			patternAppliers.BagPath.Add(applier.Object);
+
+			var mapper = new Mapper(domainInspectorMock.Object, patternAppliers);
+			mapper.CompileMappingFor(new[] { typeof(MyClass) });
+
+			applier.Verify(x => x.Apply(It.Is<PropertyPath>(pp => pp.LocalMember.Name == "Bag"), It.IsAny<IBagPropertiesMapper>()));
+		}
+
+		[Test]
+		public void CallSpecificAppliersOnBag()
+		{
+			var patternAppliers = new EmptyPatternsAppliersHolder();
+
+			var applier = new Mock<IPatternApplier<MemberInfo, IBagPropertiesMapper>>();
+			applier.Setup(x => x.Match(It.IsAny<MemberInfo>())).Returns(true);
+			patternAppliers.Bag.Add(applier.Object);
+
+			var mapper = new Mapper(domainInspectorMock.Object, patternAppliers);
+			mapper.CompileMappingFor(new[] { typeof(MyClass) });
+
+			applier.Verify(x => x.Apply(It.Is<MemberInfo>(pp => pp.Name == "Bag"), It.IsAny<IBagPropertiesMapper>()));
+		}
+
+		[Test]
 		public void CallAppliersOnList()
 		{
 			var patternAppliers = new EmptyPatternsAppliersHolder();
@@ -107,6 +137,36 @@ namespace ConfOrmTests.NH.MapperTests
 			mapper.CompileMappingFor(new[] { typeof(MyClass) });
 
 			applier.Verify(x => x.Apply(It.Is<PropertyPath>(pp => pp.LocalMember.Name == "List"), It.IsAny<ICollectionPropertiesMapper>()));
+		}
+
+		[Test]
+		public void CallSpecificAppliersOnListPath()
+		{
+			var patternAppliers = new EmptyPatternsAppliersHolder();
+
+			var applier = new Mock<IPatternApplier<PropertyPath, IListPropertiesMapper>>();
+			applier.Setup(x => x.Match(It.IsAny<PropertyPath>())).Returns(true);
+			patternAppliers.ListPath.Add(applier.Object);
+
+			var mapper = new Mapper(domainInspectorMock.Object, patternAppliers);
+			mapper.CompileMappingFor(new[] { typeof(MyClass) });
+
+			applier.Verify(x => x.Apply(It.Is<PropertyPath>(pp => pp.LocalMember.Name == "List"), It.IsAny<IListPropertiesMapper>()));
+		}
+
+		[Test]
+		public void CallSpecificAppliersOnList()
+		{
+			var patternAppliers = new EmptyPatternsAppliersHolder();
+
+			var applier = new Mock<IPatternApplier<MemberInfo, IListPropertiesMapper>>();
+			applier.Setup(x => x.Match(It.IsAny<MemberInfo>())).Returns(true);
+			patternAppliers.List.Add(applier.Object);
+
+			var mapper = new Mapper(domainInspectorMock.Object, patternAppliers);
+			mapper.CompileMappingFor(new[] { typeof(MyClass) });
+
+			applier.Verify(x => x.Apply(It.Is<MemberInfo>(pp => pp.Name == "List"), It.IsAny<IListPropertiesMapper>()));
 		}
 
 		[Test]
@@ -125,6 +185,36 @@ namespace ConfOrmTests.NH.MapperTests
 		}
 
 		[Test]
+		public void CallSpecificAppliersOnSetPath()
+		{
+			var patternAppliers = new EmptyPatternsAppliersHolder();
+
+			var applier = new Mock<IPatternApplier<PropertyPath, ISetPropertiesMapper>>();
+			applier.Setup(x => x.Match(It.IsAny<PropertyPath>())).Returns(true);
+			patternAppliers.SetPath.Add(applier.Object);
+
+			var mapper = new Mapper(domainInspectorMock.Object, patternAppliers);
+			mapper.CompileMappingFor(new[] { typeof(MyClass) });
+
+			applier.Verify(x => x.Apply(It.Is<PropertyPath>(pp => pp.LocalMember.Name == "Set"), It.IsAny<ISetPropertiesMapper>()));
+		}
+
+		[Test]
+		public void CallSpecificAppliersOnSet()
+		{
+			var patternAppliers = new EmptyPatternsAppliersHolder();
+
+			var applier = new Mock<IPatternApplier<MemberInfo, ISetPropertiesMapper>>();
+			applier.Setup(x => x.Match(It.IsAny<MemberInfo>())).Returns(true);
+			patternAppliers.Set.Add(applier.Object);
+
+			var mapper = new Mapper(domainInspectorMock.Object, patternAppliers);
+			mapper.CompileMappingFor(new[] { typeof(MyClass) });
+
+			applier.Verify(x => x.Apply(It.Is<MemberInfo>(pp => pp.Name == "Set"), It.IsAny<ISetPropertiesMapper>()));
+		}
+
+		[Test]
 		public void CallAppliersOnMap()
 		{
 			var patternAppliers = new EmptyPatternsAppliersHolder();
@@ -137,6 +227,36 @@ namespace ConfOrmTests.NH.MapperTests
 			mapper.CompileMappingFor(new[] { typeof(MyClass) });
 
 			applier.Verify(x => x.Apply(It.Is<PropertyPath>(pp => pp.LocalMember.Name == "Map"), It.IsAny<ICollectionPropertiesMapper>()));
+		}
+
+		[Test]
+		public void CallSpecificAppliersOnMapPath()
+		{
+			var patternAppliers = new EmptyPatternsAppliersHolder();
+
+			var applier = new Mock<IPatternApplier<PropertyPath, IMapPropertiesMapper>>();
+			applier.Setup(x => x.Match(It.IsAny<PropertyPath>())).Returns(true);
+			patternAppliers.MapPath.Add(applier.Object);
+
+			var mapper = new Mapper(domainInspectorMock.Object, patternAppliers);
+			mapper.CompileMappingFor(new[] { typeof(MyClass) });
+
+			applier.Verify(x => x.Apply(It.Is<PropertyPath>(pp => pp.LocalMember.Name == "Map"), It.IsAny<IMapPropertiesMapper>()));
+		}
+
+		[Test]
+		public void CallSpecificAppliersOnMap()
+		{
+			var patternAppliers = new EmptyPatternsAppliersHolder();
+
+			var applier = new Mock<IPatternApplier<MemberInfo, IMapPropertiesMapper>>();
+			applier.Setup(x => x.Match(It.IsAny<MemberInfo>())).Returns(true);
+			patternAppliers.Map.Add(applier.Object);
+
+			var mapper = new Mapper(domainInspectorMock.Object, patternAppliers);
+			mapper.CompileMappingFor(new[] { typeof(MyClass) });
+
+			applier.Verify(x => x.Apply(It.Is<MemberInfo>(pp => pp.Name == "Map"), It.IsAny<IMapPropertiesMapper>()));
 		}
 
 		[Test]

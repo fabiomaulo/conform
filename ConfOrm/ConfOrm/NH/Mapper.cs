@@ -559,6 +559,8 @@ namespace ConfOrm.NH
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					PatternsAppliers.Collection.ApplyAllMatchs(member, collectionPropertiesMapper);
 					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
+					PatternsAppliers.Bag.ApplyAllMatchs(member, collectionPropertiesMapper);
+					PatternsAppliers.BagPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
@@ -574,6 +576,8 @@ namespace ConfOrm.NH
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					PatternsAppliers.Collection.ApplyAllMatchs(member, collectionPropertiesMapper);
 					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
+					PatternsAppliers.List.ApplyAllMatchs(member, collectionPropertiesMapper);
+					PatternsAppliers.ListPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
@@ -598,6 +602,8 @@ namespace ConfOrm.NH
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					PatternsAppliers.Collection.ApplyAllMatchs(member, collectionPropertiesMapper);
 					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
+					PatternsAppliers.Map.ApplyAllMatchs(member, collectionPropertiesMapper);
+					PatternsAppliers.MapPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, mkrm.Map, cert.Map);
@@ -613,6 +619,8 @@ namespace ConfOrm.NH
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					PatternsAppliers.Collection.ApplyAllMatchs(member, collectionPropertiesMapper);
 					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
+					PatternsAppliers.Set.ApplyAllMatchs(member, collectionPropertiesMapper);
+					PatternsAppliers.SetPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
 					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);

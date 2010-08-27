@@ -65,6 +65,15 @@ namespace ConfOrm.NH
 			componentParent = new List<IPatternApplier<MemberInfo, IComponentParentMapper>>();
 
 			collectionPath = new List<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>>();
+			bag = new List<IPatternApplier<MemberInfo, IBagPropertiesMapper>>();
+			bagPath = new List<IPatternApplier<PropertyPath, IBagPropertiesMapper>>();
+			set = new List<IPatternApplier<MemberInfo, ISetPropertiesMapper>>();
+			setPath = new List<IPatternApplier<PropertyPath, ISetPropertiesMapper>>();
+			list = new List<IPatternApplier<MemberInfo, IListPropertiesMapper>>();
+			listPath = new List<IPatternApplier<PropertyPath, IListPropertiesMapper>>();
+			map = new List<IPatternApplier<MemberInfo, IMapPropertiesMapper>>();
+			mapPath = new List<IPatternApplier<PropertyPath, IMapPropertiesMapper>>();
+
 			manyToOne = new List<IPatternApplier<MemberInfo, IManyToOneMapper>>();
 			manyToOnePath = new List<IPatternApplier<PropertyPath, IManyToOneMapper>>();
 			oneToOne = new List<IPatternApplier<MemberInfo, IOneToOneMapper>>();
