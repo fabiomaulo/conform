@@ -90,6 +90,7 @@
     <Compile Include="CoolNaming\CoolPatternsAppliersHolder.cs" />
     <Compile Include="CoolNaming\CoolTablesAndColumnsNamingPack.cs" />
     <Compile Include="CoolNaming\JoinedSubclassKeyAsRootIdColumnApplier.cs" />
+    <Compile Include="CoolNaming\ListIndexAsPropertyPosColumnNameApplier.cs" />
     <Compile Include="CoolNaming\ManyToManyColumnApplier.cs" />
     <Compile Include="CoolNaming\ManyToManyKeyIdColumnApplier.cs" />
     <Compile Include="Appliers\ManyToManyPattern.cs" />

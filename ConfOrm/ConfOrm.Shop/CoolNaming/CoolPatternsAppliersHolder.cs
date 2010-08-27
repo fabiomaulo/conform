@@ -54,6 +54,10 @@ namespace ConfOrm.Shop.CoolNaming
 													new CollectionOfComponentsTableApplier(domainInspector),
 													new CollectionOfComponentsKeyColumnApplier(domainInspector),
 			                 	};
+			listPath = new List<IPatternApplier<PropertyPath, IListPropertiesMapper>>
+			           	{
+			           		new ListIndexAsPropertyPosColumnNameApplier(),
+			           	};
 			manyToOne = new List<IPatternApplier<MemberInfo, IManyToOneMapper>>
 			            	{
 			            		new MemberReadOnlyAccessorApplier<IManyToOneMapper>(),
