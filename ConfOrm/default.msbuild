@@ -2,7 +2,9 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <RootDir>$(MSBuildProjectDirectory)</RootDir>
-    <DeployFolder>$(RootDir)\Build</DeployFolder>
+    <BuildFolder>$(RootDir)\Build</BuildFolder>
+    <FullDeployFolder>$(RootDir)\Build\Full</FullDeployFolder>
+    <DeployFolder>$(RootDir)\Build\NuDeploy</DeployFolder>
     <ExternalLibFolder>$(RootDir)\Lib</ExternalLibFolder>
   </PropertyGroup>
   
@@ -30,23 +32,28 @@
     </MSBuild>
   </Target>
 
-  <Target Name="CopyAllFilesToBuild" DependsOnTargets="MakeBuildDirectory;CopyOutputsToBin;CopyExtraFiles;CopyNHibernateLibsToBin"/>
+  <Target Name="CopyAllFilesToBuild" DependsOnTargets="MakeBuildDirectory;CopyOutputsToBin;CopyExtraFiles;CopyNHibernateLibsToDeploy"/>
 
   <Target Name="MakeBuildDirectory">
+    <MakeDir Directories="$(BuildFolder)" />
+    <MakeDir Directories="$(FullDeployFolder)" />
     <MakeDir Directories="$(DeployFolder)" />
   </Target>
 
   <Target Name="CopyOutputsToBin">
+    <Copy SourceFiles="@(OutputFiles)"
+      DestinationFiles="@(OutputFiles->'$(FullDeployFolder)\%(RecursiveDir)%(Filename)%(Extension)')" />
     <Copy SourceFiles="@(OutputFiles)"
       DestinationFiles="@(OutputFiles->'$(DeployFolder)\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
 
   <Target Name="CopyExtraFiles">
     <Copy SourceFiles="@(ExtraFiles)" DestinationFolder="$(DeployFolder)" />
+    <Copy SourceFiles="@(ExtraFiles)" DestinationFolder="$(FullDeployFolder)" />
   </Target>
 
-  <Target Name="CopyNHibernateLibsToBin">
-    <Copy SourceFiles="@(NHibernateFiles)" DestinationFolder="$(DeployFolder)" />
+  <Target Name="CopyNHibernateLibsToDeploy">
+    <Copy SourceFiles="@(NHibernateFiles)" DestinationFolder="$(FullDeployFolder)" />
   </Target>
   
 </Project>
