@@ -28,10 +28,20 @@ namespace ConfOrm.NH
 		ICollection<IPatternApplier<MemberInfo, IAnyMapper>> Any { get; }
 		ICollection<IPatternApplier<PropertyPath, IAnyMapper>> AnyPath { get; }
 
+		#region Collection properties
+
 		ICollection<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> Collection { get; }
 		ICollection<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>> CollectionPath { get; }
 
+		#endregion
+
+		#region Componenets
+
 		ICollection<IPatternApplier<MemberInfo, IComponentParentMapper>> ComponentParent { get; }
+		ICollection<IPatternApplier<MemberInfo, IComponentAttributesMapper>> ComponentProperty { get; }
+		ICollection<IPatternApplier<PropertyPath, IComponentAttributesMapper>> ComponentPropertyPath { get; }
+	
+		#endregion
 
 		#region Collection Element relations
 
@@ -52,8 +62,6 @@ namespace ConfOrm.NH
 
 		ICollection<IPatternApplier<MemberInfo, IMapKeyMapper>> MapKey { get; }
 		ICollection<IPatternApplier<PropertyPath, IMapKeyMapper>> MapKeyPath { get; }
-		ICollection<IPatternApplier<MemberInfo, IComponentAttributesMapper>> ComponentProperty { get; }
-		ICollection<IPatternApplier<PropertyPath, IComponentAttributesMapper>> ComponentPropertyPath { get; }
 
 		#endregion
 	}
