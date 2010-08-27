@@ -39,6 +39,14 @@ namespace ConfOrm.NH
 		protected List<IPatternApplier<MemberInfo, IComponentAttributesMapper>> componentProperty;
 		protected List<IPatternApplier<PropertyPath, IComponentAttributesMapper>> componentPropertyPath;
 		protected List<IPatternApplier<MemberInfo, IComponentParentMapper>> componentParent;
+		protected List<IPatternApplier<MemberInfo, IBagPropertiesMapper>> bag;
+		protected List<IPatternApplier<PropertyPath, IBagPropertiesMapper>> bagPath;
+		protected List<IPatternApplier<MemberInfo, ISetPropertiesMapper>> set;
+		protected List<IPatternApplier<PropertyPath, ISetPropertiesMapper>> setPath;
+		protected List<IPatternApplier<MemberInfo, IListPropertiesMapper>> list;
+		protected List<IPatternApplier<PropertyPath, IListPropertiesMapper>> listPath;
+		protected List<IPatternApplier<MemberInfo, IMapPropertiesMapper>> map;
+		protected List<IPatternApplier<PropertyPath, IMapPropertiesMapper>> mapPath;
 
 		public EmptyPatternsAppliersHolder()
 		{
@@ -150,6 +158,46 @@ namespace ConfOrm.NH
 		public ICollection<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>> CollectionPath
 		{
 			get { return collectionPath; }
+		}
+
+		public ICollection<IPatternApplier<MemberInfo, IBagPropertiesMapper>> Bag
+		{
+			get { return bag; }
+		}
+
+		public ICollection<IPatternApplier<PropertyPath, IBagPropertiesMapper>> BagPath
+		{
+			get { return bagPath; }
+		}
+
+		public ICollection<IPatternApplier<MemberInfo, ISetPropertiesMapper>> Set
+		{
+			get { return set; }
+		}
+
+		public ICollection<IPatternApplier<PropertyPath, ISetPropertiesMapper>> SetPath
+		{
+			get { return setPath; }
+		}
+
+		public ICollection<IPatternApplier<MemberInfo, IListPropertiesMapper>> List
+		{
+			get { return list; }
+		}
+
+		public ICollection<IPatternApplier<PropertyPath, IListPropertiesMapper>> ListPath
+		{
+			get { return listPath; }
+		}
+
+		public ICollection<IPatternApplier<MemberInfo, IMapPropertiesMapper>> Map
+		{
+			get { return map; }
+		}
+
+		public ICollection<IPatternApplier<PropertyPath, IMapPropertiesMapper>> MapPath
+		{
+			get { return mapPath; }
 		}
 
 		public ICollection<IPatternApplier<MemberInfo, IComponentParentMapper>> ComponentParent

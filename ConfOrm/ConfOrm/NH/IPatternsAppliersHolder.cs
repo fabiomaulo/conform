@@ -32,6 +32,14 @@ namespace ConfOrm.NH
 
 		ICollection<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>> Collection { get; }
 		ICollection<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>> CollectionPath { get; }
+		ICollection<IPatternApplier<MemberInfo, IBagPropertiesMapper>> Bag { get; }
+		ICollection<IPatternApplier<PropertyPath, IBagPropertiesMapper>> BagPath { get; }
+		ICollection<IPatternApplier<MemberInfo, ISetPropertiesMapper>> Set { get; }
+		ICollection<IPatternApplier<PropertyPath, ISetPropertiesMapper>> SetPath { get; }
+		ICollection<IPatternApplier<MemberInfo, IListPropertiesMapper>> List { get; }
+		ICollection<IPatternApplier<PropertyPath, IListPropertiesMapper>> ListPath { get; }
+		ICollection<IPatternApplier<MemberInfo, IMapPropertiesMapper>> Map { get; }
+		ICollection<IPatternApplier<PropertyPath, IMapPropertiesMapper>> MapPath { get; }
 
 		#endregion
 
