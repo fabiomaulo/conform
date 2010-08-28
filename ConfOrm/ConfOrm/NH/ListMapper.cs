@@ -175,6 +175,16 @@ namespace ConfOrm.NH
 			mapping.filter = filters.Values.ToArray();
 		}
 
+		public void Fetch(CollectionFetchMode fetchMode)
+		{
+			if (fetchMode == null)
+			{
+				return;
+			}
+			mapping.fetch = fetchMode.ToHbm();
+			mapping.fetchSpecified = mapping.fetch != HbmCollectionFetchMode.Select;
+		}
+
 		public void Index(Action<IListIndexMapper> listIndexMapping)
 		{
 			listIndexMapping(listIndexMapper);

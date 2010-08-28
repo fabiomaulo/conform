@@ -88,6 +88,7 @@
     <Compile Include="IPatternValueGetter.cs" />
     <Compile Include="Mappers\CacheInclude.cs" />
     <Compile Include="Mappers\CacheUsage.cs" />
+    <Compile Include="Mappers\CollectionFetchMode.cs" />
     <Compile Include="Mappers\CollectionLazy.cs" />
     <Compile Include="Mappers\FetchMode.cs" />
     <Compile Include="Mappers\IAccessorPropertyMapper.cs" />

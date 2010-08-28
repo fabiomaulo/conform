@@ -108,6 +108,11 @@ namespace ConfOrm.NH.CustomizersImpl
 			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.Filter(filterName, filterMapping));
 		}
 
+		public void Fetch(CollectionFetchMode fetchMode)
+		{
+			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.Fetch(fetchMode));
+		}
+
 		#endregion
 
 		public void Access(Accessor accessor)

@@ -200,5 +200,21 @@ namespace ConfOrmTests.NH
 			hbm.filter.Length.Should().Be(1);
 			hbm.filter[0].Satisfy(f => f.name == "filter1" && f.condition == null);
 		}
+
+		[Test]
+		public void SetFetchMode()
+		{
+			var hbm = new HbmSet();
+			var mapper = new SetMapper(typeof(Animal), typeof(Animal), hbm);
+			mapper.Fetch(CollectionFetchMode.Subselect);
+			hbm.fetch.Should().Be(HbmCollectionFetchMode.Subselect);
+			hbm.fetchSpecified.Should().Be.True();
+			mapper.Fetch(CollectionFetchMode.Join);
+			hbm.fetch.Should().Be(HbmCollectionFetchMode.Join);
+			hbm.fetchSpecified.Should().Be.True();
+			mapper.Fetch(CollectionFetchMode.Select);
+			hbm.fetch.Should().Be(HbmCollectionFetchMode.Select);
+			hbm.fetchSpecified.Should().Be.False();
+		}
 	}
 }
