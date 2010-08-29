@@ -6,9 +6,9 @@ using ConfOrm.Shop.Subclassing;
 
 namespace ConfOrm.Shop.Packs
 {
-	public partial class TablePerClassHierarchyDiscriminatorPack : EmptyPatternsAppliersHolder
+	public class DiscriminatorValueAsClassNamePack : EmptyPatternsAppliersHolder
 	{
-		public TablePerClassHierarchyDiscriminatorPack(IDomainInspector domainInspector)
+		public DiscriminatorValueAsClassNamePack(IDomainInspector domainInspector)
 		{
 			rootClass = new List<IPatternApplier<Type, IClassAttributesMapper>>
 			            	{

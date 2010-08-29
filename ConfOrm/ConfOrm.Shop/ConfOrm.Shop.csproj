@@ -105,7 +105,7 @@
     <Compile Include="Packs\OneToOneRelationPack.cs" />
     <Compile Include="Packs\TablePerClassPack.cs" />
     <Compile Include="Packs\SafePropertyAccessorPack.cs" />
-    <Compile Include="Packs\TablePerClassHierarchyDiscriminatorPack.cs" />
+    <Compile Include="Packs\DiscriminatorValueAsClassNamePack.cs" />
     <Compile Include="Patterns\PoidPropertyAsClassNameId.cs" />
     <Compile Include="Patterns\UseBagWhenGenericListPattern.cs" />
     <Compile Include="Patterns\UseSetWhenGenericCollectionPattern.cs" />
