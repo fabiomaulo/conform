@@ -45,7 +45,7 @@ namespace ConfOrm.Patterns
 
 		#endregion
 
-		private static bool IsNotSupportedAsList(Type memberType)
+		protected virtual bool IsNotSupportedAsList(Type memberType)
 		{
 			return memberType == typeof(byte[]);
 		}
