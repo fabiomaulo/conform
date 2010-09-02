@@ -288,5 +288,17 @@ namespace ConfOrm
 			}
 			return type.IsEnum;
 		}
+
+		public static IEnumerable<Type> GetGenericIntercafesTypeDefinitions(this Type type)
+		{
+			if(type.IsGenericType && type.IsInterface)
+			{
+				yield return type.GetGenericTypeDefinition();
+			}
+			foreach (var t in type.GetInterfaces().Where(t => t.IsGenericType))
+			{
+				yield return t.GetGenericTypeDefinition();
+			}
+		}
 	}
 }

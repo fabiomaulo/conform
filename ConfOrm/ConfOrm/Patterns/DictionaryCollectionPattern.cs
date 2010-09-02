@@ -19,13 +19,7 @@ namespace ConfOrm.Patterns
 			}
 			if (memberType.IsGenericType)
 			{
-				List<Type> interfaces =
-					memberType.GetInterfaces().Where(t => t.IsGenericType).Select(t => t.GetGenericTypeDefinition()).ToList();
-				if (memberType.IsInterface)
-				{
-					interfaces.Add(memberType.GetGenericTypeDefinition());
-				}
-				return interfaces.Contains(typeof(IDictionary<,>));
+				return memberType.GetGenericIntercafesTypeDefinitions().Contains(typeof(IDictionary<,>));
 			}
 			return false;
 		}

@@ -30,13 +30,7 @@ namespace ConfOrm.Patterns
 			}
 			if (memberType.IsGenericType)
 			{
-				List<Type> interfaces =
-					memberType.GetInterfaces().Where(t => t.IsGenericType).Select(t => t.GetGenericTypeDefinition()).ToList();
-				if (memberType.IsInterface)
-				{
-					interfaces.Add(memberType.GetGenericTypeDefinition());
-				}
-				var isList = interfaces.Contains(typeof (IList<>));
+				var isList = memberType.GetGenericIntercafesTypeDefinitions().Contains(typeof(IList<>));
 				// a bidirectional one-to-many should use Bag or Set
 				return isList && !(new BidirectionalOneToManyPattern(domainInspector).Match(new Relation(subject.DeclaringType, memberType.DetermineCollectionElementType())));
 			}
