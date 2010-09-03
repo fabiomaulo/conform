@@ -6,7 +6,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using NHibernate.Cfg.MappingSchema;
 
-namespace ConfOrm.UsageExamples.CreateXmlMappingsInBinFolder
+namespace ConfOrm.UsageExamples
 {
 	/// <summary>
 	/// Util extensions to use in your test or where you need to see the XML mappings
@@ -30,6 +30,15 @@ namespace ConfOrm.UsageExamples.CreateXmlMappingsInBinFolder
 				string document = Serialize(hbmMapping);
 				File.WriteAllText(Path.Combine(mappingsFolderPath, fileName), document);
 			}
+		}
+
+		public static string AsString(this HbmMapping mappings)
+		{
+			if (mappings == null)
+			{
+				throw new ArgumentNullException("mappings");
+			}
+			return Serialize(mappings);
 		}
 
 		private static string ArrangeMappingsFolderPath()

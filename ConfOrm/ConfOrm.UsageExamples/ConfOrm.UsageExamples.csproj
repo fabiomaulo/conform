@@ -50,10 +50,12 @@
   <ItemGroup>
     <Compile Include="CreateXmlMappingsInBinFolder\ConfOrmInitializer.cs" />
     <Compile Include="CreateXmlMappingsInBinFolder\DemoOfXmlMappingCreation.cs" />
-    <Compile Include="CreateXmlMappingsInBinFolder\NHibernateMappingsExtensions.cs" />
+    <Compile Include="NHibernateMappingsExtensions.cs" />
     <Compile Include="CreateXmlMappingsInBinFolder\Domain\Order.cs" />
     <Compile Include="CreateXmlMappingsInBinFolder\Domain\OrderItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UseBagForIList\Contact.cs" />
+    <Compile Include="UseBagForIList\Demo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConfOrm.Shop\ConfOrm.Shop.csproj">
