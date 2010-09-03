@@ -408,7 +408,9 @@ namespace ConfOrm
 
 		public virtual bool IsSet(MemberInfo role)
 		{
-			return explicitDeclarations.Sets.ContainsMember(role) || Patterns.Sets.Match(role);
+			return (explicitDeclarations.Sets.ContainsMember(role) || Patterns.Sets.Match(role)) &&
+				(!explicitDeclarations.Bags.ContainsMember(role) && !explicitDeclarations.Lists.ContainsMember(role)
+							&& !explicitDeclarations.Arrays.ContainsMember(role));
 		}
 
 		public virtual bool IsBag(MemberInfo role)
