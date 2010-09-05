@@ -288,8 +288,13 @@ namespace ConfOrm
 
 		public virtual bool IsEntity(Type type)
 		{
-			return !explicitDeclarations.ClassExclusions.Contains(type) && (explicitDeclarations.RootEntities.Contains(type)
+			return !IsExplicitlyExcluded(type) && (explicitDeclarations.RootEntities.Contains(type)
 			       || type.GetBaseTypes().Any(t => explicitDeclarations.RootEntities.Contains(t)));
+		}
+
+		private bool IsExplicitlyExcluded(Type type)
+		{
+			return explicitDeclarations.ClassExclusions.Contains(type) || (type.IsGenericType && explicitDeclarations.ClassExclusions.Contains(type.GetGenericTypeDefinition()));
 		}
 
 		public virtual bool IsTablePerClass(Type type)
