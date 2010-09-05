@@ -127,7 +127,16 @@ namespace ConfOrm
 
 		public void Exclude<TClass>()
 		{
-			explicitDeclarations.ClassExclusions.Add(typeof (TClass));
+			Exclude(typeof (TClass));
+		}
+
+		public void Exclude(Type type)
+		{
+			if (type == null)
+			{
+				throw new ArgumentNullException("type");
+			}
+			explicitDeclarations.ClassExclusions.Add(type);
 		}
 
 		public virtual void Poid<TEntity>(Expression<Func<TEntity, object>> propertyGetter)

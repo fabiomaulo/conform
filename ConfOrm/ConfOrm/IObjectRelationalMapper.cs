@@ -30,6 +30,19 @@ namespace ConfOrm
 		/// </example>
 		void Exclude<TClass>();
 
+		/// <summary>
+		/// Exclude (jump) a class from a entity's hierarchy
+		/// </summary>
+		/// <param name="type">The class to exclude.</param>
+		/// <remarks>
+		/// Use this method when you need to "jump" a implementation inside an entity hierarchy.
+		/// Use this methos instead <see cref="Exclude{TClass}"/> when you have to exclude all concrete implementation of a generic class.
+		/// </remarks>
+		/// <example>
+		/// You need to map a interface, as root, jumping the first implementation in the hierarchy.
+		/// </example>
+		void Exclude(Type type);
+
 		void Poid<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 		void NaturalId<TBaseEntity>(params Expression<Func<TBaseEntity, object>>[] propertiesGetters) where TBaseEntity : class;
 		void ManyToMany<TLeftEntity, TRigthEntity>();
