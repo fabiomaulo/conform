@@ -33,6 +33,10 @@ namespace ConfOrm.Patterns
 			{
 				return false;
 			}
+			if (DomainInspector.IsTablePerClass(many) && !DomainInspector.IsRootEntity(many))
+			{
+				return false;
+			}
 			return base.Match(new Relation(one, many));
 		}
 

@@ -60,5 +60,64 @@ namespace ConfOrmTests.Patterns
 			var applier = new BidirectionalOneToManyOnDeleteConstraintApplier(orm.Object);
 			applier.Match(ForClass<Parent>.Property(x => x.Children)).Should().Be.False();
 		}
+
+		[Test]
+		public void WhenChildIsTablePerClassNoRootEntityThenNoMatch()
+		{
+			// Suppose this relation mapped as TablePerClass: 
+			// Person, Contact : Person, Vendor : Contact
+			// then we have the class Company with a bidirectional-one-to-many with Vendor and we want a cascade (deleting Company it should delete Vendors).
+			// The trigger will delete the record in the Vendor table leaving records in Person and in Contact.
+			var orm = new Mock<IDomainInspector>();
+			orm.Setup(m => m.IsEntity(It.Is<Type>(t => t == typeof(Parent)))).Returns(true);
+			orm.Setup(m => m.IsEntity(It.Is<Type>(t => t == typeof(Child)))).Returns(true);
+			orm.Setup(m => m.IsRootEntity(It.Is<Type>(t => t == typeof(Parent)))).Returns(true);
+			orm.Setup(m => m.IsTablePerClass(It.IsAny<Type>())).Returns(true);
+			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
+			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
+			orm.Setup(m => m.IsOneToMany(It.Is<Type>(t => t == typeof(Parent)), It.Is<Type>(t => t == typeof(Child)))).Returns(true);
+			orm.Setup(m => m.IsManyToOne(It.Is<Type>(t => t == typeof(Child)), It.Is<Type>(t => t == typeof(Parent)))).Returns(true);
+			orm.Setup(m => m.IsBag(It.Is<MemberInfo>(p => p == typeof(Parent).GetProperty("Children")))).Returns(true);
+
+			var applier = new BidirectionalOneToManyOnDeleteConstraintApplier(orm.Object);
+			applier.Match(ForClass<Parent>.Property(x => x.Children)).Should().Be.False();
+		}
+
+		[Test]
+		public void WhenChildIsTablePerClassRootEntityThenMatch()
+		{
+			var orm = new Mock<IDomainInspector>();
+			orm.Setup(m => m.IsEntity(It.Is<Type>(t => t == typeof(Parent)))).Returns(true);
+			orm.Setup(m => m.IsEntity(It.Is<Type>(t => t == typeof(Child)))).Returns(true);
+			orm.Setup(m => m.IsRootEntity(It.IsAny<Type>())).Returns(true);
+			orm.Setup(m => m.IsTablePerClass(It.IsAny<Type>())).Returns(true);
+			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
+			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
+			orm.Setup(m => m.IsOneToMany(It.Is<Type>(t => t == typeof(Parent)), It.Is<Type>(t => t == typeof(Child)))).Returns(true);
+			orm.Setup(m => m.IsManyToOne(It.Is<Type>(t => t == typeof(Child)), It.Is<Type>(t => t == typeof(Parent)))).Returns(true);
+			orm.Setup(m => m.IsBag(It.Is<MemberInfo>(p => p == typeof(Parent).GetProperty("Children")))).Returns(true);
+
+			var applier = new BidirectionalOneToManyOnDeleteConstraintApplier(orm.Object);
+			applier.Match(ForClass<Parent>.Property(x => x.Children)).Should().Be.True();
+		}
+
+		[Test]
+		public void WhenChildIsNotTablePerClassNoRootEntityThenMatch()
+		{
+			var orm = new Mock<IDomainInspector>();
+			orm.Setup(m => m.IsEntity(It.Is<Type>(t => t == typeof(Parent)))).Returns(true);
+			orm.Setup(m => m.IsEntity(It.Is<Type>(t => t == typeof(Child)))).Returns(true);
+			orm.Setup(m => m.IsRootEntity(It.Is<Type>(t => t == typeof(Parent)))).Returns(true);
+			orm.Setup(m => m.IsTablePerClass(It.Is<Type>(t => t == typeof(Parent)))).Returns(true);
+			orm.Setup(m => m.IsTablePerClassHierarchy(It.Is<Type>(t => t == typeof(Child)))).Returns(true);
+			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
+			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
+			orm.Setup(m => m.IsOneToMany(It.Is<Type>(t => t == typeof(Parent)), It.Is<Type>(t => t == typeof(Child)))).Returns(true);
+			orm.Setup(m => m.IsManyToOne(It.Is<Type>(t => t == typeof(Child)), It.Is<Type>(t => t == typeof(Parent)))).Returns(true);
+			orm.Setup(m => m.IsBag(It.Is<MemberInfo>(p => p == typeof(Parent).GetProperty("Children")))).Returns(true);
+
+			var applier = new BidirectionalOneToManyOnDeleteConstraintApplier(orm.Object);
+			applier.Match(ForClass<Parent>.Property(x => x.Children)).Should().Be.True();
+		}
 	}
 }
