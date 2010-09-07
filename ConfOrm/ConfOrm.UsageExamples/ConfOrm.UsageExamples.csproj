@@ -60,6 +60,7 @@
     <Compile Include="NHibernateMappingsExtensions.cs" />
     <Compile Include="CreateXmlMappingsInBinFolder\Domain\Order.cs" />
     <Compile Include="CreateXmlMappingsInBinFolder\Domain\OrderItem.cs" />
+    <Compile Include="Packs\CompositionDemo.cs" />
     <Compile Include="Packs\Domain.cs" />
     <Compile Include="Packs\SimpleDemo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
