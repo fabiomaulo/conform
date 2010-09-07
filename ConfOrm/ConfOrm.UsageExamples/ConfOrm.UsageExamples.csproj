@@ -68,6 +68,8 @@
     <Compile Include="UseBagForIList\Demo.cs" />
     <Compile Include="UseSetForICollection\Contact.cs" />
     <Compile Include="UseSetForICollection\Demo.cs" />
+    <Compile Include="Version\Demo.cs" />
+    <Compile Include="Version\Domain.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConfOrm.Shop\ConfOrm.Shop.csproj">
