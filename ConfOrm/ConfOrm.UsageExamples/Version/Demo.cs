@@ -22,6 +22,10 @@ namespace ConfOrm.UsageExamples.Version
 			orm.TablePerClass<Customer>();
 			orm.TablePerClass<Provider>();
 
+			// Defining relations
+			orm.OneToOne<Company, Customer>();
+			orm.OneToOne<Company, Provider>();
+
 			// In the follow line I'm defining which is the property used as Version for all classes inherited from VersionedEntity
 			orm.VersionProperty<VersionedEntity>(ve=> ve.Version);
 

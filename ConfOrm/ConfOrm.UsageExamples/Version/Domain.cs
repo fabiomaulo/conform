@@ -20,15 +20,19 @@ namespace ConfOrm.UsageExamples.Version
 	public class Company: VersionedEntity
 	{
 		public virtual string Name { get; set; }
+		public Customer Customer { get; set; }
+		public Provider Provider { get; set; }
 	}
 
 	public class Customer : VersionedEntity
 	{
+		public Company Company { get; set; }
 		public virtual string PriceListCode { get; set; }
 	}
 
 	public class Provider : VersionedEntity
 	{
-		public virtual string ContactName	{ get; set; }
+		public Company Company { get; set; }
+		public virtual string ContactName { get; set; }
 	}
 }
