@@ -99,6 +99,13 @@
     <Compile Include="Appliers\MsSQL2008DateTimeApplier.cs" />
     <Compile Include="CoolNaming\OneToManyKeyColumnApplier.cs" />
     <Compile Include="Appliers\OneToManyPattern.cs" />
+    <Compile Include="Inflectors\AbstractInflector.cs" />
+    <Compile Include="Inflectors\AbstractInflectorRule.cs" />
+    <Compile Include="Inflectors\EnglishInflector.cs" />
+    <Compile Include="Inflectors\IInflector.cs" />
+    <Compile Include="Inflectors\IInflectorReplacementRule.cs" />
+    <Compile Include="Inflectors\IInflectorRuleApplier.cs" />
+    <Compile Include="Inflectors\NounsRule.cs" />
     <Compile Include="Packs\BidirectionalManyToManyRelationPack.cs" />
     <Compile Include="Packs\BidirectionalOneToManyRelationPack.cs" />
     <Compile Include="Packs\EnumAsStringPack.cs" />
@@ -140,6 +147,7 @@
   <ItemGroup>
     <None Include="ConfOrm.Shop.snk" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
