@@ -105,6 +105,7 @@
     <Compile Include="InflectorNaming\ManyToManyPluralizedTableApplier.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="InflectorNaming\PluralizedTablesPack.cs" />
     <Compile Include="InflectorNaming\UnionSubclassPluralizedTableApplier.cs">
       <SubType>Code</SubType>
     </Compile>

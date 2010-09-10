@@ -42,7 +42,7 @@ namespace ConfOrm.ShopTests.InflectorNamingTests
 			var inflector = new Mock<IInflector>();
 			inflector.Setup(i => i.Pluralize("Person")).Returns("People");
 			var applier = new ClassPluralizedTableApplier(inflector.Object);
-			var mapper = new Mock<IClassMapper>();
+			var mapper = new Mock<IClassAttributesMapper>();
 
 			applier.Apply(typeof(Person), mapper.Object);
 

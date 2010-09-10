@@ -4,7 +4,7 @@ using ConfOrm.Shop.Inflectors;
 
 namespace ConfOrm.Shop.InflectorNaming
 {
-	public class UnionSubclassPluralizedTableApplier : IPatternApplier<Type, IUnionSubclassMapper>
+	public class UnionSubclassPluralizedTableApplier : IPatternApplier<Type, IUnionSubclassAttributesMapper>
 	{
 		private readonly IInflector inflector;
 
@@ -17,7 +17,7 @@ namespace ConfOrm.Shop.InflectorNaming
 			this.inflector = inflector;
 		}
 
-		#region IPatternApplier<Type,IUnionSubclassMapper> Members
+		#region IPatternApplier<Type,IUnionSubclassAttributesMapper> Members
 
 		public bool Match(Type subject)
 		{
@@ -25,7 +25,7 @@ namespace ConfOrm.Shop.InflectorNaming
 			return subject != null;
 		}
 
-		public void Apply(Type subject, IUnionSubclassMapper applyTo)
+		public void Apply(Type subject, IUnionSubclassAttributesMapper applyTo)
 		{
 			applyTo.Table(inflector.Pluralize(subject.Name));
 		}

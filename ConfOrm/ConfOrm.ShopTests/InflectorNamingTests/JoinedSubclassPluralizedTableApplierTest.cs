@@ -43,7 +43,7 @@ namespace ConfOrm.ShopTests.InflectorNamingTests
 			var inflector = new Mock<IInflector>();
 			inflector.Setup(i => i.Pluralize("Person")).Returns("People");
 			var applier = new JoinedSubclassPluralizedTableApplier(inflector.Object);
-			var mapper = new Mock<IJoinedSubclassMapper>();
+			var mapper = new Mock<IJoinedSubclassAttributesMapper>();
 
 			applier.Apply(typeof(Person), mapper.Object);
 
