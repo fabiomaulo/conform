@@ -100,6 +100,7 @@
     <Compile Include="Appliers\MsSQL2008DateTimeApplier.cs" />
     <Compile Include="CoolNaming\OneToManyKeyColumnApplier.cs" />
     <Compile Include="Appliers\OneToManyPattern.cs" />
+    <Compile Include="InflectorNaming\ClassPluralizedTableApplier.cs" />
     <Compile Include="Inflectors\AbstractInflector.cs" />
     <Compile Include="Inflectors\AbstractInflectorRule.cs" />
     <Compile Include="Inflectors\EnglishInflector.cs" />
