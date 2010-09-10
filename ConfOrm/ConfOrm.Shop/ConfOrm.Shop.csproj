@@ -100,7 +100,15 @@
     <Compile Include="Appliers\MsSQL2008DateTimeApplier.cs" />
     <Compile Include="CoolNaming\OneToManyKeyColumnApplier.cs" />
     <Compile Include="Appliers\OneToManyPattern.cs" />
-    <Compile Include="DearDbaNaming\ManyToManyTableApplier.cs" />
+    <Compile Include="DearDbaNaming\ClassPluralizedTableApplier.cs" />
+    <Compile Include="DearDbaNaming\DearDbaTablesAndColumnsNamingPack.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DearDbaNaming\JoinedSubclassKeyAsRootIdColumnApplier.cs" />
+    <Compile Include="DearDbaNaming\JoinedSubclassPluralizedTableApplier.cs" />
+    <Compile Include="DearDbaNaming\ManyToManyPluralizedTableApplier.cs" />
+    <Compile Include="DearDbaNaming\PoidColumnNameApplier.cs" />
+    <Compile Include="DearDbaNaming\UnionSubclassPluralizedTableApplier.cs" />
     <Compile Include="InflectorNaming\ClassPluralizedTableApplier.cs" />
     <Compile Include="InflectorNaming\JoinedSubclassPluralizedTableApplier.cs" />
     <Compile Include="InflectorNaming\ManyToManyPluralizedTableApplier.cs">
@@ -122,6 +130,7 @@
     <Compile Include="Inflectors\NounsRule.cs" />
     <Compile Include="Inflectors\SpanishInflector.cs" />
     <Compile Include="NamingAppliers\AbstractManyToManyInCollectionTableApplier.cs" />
+    <Compile Include="NamingAppliers\AbstractPoidColumnNameApplier.cs" />
     <Compile Include="Packs\BidirectionalManyToManyRelationPack.cs" />
     <Compile Include="Packs\BidirectionalOneToManyRelationPack.cs" />
     <Compile Include="Packs\EnumAsStringPack.cs" />

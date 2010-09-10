@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="CoolDomainMapper.cs" />
     <Compile Include="CreateXmlMappingsDemo.cs" />
+    <Compile Include="DearDbaDomainMapper.cs" />
     <Compile Include="DefaultDomainMapper.cs" />
     <Compile Include="Domain\Address.cs" />
     <Compile Include="Domain\Animal.cs" />

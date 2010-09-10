@@ -4,11 +4,11 @@ using ConfOrm.Shop.NamingAppliers;
 
 namespace ConfOrm.Shop.DearDbaNaming
 {
-	public class ManyToManyTableApplier: AbstractManyToManyInCollectionTableApplier
+	public class ManyToManyPluralizedTableApplier: AbstractManyToManyInCollectionTableApplier
 	{
 		private readonly IInflector inflector;
 
-		public ManyToManyTableApplier(IDomainInspector domainInspector, IInflector inflector)
+		public ManyToManyPluralizedTableApplier(IDomainInspector domainInspector, IInflector inflector)
 			: base(domainInspector)
 		{
 			if (inflector == null)

@@ -36,6 +36,18 @@ namespace ConfOrmExample
 		}
 
 		[Test, Explicit]
+		public void ShowSingleXmlMappingWithDearDbaAppliers()
+		{
+			var domainMapper = new DearDbaDomainMapper();
+			var entities = new List<Type>();
+			entities.AddRange(ModuleMappingUtil.RunModuleMapping<NaturalnessModuleMapping>(domainMapper.DomainDefinition, domainMapper.Mapper));
+
+			var document = Serialize(domainMapper.Mapper.CompileMappingFor(entities));
+			File.WriteAllText("MyMapping.hbm.xml", document);
+			Console.Write(document);
+		}
+
+		[Test, Explicit]
 		public void WriteAllXmlMapping()
 		{
 			var domainMapper = new DefaultDomainMapper();

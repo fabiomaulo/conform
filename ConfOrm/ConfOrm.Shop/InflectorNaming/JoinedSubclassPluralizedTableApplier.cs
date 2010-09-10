@@ -27,7 +27,12 @@ namespace ConfOrm.Shop.InflectorNaming
 
 		public void Apply(Type subject, IJoinedSubclassAttributesMapper applyTo)
 		{
-			applyTo.Table(inflector.Pluralize(subject.Name));
+			applyTo.Table(GetTableName(subject));
+		}
+
+		protected virtual string GetTableName(Type subject)
+		{
+			return inflector.Pluralize(subject.Name);
 		}
 
 		#endregion
