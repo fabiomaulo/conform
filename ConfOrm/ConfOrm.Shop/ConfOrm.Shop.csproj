@@ -117,6 +117,7 @@
     <Compile Include="Inflectors\IInflectorReplacementRule.cs" />
     <Compile Include="Inflectors\IInflectorRuleApplier.cs" />
     <Compile Include="Inflectors\InflectorExtensions.cs" />
+    <Compile Include="Inflectors\ItalianInflector.cs" />
     <Compile Include="Inflectors\NounsRule.cs" />
     <Compile Include="Inflectors\SpanishInflector.cs" />
     <Compile Include="Packs\BidirectionalManyToManyRelationPack.cs" />
