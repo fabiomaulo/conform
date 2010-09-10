@@ -1,5 +1,6 @@
 using ConfOrm.Shop.Inflectors;
 using NUnit.Framework;
+using SharpTestsEx;
 
 namespace ConfOrm.ShopTests.InflectorsTests
 {
@@ -46,6 +47,13 @@ namespace ConfOrm.ShopTests.InflectorsTests
 			SingularToPlural.Add("Item", "Items");
 
 			TestInflector = new SpanishInflector();
+		}
+
+		[Test]
+		public void PluralizeUnaccentWords()
+		{
+			var inflector = new SpanishInflector();
+			inflector.Pluralize("Orden").Should().Be("Ordenes");
 		}
 	}
 }
