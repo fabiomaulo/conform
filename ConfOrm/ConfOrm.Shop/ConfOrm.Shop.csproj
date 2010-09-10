@@ -120,6 +120,7 @@
     <Compile Include="Inflectors\ItalianInflector.cs" />
     <Compile Include="Inflectors\NounsRule.cs" />
     <Compile Include="Inflectors\SpanishInflector.cs" />
+    <Compile Include="NamingAppliers\AbstractManyToManyInCollectionTableApplier.cs" />
     <Compile Include="Packs\BidirectionalManyToManyRelationPack.cs" />
     <Compile Include="Packs\BidirectionalOneToManyRelationPack.cs" />
     <Compile Include="Packs\EnumAsStringPack.cs" />

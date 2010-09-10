@@ -1,10 +1,10 @@
 using System;
-using ConfOrm.Shop.CoolNaming;
 using ConfOrm.Shop.Inflectors;
+using ConfOrm.Shop.NamingAppliers;
 
 namespace ConfOrm.Shop.InflectorNaming
 {
-	public class ManyToManyPluralizedTableApplier : ManyToManyInCollectionTableApplier
+	public class ManyToManyPluralizedTableApplier : AbstractManyToManyInCollectionTableApplier
 	{
 		private readonly IInflector inflector;
 
