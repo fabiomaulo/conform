@@ -110,7 +110,9 @@
     <Compile Include="InflectorNamingTests\UnionSubclassPluralizedTableApplierTest.cs" />
     <Compile Include="InflectorsTests\CommonInflectorTests.cs" />
     <Compile Include="InflectorsTests\EnglishInflectorTest.cs" />
+    <Compile Include="InflectorsTests\InflectorExtensionsTests.cs" />
     <Compile Include="InflectorsTests\InflectorRuleTest.cs" />
+    <Compile Include="InflectorsTests\SpanishInflectorTest.cs" />
     <Compile Include="PatternsTests\PoidPropertyAsClassNameIdTest.cs" />
     <Compile Include="PatternsTests\UseBagWhenGenericListPatternTest.cs" />
     <Compile Include="PatternsTests\UseSetWhenGenericCollectionPatternTest.cs" />
