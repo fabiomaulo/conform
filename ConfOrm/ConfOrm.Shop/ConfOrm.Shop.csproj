@@ -87,6 +87,7 @@
     <Compile Include="CoolNaming\CollectionOfElementsTableApplier.cs" />
     <Compile Include="CoolNaming\ComponentPropertyColumnNameApplier.cs" />
     <Compile Include="Appliers\DatePropertyByNameApplier.cs" />
+    <Compile Include="CoolNaming\CoolColumnsNamingPack.cs" />
     <Compile Include="CoolNaming\CoolPatternsAppliersHolder.cs" />
     <Compile Include="CoolNaming\CoolTablesAndColumnsNamingPack.cs" />
     <Compile Include="CoolNaming\JoinedSubclassKeyAsRootIdColumnApplier.cs" />
