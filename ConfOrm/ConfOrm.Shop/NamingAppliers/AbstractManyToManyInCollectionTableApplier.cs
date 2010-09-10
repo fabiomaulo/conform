@@ -66,6 +66,6 @@ namespace ConfOrm.Shop.NamingAppliers
 			return GetTableNameForRelation(names);
 		}
 
-		protected abstract string GetTableNameForRelation(string[] names);
+		public abstract string GetTableNameForRelation(string[] names);
 	}
 }

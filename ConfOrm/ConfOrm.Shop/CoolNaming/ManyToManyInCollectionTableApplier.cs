@@ -12,7 +12,7 @@ namespace ConfOrm.Shop.CoolNaming
 	{
 		public ManyToManyInCollectionTableApplier(IDomainInspector domainInspector) : base(domainInspector) {}
 
-		protected override string GetTableNameForRelation(string[] names)
+		public override string GetTableNameForRelation(string[] names)
 		{
 			return string.Format("{0}To{1}", names[0], names[1]);
 		}

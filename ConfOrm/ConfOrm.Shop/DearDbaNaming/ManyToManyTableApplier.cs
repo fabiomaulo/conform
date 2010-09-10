@@ -2,13 +2,13 @@ using System;
 using ConfOrm.Shop.Inflectors;
 using ConfOrm.Shop.NamingAppliers;
 
-namespace ConfOrm.Shop.InflectorNaming
+namespace ConfOrm.Shop.DearDbaNaming
 {
-	public class ManyToManyPluralizedTableApplier : AbstractManyToManyInCollectionTableApplier
+	public class ManyToManyTableApplier: AbstractManyToManyInCollectionTableApplier
 	{
 		private readonly IInflector inflector;
 
-		public ManyToManyPluralizedTableApplier(IDomainInspector domainInspector, IInflector inflector)
+		public ManyToManyTableApplier(IDomainInspector domainInspector, IInflector inflector)
 			: base(domainInspector)
 		{
 			if (inflector == null)
@@ -20,7 +20,7 @@ namespace ConfOrm.Shop.InflectorNaming
 
 		public override string GetTableNameForRelation(string[] names)
 		{
-			return string.Format("{0}To{1}", inflector.Pluralize(names[0]), inflector.Pluralize(names[1]));
+			return string.Format("{0}_{1}", inflector.Pluralize(names[0]), inflector.Pluralize(names[1])).ToUpperInvariant();
 		}
 	}
 }
