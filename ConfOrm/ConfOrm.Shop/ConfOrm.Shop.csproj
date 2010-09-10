@@ -102,6 +102,9 @@
     <Compile Include="Appliers\OneToManyPattern.cs" />
     <Compile Include="InflectorNaming\ClassPluralizedTableApplier.cs" />
     <Compile Include="InflectorNaming\JoinedSubclassPluralizedTableApplier.cs" />
+    <Compile Include="InflectorNaming\ManyToManyPluralizedTableApplier.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="InflectorNaming\UnionSubclassPluralizedTableApplier.cs">
       <SubType>Code</SubType>
     </Compile>

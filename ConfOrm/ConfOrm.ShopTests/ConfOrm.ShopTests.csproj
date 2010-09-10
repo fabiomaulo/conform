@@ -106,6 +106,7 @@
     <Compile Include="CoolNamingsAppliersTests\ListIndexAsPropertyPosColumnNameApplierTest.cs" />
     <Compile Include="InflectorNamingTests\ClassPluralizedTableApplierTest.cs" />
     <Compile Include="InflectorNamingTests\JoinedSubclassPluralizedTableApplierTest.cs" />
+    <Compile Include="InflectorNamingTests\ManyToManyPluralizedTableApplierTest.cs" />
     <Compile Include="InflectorNamingTests\UnionSubclassPluralizedTableApplierTest.cs" />
     <Compile Include="InflectorsTests\CommonInflectorTests.cs" />
     <Compile Include="InflectorsTests\EnglishInflectorTest.cs" />
