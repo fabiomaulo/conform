@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Cascade.cs" />
     <Compile Include="DefaultNHibernatePatternsHolder.cs" />
+    <Compile Include="DomainInspectorExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="ExplicitDeclarationsHolder.cs" />
     <Compile Include="Extensions.cs" />

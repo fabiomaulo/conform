@@ -80,6 +80,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DomainInspectorExtensionsTests.cs" />
     <Compile Include="ForClassTest.cs" />
     <Compile Include="Mappers\CacheIncludeTest.cs" />
     <Compile Include="Mappers\CacheUsageTest.cs" />
