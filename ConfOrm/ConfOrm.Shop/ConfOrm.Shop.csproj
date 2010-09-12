@@ -104,6 +104,7 @@
     <Compile Include="DearDbaNaming\CollectionOfComponentsKeyColumnApplier.cs" />
     <Compile Include="DearDbaNaming\CollectionOfComponentsTableApplier.cs" />
     <Compile Include="DearDbaNaming\CollectionOfElementsKeyColumnApplier.cs" />
+    <Compile Include="DearDbaNaming\CollectionOfElementsTableApplier.cs" />
     <Compile Include="DearDbaNaming\DearDbaTablesAndColumnsNamingPack.cs">
       <SubType>Code</SubType>
     </Compile>
