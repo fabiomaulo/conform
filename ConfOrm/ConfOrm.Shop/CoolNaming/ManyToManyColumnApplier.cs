@@ -29,11 +29,13 @@ namespace ConfOrm.Shop.CoolNaming
 			applyTo.Column(GetColumnNameForRelation(subject));
 		}
 
-		private string GetColumnNameForRelation(PropertyPath subject)
+		#endregion
+
+		protected virtual string GetColumnNameForRelation(PropertyPath subject)
 		{
 			var relation = GetRelation(subject.LocalMember);
 			var fromMany = relation.From;
-			if(!DomainInspector.IsEntity(fromMany))
+			if (!DomainInspector.IsEntity(fromMany))
 			{
 				fromMany = subject.GetContainerEntity(DomainInspector);
 			}
@@ -45,7 +47,5 @@ namespace ConfOrm.Shop.CoolNaming
 			}
 			return subject.ToColumnName() + baseColumnName;
 		}
-
-		#endregion
 	}
 }
