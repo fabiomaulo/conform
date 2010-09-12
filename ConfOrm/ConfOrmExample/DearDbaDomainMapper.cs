@@ -30,7 +30,6 @@ namespace ConfOrmExample
 					.Merge(new BidirectionalOneToManyRelationPack(orm))
 					.Merge(new DiscriminatorValueAsClassNamePack(orm))
 					.Merge(new DearDbaTablesAndColumnsNamingPack(orm, new EnglishInflector()))
-					.Merge(new ListIndexAsPropertyPosColumnNameApplier())
 					.Merge(new TablePerClassPack())
 					.Merge(new DatePropertyByNameApplier())
 					.Merge(new MsSQL2008DateTimeApplier());
