@@ -31,7 +31,7 @@ namespace ConfOrm.Shop.DearDbaNaming
 
 		protected virtual string GetKeyColumnName(PropertyPath subject)
 		{
-			Type entity = subject.GetContainerEntity(DomainInspector).GetBaseTypes().Single(t => DomainInspector.IsRootEntity(t));
+			Type entity = subject.GetContainerEntity(DomainInspector).GetRootEntity(DomainInspector);
 			return entity.GetPoidColumnName();
 		}
 	}

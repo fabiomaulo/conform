@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using ConfOrm.Mappers;
 
 namespace ConfOrm.Shop.DearDbaNaming
@@ -26,7 +25,7 @@ namespace ConfOrm.Shop.DearDbaNaming
 
 		public void Apply(Type subject, IJoinedSubclassAttributesMapper applyTo)
 		{
-			var rootEntity = subject.GetBaseTypes().Single(t => domainInspector.IsRootEntity(t));
+			var rootEntity = subject.GetRootEntity(domainInspector);
 			applyTo.Key(km => km.Column(rootEntity.GetPoidColumnName()));
 		}
 	}

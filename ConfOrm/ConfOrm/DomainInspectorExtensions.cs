@@ -17,5 +17,14 @@ namespace ConfOrm
 			}
 			return entityType.GetBaseTypes().SingleOrDefault(domainInspector.IsRootEntity);
 		}
+
+		public static Type GetRootEntity(this Type entityType, IDomainInspector domainInspector)
+		{
+			if (domainInspector == null)
+			{
+				throw new ArgumentNullException("domainInspector");
+			}
+			return domainInspector.GetRootEntity(entityType);
+		}
 	}
 }

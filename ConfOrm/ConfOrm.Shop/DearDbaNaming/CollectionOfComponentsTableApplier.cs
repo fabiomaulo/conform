@@ -1,17 +1,20 @@
 using System;
-using System.Linq;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
 using ConfOrm.Shop.Appliers;
+using ConfOrm.Shop.Inflectors;
 
 namespace ConfOrm.Shop.DearDbaNaming
 {
 	public class CollectionOfComponentsTableApplier : CollectionOfComponentsPattern,
 																										IPatternApplier<PropertyPath, ICollectionPropertiesMapper>
 	{
-		public CollectionOfComponentsTableApplier(IDomainInspector domainInspector)
+		private readonly IInflector inflector;
+
+		public CollectionOfComponentsTableApplier(IDomainInspector domainInspector, IInflector inflector)
 			: base(domainInspector)
 		{
+			this.inflector = inflector;
 		}
 
 		#region IPatternApplier<PropertyPath,ICollectionPropertiesMapper> Members
@@ -30,8 +33,8 @@ namespace ConfOrm.Shop.DearDbaNaming
 
 		protected virtual string GetTableName(PropertyPath subject)
 		{
-			Type entity = subject.GetContainerEntity(DomainInspector).GetBaseTypes().Single(t => DomainInspector.IsRootEntity(t));
-			return string.Format("{0}_{1}", entity.GetPoidColumnName(), subject.ToColumnName().ToUpperInvariant());
+			Type entity = subject.GetContainerEntity(DomainInspector).GetRootEntity(DomainInspector);
+			return string.Format("{0}_{1}", inflector.Pluralize(entity.Name).ToUpperInvariant() , subject.ToColumnName().ToUpperInvariant());
 		}
 	}
 }
