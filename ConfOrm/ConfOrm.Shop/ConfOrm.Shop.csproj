@@ -87,6 +87,7 @@
     <Compile Include="CoolNaming\CollectionOfElementsTableApplier.cs" />
     <Compile Include="DearDbaNaming\ListIndexAsPropertyPosColumnNameApplier.cs" />
     <Compile Include="DearDbaNaming\ManyToManyColumnApplier.cs" />
+    <Compile Include="DearDbaNaming\ManyToManyKeyIdColumnApplier.cs" />
     <Compile Include="NamingAppliers\ComponentPropertyColumnNameApplier.cs" />
     <Compile Include="Appliers\DatePropertyByNameApplier.cs" />
     <Compile Include="CoolNaming\CoolColumnsNamingPack.cs" />
