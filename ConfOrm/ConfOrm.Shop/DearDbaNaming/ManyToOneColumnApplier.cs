@@ -25,7 +25,7 @@ namespace ConfOrm.Shop.DearDbaNaming
 
 		protected virtual string GetRelationColumnName(PropertyPath subject)
 		{
-			return subject.ToColumnName().ToUpperInvariant() + "_ID";
+			return subject.ToColumnName("_").ToUpperInvariant() + "_ID";
 		}
 	}
 }

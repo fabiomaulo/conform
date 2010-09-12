@@ -54,5 +54,23 @@ namespace ConfOrmTests.NH
 
 			path.GetContainerEntity(orm.Object).Should().Be(typeof(InheritedEntity));
 		}
+
+		[Test]
+		public void ToColumnNameWithCustomSeparator()
+		{
+			var level0 = new PropertyPath(null, ForClass<InheritedEntity>.Property(p => p.Component));
+			var level1 = new PropertyPath(level0, ForClass<MyComponent>.Property(p => p.Component1));
+			var path = new PropertyPath(level1, ForClass<MyComponent1>.Property(p => p.Something));
+			path.ToColumnName("_").Should().Be("Component_Component1_Something");
+		}
+
+		[Test]
+		public void WhenCustomSeparatorIsNullThenConcat()
+		{
+			var level0 = new PropertyPath(null, ForClass<InheritedEntity>.Property(p => p.Component));
+			var level1 = new PropertyPath(level0, ForClass<MyComponent>.Property(p => p.Component1));
+			var path = new PropertyPath(level1, ForClass<MyComponent1>.Property(p => p.Something));
+			path.ToColumnName(null).Should().Be("ComponentComponent1Something");
+		}
 	}
 }

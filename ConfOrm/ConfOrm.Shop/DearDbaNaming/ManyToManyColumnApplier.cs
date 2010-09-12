@@ -41,7 +41,7 @@ namespace ConfOrm.Shop.DearDbaNaming
 			}
 			var toMany = relation.To;
 			var baseColumnName = toMany.GetPoidColumnName();
-			return fromMany != toMany ? baseColumnName : string.Format("{0}_{1}", subject.ToColumnName(), baseColumnName);
+			return fromMany != toMany ? baseColumnName : string.Format("{0}_{1}", subject.ToColumnName("_"), baseColumnName);
 		}
 	}
 }

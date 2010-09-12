@@ -13,5 +13,10 @@ namespace ConfOrm.NH
 			}
 			return analizing.LocalMember.ReflectedType;
 		}
+
+		public static string ToColumnName(this PropertyPath propertyPath, string pathSeparator)
+		{
+			return propertyPath.ToString().Replace(".", pathSeparator);
+		}
 	}
 }

@@ -34,7 +34,7 @@ namespace ConfOrm.Shop.DearDbaNaming
 		protected virtual string GetTableName(PropertyPath subject)
 		{
 			Type entity = subject.GetContainerEntity(DomainInspector).GetRootEntity(DomainInspector);
-			return string.Format("{0}_{1}", inflector.Pluralize(entity.Name).ToUpperInvariant() , subject.ToColumnName().ToUpperInvariant());
+			return string.Format("{0}_{1}", inflector.Pluralize(entity.Name).ToUpperInvariant() , subject.ToColumnName("_").ToUpperInvariant());
 		}
 	}
 }

@@ -17,7 +17,7 @@ namespace ConfOrm.Shop.DearDbaNaming
 
 		protected virtual string GetIndexColumnName(PropertyPath subject)
 		{
-			return subject.ToColumnName() + "_IDX";
+			return subject.ToColumnName("_") + "_IDX";
 		}
 	}
 }
