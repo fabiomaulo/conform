@@ -101,9 +101,13 @@
     <Compile Include="CoolNaming\OneToManyKeyColumnApplier.cs" />
     <Compile Include="Appliers\OneToManyPattern.cs" />
     <Compile Include="DearDbaNaming\ClassPluralizedTableApplier.cs" />
+    <Compile Include="DearDbaNaming\CollectionOfComponentsKeyColumnApplier.cs" />
+    <Compile Include="DearDbaNaming\CollectionOfComponentsTableApplier.cs" />
+    <Compile Include="DearDbaNaming\CollectionOfElementsKeyColumnApplier.cs" />
     <Compile Include="DearDbaNaming\DearDbaTablesAndColumnsNamingPack.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DearDbaNaming\EntityPoidNamingExtension.cs" />
     <Compile Include="DearDbaNaming\JoinedSubclassKeyAsRootIdColumnApplier.cs" />
     <Compile Include="DearDbaNaming\JoinedSubclassPluralizedTableApplier.cs" />
     <Compile Include="DearDbaNaming\ManyToManyPluralizedTableApplier.cs" />

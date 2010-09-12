@@ -7,7 +7,7 @@ namespace ConfOrm.Shop.DearDbaNaming
 	{
 		public override string GetPoidColumnName(Type subject)
 		{
-			return subject.Name.ToUpperInvariant() + "_ID";
+			return subject.GetPoidColumnName();
 		}
 	}
 }

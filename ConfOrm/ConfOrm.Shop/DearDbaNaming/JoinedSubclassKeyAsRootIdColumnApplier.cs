@@ -6,7 +6,6 @@ namespace ConfOrm.Shop.DearDbaNaming
 {
 	public class JoinedSubclassKeyAsRootIdColumnApplier: IPatternApplier<Type, IJoinedSubclassAttributesMapper>
 	{
-		private readonly PoidColumnNameApplier rootEntityPoidApplier;
 		private readonly IDomainInspector domainInspector;
 
 		public JoinedSubclassKeyAsRootIdColumnApplier(IDomainInspector domainInspector)
@@ -16,7 +15,6 @@ namespace ConfOrm.Shop.DearDbaNaming
 				throw new ArgumentNullException("domainInspector");
 			}
 			this.domainInspector = domainInspector;
-			rootEntityPoidApplier = new PoidColumnNameApplier();
 		}
 
 
@@ -29,7 +27,7 @@ namespace ConfOrm.Shop.DearDbaNaming
 		public void Apply(Type subject, IJoinedSubclassAttributesMapper applyTo)
 		{
 			var rootEntity = subject.GetBaseTypes().Single(t => domainInspector.IsRootEntity(t));
-			applyTo.Key(km => km.Column(rootEntityPoidApplier.GetPoidColumnName(rootEntity)));
+			applyTo.Key(km => km.Column(rootEntity.GetPoidColumnName()));
 		}
 	}
 }
