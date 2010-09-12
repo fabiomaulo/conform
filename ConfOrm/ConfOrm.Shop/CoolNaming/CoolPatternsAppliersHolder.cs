@@ -4,6 +4,8 @@ using System.Reflection;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
 using ConfOrm.Patterns;
+using ConfOrm.Shop.Appliers;
+using ConfOrm.Shop.NamingAppliers;
 
 namespace ConfOrm.Shop.CoolNaming
 {

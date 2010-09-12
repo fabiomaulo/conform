@@ -85,7 +85,7 @@
     <Compile Include="CoolNaming\CollectionOfElementsKeyColumnApplier.cs" />
     <Compile Include="Appliers\CollectionOfElementsOnlyPattern.cs" />
     <Compile Include="CoolNaming\CollectionOfElementsTableApplier.cs" />
-    <Compile Include="CoolNaming\ComponentPropertyColumnNameApplier.cs" />
+    <Compile Include="Appliers\ComponentPropertyColumnNameApplier.cs" />
     <Compile Include="Appliers\DatePropertyByNameApplier.cs" />
     <Compile Include="CoolNaming\CoolColumnsNamingPack.cs" />
     <Compile Include="CoolNaming\CoolPatternsAppliersHolder.cs" />

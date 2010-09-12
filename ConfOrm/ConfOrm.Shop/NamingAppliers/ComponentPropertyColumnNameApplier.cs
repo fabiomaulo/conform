@@ -1,8 +1,7 @@
 using ConfOrm.Mappers;
 using ConfOrm.NH;
-using ConfOrm.Shop.Appliers;
 
-namespace ConfOrm.Shop.CoolNaming
+namespace ConfOrm.Shop.Appliers
 {
 	public class ComponentPropertyColumnNameApplier : ComponentMemberDeepPathPattern, IPatternApplier<PropertyPath, IPropertyMapper>
 	{
