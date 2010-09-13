@@ -18,6 +18,11 @@ namespace ConfOrm.Shop.InflectorNaming
 			this.inflector = inflector;
 		}
 
+		public IInflector Inflector
+		{
+			get { return inflector; }
+		}
+
 		public override string GetTableNameForRelation(string[] names)
 		{
 			return string.Format("{0}To{1}", inflector.Pluralize(names[0]), inflector.Pluralize(names[1]));

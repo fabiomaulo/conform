@@ -17,6 +17,11 @@ namespace ConfOrm.Shop.InflectorNaming
 			this.inflector = inflector;
 		}
 
+		public IInflector Inflector
+		{
+			get { return inflector; }
+		}
+
 		#region IPatternApplier<Type,IJoinedSubclassAttributesMapper> Members
 
 		public bool Match(Type subject)
