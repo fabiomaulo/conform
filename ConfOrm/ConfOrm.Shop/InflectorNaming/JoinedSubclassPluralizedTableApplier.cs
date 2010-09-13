@@ -35,7 +35,7 @@ namespace ConfOrm.Shop.InflectorNaming
 			applyTo.Table(GetTableName(subject));
 		}
 
-		protected virtual string GetTableName(Type subject)
+		public virtual string GetTableName(Type subject)
 		{
 			return inflector.Pluralize(subject.Name);
 		}

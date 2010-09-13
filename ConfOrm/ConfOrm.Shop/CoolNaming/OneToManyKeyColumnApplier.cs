@@ -37,6 +37,11 @@ namespace ConfOrm.Shop.CoolNaming
 			var entity = subject.GetContainerEntity(DomainInspector);
 			var parentPropertyInChild = childType.GetFirstPropertyOfType(entity);
 			var baseName = parentPropertyInChild == null ? subject.PreviousPath == null ? entity.Name : entity.Name + subject.PreviousPath : parentPropertyInChild.Name;
+			return GetKeyColumnName(baseName);
+		}
+
+		protected virtual string GetKeyColumnName(string baseName)
+		{
 			return string.Format("{0}Id", baseName);
 		}
 	}

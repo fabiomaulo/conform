@@ -9,7 +9,7 @@ namespace ConfOrm.Shop.DearDbaNaming
 		{
 		}
 
-		protected override string GetTableName(Type subject)
+		public override string GetTableName(Type subject)
 		{
 			return base.GetTableName(subject).ToUpperInvariant();
 		}
