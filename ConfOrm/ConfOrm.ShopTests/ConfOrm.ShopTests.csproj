@@ -119,6 +119,7 @@
     <Compile Include="PatternsTests\UseBagWhenGenericListPatternTest.cs" />
     <Compile Include="PatternsTests\UseSetWhenGenericCollectionPatternTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Subclassing\ClassDiscriminatorValueAsEnumValueApplierTest.cs" />
     <Compile Include="Subclassing\DiscriminatorColumnNameApplierTests.cs" />
     <Compile Include="Subclassing\ClassDiscriminatorValueAsClassNameApplierTest.cs" />
     <Compile Include="Subclassing\SubclassDiscriminatorValueAsClassNameApplierTest.cs" />
