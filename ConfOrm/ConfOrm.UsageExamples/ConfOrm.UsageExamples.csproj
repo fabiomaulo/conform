@@ -57,6 +57,8 @@
     <Compile Include="ClassExclusion\OutcomeDetail.cs" />
     <Compile Include="CreateXmlMappingsInBinFolder\ConfOrmInitializer.cs" />
     <Compile Include="CreateXmlMappingsInBinFolder\DemoOfXmlMappingCreation.cs" />
+    <Compile Include="DiscriminatorValueAsEnumValue\Demo.cs" />
+    <Compile Include="DiscriminatorValueAsEnumValue\Domain.cs" />
     <Compile Include="NHibernateMappingsExtensions.cs" />
     <Compile Include="CreateXmlMappingsInBinFolder\Domain\Order.cs" />
     <Compile Include="CreateXmlMappingsInBinFolder\Domain\OrderItem.cs" />

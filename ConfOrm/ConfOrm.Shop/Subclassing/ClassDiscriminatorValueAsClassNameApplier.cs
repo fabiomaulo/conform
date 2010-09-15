@@ -22,13 +22,6 @@ namespace ConfOrm.Shop.Subclassing
 		public virtual void Apply(Type subject, IClassAttributesMapper applyTo)
 		{
 			applyTo.DiscriminatorValue(subject.Name);
-
-			SetColumnLength(applyTo);
-		}
-
-		protected virtual void SetColumnLength(IClassAttributesMapper applyTo)
-		{
-			applyTo.Discriminator(dm=> dm.Length(64));
 		}
 
 		#endregion

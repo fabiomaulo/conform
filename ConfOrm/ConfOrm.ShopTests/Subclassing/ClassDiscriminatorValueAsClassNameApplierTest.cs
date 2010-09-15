@@ -43,20 +43,21 @@ namespace ConfOrm.ShopTests.Subclassing
 			mapper.Verify(cm=> cm.DiscriminatorValue(It.Is<string>(n=> "MyClass".Equals(n))));
 		}
 
-		[Test]
-		public void AlwaysApplyDicriminatorColumnLength()
-		{
-			var orm = new Mock<IDomainInspector>();
-			var applier = new ClassDiscriminatorValueAsClassNameApplier(orm.Object);
+		//[Test]
+		// Is better to avoid double responsibility and leave the default length
+		//public void AlwaysApplyDicriminatorColumnLength()
+		//{
+		//  var orm = new Mock<IDomainInspector>();
+		//  var applier = new ClassDiscriminatorValueAsClassNameApplier(orm.Object);
 
-			var mapper = new Mock<IClassAttributesMapper>();
-			var discriminatorMapper = new Mock<IDiscriminatorMapper>();
-			mapper.Setup(x => x.Discriminator(It.IsAny<Action<IDiscriminatorMapper>>())).Callback<Action<IDiscriminatorMapper>>(
-				x => x.Invoke(discriminatorMapper.Object));
+		//  var mapper = new Mock<IClassAttributesMapper>();
+		//  var discriminatorMapper = new Mock<IDiscriminatorMapper>();
+		//  mapper.Setup(x => x.Discriminator(It.IsAny<Action<IDiscriminatorMapper>>())).Callback<Action<IDiscriminatorMapper>>(
+		//    x => x.Invoke(discriminatorMapper.Object));
 
-			applier.Apply(typeof(MyClass), mapper.Object);
+		//  applier.Apply(typeof(MyClass), mapper.Object);
 
-			discriminatorMapper.Verify(m => m.Length(It.Is<int>(l => l > 0)));
-		}
+		//  discriminatorMapper.Verify(m => m.Length(It.Is<int>(l => l > 0)));
+		//}
 	}
 }
