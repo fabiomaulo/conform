@@ -259,5 +259,14 @@ namespace ConfOrmTests.NH
 			mapdoc.RootClasses[0].filter.Length.Should().Be(1);
 			mapdoc.RootClasses[0].filter[0].Satisfy(f => f.name == "filter1" && f.condition == null);
 		}
+
+		[Test]
+		public void CanSetWhereClause()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
+			rc.Where("Id > 0");
+			mapdoc.RootClasses[0].where.Should().Be("Id > 0");
+		}
 	}
 }

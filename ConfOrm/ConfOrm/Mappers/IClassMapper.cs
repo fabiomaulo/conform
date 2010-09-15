@@ -18,6 +18,7 @@ namespace ConfOrm.Mappers
 		void NaturalId(Action<INaturalIdMapper> naturalIdMapping);
 		void Cache(Action<ICacheMapper> cacheMapping);
 		void Filter(string filterName, Action<IFilterMapper> filterMapping);
+		void Where(string whereClause);
 	}
 
 	public interface IClassMapper : IClassAttributesMapper, IPropertyContainerMapper
@@ -38,6 +39,7 @@ namespace ConfOrm.Mappers
 		void NaturalId(Action<INaturalIdAttributesMapper> naturalIdMapping);
 		void Cache(Action<ICacheMapper> cacheMapping);
 		void Filter(string filterName, Action<IFilterMapper> filterMapping);
+		void Where(string whereClause);
 	}
 
 	public interface IClassMapper<TEntity> : IClassAttributesMapper<TEntity>, IPropertyContainerMapper<TEntity> where TEntity : class

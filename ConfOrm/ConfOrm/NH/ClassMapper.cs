@@ -158,6 +158,11 @@ namespace ConfOrm.NH
 			classMapping.filter = filters.Values.ToArray();
 		}
 
+		public void Where(string whereClause)
+		{
+			classMapping.where = whereClause;
+		}
+
 		#endregion
 
 		#region Implementation of IEntityAttributesMapper
