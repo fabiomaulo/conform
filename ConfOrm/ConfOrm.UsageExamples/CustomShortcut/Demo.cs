@@ -30,6 +30,7 @@ namespace ConfOrm.UsageExamples.CustomShortcut
 			orm.TablePerClass<MyRelated>();
 
 			mapper.NotNullable<MyEntity>(myEntity=> myEntity.Name);
+			mapper.NotNullable<MyEntity>(myEntity => myEntity.MyRelated);
 			var mapping = mapper.CompileMappingFor(new[] { typeof(MyEntity) });
 			Console.Write(mapping.AsString());
 		}
