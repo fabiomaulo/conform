@@ -254,6 +254,7 @@
     <Compile Include="Patterns\CustomUserTypeInDictionaryKeyApplier.cs" />
     <Compile Include="Patterns\DelegatedAdvancedApplier.cs" />
     <Compile Include="Patterns\DelegatedApplier.cs" />
+    <Compile Include="Patterns\DelegatedPattern.cs" />
     <Compile Include="Patterns\DictionaryCollectionPattern.cs" />
     <Compile Include="Patterns\GuidOptimizedPoidPattern.cs" />
     <Compile Include="Patterns\GuidPoidPattern.cs" />

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace ConfOrm
 {
@@ -61,5 +62,6 @@ namespace ConfOrm
 		void PersistentProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 		void ExcludeProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 		void VersionProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
+		void ExcludeProperty(Predicate<MemberInfo> matchForExclusion);
 	}
 }

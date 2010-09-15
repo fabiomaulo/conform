@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using ConfOrm.Patterns;
 
 namespace ConfOrm
 {
@@ -259,6 +260,11 @@ namespace ConfOrm
 			explicitDeclarations.VersionProperties.Add(member);
 			var memberOf = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
 			explicitDeclarations.VersionProperties.Add(memberOf);
+		}
+
+		public void ExcludeProperty(Predicate<MemberInfo> matchForExclusion)
+		{
+			Patterns.PersistentPropertiesExclusions.Add(new DelegatedPattern<MemberInfo>(matchForExclusion));
 		}
 
 		#endregion
