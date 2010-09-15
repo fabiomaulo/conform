@@ -78,6 +78,11 @@ namespace ConfOrm.NH.CustomizersImpl
 			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Filter(filterName, filterMapping));
 		}
 
+		public void Where(string whereClause)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.Where(whereClause));
+		}
+
 		public void EntityName(string value)
 		{
 			CustomizersHolder.AddCustomizer(typeof(TEntity), (IClassAttributesMapper m) => m.EntityName(value));
