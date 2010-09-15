@@ -55,6 +55,11 @@ namespace ConfOrm.NH
 			this.membersProvider = membersProvider;
 		}
 
+		public IDomainInspector DomainInspector
+		{
+			get { return domainInspector; }
+		}
+
 		public void Class<TRootEntity>(Action<IClassMapper<TRootEntity>> customizeAction) where TRootEntity : class
 		{
 			var customizer = new ClassCustomizer<TRootEntity>(customizerHolder);

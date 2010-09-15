@@ -10,6 +10,12 @@ namespace ConfOrm.UsageExamples.CustomShortcut
 		private class MyEntity
 		{
 			public string Name { get; set; }
+			public MyRelated MyRelated { get; set; }
+		}
+
+		private class MyRelated
+		{
+			public int Id { get; set; }
 		}
 
 		[Test, Explicit]
@@ -21,6 +27,7 @@ namespace ConfOrm.UsageExamples.CustomShortcut
 			var orm = new ObjectRelationalMapper();
 			var mapper = new Mapper(orm);
 			orm.TablePerClass<MyEntity>();
+			orm.TablePerClass<MyRelated>();
 
 			mapper.NotNullable<MyEntity>(myEntity=> myEntity.Name);
 			var mapping = mapper.CompileMappingFor(new[] { typeof(MyEntity) });
@@ -32,7 +39,16 @@ namespace ConfOrm.UsageExamples.CustomShortcut
 	{
 		public static void NotNullable<T>(this Mapper mapper, Expression<Func<T, object>> property) where T : class
 		{
-			mapper.Customize<T>(map => map.Property(property, pm => pm.NotNullable(true)));
+			var member = TypeExtensions.DecodeMemberAccessExpression(property);
+			Type propertyType = member.GetPropertyOrFieldType();
+			if (mapper.DomainInspector.IsManyToOne(typeof(T), propertyType))
+			{
+				mapper.Customize<T>(map => map.ManyToOne(property, pm => pm.NotNullable(true)));
+			}
+			else
+			{
+				mapper.Customize<T>(map => map.Property(property, pm => pm.NotNullable(true)));
+			}
 		}
 	}
 }
