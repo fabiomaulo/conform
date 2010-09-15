@@ -123,6 +123,7 @@
     <Compile Include="Subclassing\DiscriminatorColumnNameApplierTests.cs" />
     <Compile Include="Subclassing\ClassDiscriminatorValueAsClassNameApplierTest.cs" />
     <Compile Include="Subclassing\SubclassDiscriminatorValueAsClassNameApplierTest.cs" />
+    <Compile Include="Subclassing\SubclassDiscriminatorValueAsEnumValueApplierTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConfOrm.Shop\ConfOrm.Shop.csproj">

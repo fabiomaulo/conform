@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using ConfOrm.Mappers;
 
@@ -12,12 +11,7 @@ namespace ConfOrm.Shop.Subclassing
 		private readonly IDomainInspector domainInspector;
 		private readonly string[] enumsNames;
 		private readonly int indexOfUnknow;
-		private static Dictionary<Type, Func<object, object>> converters;
-		static ClassDiscriminatorValueAsEnumValueApplier()
-		{
-			converters = new Dictionary<Type, Func<object, object>>();
-			converters.Add(typeof(int), x=> Convert.ToInt32(x));
-		}
+
 		public ClassDiscriminatorValueAsEnumValueApplier(IDomainInspector domainInspector)
 		{
 			if (domainInspector == null)
@@ -43,21 +37,16 @@ namespace ConfOrm.Shop.Subclassing
 			var className = subject.Name;
 			if (Array.IndexOf(enumsNames, className) >= 0)
 			{
-				applyTo.DiscriminatorValue(GetConvertedValue(className));
+				applyTo.DiscriminatorValue(EnumUtil.ParseGettingUnderlyingValue(typeof(TEnum), className));
 			}
 			else if (indexOfUnknow >= 0)
 			{
-				applyTo.DiscriminatorValue(GetConvertedValue(enumsNames[indexOfUnknow]));
+				applyTo.DiscriminatorValue(EnumUtil.ParseGettingUnderlyingValue(typeof(TEnum), enumsNames[indexOfUnknow]));
 			}
 			else
 			{
 				throw new ArgumentException("Canot find the discriminator value for the class " + subject.FullName + " using the enum " + typeof(TEnum).FullName);
 			}
-		}
-
-		private object GetConvertedValue(string enumName)
-		{
-			return converters[Enum.GetUnderlyingType(typeof(TEnum))](Enum.Parse(typeof(TEnum), enumName));
 		}
 	}
 }

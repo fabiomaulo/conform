@@ -156,6 +156,7 @@
     <Compile Include="Subclassing\ClassDiscriminatorValueAsEnumValueApplier.cs" />
     <Compile Include="Subclassing\DiscriminatorColumnNameApplier.cs" />
     <Compile Include="Subclassing\SubclassDiscriminatorValueAsClassNameApplier.cs" />
+    <Compile Include="Subclassing\SubclassDiscriminatorValueAsEnumValueApplier.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConfOrm\ConfOrm.csproj">

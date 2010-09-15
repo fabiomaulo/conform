@@ -77,6 +77,7 @@
     <Compile Include="DefaultNHibernatePatternsHolder.cs" />
     <Compile Include="DomainInspectorExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="EnumUtil.cs" />
     <Compile Include="ExplicitDeclarationsHolder.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="ForClass.cs" />
