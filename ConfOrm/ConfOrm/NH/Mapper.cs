@@ -510,8 +510,7 @@ namespace ConfOrm.NH
 				}
 				PatternsAppliers.Any.ApplyAllMatchs(member, anyMapper);
 				PatternsAppliers.AnyPath.ApplyAllMatchs(memberPath, anyMapper);
-				customizerHolder.InvokeCustomizers(new PropertyPath(null, member), anyMapper);
-				customizerHolder.InvokeCustomizers(memberPath, anyMapper);
+				ForEachMemberPath(member, memberPath, pp => customizerHolder.InvokeCustomizers(pp, anyMapper));
 			});
 		}
 
@@ -521,9 +520,33 @@ namespace ConfOrm.NH
 				{
 					PatternsAppliers.Property.ApplyAllMatchs(member, propertyMapper);
 					PatternsAppliers.PropertyPath.ApplyAllMatchs(propertyPath, propertyMapper);
-					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), propertyMapper);
-					customizerHolder.InvokeCustomizers(propertyPath, propertyMapper);
+					ForEachMemberPath(member, propertyPath, pp => customizerHolder.InvokeCustomizers(pp, propertyMapper));
 				});
+		}
+
+		protected void ForEachMemberPath(MemberInfo member, PropertyPath progressivePath, Action<PropertyPath> invoke)
+		{
+			// To ensure that a customizer is called just once I can't use a set because all customizers
+			// needs to be called in a certain sequence starting from the most general (base classes) to the
+			// most specific (on progressivePath).
+			// I can use some if.
+
+			// path on declaring type
+			var propertyPathLevel0 = new PropertyPath(null, member.GetMemberFromDeclaringType());
+			// path on reflected type
+			var propertyPathLevel1 = new PropertyPath(null, member);
+			//full path
+			var propertyPathLevel2 = progressivePath;
+
+			invoke(propertyPathLevel0);
+			if(!propertyPathLevel0.Equals(propertyPathLevel1))
+			{
+				invoke(propertyPathLevel1);
+			}
+			if(!propertyPathLevel2.Equals(propertyPathLevel0) && !propertyPathLevel2.Equals(propertyPathLevel1))
+			{
+				invoke(propertyPathLevel2);
+			}
 		}
 
 		private void MapComponent(MemberInfo member, PropertyPath memberPath, Type propertyType, IBasePlainPropertyContainerMapper propertiesContainer,
@@ -566,8 +589,7 @@ namespace ConfOrm.NH
 					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					PatternsAppliers.Bag.ApplyAllMatchs(member, collectionPropertiesMapper);
 					PatternsAppliers.BagPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
-					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
-					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
+					ForEachMemberPath(member, propertyPath, pp => customizerHolder.InvokeCustomizers(pp, collectionPropertiesMapper));
 				}, cert.Map);
 		}
 
@@ -583,8 +605,7 @@ namespace ConfOrm.NH
 					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					PatternsAppliers.List.ApplyAllMatchs(member, collectionPropertiesMapper);
 					PatternsAppliers.ListPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
-					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
-					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
+					ForEachMemberPath(member, propertyPath, pp => customizerHolder.InvokeCustomizers(pp, collectionPropertiesMapper));
 				}, cert.Map);
 		}
 
@@ -609,8 +630,7 @@ namespace ConfOrm.NH
 					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					PatternsAppliers.Map.ApplyAllMatchs(member, collectionPropertiesMapper);
 					PatternsAppliers.MapPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
-					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
-					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
+					ForEachMemberPath(member, propertyPath, pp => customizerHolder.InvokeCustomizers(pp, collectionPropertiesMapper));
 				}, mkrm.Map, cert.Map);
 		}
 
@@ -626,8 +646,7 @@ namespace ConfOrm.NH
 					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					PatternsAppliers.Set.ApplyAllMatchs(member, collectionPropertiesMapper);
 					PatternsAppliers.SetPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
-					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), collectionPropertiesMapper);
-					customizerHolder.InvokeCustomizers(propertyPath, collectionPropertiesMapper);
+					ForEachMemberPath(member, propertyPath, pp => customizerHolder.InvokeCustomizers(pp, collectionPropertiesMapper));
 				}, cert.Map);
 		}
 
@@ -640,8 +659,7 @@ namespace ConfOrm.NH
 					oneToOneMapper.Cascade(cascade.GetValueOrDefault(Cascade.None));
 					PatternsAppliers.OneToOne.ApplyAllMatchs(member, oneToOneMapper);
 					PatternsAppliers.OneToOnePath.ApplyAllMatchs(propertyPath, oneToOneMapper);
-					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), oneToOneMapper);
-					customizerHolder.InvokeCustomizers(propertyPath, oneToOneMapper);
+					ForEachMemberPath(member, propertyPath, pp => customizerHolder.InvokeCustomizers(pp, oneToOneMapper));
 				});
 		}
 
@@ -654,8 +672,7 @@ namespace ConfOrm.NH
 					manyToOneMapper.Cascade(cascade.GetValueOrDefault(Cascade.None));
 					PatternsAppliers.ManyToOne.ApplyAllMatchs(member, manyToOneMapper);
 					PatternsAppliers.ManyToOnePath.ApplyAllMatchs(propertyPath, manyToOneMapper);
-					customizerHolder.InvokeCustomizers(new PropertyPath(null, member), manyToOneMapper);
-					customizerHolder.InvokeCustomizers(propertyPath, manyToOneMapper);
+					ForEachMemberPath(member, propertyPath, pp => customizerHolder.InvokeCustomizers(pp, manyToOneMapper));
 				});
 		}
 
