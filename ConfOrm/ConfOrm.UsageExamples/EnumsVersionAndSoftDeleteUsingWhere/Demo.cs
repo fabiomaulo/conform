@@ -92,6 +92,10 @@ namespace ConfOrm.UsageExamples.EnumsVersionAndSoftDeleteUsingWhere
 			                                  	mi.GetPropertyOrFieldType().DetermineCollectionElementType())
 			                            , map => map.Where(softDeleteWhereClause));
 
+			// The default length for string is 100
+			// Note : because this convetion has no specific restriction other than typeof(string) should be added at first (the order, in this case, is important)
+			mapper.AddPropertyPattern(mi => mi.GetPropertyOrFieldType() == typeof(string), map => map.Length(100));
+
 			// When the property name is Description and is of type string then apply length 500
 			mapper.AddPropertyPattern(mi => mi.Name == "Description" && mi.GetPropertyOrFieldType() == typeof (string),
 			                          map => map.Length(500));
@@ -125,19 +129,11 @@ namespace ConfOrm.UsageExamples.EnumsVersionAndSoftDeleteUsingWhere
 
 			// Column customization for class ProductQuotation
 			// Note: It is needed only for properties outside conventions
-			mapper.Customize<ProductQuotation>(map =>
-			                                   	{
-			                                   		map.Property(pq => pq.Name, pm => pm.Length(100));
-			                                   		map.Property(pq => pq.Group, pm =>
-			                                   		                             	{
-			                                   		                             		pm.Length(50);
-			                                   		                             		pm.Column("GroupName");
-			                                   		                             	});
-			                                   		map.Property(pq => pq.Format, pm => pm.Length(100));
-			                                   		map.Property(pq => pq.Color, pm => pm.Length(100));
-			                                   		map.Property(pq => pq.PaperWeight, pm => pm.Length(100));
-			                                   		map.Property(pq => pq.PaperType, pm => pm.Length(100));
-			                                   	});
+			mapper.Customize<ProductQuotation>(map => map.Property(pq => pq.Group, pm =>
+			                                                                       	{
+			                                                                       		pm.Length(50);
+			                                                                       		pm.Column("GroupName");
+			                                                                       	}));
 		}
 	}
 }
