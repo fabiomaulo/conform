@@ -60,6 +60,7 @@
     <Compile Include="CustomShortcut\Demo.cs" />
     <Compile Include="DiscriminatorValueAsEnumValue\Demo.cs" />
     <Compile Include="DiscriminatorValueAsEnumValue\Domain.cs" />
+    <Compile Include="EnumsVersionAndSoftDeleteUsingWhere\Demo.cs" />
     <Compile Include="EnumsVersionAndSoftDeleteUsingWhere\Domain\CalculatedCost.cs" />
     <Compile Include="EnumsVersionAndSoftDeleteUsingWhere\Domain\Cost.cs" />
     <Compile Include="EnumsVersionAndSoftDeleteUsingWhere\Domain\EditionQuotation.cs" />
@@ -94,7 +95,9 @@
       <Name>ConfOrm</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="EnumsVersionAndSoftDeleteUsingWhere\Domain\Domain.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
