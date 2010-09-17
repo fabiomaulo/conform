@@ -13,7 +13,7 @@ namespace ConfOrm.Shop.Appliers
 		public bool Match(MemberInfo subject)
 		{
 			var elementType = GetElementType(subject);
-			return elementType.IsEnumOrNullableEnum();
+			return elementType.IsEnumOrNullableEnum() && !elementType.IsFlagEnumOrNullableFlagEnum();
 		}
 
 		public void Apply(MemberInfo subject, IElementMapper applyTo)

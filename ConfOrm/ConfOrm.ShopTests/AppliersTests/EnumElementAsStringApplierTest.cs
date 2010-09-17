@@ -15,6 +15,13 @@ namespace ConfOrm.ShopTests.AppliersTests
 		{
 			One
 		}
+
+		[Flags]
+		private enum MyFlagEnum
+		{
+			One = 1
+		}
+
 		private class MyClass
 		{
 			public IEnumerable<int> AnyProp { get; set; }
@@ -22,6 +29,8 @@ namespace ConfOrm.ShopTests.AppliersTests
 			public IEnumerable<MyEnum?> MyEnumNullable { get; set; }
 			public IDictionary<string, MyEnum> MapMyEnumValue { get; set; }
 			public IDictionary<MyEnum, string> MapMyEnumKey { get; set; }
+			public IEnumerable<MyFlagEnum> MyFlagEnum { get; set; }
+			public IEnumerable<MyFlagEnum?> MyFlagEnumNullable { get; set; }
 		}
 
 		[Test]
@@ -32,10 +41,24 @@ namespace ConfOrm.ShopTests.AppliersTests
 		}
 
 		[Test]
+		public void WhenCollectionOfFlagEnumThenNoMatch()
+		{
+			var applier = new EnumElementAsStringApplier();
+			applier.Match(ForClass<MyClass>.Property(c => c.MyFlagEnum)).Should().Be.False();
+		}
+
+		[Test]
 		public void WhenCollectionOfNullableEnumThenMatch()
 		{
 			var applier = new EnumElementAsStringApplier();
 			applier.Match(ForClass<MyClass>.Property(c => c.MyEnumNullable)).Should().Be.True();
+		}
+
+		[Test]
+		public void WhenCollectionOfFlagNullableEnumThenNoMatch()
+		{
+			var applier = new EnumElementAsStringApplier();
+			applier.Match(ForClass<MyClass>.Property(c => c.MyFlagEnumNullable)).Should().Be.False();
 		}
 
 		[Test]
