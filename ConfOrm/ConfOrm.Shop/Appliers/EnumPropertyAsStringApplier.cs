@@ -13,7 +13,7 @@ namespace ConfOrm.Shop.Appliers
 				return false;
 			}
 			var memberType = subject.GetPropertyOrFieldType();
-			return memberType.IsEnumOrNullableEnum();
+			return memberType.IsEnumOrNullableEnum() && !memberType.IsFlagEnumOrNullableFlagEnum();
 		}
 
 		public void Apply(MemberInfo subject, IPropertyMapper applyTo)

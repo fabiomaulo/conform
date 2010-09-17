@@ -289,6 +289,20 @@ namespace ConfOrm
 			return type.IsEnum;
 		}
 
+		public static bool IsFlagEnumOrNullableFlagEnum(this Type type)
+		{
+			if (type == null)
+			{
+				return false;
+			}
+			Type typeofEnum = type;
+			if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+			{
+				typeofEnum = type.GetGenericArguments()[0];
+			}
+			return typeofEnum.IsEnum && typeofEnum.GetCustomAttributes(typeof(FlagsAttribute),false).Length > 0;
+		}
+
 		public static IEnumerable<Type> GetGenericIntercafesTypeDefinitions(this Type type)
 		{
 			if(type.IsGenericType && type.IsInterface)

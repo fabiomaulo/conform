@@ -14,11 +14,20 @@ namespace ConfOrm.ShopTests.AppliersTests
 		{
 			One
 		}
+
+		[Flags]
+		private enum MyFlagEnum
+		{
+			One = 1
+		}
+
 		private class MyClass
 		{
 			public int AnyProp { get; set; }
 			public MyEnum MyEnum { get; set; }
 			public MyEnum? MyEnumNullable { get; set; }
+			public MyFlagEnum MyFlagEnum { get; set; }
+			public MyFlagEnum? MyFlagEnumNullable { get; set; }
 		}
 
 		[Test]
@@ -29,10 +38,24 @@ namespace ConfOrm.ShopTests.AppliersTests
 		}
 
 		[Test]
+		public void WhenPropIsFlagEnumThenNoMatch()
+		{
+			var applier = new EnumPropertyAsStringApplier();
+			applier.Match(ForClass<MyClass>.Property(c => c.MyFlagEnum)).Should().Be.False();
+		}
+
+		[Test]
 		public void WhenPropIsNullableEnumThenMatch()
 		{
 			var applier = new EnumPropertyAsStringApplier();
 			applier.Match(ForClass<MyClass>.Property(c => c.MyEnumNullable)).Should().Be.True();
+		}
+
+		[Test]
+		public void WhenPropIsFlagNullableEnumThenNoMatch()
+		{
+			var applier = new EnumPropertyAsStringApplier();
+			applier.Match(ForClass<MyClass>.Property(c => c.MyFlagEnumNullable)).Should().Be.False();
 		}
 
 		[Test]
