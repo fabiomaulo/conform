@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ConfOrm.UsageExamples.EnumsVersionAndSoftDeleteUsingWhere.Domain.CalculatedCost">
+    <Position X="2" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAggAAAAAA=</HashCode>
+      <FileName>EnumsVersionAndSoftDeleteUsingWhere\Domain\CalculatedCost.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConfOrm.UsageExamples.EnumsVersionAndSoftDeleteUsingWhere.Domain.Cost">
+    <Position X="3.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>EnumsVersionAndSoftDeleteUsingWhere\Domain\Cost.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConfOrm.UsageExamples.EnumsVersionAndSoftDeleteUsingWhere.Domain.EditionQuotation" Collapsed="true">
+    <Position X="10" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAIQAAAAAAAAAAIBAASAAAAAAIAEQAAgAAAIBk=</HashCode>
+      <FileName>EnumsVersionAndSoftDeleteUsingWhere\Domain\EditionQuotation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConfOrm.UsageExamples.EnumsVersionAndSoftDeleteUsingWhere.Domain.ExplicitCost">
+    <Position X="5.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EnumsVersionAndSoftDeleteUsingWhere\Domain\ExplicitCost.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConfOrm.UsageExamples.EnumsVersionAndSoftDeleteUsingWhere.Domain.GenericModelBase&lt;TId&gt;" Collapsed="true">
+    <Position X="6.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EnumsVersionAndSoftDeleteUsingWhere\Domain\GenericModelBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConfOrm.UsageExamples.EnumsVersionAndSoftDeleteUsingWhere.Domain.PiecesSpeedCost">
+    <Position X="1" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAoAAAAAA=</HashCode>
+      <FileName>EnumsVersionAndSoftDeleteUsingWhere\Domain\PiecesSpeedCost.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConfOrm.UsageExamples.EnumsVersionAndSoftDeleteUsingWhere.Domain.ProductQuotation" Collapsed="true">
+    <Position X="7.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAkAAAAQgEACACAAAgAQEAAqAAAAIAAAAgAAAAAA=</HashCode>
+      <FileName>EnumsVersionAndSoftDeleteUsingWhere\Domain\ProductQuotation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConfOrm.UsageExamples.EnumsVersionAndSoftDeleteUsingWhere.Domain.QuantityCost">
+    <Position X="3" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>EnumsVersionAndSoftDeleteUsingWhere\Domain\QuantityCost.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConfOrm.UsageExamples.EnumsVersionAndSoftDeleteUsingWhere.Domain.Quotation" Collapsed="true">
+    <Position X="12.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgABEACAAAAgAAAAAAAggAAAEAACAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>EnumsVersionAndSoftDeleteUsingWhere\Domain\Quotation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConfOrm.UsageExamples.EnumsVersionAndSoftDeleteUsingWhere.Domain.VersionModelBase" Collapsed="true">
+    <Position X="6.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EnumsVersionAndSoftDeleteUsingWhere\Domain\VersionModelBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="ConfOrm.UsageExamples.EnumsVersionAndSoftDeleteUsingWhere.Domain.PrinterType" Collapsed="true">
+    <Position X="2" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EnumsVersionAndSoftDeleteUsingWhere\Domain\ProductQuotation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ConfOrm.UsageExamples.EnumsVersionAndSoftDeleteUsingWhere.Domain.PaperCostType" Collapsed="true">
+    <Position X="2" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EnumsVersionAndSoftDeleteUsingWhere\Domain\ProductQuotation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ConfOrm.UsageExamples.EnumsVersionAndSoftDeleteUsingWhere.Domain.CostOptions" Collapsed="true">
+    <Position X="2" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAEAAAAAAAAAAAAYAAAAAAARAAIAAAIQAAAA=</HashCode>
+      <FileName>EnumsVersionAndSoftDeleteUsingWhere\Domain\ProductQuotation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -60,6 +60,17 @@
     <Compile Include="CustomShortcut\Demo.cs" />
     <Compile Include="DiscriminatorValueAsEnumValue\Demo.cs" />
     <Compile Include="DiscriminatorValueAsEnumValue\Domain.cs" />
+    <Compile Include="EnumsVersionAndSoftDeleteUsingWhere\Demo.cs" />
+    <Compile Include="EnumsVersionAndSoftDeleteUsingWhere\Domain\CalculatedCost.cs" />
+    <Compile Include="EnumsVersionAndSoftDeleteUsingWhere\Domain\Cost.cs" />
+    <Compile Include="EnumsVersionAndSoftDeleteUsingWhere\Domain\EditionQuotation.cs" />
+    <Compile Include="EnumsVersionAndSoftDeleteUsingWhere\Domain\ExplicitCost.cs" />
+    <Compile Include="EnumsVersionAndSoftDeleteUsingWhere\Domain\GenericModelBase.cs" />
+    <Compile Include="EnumsVersionAndSoftDeleteUsingWhere\Domain\PiecesSpeedCost.cs" />
+    <Compile Include="EnumsVersionAndSoftDeleteUsingWhere\Domain\ProductQuotation.cs" />
+    <Compile Include="EnumsVersionAndSoftDeleteUsingWhere\Domain\QuantityCost.cs" />
+    <Compile Include="EnumsVersionAndSoftDeleteUsingWhere\Domain\Quotation.cs" />
+    <Compile Include="EnumsVersionAndSoftDeleteUsingWhere\Domain\VersionModelBase.cs" />
     <Compile Include="NHibernateMappingsExtensions.cs" />
     <Compile Include="CreateXmlMappingsInBinFolder\Domain\Order.cs" />
     <Compile Include="CreateXmlMappingsInBinFolder\Domain\OrderItem.cs" />
@@ -84,7 +95,9 @@
       <Name>ConfOrm</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="EnumsVersionAndSoftDeleteUsingWhere\Domain\Domain.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
