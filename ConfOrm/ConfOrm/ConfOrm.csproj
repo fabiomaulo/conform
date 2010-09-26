@@ -118,6 +118,7 @@
     <Compile Include="Mappers\IVersionMapper.cs" />
     <Compile Include="Mappers\Lazy.cs" />
     <Compile Include="Mappers\NotFoundMode.cs" />
+    <Compile Include="Mappers\SchemaAction.cs" />
     <Compile Include="Mappers\VersionGeneration.cs" />
     <Compile Include="NH\AbstractBasePropertyContainerMapper.cs" />
     <Compile Include="NH\AccessorPropertyMapper.cs" />
