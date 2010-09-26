@@ -163,6 +163,11 @@ namespace ConfOrm.NH
 			classMapping.where = whereClause;
 		}
 
+		public void SchemaAction(SchemaAction action)
+		{
+			classMapping.schemaaction = action.ToSchemaActionString();
+		}
+
 		#endregion
 
 		#region Implementation of IEntityAttributesMapper

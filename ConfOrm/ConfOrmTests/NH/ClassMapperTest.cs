@@ -268,5 +268,14 @@ namespace ConfOrmTests.NH
 			rc.Where("Id > 0");
 			mapdoc.RootClasses[0].where.Should().Be("Id > 0");
 		}
+
+		[Test]
+		public void CanSetSchemaAction()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
+			rc.SchemaAction(SchemaAction.None);
+			mapdoc.RootClasses[0].schemaaction.Should().Be("none");
+		}
 	}
 }

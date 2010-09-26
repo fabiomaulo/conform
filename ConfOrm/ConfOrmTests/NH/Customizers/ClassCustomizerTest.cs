@@ -29,5 +29,19 @@ namespace ConfOrmTests.NH.Customizers
 
 			filterMapper.Verify(x => x.Condition(It.Is<string>(v => v == "any condition")));
 		}
+
+		[Test]
+		public void InvokeSetOfSchemaAction()
+		{
+			var customizersHolder = new CustomizersHolder();
+			var customizer = new ClassCustomizer<MyClass>(customizersHolder);
+			var classMapper = new Mock<IClassAttributesMapper>();
+
+			customizer.SchemaAction(SchemaAction.None);
+			customizersHolder.InvokeCustomizers(typeof(MyClass), classMapper.Object);
+
+			classMapper.Verify(x => x.SchemaAction(SchemaAction.None));
+		}
+
 	}
 }

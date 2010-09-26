@@ -19,6 +19,7 @@ namespace ConfOrm.Mappers
 		void Cache(Action<ICacheMapper> cacheMapping);
 		void Filter(string filterName, Action<IFilterMapper> filterMapping);
 		void Where(string whereClause);
+		void SchemaAction(SchemaAction action);
 	}
 
 	public interface IClassMapper : IClassAttributesMapper, IPropertyContainerMapper
@@ -40,6 +41,7 @@ namespace ConfOrm.Mappers
 		void Cache(Action<ICacheMapper> cacheMapping);
 		void Filter(string filterName, Action<IFilterMapper> filterMapping);
 		void Where(string whereClause);
+		void SchemaAction(SchemaAction action);
 	}
 
 	public interface IClassMapper<TEntity> : IClassAttributesMapper<TEntity>, IPropertyContainerMapper<TEntity> where TEntity : class
