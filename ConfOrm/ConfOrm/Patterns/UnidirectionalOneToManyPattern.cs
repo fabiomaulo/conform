@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace ConfOrm.Patterns
@@ -31,7 +32,11 @@ namespace ConfOrm.Patterns
 				return false;
 			}
 			var elementType = subject.GetPropertyOrFieldType().DetermineCollectionElementType();
-			if(elementType == null)
+			if (elementType != null && elementType.IsGenericType && typeof(KeyValuePair<,>) == elementType.GetGenericTypeDefinition())
+			{
+				elementType = subject.GetPropertyOrFieldType().DetermineDictionaryValueType();
+			}
+			if (elementType == null)
 			{
 				return false;
 			}

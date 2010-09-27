@@ -15,9 +15,11 @@ namespace ConfOrmTests.Patterns
 		{
 			public string Something { get; set; }
 			public IEnumerable<Related> Relateds { get; set; }
-			public IEnumerable<Bidirectional> Childs { get; set; }
+			public IEnumerable<Bidirectional> Children { get; set; }
 			public IEnumerable<Component> Components { get; set; }
 			public IEnumerable<string > Elements { get; set; }
+			public IDictionary<string, Related> DicRelateds { get; set; }
+			public IDictionary<string, Bidirectional> DicChildren { get; set; }
 		}
 
 		private class Related
@@ -81,7 +83,7 @@ namespace ConfOrmTests.Patterns
 		{
 			var orm = GetDomainInspectorMock();
 			var pattern = new UnidirectionalOneToManyMemberPattern(orm.Object);
-			pattern.Match(ForClass<MyClass>.Property(mc => mc.Childs)).Should().Be.False();
+			pattern.Match(ForClass<MyClass>.Property(mc => mc.Children)).Should().Be.False();
 		}
 
 		[Test]
@@ -99,6 +101,23 @@ namespace ConfOrmTests.Patterns
 
 			var pattern = new UnidirectionalOneToManyMemberPattern(orm.Object);
 			pattern.Match(ForClass<MyClass>.Property(mc => mc.Relateds)).Should().Be.True();
+		}
+
+		[Test]
+		public void WhenDictionaryBidirectionalThenNoMatch()
+		{
+			var orm = GetDomainInspectorMock();
+			var pattern = new UnidirectionalOneToManyMemberPattern(orm.Object);
+			pattern.Match(ForClass<MyClass>.Property(mc => mc.DicChildren)).Should().Be.False();
+		}
+
+		[Test]
+		public void WhenDictionaryUnidirectionalThenMatch()
+		{
+			var orm = GetDomainInspectorMock();
+
+			var pattern = new UnidirectionalOneToManyMemberPattern(orm.Object);
+			pattern.Match(ForClass<MyClass>.Property(mc => mc.DicRelateds)).Should().Be.True();
 		}
 	}
 }
