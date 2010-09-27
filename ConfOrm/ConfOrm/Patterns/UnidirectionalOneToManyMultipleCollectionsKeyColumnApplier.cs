@@ -30,7 +30,7 @@ namespace ConfOrm.Patterns
 			}
 			if (base.Match(subject.LocalMember))
 			{
-				return HasMultipleCollectionOf(subject.LocalMember.DeclaringType, subject.LocalMember.GetPropertyOrFieldType().DetermineCollectionElementOrDictionaryValueType());
+				return HasMultipleCollectionOf(subject.GetContainerEntity(DomainInspector), subject.LocalMember.GetPropertyOrFieldType().DetermineCollectionElementOrDictionaryValueType(), 0);
 			}
 			return false;
 		}
@@ -40,14 +40,29 @@ namespace ConfOrm.Patterns
 			applyTo.Key(km=> km.Column(GetColumnName(subject)));
 		}
 
-		protected bool HasMultipleCollectionOf(Type collectionOwner, Type elementType)
+		protected bool HasMultipleCollectionOf(Type collectionOwner, Type elementType, int counted)
 		{
-			var collectionCount = 0;
-			return collectionOwner.GetProperties(PublicPropertiesOfClassHierarchy)
-				.Select(p => p.PropertyType)
-				.Select(propertyType => propertyType.DetermineCollectionElementOrDictionaryValueType())
-				.Where(propertyElementType => elementType.Equals(propertyElementType))
-				.Any(x => ++collectionCount > 1);
+			var collectionCount = counted;
+			foreach (var propertyType in collectionOwner.GetProperties(PublicPropertiesOfClassHierarchy).Select(p => p.PropertyType))
+			{
+				if (DomainInspector.IsComponent(propertyType) && HasMultipleCollectionOf(propertyType, elementType, collectionCount))
+				{
+					return true;
+				}
+				else
+				{
+					var propertyElementType = propertyType.DetermineCollectionElementOrDictionaryValueType();
+					if(elementType.Equals(propertyElementType))
+					{
+						collectionCount++;
+					}
+				}
+				if(collectionCount > 1)
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 
 		protected virtual string GetColumnName(PropertyPath subject)
