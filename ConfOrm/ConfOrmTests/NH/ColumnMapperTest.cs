@@ -11,10 +11,10 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void CtorProtection()
 		{
-			ActionAssert.Throws<ArgumentNullException>(() => new ColumnMapper(null, null));
-			ActionAssert.Throws<ArgumentNullException>(() => new ColumnMapper(null, "pepe"));
-			ActionAssert.Throws<ArgumentNullException>(() => new ColumnMapper(new HbmColumn(), null));
-			ActionAssert.Throws<ArgumentNullException>(() => new ColumnMapper(new HbmColumn(), string.Empty));
+			Executing.This(() => new ColumnMapper(null, null)).Should().Throw<ArgumentNullException>();
+			Executing.This(() => new ColumnMapper(null, "pepe")).Should().Throw<ArgumentNullException>();
+			Executing.This(() => new ColumnMapper(new HbmColumn(), null)).Should().Throw<ArgumentNullException>();
+			Executing.This(() => new ColumnMapper(new HbmColumn(), string.Empty)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]
@@ -38,8 +38,8 @@ namespace ConfOrmTests.NH
 			
 			hbm.length.Should().Be("50");
 
-			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.Length(0));
-			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.Length(-1));
+			mapper.Executing(m => m.Length(0)).Throws<ArgumentOutOfRangeException>();
+			mapper.Executing(m => m.Length(-1)).Throws<ArgumentOutOfRangeException>();
 		}
 
 		[Test]
@@ -50,8 +50,9 @@ namespace ConfOrmTests.NH
 			mapper.Precision(12);
 
 			hbm.precision.Should().Be("12");
-			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.Precision(0));
-			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.Precision(-1));
+
+			mapper.Executing(m => m.Precision(0)).Throws<ArgumentOutOfRangeException>();
+			mapper.Executing(m => m.Precision(-1)).Throws<ArgumentOutOfRangeException>();
 		}
 
 		[Test]
@@ -62,8 +63,9 @@ namespace ConfOrmTests.NH
 			mapper.Scale(3);
 
 			hbm.scale.Should().Be("3");
-			ActionAssert.NotThrow(() => mapper.Scale(0));
-			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.Scale(-1));
+
+			mapper.Executing(m => m.Scale(0)).NotThrows();
+			mapper.Executing(m => m.Scale(-1)).Throws<ArgumentOutOfRangeException>();
 		}
 
 		[Test]
