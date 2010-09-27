@@ -187,6 +187,29 @@ namespace ConfOrm
 			return null;
 		}
 
+		public static Type DetermineCollectionElementOrDictionaryValueType(this Type genericCollection)
+		{
+			if (genericCollection.IsGenericType)
+			{
+				List<Type> interfaces = genericCollection.GetInterfaces().Where(t => t.IsGenericType).ToList();
+				if (genericCollection.IsInterface)
+				{
+					interfaces.Add(genericCollection);
+				}
+				var enumerableInterface = interfaces.FirstOrDefault(t => t.GetGenericTypeDefinition() == typeof(IEnumerable<>));
+				if (enumerableInterface != null)
+				{
+					var dictionaryInterface = interfaces.FirstOrDefault(t => t.GetGenericTypeDefinition() == typeof (IDictionary<,>));
+					if (dictionaryInterface == null)
+					{
+						return enumerableInterface.GetGenericArguments()[0];
+					}
+					return dictionaryInterface.GetGenericArguments()[1];
+				}
+			}
+			return null;
+		}
+
 		public static Type DetermineDictionaryKeyType(this Type genericDictionary)
 		{
 			if (genericDictionary.IsGenericType)

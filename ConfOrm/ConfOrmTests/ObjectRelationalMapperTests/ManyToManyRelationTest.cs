@@ -62,9 +62,13 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			mapper.TablePerClass<BEntity>();
 			mapper.ManyToMany<AEntity, BEntity>();
 			mapper.IsOneToMany(typeof(AEntity), typeof(BEntity)).Should().Be.False();
-			mapper.IsManyToOne(typeof(AEntity), typeof(BEntity)).Should().Be.False();
 			mapper.IsOneToMany(typeof(BEntity), typeof(AEntity)).Should().Be.False();
-			mapper.IsManyToOne(typeof(BEntity), typeof(AEntity)).Should().Be.False();
+
+			// Commented because CfgORM-5 
+			// many-to-many should work only inside a collection.
+			// many-to-one should work only outside a collection.
+			//mapper.IsManyToOne(typeof(AEntity), typeof(BEntity)).Should().Be.False();
+			//mapper.IsManyToOne(typeof(BEntity), typeof(AEntity)).Should().Be.False();
 		}
 
 		[Test]

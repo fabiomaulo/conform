@@ -253,6 +253,7 @@
     <Compile Include="NH\UnionSubclassMapperTest.cs" />
     <Compile Include="NH\VersionMapperTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\AnyIntegrationTest.cs" />
+    <Compile Include="ObjectRelationalMapperTests\DoubleRelationKindManyToManyOneToManyTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\GenericBaseEntityWithPoperties.cs" />
     <Compile Include="ObjectRelationalMapperTests\HeterogeneousAssociationTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\HierarchyClassExclusionTest.cs" />
@@ -333,6 +334,10 @@
     <Compile Include="Patterns\ReadOnlyPropertyPatternWithPolymorphismTest.cs" />
     <Compile Include="Patterns\SequencePoidPatternTest.cs" />
     <Compile Include="Patterns\SetCollectionPatternTest.cs" />
+    <Compile Include="Patterns\UnidirectionalOneToManyMemberPatternTest.cs" />
+    <Compile Include="Patterns\UnidirectionalOneToManyMultipleCollections\MultipleCollectionBehindMultipleComponentsTest.cs" />
+    <Compile Include="Patterns\UnidirectionalOneToManyMultipleCollections\MultipleCollectionBehindComponentTest.cs" />
+    <Compile Include="Patterns\UnidirectionalOneToManyMultipleCollections\UnidirectionalOneToManyMultipleCollectionsKeyColumnApplierTest.cs" />
     <Compile Include="Patterns\UnidirectionalUnaryAssociationPatternTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelationOnTest.cs" />
