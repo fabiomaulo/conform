@@ -30,7 +30,7 @@ namespace ConfOrm.Patterns
 			}
 			if (base.Match(subject.LocalMember))
 			{
-				return HasMultipleCollectionOf(subject.GetContainerEntity(DomainInspector), subject.LocalMember.GetPropertyOrFieldType().DetermineCollectionElementOrDictionaryValueType(), 0);
+				return HasMultipleCollectionOf(subject.GetContainerEntity(DomainInspector), subject.LocalMember.GetPropertyOrFieldType().DetermineCollectionElementOrDictionaryValueType());
 			}
 			return false;
 		}
@@ -40,14 +40,22 @@ namespace ConfOrm.Patterns
 			applyTo.Key(km=> km.Column(GetColumnName(subject)));
 		}
 
-		protected bool HasMultipleCollectionOf(Type collectionOwner, Type elementType, int counted)
+		protected bool HasMultipleCollectionOf(Type collectionOwner, Type elementType)
 		{
-			var collectionCount = counted;
+			int collectionCount = 0;
+			return HasMultipleCollectionOf(collectionOwner, elementType, ref collectionCount);
+		}
+
+		protected bool HasMultipleCollectionOf(Type collectionOwner, Type elementType, ref int collectionCount)
+		{
 			foreach (var propertyType in collectionOwner.GetProperties(PublicPropertiesOfClassHierarchy).Select(p => p.PropertyType))
 			{
-				if (DomainInspector.IsComponent(propertyType) && HasMultipleCollectionOf(propertyType, elementType, collectionCount))
+				if (DomainInspector.IsComponent(propertyType))
 				{
-					return true;
+					if (HasMultipleCollectionOf(propertyType, elementType, ref collectionCount))
+					{
+						return true;
+					}
 				}
 				else
 				{
