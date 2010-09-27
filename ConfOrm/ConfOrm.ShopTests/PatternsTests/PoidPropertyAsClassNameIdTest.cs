@@ -17,7 +17,7 @@ namespace ConfOrm.ShopTests.PatternsTests
 		public void WhenNullNotThrow()
 		{
 			var pattern = new PoidPropertyAsClassNameId();
-			ActionAssert.NotThrow(()=> pattern.Match(null));
+			pattern.Executing(p=> p.Match(null)).NotThrows();
 		}
 
 		[Test]
