@@ -23,7 +23,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			public virtual string LastName { get; set; }
 		}
 
-		[Test(Description = "CfgORM-5"), Ignore("Not fixed yet.")]
+		[Test(Description = "CfgORM-5")]
 		public void WhenExplicitManyToManyThenShouldMapSimpleRelationAsManyToOneByDefault()
 		{
 			var orm = new ObjectRelationalMapper();
@@ -35,6 +35,8 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			orm.IsManyToMany(typeof(Group), typeof(User)).Should().Be.True();
 			orm.IsOneToMany(typeof(Group), typeof(User)).Should().Be.False();
 			orm.IsOneToOne(typeof(Group), typeof(User)).Should().Be.False();
+			orm.IsManyToMany(typeof(User), typeof(Group)).Should().Be.True();
+			orm.IsOneToMany(typeof(User), typeof(Group)).Should().Be.False();
 		}
 	}
 }
