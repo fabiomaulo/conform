@@ -9,7 +9,7 @@ using Moq;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace ConfOrmTests.Patterns
+namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 {
 	public class UnidirectionalOneToManyMultipleCollectionsKeyColumnApplierTest
 	{

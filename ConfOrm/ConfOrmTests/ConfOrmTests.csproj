@@ -334,7 +334,7 @@
     <Compile Include="Patterns\SequencePoidPatternTest.cs" />
     <Compile Include="Patterns\SetCollectionPatternTest.cs" />
     <Compile Include="Patterns\UnidirectionalOneToManyMemberPatternTest.cs" />
-    <Compile Include="Patterns\UnidirectionalOneToManyMultipleCollectionsKeyColumnApplierTest.cs" />
+    <Compile Include="Patterns\UnidirectionalOneToManyMultipleCollections\UnidirectionalOneToManyMultipleCollectionsKeyColumnApplierTest.cs" />
     <Compile Include="Patterns\UnidirectionalUnaryAssociationPatternTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelationOnTest.cs" />
