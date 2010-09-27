@@ -284,6 +284,7 @@
     <Compile Include="Patterns\SequencePoidPattern.cs" />
     <Compile Include="Patterns\SetCollectionPattern.cs" />
     <Compile Include="Patterns\OneToOneUnidirectionalToManyToOnePattern.cs" />
+    <Compile Include="Patterns\UnidirectionalOneToManyPattern.cs" />
     <Compile Include="Patterns\UnidirectionalOneToOneUniqueCascadeApplier.cs" />
     <Compile Include="Patterns\UnidirectionalUnaryAssociationPattern.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
