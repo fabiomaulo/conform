@@ -31,11 +31,7 @@ namespace ConfOrm.Patterns
 			{
 				return false;
 			}
-			var elementType = subject.GetPropertyOrFieldType().DetermineCollectionElementType();
-			if (elementType != null && elementType.IsGenericType && typeof(KeyValuePair<,>) == elementType.GetGenericTypeDefinition())
-			{
-				elementType = subject.GetPropertyOrFieldType().DetermineDictionaryValueType();
-			}
+			var elementType = subject.GetPropertyOrFieldType().DetermineCollectionElementOrDictionaryValueType();
 			if (elementType == null)
 			{
 				return false;
