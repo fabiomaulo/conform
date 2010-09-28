@@ -82,7 +82,6 @@
     <Compile Include="Appliers\EnumPropertyAsStringApplier.cs" />
     <Compile Include="Appliers\UseCurrencyForDecimalApplier.cs" />
     <Compile Include="CoolNaming\CollectionOfComponentsKeyColumnApplier.cs" />
-    <Compile Include="CoolNaming\CollectionOfComponentsPropertyPathKeyColumnApplier.cs" />
     <Compile Include="CoolNaming\CollectionOfComponentsTableApplier.cs" />
     <Compile Include="CoolNaming\CollectionOfElementsKeyColumnApplier.cs" />
     <Compile Include="Appliers\CollectionOfElementsOnlyPattern.cs" />
