@@ -40,7 +40,17 @@ namespace ConfOrm.Patterns
 			applyTo.Key(km=> km.Column(GetColumnName(subject)));
 		}
 
-		protected bool HasMultipleCollectionOf(Type collectionOwner, Type elementType)
+		/// <summary>
+		/// Check if the <paramref name="collectionOwner"/> has more than one collection of the same entity-type.
+		/// </summary>
+		/// <param name="collectionOwner">The class containing the collection.</param>
+		/// <param name="elementType">The type of the element of the generic collection (is an entity for sure).</param>
+		/// <returns>True when the <paramref name="collectionOwner"/> contains more than one collection of the same <paramref name="elementType"/>.</returns>
+		/// <remarks>
+		/// Override this method if you want speed-up the pattern avoiding the usage of reflection in certain cases where you know you have a double usage
+		/// (for example using a HashSet{Type} where store well known cases)./>
+		/// </remarks>
+		protected virtual bool HasMultipleCollectionOf(Type collectionOwner, Type elementType)
 		{
 			int collectionCount = 0;
 			return HasMultipleCollectionOf(collectionOwner, elementType, ref collectionCount);
@@ -75,7 +85,12 @@ namespace ConfOrm.Patterns
 
 		protected virtual string GetColumnName(PropertyPath subject)
 		{
-			return subject.GetContainerEntity(DomainInspector).Name + subject.ToColumnName() + "_key";
+			return GetBaseColumnName(subject) + "_key";
+		}
+
+		protected virtual string GetBaseColumnName(PropertyPath subject)
+		{
+			return subject.GetContainerEntity(DomainInspector).Name + subject.ToColumnName();
 		}
 	}
 }
