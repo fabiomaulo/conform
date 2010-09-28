@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ConfOrm.Mappers;
@@ -14,12 +15,25 @@ namespace ConfOrm.Patterns
 	/// Because reflection-expensive, and because you can use a specific where clause to disambiguates collection elements, 
 	/// this applier is not part of <see cref="DefaultPatternsAppliersHolder"/> (you have to use it explicitly).
 	/// </remarks>
-	public class UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier : UnidirectionalOneToManyMemberPattern, IPatternApplier<PropertyPath, ICollectionPropertiesMapper>
+	public class UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier : IPatternApplier<PropertyPath, ICollectionPropertiesMapper>
 	{
 		private const BindingFlags PublicPropertiesOfClassHierarchy = BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
+		private readonly HashSet<Relation> relationsWithMultipleCollections = new HashSet<Relation>();
 
-		public UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(IDomainInspector domainInspector) : base(domainInspector)
+		public UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(IDomainInspector domainInspector)
 		{
+			if (domainInspector == null)
+			{
+				throw new ArgumentNullException("domainInspector");
+			}
+			DomainInspector = domainInspector;
+		}
+
+		protected IDomainInspector DomainInspector { get; set; }
+
+		protected HashSet<Relation> RelationsWithMultipleCollections
+		{
+			get { return relationsWithMultipleCollections; }
 		}
 
 		public bool Match(PropertyPath subject)
@@ -28,11 +42,32 @@ namespace ConfOrm.Patterns
 			{
 				return false;
 			}
-			if (base.Match(subject.LocalMember))
+			var elementType = subject.LocalMember.GetPropertyOrFieldType().DetermineCollectionElementOrDictionaryValueType();
+			if(elementType == null)
 			{
-				return HasMultipleCollectionOf(subject.GetContainerEntity(DomainInspector), subject.LocalMember.GetPropertyOrFieldType().DetermineCollectionElementOrDictionaryValueType());
+				return false;
 			}
-			return false;
+			var collectionOwner = subject.GetContainerEntity(DomainInspector);
+			if (relationsWithMultipleCollections.Contains(new Relation(collectionOwner, elementType)))
+			{
+				// early match minimizing reflection; we already know the relation
+				return true;
+			}
+			if (!IsUnidirectionalOneToMany(subject.LocalMember.DeclaringType, elementType))
+			{
+				return false;
+			}
+			var hasMultipleCollection = HasMultipleCollectionOf(collectionOwner, elementType);
+			if (hasMultipleCollection)
+			{
+				relationsWithMultipleCollections.Add(new Relation(collectionOwner, elementType));
+			}
+			return hasMultipleCollection;
+		}
+
+		private bool IsUnidirectionalOneToMany(Type from, Type to)
+		{
+			return DomainInspector.IsOneToMany(from, to) && to.GetFirstPropertyOfType(from) == null;
 		}
 
 		public void Apply(PropertyPath subject, ICollectionPropertiesMapper applyTo)
@@ -47,8 +82,8 @@ namespace ConfOrm.Patterns
 		/// <param name="elementType">The type of the element of the generic collection (is an entity for sure).</param>
 		/// <returns>True when the <paramref name="collectionOwner"/> contains more than one collection of the same <paramref name="elementType"/>.</returns>
 		/// <remarks>
-		/// Override this method if you want speed-up the pattern avoiding the usage of reflection in certain cases where you know you have a double usage
-		/// (for example using a HashSet{Type} where store well known cases)./>
+		/// Override this method if you want speed-up the pattern avoiding the usage of reflection in certain cases where you know you have a double usage.
+		/// A good way is inheriting this applier and adding your well-known relations to <see cref="RelationsWithMultipleCollections"/> directly in the constructor.
 		/// </remarks>
 		protected virtual bool HasMultipleCollectionOf(Type collectionOwner, Type elementType)
 		{
