@@ -183,6 +183,14 @@ namespace ConfOrm.NH
 
 			MergeAppliersCollection(source.Collection, destination.Collection);
 			MergeAppliersCollection(source.CollectionPath, destination.CollectionPath);
+			MergeAppliersCollection(source.Bag, destination.Bag);
+			MergeAppliersCollection(source.BagPath, destination.BagPath);
+			MergeAppliersCollection(source.List, destination.List);
+			MergeAppliersCollection(source.ListPath, destination.ListPath);
+			MergeAppliersCollection(source.Set, destination.Set);
+			MergeAppliersCollection(source.SetPath, destination.SetPath);
+			MergeAppliersCollection(source.Map, destination.Map);
+			MergeAppliersCollection(source.MapPath, destination.MapPath);
 
 			MergeAppliersCollection(source.ComponentParent, destination.ComponentParent);
 
