@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
+using System.Reflection;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
-using ConfOrm.Shop.CoolNaming;
-using ConfOrm.Shop.NamingAppliers;
 
 namespace ConfOrm.UsageExamples.TableAndColumnNaming
 {
@@ -17,6 +15,10 @@ namespace ConfOrm.UsageExamples.TableAndColumnNaming
 	{
 		public MyTablesAndColumnsNamingPack()
 		{
+			poid = new List<IPatternApplier<MemberInfo, IIdMapper>>
+			       {
+			       	new PoidPropertyColumnNameApplier(),
+			       };
 			propertyPath = new List<IPatternApplier<PropertyPath, IPropertyMapper>>
 			               {
 			               	new ComponentPropertyColumnNameApplier(),

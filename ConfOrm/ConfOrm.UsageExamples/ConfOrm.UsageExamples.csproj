@@ -82,7 +82,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TableAndColumnNaming\Domain.cs" />
     <Compile Include="TableAndColumnNaming\MyInflector.cs" />
+    <Compile Include="TableAndColumnNaming\MyPoidProperty.cs" />
     <Compile Include="TableAndColumnNaming\MyTablesAndColumnsNamingPack.cs" />
+    <Compile Include="TableAndColumnNaming\PoidPropertyColumnNameApplier.cs" />
     <Compile Include="UseBagForIList\Contact.cs" />
     <Compile Include="UseBagForIList\Demo.cs" />
     <Compile Include="UseSetForICollection\Contact.cs" />

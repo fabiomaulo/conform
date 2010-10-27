@@ -11,12 +11,16 @@ namespace ConfOrm.UsageExamples.TableAndColumnNaming
 		/*
 		 * In this demo I'll show how create a custom column-naming pack to substitue some pattern-appliers of others packs.
 		 * The trick is done using the 'UnionWith' extension instead 'Merge'.
+		 * 
+		 * The demo contains even an example of a custom-pattern to recognize the property representing the POID.
 		 */
 
 		[Test, Explicit]
 		public void ExclusionDemo()
 		{
 			var orm = new ObjectRelationalMapper();
+
+			orm.Patterns.Poids.Add(new MyPoidProperty()); // <== recognize the property representing the POID
 
 			IPatternsAppliersHolder patternsAppliers =
 				(new CoolPatternsAppliersHolder(orm))
