@@ -95,16 +95,19 @@ namespace ConfOrmTests.NH
 			unionResult.Collection.Single().Should().Be.SameInstanceAs(bidirectionalManyToManyInverseApplier);
 		}
 
-		[Test, Ignore("Test needed but not implemented.")]
+		[Test]
 		public void UnionShouldGetAllPropertiesOfPatternsAppliersHolderOfBothSide()
 		{
-			// To implement this test I can use DynamicProxy of IPatternsAppliersHolder
-			// with target class EmptyPatternsAppliersHolder and intercept all getters
-			// but I would use Moq.
-			// The test is needed because it should fail when I add some new PatternApplier to IPatternsAppliersHolder
-			IPatternsAppliersHolder first = new EmptyPatternsAppliersHolder();
-			IPatternsAppliersHolder second = new EmptyPatternsAppliersHolder();
+			string[] propertiesOfIPatternsAppliersHolder =
+				typeof(IPatternsAppliersHolder).GetProperties().Select(x => x.Name).ToArray();
 
+			var first = new PatternsAppliersHolderPropertyCallingMock();
+			var second = new PatternsAppliersHolderPropertyCallingMock();
+
+			first.UnionWith(second);
+
+			first.PropertiesGettersUsed.Should().Have.SameValuesAs(propertiesOfIPatternsAppliersHolder);
+			second.PropertiesGettersUsed.Should().Have.SameValuesAs(propertiesOfIPatternsAppliersHolder);
 		}
 	}
 }

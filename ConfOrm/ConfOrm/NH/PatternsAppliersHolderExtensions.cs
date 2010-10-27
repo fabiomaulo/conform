@@ -272,6 +272,14 @@ namespace ConfOrm.NH
 
 			UnionWithAppliersCollection(source.Collection, destination.Collection);
 			UnionWithAppliersCollection(source.CollectionPath, destination.CollectionPath);
+			UnionWithAppliersCollection(source.Bag, destination.Bag);
+			UnionWithAppliersCollection(source.BagPath, destination.BagPath);
+			UnionWithAppliersCollection(source.List, destination.List);
+			UnionWithAppliersCollection(source.ListPath, destination.ListPath);
+			UnionWithAppliersCollection(source.Set, destination.Set);
+			UnionWithAppliersCollection(source.SetPath, destination.SetPath);
+			UnionWithAppliersCollection(source.Map, destination.Map);
+			UnionWithAppliersCollection(source.MapPath, destination.MapPath);
 
 			UnionWithAppliersCollection(source.ComponentParent, destination.ComponentParent);
 
