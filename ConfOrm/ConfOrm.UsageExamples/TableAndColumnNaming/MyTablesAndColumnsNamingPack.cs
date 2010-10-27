@@ -23,6 +23,10 @@ namespace ConfOrm.UsageExamples.TableAndColumnNaming
 			               {
 			               	new ComponentPropertyColumnNameApplier(),
 			               };
+			listPath = new List<IPatternApplier<PropertyPath, IListPropertiesMapper>>
+			           	{
+			           		new ListIndexAsPropertyPosColumnNameApplier(),
+			           	};
 		}
 	}
 }

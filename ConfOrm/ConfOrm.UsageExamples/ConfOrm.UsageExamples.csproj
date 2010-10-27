@@ -81,6 +81,7 @@
     <Compile Include="Packs\SimpleDemo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TableAndColumnNaming\Domain.cs" />
+    <Compile Include="TableAndColumnNaming\ListIndexAsPropertyPosColumnNameApplier.cs" />
     <Compile Include="TableAndColumnNaming\MyInflector.cs" />
     <Compile Include="TableAndColumnNaming\MyPoidProperty.cs" />
     <Compile Include="TableAndColumnNaming\MyTablesAndColumnsNamingPack.cs" />
