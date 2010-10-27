@@ -55,6 +55,8 @@
     <Compile Include="ClassExclusion\MovementDetail.cs" />
     <Compile Include="ClassExclusion\Outcome.cs" />
     <Compile Include="ClassExclusion\OutcomeDetail.cs" />
+    <Compile Include="TableAndColumnNaming\ComponentPropertyColumnNameApplier.cs" />
+    <Compile Include="TableAndColumnNaming\Demo.cs" />
     <Compile Include="CreateXmlMappingsInBinFolder\ConfOrmInitializer.cs" />
     <Compile Include="CreateXmlMappingsInBinFolder\DemoOfXmlMappingCreation.cs" />
     <Compile Include="CustomShortcut\Demo.cs" />
@@ -78,6 +80,9 @@
     <Compile Include="Packs\Domain.cs" />
     <Compile Include="Packs\SimpleDemo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableAndColumnNaming\Domain.cs" />
+    <Compile Include="TableAndColumnNaming\MyInflector.cs" />
+    <Compile Include="TableAndColumnNaming\MyTablesAndColumnsNamingPack.cs" />
     <Compile Include="UseBagForIList\Contact.cs" />
     <Compile Include="UseBagForIList\Demo.cs" />
     <Compile Include="UseSetForICollection\Contact.cs" />
