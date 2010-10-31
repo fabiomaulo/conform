@@ -50,6 +50,49 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			orm.IsEntity(typeof(ValidImplEntity)).Should().Be.True();
 			orm.IsEntity(typeof(ToExcludeImplEntity)).Should().Be.False();
 		}
-	}
 
+		[Test]
+		public void WhenExplicitExcludedThenNotRootEntity()
+		{
+			// To prevent inconsistence
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<ToExcludeImplEntity>();
+			orm.Exclude<ToExcludeImplEntity>();
+
+			orm.IsRootEntity(typeof(ToExcludeImplEntity)).Should().Be.False();
+		}
+
+		[Test]
+		public void WhenExplicitExcludedThenNotTablePerClass()
+		{
+			// To prevent inconsistence
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<ToExcludeImplEntity>();
+			orm.Exclude<ToExcludeImplEntity>();
+
+			orm.IsTablePerClass(typeof(ToExcludeImplEntity)).Should().Be.False();
+		}
+
+		[Test]
+		public void WhenExplicitExcludedThenNotTablePerClassHierarchy()
+		{
+			// To prevent inconsistence
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClassHierarchy<ToExcludeImplEntity>();
+			orm.Exclude<ToExcludeImplEntity>();
+
+			orm.IsTablePerClassHierarchy(typeof(ToExcludeImplEntity)).Should().Be.False();
+		}
+
+		[Test]
+		public void WhenExplicitExcludedThenNotTablePerConcreteClass()
+		{
+			// To prevent inconsistence
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerConcreteClass<ToExcludeImplEntity>();
+			orm.Exclude<ToExcludeImplEntity>();
+
+			orm.IsTablePerConcreteClass(typeof(ToExcludeImplEntity)).Should().Be.False();
+		}
+	}
 }
