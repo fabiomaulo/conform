@@ -26,7 +26,7 @@ namespace ConfOrmTests.NH.MapperTests
 			public string Message { get; set; }
 		}
 
-		[Test, Ignore("Not supported yet.")]
+		[Test]
 		public void WhenCustomizePropertyOnInterfaceThenApplyCustomizationOnImplementations()
 		{
 			var orm = new ObjectRelationalMapper();

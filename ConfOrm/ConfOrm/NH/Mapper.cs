@@ -532,9 +532,17 @@ namespace ConfOrm.NH
 		protected void ForEachMemberPath(MemberInfo member, PropertyPath progressivePath, Action<PropertyPath> invoke)
 		{
 			// To ensure that a customizer is called just once I can't use a set because all customizers
-			// needs to be called in a certain sequence starting from the most general (base classes) to the
+			// needs to be called in a certain sequence starting from the most general (interfaces) to the
 			// most specific (on progressivePath).
 			// I can use some if.
+
+			// paths on interfaces (note: when a property is the implementation of more then one interface a specific order can't be applied...AFAIK)
+			var propertiesOnInterfaces = member.GetPropertyFromInterfaces();
+			foreach (var propertyOnInterface in propertiesOnInterfaces)
+			{
+				var propertyPathInterfaceLevel = new PropertyPath(null, propertyOnInterface);
+				invoke(propertyPathInterfaceLevel);
+			}
 
 			// path on declaring type
 			var propertyPathLevel0 = new PropertyPath(null, member.GetMemberFromDeclaringType());
