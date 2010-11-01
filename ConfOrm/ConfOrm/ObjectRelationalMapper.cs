@@ -273,7 +273,7 @@ namespace ConfOrm
 
 		public virtual bool IsRootEntity(Type type)
 		{
-			return explicitDeclarations.RootEntities.Contains(type);
+			return explicitDeclarations.RootEntities.Contains(type) && !IsExplicitlyExcluded(type);
 		}
 
 		public virtual bool IsComponent(Type type)
@@ -305,12 +305,12 @@ namespace ConfOrm
 
 		public virtual bool IsTablePerClass(Type type)
 		{
-			return IsMappedFor(explicitDeclarations.TablePerClassEntities, type);
+			return IsMappedFor(explicitDeclarations.TablePerClassEntities, type) && !IsExplicitlyExcluded(type);
 		}
 
 		public virtual bool IsTablePerClassHierarchy(Type type)
 		{
-			return IsMappedFor(explicitDeclarations.TablePerClassHierarchyEntities, type);
+			return IsMappedFor(explicitDeclarations.TablePerClassHierarchyEntities, type) && !IsExplicitlyExcluded(type);
 		}
 
 		protected bool IsMappedFor(ICollection<Type> explicitMappedEntities, Type type)
@@ -331,7 +331,7 @@ namespace ConfOrm
 
 		public virtual bool IsTablePerConcreteClass(Type type)
 		{
-			return IsMappedFor(explicitDeclarations.TablePerConcreteClassEntities, type);
+			return IsMappedFor(explicitDeclarations.TablePerConcreteClassEntities, type) && !IsExplicitlyExcluded(type);
 		}
 
 		public virtual bool IsOneToOne(Type from, Type to)
