@@ -169,6 +169,37 @@ namespace ConfOrm
 			return source.DeclaringType.GetProperty(source.Name, BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
 		}
 
+		public static IEnumerable<MemberInfo> GetPropertyFromInterfaces(this MemberInfo source)
+		{
+			if (source == null)
+			{
+				throw new ArgumentNullException("source");
+			}
+			var propertyInfo = source as PropertyInfo;
+			if(propertyInfo == null)
+			{
+				yield break;
+			}
+			var interfaces = source.ReflectedType.GetInterfaces();
+			if(interfaces.Length == 0)
+			{
+				yield break;
+			}
+			var propertyGetter = propertyInfo.GetGetMethod();
+			foreach (var @interface in interfaces)
+			{
+				var memberMap = source.ReflectedType.GetInterfaceMap(@interface);
+				var interfaceProperties = @interface.GetProperties();
+				for (int i = 0; i < memberMap.TargetMethods.Length; i++)
+				{
+					if (memberMap.TargetMethods[i] == propertyGetter)
+					{
+						yield return interfaceProperties.Single(pi => pi.GetGetMethod() == memberMap.InterfaceMethods[i]);
+					}
+				}
+			}
+		}
+
 		public static Type DetermineCollectionElementType(this Type genericCollection)
 		{
 			if (genericCollection.IsGenericType)
