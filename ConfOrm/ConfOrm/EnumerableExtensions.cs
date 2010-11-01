@@ -8,8 +8,8 @@ namespace ConfOrm
 	{
 		public static bool ContainsMember(this ICollection<MemberInfo> source, MemberInfo item)
 		{
-			return source.Contains(item) || (!item.DeclaringType.Equals(item.ReflectedType) && source.Contains(item.GetMemberFromDeclaringType())) ||
-			       item.GetPropertyFromInterfaces().Any(source.Contains);
+			return source.Count > 0 && (source.Contains(item) || (!item.DeclaringType.Equals(item.ReflectedType) && source.Contains(item.GetMemberFromDeclaringType())) ||
+			                            item.GetPropertyFromInterfaces().Any(source.Contains));
 		}
 	}
 }
