@@ -367,16 +367,21 @@ namespace ConfOrm.NH
 
 		private void InvokeClassCustomizers(Type type, IClassAttributesMapper classMapper)
 		{
-			var typeHierarchy = type.GetHierarchyFromBase();
+			InvokeAncestorsCustomizers(type.GetInterfaces(), classMapper);
+			InvokeAncestorsCustomizers(type.GetHierarchyFromBase(), classMapper);
+			customizerHolder.InvokeCustomizers(type, classMapper);
+		}
+
+		private void InvokeAncestorsCustomizers(IEnumerable<Type> typeAncestors, IClassAttributesMapper classMapper)
+		{
 			// only apply the polymorphic mapping for no entities:
 			// this is to avoid a possible caos in entity-subclassing:
 			// an example of caos is when a base class has a specific TableName and a subclass does not have a specific name (use the default class name).
 			// I can remove this "limitation", where required, and delegate to the user the responsibility of his caos.
-			foreach (var entityType in typeHierarchy.Where(t => !domainInspector.IsEntity(t)))
+			foreach (var entityType in typeAncestors.Where(t => !domainInspector.IsEntity(t)))
 			{
 				customizerHolder.InvokeCustomizers(entityType, classMapper);
 			}
-			customizerHolder.InvokeCustomizers(type, classMapper);
 		}
 
 		private void MapNaturalIdProperties(Type rootEntityType, INaturalIdMapper naturalIdMapper, PropertyInfo property)

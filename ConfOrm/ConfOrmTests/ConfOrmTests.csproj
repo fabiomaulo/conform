@@ -232,6 +232,7 @@
     <Compile Include="NH\MapperTests\UnionSubclassCustomizerCallingTest.cs" />
     <Compile Include="NH\MapperTests\UnionSubclassPatternsAddition.cs" />
     <Compile Include="NH\MapperTests\VersionAppliersCallingTest.cs" />
+    <Compile Include="NH\MapperTests\VersionInterfacePolymorphicCustomizationTest.cs" />
     <Compile Include="NH\MapperTests\VersionPolymorphicCustomizationTest.cs" />
     <Compile Include="NH\MapperTests\VersionPropertyTest.cs" />
     <Compile Include="NH\NaturalIdMapperTest.cs" />
