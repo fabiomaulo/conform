@@ -422,7 +422,7 @@ namespace ConfOrm
 
 		public virtual bool IsPersistentProperty(MemberInfo role)
 		{
-			return (!explicitDeclarations.ExclusionProperties.Contains(role) && !Patterns.PersistentPropertiesExclusions.Match(role))
+			return (!explicitDeclarations.ExclusionProperties.ContainsMember(role) && !Patterns.PersistentPropertiesExclusions.Match(role))
 						 || explicitDeclarations.PersistentProperties.ContainsMember(role);
 		}
 

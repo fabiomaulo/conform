@@ -24,7 +24,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			public string Something { get; set; }
 		}
 
-		[Test, Ignore("Not supported yet.")]
+		[Test]
 		public void WhenRegisterPersistentPropertyOnInterfaceThenShouldRecognizePropertyOfConcreteImpl()
 		{
 			var orm = new ObjectRelationalMapper();
@@ -34,7 +34,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			orm.IsPersistentProperty(ForClass<Person>.Property(p => p.IsValid)).Should().Be.True();
 		}
 
-		[Test, Ignore("Not supported yet.")]
+		[Test]
 		public void WhenRegisterExclusionPropertyOnInterfaceThenShouldExcludePropertyOfConcreteImpl()
 		{
 			var orm = new ObjectRelationalMapper();
@@ -44,7 +44,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			orm.IsPersistentProperty(ForClass<Person>.Property(p => p.Something)).Should().Be.False();
 		}
 
-		[Test, Ignore("Not supported yet.")]
+		[Test]
 		public void WhenRegisterExclusionPropertyOnInterfaceAndInclusionOnConcreteThenShouldIncludePropertyOfConcreteImpl()
 		{
 			var orm = new ObjectRelationalMapper();
@@ -53,6 +53,17 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			orm.PersistentProperty<Person>(p => p.Something);
 
 			orm.IsPersistentProperty(ForClass<Person>.Property(p => p.Something)).Should().Be.True();
+		}
+
+		[Test]
+		public void WhenNoRegisterExclusionPropertyForInterfaceThenShouldWorkNormally()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Person>();
+
+			orm.IsPersistentProperty(ForClass<Person>.Property(p => p.Something)).Should().Be.True();
+			orm.IsPersistentProperty(ForClass<Person>.Property(p => p.IsValid)).Should().Be.False();
+			orm.IsPersistentProperty(ForClass<Person>.Property(p => p.Name)).Should().Be.True();
 		}
 	}
 }
