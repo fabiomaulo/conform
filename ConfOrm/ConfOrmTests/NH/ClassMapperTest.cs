@@ -1,4 +1,5 @@
 using System.Linq;
+using ConfOrm;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
@@ -25,6 +26,23 @@ namespace ConfOrmTests.NH
 			public int Id { get; set; }
 			public int Code { get; set; }
 			public string Name { get; set; }
+		}
+
+		private interface IEntityProxable
+		{
+			int Id { get; set; }
+			int Code { get; set; }
+		}
+
+		private interface IAnotherInterface
+		{
+			int Code { get; set; }
+		}
+
+		private class EntityProxable : IEntityProxable
+		{
+			public int Id { get; set; }
+			public int Code { get; set; }
 		}
 
 		[Test]
@@ -276,6 +294,25 @@ namespace ConfOrmTests.NH
 			var rc = new ClassMapper(typeof(EntitySimple), mapdoc, typeof(EntitySimple).GetProperty("Id"));
 			rc.SchemaAction(SchemaAction.None);
 			mapdoc.RootClasses[0].schemaaction.Should().Be("none");
+		}
+
+		[Test]
+		public void CanSetProxy()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntityProxable), mapdoc, ForClass<EntityProxable>.Property(x=> x.Id));
+			rc.Proxy(typeof(IEntityProxable));
+
+			var hbmEntity = mapdoc.RootClasses[0];
+			hbmEntity.Proxy.Should().Contain("IEntityProxable");
+		}
+
+		[Test]
+		public void WhenSetWrongProxyThenThrow()
+		{
+			var mapdoc = new HbmMapping();
+			var rc = new ClassMapper(typeof(EntityProxable), mapdoc, ForClass<EntityProxable>.Property(x => x.Id));
+			rc.Executing(m => m.Proxy(typeof(IAnotherInterface))).Throws<MappingException>();
 		}
 	}
 }
