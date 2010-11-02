@@ -87,6 +87,7 @@
     <Compile Include="CoolNaming\CollectionOfElementsKeyColumnApplier.cs" />
     <Compile Include="Appliers\CollectionOfElementsOnlyPattern.cs" />
     <Compile Include="CoolNaming\CollectionOfElementsTableApplier.cs" />
+    <Compile Include="CoolNaming\CoolTablesNamingPack.cs" />
     <Compile Include="CoolNaming\UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier.cs" />
     <Compile Include="DearDbaNaming\ListIndexAsPropertyPosColumnNameApplier.cs" />
     <Compile Include="DearDbaNaming\ManyToManyColumnApplier.cs" />
