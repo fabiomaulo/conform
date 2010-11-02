@@ -104,6 +104,7 @@
     <Compile Include="AppliersTests\OneToManyKeyColumnApplierTest.cs" />
     <Compile Include="AppliersTests\OneToManyPatternTest.cs" />
     <Compile Include="AppliersTests\UseCurrencyForDecimalApplierTest.cs" />
+    <Compile Include="AppliersTests\UseNoLazyForNoProxableApplierTest.cs" />
     <Compile Include="CoolNamingsAppliersTests\ListIndexAsPropertyPosColumnNameApplierTest.cs" />
     <Compile Include="DearDbaNamingTests\ManyToManyTableApplierTest.cs" />
     <Compile Include="InflectorNamingTests\ClassPluralizedTableApplierTest.cs" />

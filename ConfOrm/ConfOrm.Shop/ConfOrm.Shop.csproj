@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="Appliers\EnumPropertyAsStringApplier.cs" />
     <Compile Include="Appliers\UseCurrencyForDecimalApplier.cs" />
+    <Compile Include="Appliers\UseNoLazyForNoProxableApplier.cs" />
     <Compile Include="CoolNaming\CollectionOfComponentsKeyColumnApplier.cs" />
     <Compile Include="CoolNaming\CollectionOfComponentsTableApplier.cs" />
     <Compile Include="CoolNaming\CollectionOfElementsKeyColumnApplier.cs" />
