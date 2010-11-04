@@ -169,6 +169,7 @@
     <Compile Include="NH\MapperTests\HierarchyTablePerConcreteClassJumpingTest.cs" />
     <Compile Include="NH\MapperTests\InterfaceAsRootEntityTest.cs" />
     <Compile Include="NH\MapperTests\InterfacePropertiesPolymorphicCustomizationTest.cs" />
+    <Compile Include="NH\MapperTests\InterfacePropertiesPolymorphicOnComponentsCustomizationTest.cs" />
     <Compile Include="NH\MapperTests\JoinedSubclassPatternsAddition.cs" />
     <Compile Include="NH\MapperTests\ManyToManyApplierCalling.cs" />
     <Compile Include="NH\MapperTests\ManyToManyCustomizersCallingTest.cs" />
