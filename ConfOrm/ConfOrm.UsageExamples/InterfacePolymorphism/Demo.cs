@@ -9,6 +9,10 @@ namespace ConfOrm.UsageExamples.InterfacePolymorphism
 		[Test, Explicit]
 		public void UseBagForLists()
 		{
+			// In this example you can see how you can specify the mapping using an interface that will be implemented by some classes of your domain
+			// no matter if they are entities or component and over all even when the interface is not really part of the mapping (not an entity).
+			// Even when you have defined a mapping using an interface you can always override the mapping for a specific implementation (see Customize<Tweet>)
+
 			var entities = new[] { typeof(User), typeof(Email), typeof(InstantMessage) };
 			var orm = new ObjectRelationalMapper();
 			orm.TablePerClass(entities);
