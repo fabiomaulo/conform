@@ -1,5 +1,6 @@
 using System;
 using ConfOrm.NH;
+using NHibernate;
 using NUnit.Framework;
 
 namespace ConfOrm.UsageExamples.InterfacePolymorphism
@@ -7,7 +8,7 @@ namespace ConfOrm.UsageExamples.InterfacePolymorphism
 	public class Demo
 	{
 		[Test, Explicit]
-		public void UseBagForLists()
+		public void InterfacePolymorphisDemo()
 		{
 			// In this example you can see how you can specify the mapping using an interface that will be implemented by some classes of your domain
 			// no matter if they are entities or component and over all even when the interface is not really part of the mapping (not an entity).
@@ -18,8 +19,8 @@ namespace ConfOrm.UsageExamples.InterfacePolymorphism
 			orm.TablePerClass(entities);
 
 			var mapper = new Mapper(orm);
-			mapper.Customize<IHasMessage>(x => x.Property(hasMessage => hasMessage.Message, pm => { pm.Length(11000); pm.Lazy(true); }));
-			mapper.Customize<Tweet>(x => x.Property(tweet => tweet.Message, pm => { pm.Length(140); pm.Lazy(false); }));
+			mapper.Customize<IHasMessage>(x => x.Property(hasMessage => hasMessage.Message, pm => { pm.Type(NHibernateUtil.StringClob); pm.Lazy(true); }));
+			mapper.Customize<Tweet>(x => x.Property(tweet => tweet.Message, pm => { pm.Type(NHibernateUtil.String); pm.Length(140); pm.Lazy(false); }));
 
 			// Show the mapping to the console
 			var mapping = mapper.CompileMappingFor(entities);
