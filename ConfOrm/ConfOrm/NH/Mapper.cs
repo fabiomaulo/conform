@@ -853,10 +853,9 @@ namespace ConfOrm.NH
 			private readonly IDomainInspector domainInspector;
 			private readonly IPatternsAppliersHolder patternsAppliersHolder;
 			private readonly ICustomizersHolder customizersHolder;
+			private readonly Mapper mapper;
 
-			public ComponentRelationMapper(Type ownerType, Type componentType,
-			                               ICandidatePersistentMembersProvider membersProvider, IDomainInspector domainInspector,
-			                               IPatternsAppliersHolder patternsAppliersHolder, ICustomizersHolder customizersHolder)
+			public ComponentRelationMapper(Type ownerType, Type componentType, ICandidatePersistentMembersProvider membersProvider, IDomainInspector domainInspector, IPatternsAppliersHolder patternsAppliersHolder, ICustomizersHolder customizersHolder, Mapper mapper)
 			{
 				this.ownerType = ownerType;
 				this.componentType = componentType;
@@ -864,6 +863,7 @@ namespace ConfOrm.NH
 				this.domainInspector = domainInspector;
 				this.patternsAppliersHolder = patternsAppliersHolder;
 				this.customizersHolder = customizersHolder;
+				this.mapper = mapper;
 			}
 
 			#region Implementation of ICollectionElementRelationMapper
@@ -916,7 +916,8 @@ namespace ConfOrm.NH
 						propertiesContainer.ManyToOne(member, manyToOneMapper =>
 							{
 								patternsAppliersHolder.ManyToOne.ApplyAllMatchs(member, manyToOneMapper);
-								customizersHolder.InvokeCustomizers(propertyPath, manyToOneMapper);
+								patternsAppliersHolder.ManyToOnePath.ApplyAllMatchs(propertyPath, manyToOneMapper);
+								mapper.ForEachMemberPath(member, propertyPath, pp => customizersHolder.InvokeCustomizers(pp, manyToOneMapper));
 							});
 					}
 					else if (domainInspector.IsComponent(propertyType))
@@ -950,7 +951,8 @@ namespace ConfOrm.NH
 						propertiesContainer.Property(member, propertyMapper =>
 							{
 								patternsAppliersHolder.Property.ApplyAllMatchs(member, propertyMapper);
-								customizersHolder.InvokeCustomizers(propertyPath, propertyMapper);
+								patternsAppliersHolder.PropertyPath.ApplyAllMatchs(propertyPath, propertyMapper);
+								mapper.ForEachMemberPath(member, propertyPath, pp => customizersHolder.InvokeCustomizers(pp, propertyMapper));
 							});
 					}
 				}
@@ -970,7 +972,7 @@ namespace ConfOrm.NH
 			}
 			if (domainInspector.IsComponent(collectionElementType))
 			{
-				return new ComponentRelationMapper(ownerType, collectionElementType, membersProvider, domainInspector, PatternsAppliers, customizerHolder);
+				return new ComponentRelationMapper(ownerType, collectionElementType, membersProvider, domainInspector, PatternsAppliers, customizerHolder, this);
 			}
 			return new ElementRelationMapper(property, propertyPath, PatternsAppliers, customizerHolder);
 		}
