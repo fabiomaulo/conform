@@ -85,7 +85,9 @@
     <Compile Include="GetMemberFromInterfacesTest.cs" />
     <Compile Include="InterfaceAsRelation\Case1.cs" />
     <Compile Include="InterfaceAsRelation\Domain.cs" />
-    <Compile Include="TypeExtensionsTests\GetFirstImplementorConcreteClassesTest.cs" />
+    <Compile Include="TypeExtensionsTests\GetFirstImplementorConcreteClassesTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TypeExtensionsTests\GetFirstImplementorTest.cs" />
     <Compile Include="Mappers\CacheIncludeTest.cs" />
     <Compile Include="Mappers\CacheUsageTest.cs" />

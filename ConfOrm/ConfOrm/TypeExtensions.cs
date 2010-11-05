@@ -383,7 +383,11 @@ namespace ConfOrm
 			{
 				return null;
 			}
-			return source.GetHierarchyFromBase().FirstOrDefault(t=> abstractType.IsAssignableFrom(t));
+			if (source.Equals(abstractType))
+			{
+				return source;
+			}
+			return source.GetHierarchyFromBase().FirstOrDefault(t => !t.Equals(abstractType) && abstractType.IsAssignableFrom(t));
 		}
 	}
 }
