@@ -24,6 +24,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 	 * The ObjectRelationalMapper (IDomainInspector) should provide the correct response of IsEntity, IsRootEntity, IsManyToOne, IsComponent, IsHeterogeneousAssociation.
 	 * The Mapper (perhaps through the IDomainInspector) should have an applier to be able to apply the correct concrete-class in each case.
 	 * 
+	 * For case-1 and case-2 ConfORM may generate even the node <import> to use those interfaces in HQL.
 	 * For the case-4 ConfORM should provide a way to interprete the relation as heterogeneous-association by default.
 	 * For the case-5 I don't think I can do something.
 	 * 
