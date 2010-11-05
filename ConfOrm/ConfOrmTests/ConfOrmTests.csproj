@@ -83,6 +83,8 @@
     <Compile Include="DomainInspectorExtensionsTests.cs" />
     <Compile Include="ForClassTest.cs" />
     <Compile Include="GetMemberFromInterfacesTest.cs" />
+    <Compile Include="InterfaceAsRelation\Case1.cs" />
+    <Compile Include="InterfaceAsRelation\Domain.cs" />
     <Compile Include="Mappers\CacheIncludeTest.cs" />
     <Compile Include="Mappers\CacheUsageTest.cs" />
     <Compile Include="Mappers\ElementMapperWithFormulaTest.cs" />
