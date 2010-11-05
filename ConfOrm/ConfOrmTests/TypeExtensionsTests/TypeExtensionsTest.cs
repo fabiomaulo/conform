@@ -7,7 +7,7 @@ using ConfOrm;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace ConfOrmTests
+namespace ConfOrmTests.TypeExtensionsTests
 {
 	public class TypeExtensionsTest
 	{

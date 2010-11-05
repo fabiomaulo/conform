@@ -368,5 +368,22 @@ namespace ConfOrm
 				yield return t.GetGenericTypeDefinition();
 			}
 		}
+
+		public static Type GetFirstImplementorOf(this Type source, Type abstractType)
+		{
+			if (source == null)
+			{
+				throw new ArgumentNullException("source");
+			}
+			if (abstractType == null)
+			{
+				throw new ArgumentNullException("abstractType");
+			}
+			if(source.IsInterface)
+			{
+				return null;
+			}
+			return source.GetHierarchyFromBase().FirstOrDefault(t=> abstractType.IsAssignableFrom(t));
+		}
 	}
 }
