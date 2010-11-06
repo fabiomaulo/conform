@@ -18,10 +18,10 @@ namespace ConfOrm
 			{
 				return false;
 			}
-			var list = source as IList<TSource>;
+			var list = source as ICollection<TSource>;
 			if (list != null)
 			{
-				return list.Count != 1;
+				return list.Count == 1;
 			}
 			using (IEnumerator<TSource> enumerator = source.GetEnumerator())
 			{

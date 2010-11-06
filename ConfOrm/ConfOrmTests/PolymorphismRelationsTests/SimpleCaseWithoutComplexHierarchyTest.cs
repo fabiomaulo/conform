@@ -33,5 +33,26 @@ namespace ConfOrmTests.PolymorphismRelationsTests
 			domainAnalyzer.GetBaseImplementors(typeof(IRelation)).Single().Should().Be(typeof(MyRelation));
 			domainAnalyzer.GetBaseImplementors(typeof(Relation1)).Single().Should().Be(typeof(MyRelation1));
 		}
+
+		[Test]
+		public void WhenFindAncestorOfNullThenReturnEmpty()
+		{
+			var domainAnalyzer = new PolymorphismResolver();
+			domainAnalyzer.Add(typeof(MyRelation));
+			domainAnalyzer.Add(typeof(MyRelation1));
+			domainAnalyzer.GetBaseImplementors(null).Should().Be.Empty();
+		}
+
+		[Test]
+		public void WhenModifyStateThenFindNewResults()
+		{
+			var domainAnalyzer = new PolymorphismResolver();
+			domainAnalyzer.Add(typeof(MyRelation));
+			
+			domainAnalyzer.GetBaseImplementors(typeof(Relation1)).Should().Be.Empty();
+
+			domainAnalyzer.Add(typeof(MyRelation1));
+			domainAnalyzer.GetBaseImplementors(typeof(Relation1)).Single().Should().Be(typeof(MyRelation1));
+		}
 	}
 }
