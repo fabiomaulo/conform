@@ -24,6 +24,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 		{
 			public int Id { get; set; }
 		}
+
 		private class Relation1
 		{
 		}
@@ -39,6 +40,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			var orm = new ObjectRelationalMapper();
 			orm.TablePerClass<MyEntity>();
 			orm.TablePerClass<MyRelation>();
+			orm.TablePerClass<MyRelation1>();
 
 			var mapper = new Mapper(orm);
 			var mapping = mapper.CompileMappingFor(new[] { typeof(MyEntity) });
@@ -46,6 +48,8 @@ namespace ConfOrmTests.InterfaceAsRelation
 			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("MyEntity"));
 			rc.Properties.Where(p => p.Name == "Relation").Single().Should().Be.OfType<HbmManyToOne>()
 				.And.ValueOf.Class.Should().Contain("MyRelation");
+			rc.Properties.Where(p => p.Name == "Relation1").Single().Should().Be.OfType<HbmManyToOne>()
+				.And.ValueOf.Class.Should().Contain("MyRelation1");
 		}
 	}
 }
