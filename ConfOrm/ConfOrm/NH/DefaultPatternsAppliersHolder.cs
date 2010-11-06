@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using ConfOrm.Mappers;
 using ConfOrm.Patterns;
@@ -89,27 +88,6 @@ namespace ConfOrm.NH
 			                    		new MemberNoSetterToFieldAccessorApplier<IComponentAttributesMapper>(),
 			                    		new MemberToFieldAccessorApplier<IComponentAttributesMapper>()
 			                    	};
-		}
-	}
-
-	public class PolymorphismManyToOneClassApplier : IPatternApplier<MemberInfo, IManyToOneMapper>
-	{
-		private readonly IDomainInspector domainInspector;
-
-		public PolymorphismManyToOneClassApplier(IDomainInspector domainInspector)
-		{
-			this.domainInspector = domainInspector;
-		}
-
-		public bool Match(MemberInfo subject)
-		{
-			var polymorphismResolver = domainInspector.PolymorphismResolver;
-			return polymorphismResolver != null && polymorphismResolver.GetBaseImplementors(subject.GetPropertyOrFieldType()).IsSingle();
-		}
-
-		public void Apply(MemberInfo subject, IManyToOneMapper applyTo)
-		{
-			applyTo.Class(domainInspector.PolymorphismResolver.GetBaseImplementors(subject.GetPropertyOrFieldType()).Single());
 		}
 	}
 }

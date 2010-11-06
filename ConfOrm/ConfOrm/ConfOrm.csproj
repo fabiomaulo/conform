@@ -212,6 +212,7 @@
     <Compile Include="NH\CustomizersImpl\PropertyContainerCustomizer.cs" />
     <Compile Include="NH\ComponentParentMapper.cs" />
     <Compile Include="NH\PatternsAppliersHolderExtensions.cs" />
+    <Compile Include="Patterns\PolymorphismManyToOneClassApplier.cs" />
     <Compile Include="NH\PropertyMapper.cs" />
     <Compile Include="NH\PropertyPath.cs">
       <SubType>Code</SubType>
