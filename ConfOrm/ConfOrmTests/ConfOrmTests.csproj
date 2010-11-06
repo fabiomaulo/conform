@@ -85,6 +85,8 @@
     <Compile Include="GetMemberFromInterfacesTest.cs" />
     <Compile Include="InterfaceAsRelation\Case1.cs" />
     <Compile Include="InterfaceAsRelation\Domain.cs" />
+    <Compile Include="PolymorphismRelationsTests\DomainAnalyzer.cs" />
+    <Compile Include="PolymorphismRelationsTests\SimpleCaseWithoutComplexHierarchyTest.cs" />
     <Compile Include="TypeExtensionsTests\GetFirstImplementorConcreteClassesTest.cs">
       <SubType>Code</SubType>
     </Compile>
