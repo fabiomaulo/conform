@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ConfOrm;
 
-namespace ConfOrmTests.PolymorphismRelationsTests
+namespace ConfOrm
 {
 	public class PolymorphismResolver
 	{

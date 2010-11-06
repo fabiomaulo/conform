@@ -1,4 +1,5 @@
 using System.Linq;
+using ConfOrm;
 using NUnit.Framework;
 using SharpTestsEx;
 
