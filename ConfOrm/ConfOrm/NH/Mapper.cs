@@ -182,6 +182,11 @@ namespace ConfOrm.NH
 			{
 				throw new ArgumentNullException("types");
 			}
+			var typeToMap = types.ToArray();
+			if (DomainInspector.PolymorphismResolver != null)
+			{
+				Array.ForEach(typeToMap, DomainInspector.PolymorphismResolver.Add);
+			}
 			string defaultAssemblyName = null;
 			string defaultNamespace = null;
 			var firstType = types.FirstOrDefault();

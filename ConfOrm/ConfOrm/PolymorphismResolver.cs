@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ConfOrm
 {
-	public class PolymorphismResolver
+	public class PolymorphismResolver : IPolymorphismResolver
 	{
 		private ICollection<Type> domain = new HashSet<Type>();
 		private ICollection<Type> exclusions = new HashSet<Type>();

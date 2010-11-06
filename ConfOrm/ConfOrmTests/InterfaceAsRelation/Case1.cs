@@ -33,7 +33,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			public int Id { get; set; }
 		}
 
-		[Test, Ignore("Not 'auto' supported.")]
+		[Test]
 		public void WhenInterfaceIsImplementedByEntityThenRecognizeManyToOneWithTheCorrectClass()
 		{
 			var orm = new ObjectRelationalMapper();

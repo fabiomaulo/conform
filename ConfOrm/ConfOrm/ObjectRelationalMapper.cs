@@ -10,11 +10,13 @@ namespace ConfOrm
 	public class ObjectRelationalMapper : IObjectRelationalMapper, IDomainInspector
 	{
 		private readonly IExplicitDeclarationsHolder explicitDeclarations;
+		private readonly IPolymorphismResolver polymorphismResolver;
 
 		public ObjectRelationalMapper()
 		{
 			explicitDeclarations = new ExplicitDeclarationsHolder();
 			Patterns = new DefaultNHibernatePatternsHolder(this, explicitDeclarations);
+			polymorphismResolver = new PolymorphismResolver();
 		}
 
 		public ObjectRelationalMapper(IPatternsHolder patterns): this(patterns, new ExplicitDeclarationsHolder())
@@ -33,6 +35,7 @@ namespace ConfOrm
 			}
 			Patterns = patterns;
 			this.explicitDeclarations = explicitDeclarations;
+			polymorphismResolver = new PolymorphismResolver();
 		}
 
 		public IPatternsHolder Patterns { get; protected set; }
@@ -71,6 +74,7 @@ namespace ConfOrm
 
 		protected void RegisterTablePerClassHierarchy(Type type)
 		{
+			PolymorphismResolver.Add(type);
 			PreventComponentAsEntity(type);
 			explicitDeclarations.RootEntities.Add(type);
 			explicitDeclarations.TablePerClassHierarchyEntities.Add(type);
@@ -92,6 +96,7 @@ namespace ConfOrm
 
 		protected void RegisterTablePerClass(Type type)
 		{
+			PolymorphismResolver.Add(type);
 			PreventComponentAsEntity(type);
 			explicitDeclarations.RootEntities.Add(type);
 			explicitDeclarations.TablePerClassEntities.Add(type);
@@ -105,6 +110,7 @@ namespace ConfOrm
 
 		protected void RegisterTablePerConcreteClass(Type type)
 		{
+			PolymorphismResolver.Add(type);
 			PreventComponentAsEntity(type);
 			explicitDeclarations.RootEntities.Add(type);
 			explicitDeclarations.TablePerConcreteClassEntities.Add(type);
@@ -292,6 +298,11 @@ namespace ConfOrm
 			return explicitDeclarations.VersionProperties.ContainsMember(member) || Patterns.Versions.Match(member);
 		}
 
+		public IPolymorphismResolver PolymorphismResolver
+		{
+			get { return polymorphismResolver; }
+		}
+
 		public virtual bool IsEntity(Type type)
 		{
 			return !IsExplicitlyExcluded(type) && (explicitDeclarations.RootEntities.Contains(type)
@@ -355,9 +366,16 @@ namespace ConfOrm
 			}
 			bool areEntities = IsEntity(from) && IsEntity(to);
 			bool isFromComponentToEntity = IsComponent(from) && IsEntity(to);
-			return (areEntities && Patterns.ManyToOneRelations.Match(relation)) || (areEntities && !IsOneToOne(from, to)) || isFromComponentToEntity;
-
+			var isManyToOne = (areEntities && Patterns.ManyToOneRelations.Match(relation)) || (areEntities && !IsOneToOne(from, to)) || isFromComponentToEntity;
 			//&& !explicitDeclarations.ManyToManyRelations.Contains(relation) cause of CfgORM-5
+			
+			if(!isManyToOne)
+			{
+				// try to find the relation through PolymorphismResolver
+				isManyToOne = PolymorphismResolver.GetBaseImplementors(to).Any(t=> t != to && IsManyToOne(from, t));
+			}
+
+			return isManyToOne;
 		}
 
 		public virtual bool IsManyToMany(Type role1, Type role2)
