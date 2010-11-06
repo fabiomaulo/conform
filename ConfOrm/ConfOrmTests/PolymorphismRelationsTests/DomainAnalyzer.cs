@@ -1,20 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using ConfOrm;
 
 namespace ConfOrmTests.PolymorphismRelationsTests
 {
 	public class DomainAnalyzer
 	{
 		private ICollection<Type> domain = new HashSet<Type>();
+		private ICollection<Type> exclusions = new HashSet<Type>();
 		public IEnumerable<Type> GetBaseImplementors(Type ancestor)
 		{
+			var result = new HashSet<Type>();
 			foreach (var type in domain)
 			{
-				if(ancestor.IsAssignableFrom(type))
+				var implementor = type.GetFirstImplementorOf(ancestor);
+				if(implementor != null)
 				{
-					yield return type;
+					result.Add(implementor);
 				}
 			}
+			return result.Where(t=> !exclusions.Contains(t));
 		}
 
 		public void Add(Type type)
@@ -24,6 +30,15 @@ namespace ConfOrmTests.PolymorphismRelationsTests
 				return;
 			}
 			domain.Add(type);
+		}
+
+		public void Exclude(Type type)
+		{
+			if (type == null)
+			{
+				return;
+			}
+			exclusions.Add(type);
 		}
 	}
 }
