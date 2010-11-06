@@ -35,7 +35,7 @@ namespace ConfOrmTests.PolymorphismRelationsTests
 		[Test]
 		public void WhenEntitiesOfDomainThenOnlyReturnFirstImplementorInTheHierarchy()
 		{
-			var domainAnalyzer = new DomainAnalyzer();
+			var domainAnalyzer = new PolymorphismResolver();
 			domainAnalyzer.Add(typeof(MyRelation));
 			domainAnalyzer.Add(typeof(MyRelation1));
 			domainAnalyzer.Add(typeof(MyRelationLevel1));
@@ -47,7 +47,7 @@ namespace ConfOrmTests.PolymorphismRelationsTests
 		[Test]
 		public void WhenRegisterWholeDomainThenOnlyReturnFirstNoJumpedImplementorInTheHierarchy()
 		{
-			var domainAnalyzer = new DomainAnalyzer();
+			var domainAnalyzer = new PolymorphismResolver();
 			domainAnalyzer.Add(typeof(MyRelation));
 			domainAnalyzer.Add(typeof(MyRelation1));
 			domainAnalyzer.Add(typeof(MyRelationLevel1));

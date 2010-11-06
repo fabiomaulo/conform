@@ -5,7 +5,7 @@ using ConfOrm;
 
 namespace ConfOrmTests.PolymorphismRelationsTests
 {
-	public class DomainAnalyzer
+	public class PolymorphismResolver
 	{
 		private ICollection<Type> domain = new HashSet<Type>();
 		private ICollection<Type> exclusions = new HashSet<Type>();

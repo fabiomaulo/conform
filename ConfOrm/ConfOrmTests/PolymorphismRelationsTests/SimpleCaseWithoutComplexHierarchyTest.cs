@@ -26,7 +26,7 @@ namespace ConfOrmTests.PolymorphismRelationsTests
 		[Test]
 		public void WhenAskForInterfaceThenGetFistEntityImplementingTheInterface()
 		{
-			var domainAnalyzer = new DomainAnalyzer();
+			var domainAnalyzer = new PolymorphismResolver();
 			domainAnalyzer.Add(typeof(MyRelation));
 			domainAnalyzer.Add(typeof(MyRelation1));
 			domainAnalyzer.GetBaseImplementors(typeof(IRelation)).Single().Should().Be(typeof(MyRelation));
