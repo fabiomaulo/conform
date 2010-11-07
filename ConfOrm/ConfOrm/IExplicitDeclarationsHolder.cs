@@ -6,6 +6,7 @@ namespace ConfOrm
 {
 	public interface IExplicitDeclarationsHolder
 	{
+		HashSet<Type> DomainClasses { get; }
 		ICollection<Type> RootEntities { get; }
 		ICollection<Type> TablePerClassEntities { get; }
 		ICollection<Type> TablePerClassHierarchyEntities { get; }

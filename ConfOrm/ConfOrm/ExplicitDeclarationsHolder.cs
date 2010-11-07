@@ -6,6 +6,7 @@ namespace ConfOrm
 {
 	public class ExplicitDeclarationsHolder: IExplicitDeclarationsHolder
 	{
+		private readonly HashSet<Type> domainClasses = new HashSet<Type>();
 		private readonly HashSet<Type> rootEntities = new HashSet<Type>();
 		private readonly HashSet<Type> tablePerClassEntities = new HashSet<Type>();
 		private readonly HashSet<Type> tablePerClassHierarchyEntities = new HashSet<Type>();
@@ -30,6 +31,11 @@ namespace ConfOrm
 		private readonly HashSet<MemberInfo> heterogeneousAssociations = new HashSet<MemberInfo>();
 		private readonly HashSet<MemberInfo> naturalIds = new HashSet<MemberInfo>();
 		private readonly HashSet<MemberInfo> exclusionProperties = new HashSet<MemberInfo>();
+
+		public HashSet<Type> DomainClasses
+		{
+			get { return domainClasses; }
+		}
 
 		public ICollection<Type> RootEntities
 		{
