@@ -27,9 +27,9 @@ namespace ConfOrmTests.PolymorphismRelationsTests
 		[Test]
 		public void WhenAskForInterfaceThenGetFistEntityImplementingTheInterface()
 		{
-			var domainAnalyzer = new PolymorphismResolver();
-			domainAnalyzer.Add(typeof(MyRelation));
-			domainAnalyzer.Add(typeof(MyRelation1));
+			var domainAnalyzer = new ObjectRelationalMapper();
+			domainAnalyzer.AddToDomain(typeof(MyRelation));
+			domainAnalyzer.AddToDomain(typeof(MyRelation1));
 			domainAnalyzer.GetBaseImplementors(typeof(IRelation)).Single().Should().Be(typeof(MyRelation));
 			domainAnalyzer.GetBaseImplementors(typeof(Relation1)).Single().Should().Be(typeof(MyRelation1));
 		}
@@ -37,21 +37,21 @@ namespace ConfOrmTests.PolymorphismRelationsTests
 		[Test]
 		public void WhenFindAncestorOfNullThenReturnEmpty()
 		{
-			var domainAnalyzer = new PolymorphismResolver();
-			domainAnalyzer.Add(typeof(MyRelation));
-			domainAnalyzer.Add(typeof(MyRelation1));
+			var domainAnalyzer = new ObjectRelationalMapper();
+			domainAnalyzer.AddToDomain(typeof(MyRelation));
+			domainAnalyzer.AddToDomain(typeof(MyRelation1));
 			domainAnalyzer.GetBaseImplementors(null).Should().Be.Empty();
 		}
 
 		[Test]
 		public void WhenModifyStateThenFindNewResults()
 		{
-			var domainAnalyzer = new PolymorphismResolver();
-			domainAnalyzer.Add(typeof(MyRelation));
+			var domainAnalyzer = new ObjectRelationalMapper();
+			domainAnalyzer.AddToDomain(typeof(MyRelation));
 			
 			domainAnalyzer.GetBaseImplementors(typeof(Relation1)).Should().Be.Empty();
 
-			domainAnalyzer.Add(typeof(MyRelation1));
+			domainAnalyzer.AddToDomain(typeof(MyRelation1));
 			domainAnalyzer.GetBaseImplementors(typeof(Relation1)).Single().Should().Be(typeof(MyRelation1));
 		}
 	}

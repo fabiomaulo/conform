@@ -10,13 +10,14 @@ namespace ConfOrm
 	public class ObjectRelationalMapper : IObjectRelationalMapper, IDomainInspector
 	{
 		private readonly IExplicitDeclarationsHolder explicitDeclarations;
-		private readonly IPolymorphismResolver polymorphismResolver;
+
+		// polymorphismSolutions is the cached result to avoid the usage of reflection all the time.
+		private readonly Dictionary<Type, IEnumerable<Type>> polymorphismSolutions = new Dictionary<Type, IEnumerable<Type>>();
 
 		public ObjectRelationalMapper()
 		{
 			explicitDeclarations = new ExplicitDeclarationsHolder();
 			Patterns = new DefaultNHibernatePatternsHolder(this, explicitDeclarations);
-			polymorphismResolver = new PolymorphismResolver();
 		}
 
 		public ObjectRelationalMapper(IPatternsHolder patterns): this(patterns, new ExplicitDeclarationsHolder())
@@ -35,7 +36,6 @@ namespace ConfOrm
 			}
 			Patterns = patterns;
 			this.explicitDeclarations = explicitDeclarations;
-			polymorphismResolver = new PolymorphismResolver();
 		}
 
 		public IPatternsHolder Patterns { get; protected set; }
@@ -143,7 +143,10 @@ namespace ConfOrm
 			{
 				throw new ArgumentNullException("type");
 			}
-			explicitDeclarations.ClassExclusions.Add(type);
+			if(explicitDeclarations.ClassExclusions.Add(type))
+			{
+				InvalidatePolymorphismSolutions();
+			}
 		}
 
 		public virtual void Poid<TEntity>(Expression<Func<TEntity, object>> propertyGetter)
@@ -300,20 +303,52 @@ namespace ConfOrm
 
 		public virtual IEnumerable<Type> GetBaseImplementors(Type ancestor)
 		{
-			return polymorphismResolver.GetBaseImplementors(ancestor);
+			if (ancestor == null)
+			{
+				return Enumerable.Empty<Type>();
+			}
+			IEnumerable<Type> result;
+			if (!polymorphismSolutions.TryGetValue(ancestor, out result))
+			{
+				var partialResult = new HashSet<Type>();
+				foreach (var type in explicitDeclarations.DomainClasses)
+				{
+					var implementor = type.GetFirstImplementorOf(ancestor);
+					if (implementor != null)
+					{
+						partialResult.Add(implementor);
+					}
+				}
+				result = partialResult.Where(t => !IsExplicitlyExcluded(t)).ToArray();
+				polymorphismSolutions[ancestor] = result;
+			}
+			return result;
 		}
 
 		public virtual void AddToDomain(Type domainClass)
 		{
-			polymorphismResolver.Add(domainClass);
+			if (domainClass == null)
+			{
+				return;
+			}
+
+			if (explicitDeclarations.DomainClasses.Add(domainClass))
+			{
+				InvalidatePolymorphismSolutions();
+			}
 		}
 
 		public virtual void AddToDomain(IEnumerable<Type> domainClasses)
 		{
 			foreach (var domainClass in domainClasses)
 			{
-				polymorphismResolver.Add(domainClass);
+				AddToDomain(domainClass);
 			}
+		}
+
+		protected void InvalidatePolymorphismSolutions()
+		{
+			polymorphismSolutions.Clear();
 		}
 
 		public virtual bool IsEntity(Type type)

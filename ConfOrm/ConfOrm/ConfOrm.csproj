@@ -88,7 +88,6 @@
     <Compile Include="IPatternApplier.cs" />
     <Compile Include="IPatternsHolder.cs" />
     <Compile Include="IPatternValueGetter.cs" />
-    <Compile Include="IPolymorphismResolver.cs" />
     <Compile Include="Mappers\CacheInclude.cs" />
     <Compile Include="Mappers\CacheUsage.cs" />
     <Compile Include="Mappers\CollectionFetchMode.cs" />
@@ -290,7 +289,6 @@
     <Compile Include="Patterns\UnidirectionalOneToManyPattern.cs" />
     <Compile Include="Patterns\UnidirectionalOneToOneUniqueCascadeApplier.cs" />
     <Compile Include="Patterns\UnidirectionalUnaryAssociationPattern.cs" />
-    <Compile Include="PolymorphismResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Relation.cs" />
     <Compile Include="RelationOn.cs" />

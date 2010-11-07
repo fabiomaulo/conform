@@ -36,11 +36,11 @@ namespace ConfOrmTests.PolymorphismRelationsTests
 		[Test]
 		public void WhenEntitiesOfDomainThenOnlyReturnFirstImplementorInTheHierarchy()
 		{
-			var domainAnalyzer = new PolymorphismResolver();
-			domainAnalyzer.Add(typeof(MyRelation));
-			domainAnalyzer.Add(typeof(MyRelation1));
-			domainAnalyzer.Add(typeof(MyRelationLevel1));
-			domainAnalyzer.Add(typeof(MyRelation1Lvel1));
+			var domainAnalyzer = new ObjectRelationalMapper();
+			domainAnalyzer.AddToDomain(typeof(MyRelation));
+			domainAnalyzer.AddToDomain(typeof(MyRelation1));
+			domainAnalyzer.AddToDomain(typeof(MyRelationLevel1));
+			domainAnalyzer.AddToDomain(typeof(MyRelation1Lvel1));
 			domainAnalyzer.GetBaseImplementors(typeof(IRelation)).Single().Should().Be(typeof(MyRelation));
 			domainAnalyzer.GetBaseImplementors(typeof(Relation1)).Single().Should().Be(typeof(MyRelation1));
 		}
@@ -48,13 +48,13 @@ namespace ConfOrmTests.PolymorphismRelationsTests
 		[Test]
 		public void WhenRegisterWholeDomainThenOnlyReturnFirstNoJumpedImplementorInTheHierarchy()
 		{
-			var domainAnalyzer = new PolymorphismResolver();
-			domainAnalyzer.Add(typeof(MyRelation));
-			domainAnalyzer.Add(typeof(MyRelation1));
-			domainAnalyzer.Add(typeof(MyRelationLevel1));
-			domainAnalyzer.Add(typeof(MyRelation1Lvel1));
-			domainAnalyzer.Add(typeof(IRelation));
-			domainAnalyzer.Add(typeof(Relation1));
+			var domainAnalyzer = new ObjectRelationalMapper();
+			domainAnalyzer.AddToDomain(typeof(MyRelation));
+			domainAnalyzer.AddToDomain(typeof(MyRelation1));
+			domainAnalyzer.AddToDomain(typeof(MyRelationLevel1));
+			domainAnalyzer.AddToDomain(typeof(MyRelation1Lvel1));
+			domainAnalyzer.AddToDomain(typeof(IRelation));
+			domainAnalyzer.AddToDomain(typeof(Relation1));
 
 			domainAnalyzer.Exclude(typeof(Relation1));
 
@@ -65,13 +65,13 @@ namespace ConfOrmTests.PolymorphismRelationsTests
 		[Test]
 		public void WhenChangeStateOfWholeDomainThenOnlyInvalidateCache()
 		{
-			var domainAnalyzer = new PolymorphismResolver();
-			domainAnalyzer.Add(typeof(MyRelation));
-			domainAnalyzer.Add(typeof(MyRelation1));
-			domainAnalyzer.Add(typeof(MyRelationLevel1));
-			domainAnalyzer.Add(typeof(MyRelation1Lvel1));
-			domainAnalyzer.Add(typeof(IRelation));
-			domainAnalyzer.Add(typeof(Relation1));
+			var domainAnalyzer = new ObjectRelationalMapper();
+			domainAnalyzer.AddToDomain(typeof(MyRelation));
+			domainAnalyzer.AddToDomain(typeof(MyRelation1));
+			domainAnalyzer.AddToDomain(typeof(MyRelationLevel1));
+			domainAnalyzer.AddToDomain(typeof(MyRelation1Lvel1));
+			domainAnalyzer.AddToDomain(typeof(IRelation));
+			domainAnalyzer.AddToDomain(typeof(Relation1));
 			domainAnalyzer.GetBaseImplementors(typeof(Relation1));
 
 			domainAnalyzer.Exclude(typeof(Relation1));
