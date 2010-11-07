@@ -11,6 +11,7 @@ namespace ConfOrm.Mappers
 		void Update(bool consideredInUpdateQuery);
 		void Insert(bool consideredInInsertQuery);
 		void Lazy(bool isLazy);
+		void Class(Type componentType);
 	}
 
 	public interface IComponentMapper : IComponentAttributesMapper, IPropertyContainerMapper
@@ -24,6 +25,7 @@ namespace ConfOrm.Mappers
 		void Update(bool consideredInUpdateQuery);
 		void Insert(bool consideredInInsertQuery);
 		void Lazy(bool isLazy);
+		void Class<TConcrete>() where TConcrete: TComponent;
 	}
 
 	public interface IComponentMapper<TComponent> : IComponentAttributesMapper<TComponent>, IPropertyContainerMapper<TComponent> where TComponent : class

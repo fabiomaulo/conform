@@ -39,6 +39,11 @@ namespace ConfOrm.NH.CustomizersImpl
 			AddCustomizer(m => m.Lazy(isLazy));
 		}
 
+		public void Class<TConcrete>() where TConcrete : TComponent
+		{
+			AddCustomizer(m=> m.Class(typeof(TConcrete)));
+		}
+
 		#endregion
 
 		public void Access(Accessor accessor)

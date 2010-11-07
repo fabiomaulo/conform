@@ -77,6 +77,10 @@ namespace ConfOrm.NH
 			manyToMany = new List<IPatternApplier<MemberInfo, IManyToManyMapper>>
 			             	{new BidirectionalManyToManyColumnApplier(),};
 			manyToManyPath = new List<IPatternApplier<PropertyPath, IManyToManyMapper>>();
+			component = new List<IPatternApplier<Type, IComponentAttributesMapper>>
+			            {
+			            	new PolymorphismComponentClassApplier(domainInspector),
+			            };
 			componentParent = new List<IPatternApplier<MemberInfo, IComponentParentMapper>>
 			                  	{
 			                  		new MemberNoSetterToFieldAccessorApplier<IComponentParentMapper>(),

@@ -66,6 +66,11 @@ namespace ConfOrm.NH
 			component.lazy = isLazy;
 		}
 
+		public void Class(Type componentType)
+		{
+			component.@class = componentType.GetShortClassName(mapDoc);
+		}
+
 		#endregion
 
 		private IComponentParentMapper GetParentMapper(MemberInfo parent)

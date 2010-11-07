@@ -54,6 +54,11 @@ namespace ConfOrm.NH
 			// not supported by HbmNestedCompositeElement
 		}
 
+		public void Class(Type componentConcreteType)
+		{
+			// TODO : not supported yet.
+		}
+
 		public void Property(MemberInfo property, Action<IPropertyMapper> mapping)
 		{
 			var hbmProperty = new HbmProperty { name = property.Name };
