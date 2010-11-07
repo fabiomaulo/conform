@@ -416,11 +416,15 @@ namespace ConfOrm
 			bool isFromComponentToEntity = IsComponent(from) && IsEntity(to);
 			var isManyToOne = (areEntities && Patterns.ManyToOneRelations.Match(relation)) || (areEntities && !IsOneToOne(from, to)) || isFromComponentToEntity;
 			//&& !explicitDeclarations.ManyToManyRelations.Contains(relation) cause of CfgORM-5
-			
-			if(!isManyToOne)
+
+			if (!isManyToOne)
 			{
 				// try to find the relation through PolymorphismResolver
-				isManyToOne = GetBaseImplementors(to).Any(t=> t != to && IsManyToOne(from, t));
+				var baseImplementors = GetBaseImplementors(to).Where(t => t != to).ToArray();
+				if (baseImplementors.Length == 1)
+				{
+					isManyToOne = IsManyToOne(from, baseImplementors[0]);
+				}
 			}
 
 			return isManyToOne;

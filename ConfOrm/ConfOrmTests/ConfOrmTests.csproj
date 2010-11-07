@@ -86,6 +86,7 @@
     <Compile Include="InterfaceAsRelation\Case1.cs" />
     <Compile Include="InterfaceAsRelation\Case2.cs" />
     <Compile Include="InterfaceAsRelation\Case3.cs" />
+    <Compile Include="InterfaceAsRelation\Case4.cs" />
     <Compile Include="InterfaceAsRelation\Domain.cs" />
     <Compile Include="PolymorphismRelationsTests\CaseWithHierarchyTest.cs" />
     <Compile Include="PolymorphismRelationsTests\SimpleCaseWithoutComplexHierarchyTest.cs" />
