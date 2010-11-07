@@ -298,17 +298,17 @@ namespace ConfOrm
 			return explicitDeclarations.VersionProperties.ContainsMember(member) || Patterns.Versions.Match(member);
 		}
 
-		public IEnumerable<Type> GetBaseImplementors(Type ancestor)
+		public virtual IEnumerable<Type> GetBaseImplementors(Type ancestor)
 		{
 			return polymorphismResolver.GetBaseImplementors(ancestor);
 		}
 
-		public void AddToDomain(Type domainClass)
+		public virtual void AddToDomain(Type domainClass)
 		{
 			polymorphismResolver.Add(domainClass);
 		}
 
-		public void AddToDomain(IEnumerable<Type> domainClasses)
+		public virtual void AddToDomain(IEnumerable<Type> domainClasses)
 		{
 			foreach (var domainClass in domainClasses)
 			{
