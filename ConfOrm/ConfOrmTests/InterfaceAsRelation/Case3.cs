@@ -26,7 +26,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 		}
 
 		[Test]
-		public void WhenInterfaceIsImplementedByEntityThenRecognizeManyToOneWithTheCorrectClass()
+		public void WhenInterfaceIsImplementedByComponentThenRecognizeComponentWithTheCorrectClass()
 		{
 			// Note: the MyComponent class must be explicitly declared in ORM or mapper.CompileMappingFor
 
