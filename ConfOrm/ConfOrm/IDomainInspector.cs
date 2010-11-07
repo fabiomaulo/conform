@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace ConfOrm
@@ -35,6 +36,9 @@ namespace ConfOrm
 		bool IsDictionary(MemberInfo role);
 		bool IsComplex(MemberInfo member);
 		bool IsVersion(MemberInfo member);
-		IPolymorphismResolver PolymorphismResolver { get; }
+
+		IEnumerable<Type> GetBaseImplementors(Type ancestor);
+		void AddToDomain(Type domainClass);
+		void AddToDomain(IEnumerable<Type> domainClasses);
 	}
 }

@@ -183,27 +183,25 @@ namespace ConfOrm.NH
 				throw new ArgumentNullException("types");
 			}
 			var typeToMap = types.ToArray();
-			if (DomainInspector.PolymorphismResolver != null)
-			{
-				Array.ForEach(typeToMap, DomainInspector.PolymorphismResolver.Add);
-			}
+			DomainInspector.AddToDomain(typeToMap);
+
 			string defaultAssemblyName = null;
 			string defaultNamespace = null;
-			var firstType = types.FirstOrDefault();
-			if (firstType != null && types.All(t => t.Assembly.Equals(firstType.Assembly)))
+			var firstType = typeToMap.FirstOrDefault();
+			if (firstType != null && typeToMap.All(t => t.Assembly.Equals(firstType.Assembly)))
 			{
 				defaultAssemblyName = firstType.Assembly.GetName().Name;
 			}
-			if (firstType != null && types.All(t => t.Namespace.Equals(firstType.Namespace)))
+			if (firstType != null && typeToMap.All(t => t.Namespace.Equals(firstType.Namespace)))
 			{
 				defaultNamespace = firstType.Namespace;
 			}
 			var mapping = new HbmMapping {assembly = defaultAssemblyName, @namespace = defaultNamespace};
-			foreach (var type in RootClasses(types))
+			foreach (var type in RootClasses(typeToMap))
 			{
 				AddRootClassMapping(type, mapping);
 			}
-			foreach (var type in Subclasses(types))
+			foreach (var type in Subclasses(typeToMap))
 			{
 				AddSubclassMapping(mapping, type);
 			}
@@ -1114,13 +1112,16 @@ namespace ConfOrm.NH
 			{
 				throw new ArgumentNullException("types");
 			}
-			foreach (var type in RootClasses(types))
+			var typeToMap = types.ToArray();
+			DomainInspector.AddToDomain(typeToMap);
+
+			foreach (var type in RootClasses(typeToMap))
 			{
 				var mapping = new HbmMapping { assembly = type.Assembly.GetName().Name, @namespace = type.Namespace };
 				AddRootClassMapping(type, mapping);
 				yield return mapping;
 			}
-			foreach (var type in Subclasses(types))
+			foreach (var type in Subclasses(typeToMap))
 			{
 				var mapping = new HbmMapping { assembly = type.Assembly.GetName().Name, @namespace = type.Namespace };
 				AddSubclassMapping(mapping, type);

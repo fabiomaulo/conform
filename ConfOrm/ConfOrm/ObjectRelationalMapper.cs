@@ -74,7 +74,7 @@ namespace ConfOrm
 
 		protected void RegisterTablePerClassHierarchy(Type type)
 		{
-			PolymorphismResolver.Add(type);
+			AddToDomain(type);
 			PreventComponentAsEntity(type);
 			explicitDeclarations.RootEntities.Add(type);
 			explicitDeclarations.TablePerClassHierarchyEntities.Add(type);
@@ -96,7 +96,7 @@ namespace ConfOrm
 
 		protected void RegisterTablePerClass(Type type)
 		{
-			PolymorphismResolver.Add(type);
+			AddToDomain(type);
 			PreventComponentAsEntity(type);
 			explicitDeclarations.RootEntities.Add(type);
 			explicitDeclarations.TablePerClassEntities.Add(type);
@@ -110,7 +110,7 @@ namespace ConfOrm
 
 		protected void RegisterTablePerConcreteClass(Type type)
 		{
-			PolymorphismResolver.Add(type);
+			AddToDomain(type);
 			PreventComponentAsEntity(type);
 			explicitDeclarations.RootEntities.Add(type);
 			explicitDeclarations.TablePerConcreteClassEntities.Add(type);
@@ -298,9 +298,22 @@ namespace ConfOrm
 			return explicitDeclarations.VersionProperties.ContainsMember(member) || Patterns.Versions.Match(member);
 		}
 
-		public IPolymorphismResolver PolymorphismResolver
+		public IEnumerable<Type> GetBaseImplementors(Type ancestor)
 		{
-			get { return polymorphismResolver; }
+			return polymorphismResolver.GetBaseImplementors(ancestor);
+		}
+
+		public void AddToDomain(Type domainClass)
+		{
+			polymorphismResolver.Add(domainClass);
+		}
+
+		public void AddToDomain(IEnumerable<Type> domainClasses)
+		{
+			foreach (var domainClass in domainClasses)
+			{
+				polymorphismResolver.Add(domainClass);
+			}
 		}
 
 		public virtual bool IsEntity(Type type)
@@ -372,7 +385,7 @@ namespace ConfOrm
 			if(!isManyToOne)
 			{
 				// try to find the relation through PolymorphismResolver
-				isManyToOne = PolymorphismResolver.GetBaseImplementors(to).Any(t=> t != to && IsManyToOne(from, t));
+				isManyToOne = GetBaseImplementors(to).Any(t=> t != to && IsManyToOne(from, t));
 			}
 
 			return isManyToOne;
