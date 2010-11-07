@@ -10,7 +10,7 @@ namespace ConfOrm
 		ICollection<Type> TablePerClassEntities { get; }
 		ICollection<Type> TablePerClassHierarchyEntities { get; }
 		ICollection<Type> TablePerConcreteClassEntities { get; }
-		ICollection<Type> ClassExclusions { get; }
+		HashSet<Type> ClassExclusions { get; }
 		ICollection<Relation> ManyToOneRelations { get; }
 		ICollection<Relation> OneToManyRelations { get; }
 		ICollection<Relation> OneToOneRelations { get; }

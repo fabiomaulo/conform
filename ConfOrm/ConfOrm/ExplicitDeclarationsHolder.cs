@@ -51,7 +51,7 @@ namespace ConfOrm
 			get { return tablePerConcreteClassEntities; }
 		}
 
-		public ICollection<Type> ClassExclusions
+		public HashSet<Type> ClassExclusions
 		{
 			get { return classExclusions; }
 		}
