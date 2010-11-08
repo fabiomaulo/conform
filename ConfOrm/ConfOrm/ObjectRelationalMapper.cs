@@ -303,6 +303,11 @@ namespace ConfOrm
 
 		public virtual IEnumerable<Type> GetBaseImplementors(Type ancestor)
 		{
+			// Thoughts : this operation is reflection-expensive because GetFirstImplementorOf and because it iterate the domain-classes
+			// The real usage, so far, need :
+			// - just the 'single' implementor
+			// - just know if there are more then one entity (to use any)
+			// TODO: find a way to make it most efficient
 			if (ancestor == null)
 			{
 				return Enumerable.Empty<Type>();
@@ -419,6 +424,7 @@ namespace ConfOrm
 
 			if (!isManyToOne)
 			{
+				// TODO: find a way to use a injectable-not-expensive pattern instead this hard-coded solution
 				// try to find the relation through PolymorphismResolver
 				var baseImplementors = GetBaseImplementors(to).Where(t => t != to).ToArray();
 				if (baseImplementors.Length == 1)
@@ -459,6 +465,7 @@ namespace ConfOrm
 		{
 			bool isHeterogeneousAssociation = explicitDeclarations.HeterogeneousAssociations.ContainsMember(member);
 
+			// TODO: Add patterns for Heterogeneous Association
 			if (!isHeterogeneousAssociation)
 			{
 				// try to find the relation through PolymorphismResolver
