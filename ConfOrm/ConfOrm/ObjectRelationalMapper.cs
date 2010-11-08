@@ -315,19 +315,23 @@ namespace ConfOrm
 			IEnumerable<Type> result;
 			if (!polymorphismSolutions.TryGetValue(ancestor, out result))
 			{
-				var partialResult = new HashSet<Type>();
-				foreach (var type in explicitDeclarations.DomainClasses)
-				{
-					var implementor = type.GetFirstImplementorOf(ancestor);
-					if (implementor != null)
-					{
-						partialResult.Add(implementor);
-					}
-				}
-				result = partialResult.Where(t => !IsExplicitlyExcluded(t)).ToArray();
-				polymorphismSolutions[ancestor] = result;
+				polymorphismSolutions[ancestor] = result = GetBaseImplementorsPerHierarchy(ancestor);
 			}
 			return result;
+		}
+
+		private IEnumerable<Type> GetBaseImplementorsPerHierarchy(Type ancestor)
+		{
+			IEnumerable<Type> implementorsPerEachDomainClass =
+				explicitDeclarations.DomainClasses.Select(type => type.GetFirstImplementorOf(ancestor)).Where(implementor => implementor != null && !IsExplicitlyExcluded(implementor));
+
+			var implementorsPerEachDomainClassSet = new HashSet<Type>(implementorsPerEachDomainClass);
+
+			var inherited =
+				implementorsPerEachDomainClassSet.SelectMany(implementor => implementorsPerEachDomainClassSet.Where(t => !t.Equals(implementor) && implementor.IsAssignableFrom(t))).ToArray();
+
+			implementorsPerEachDomainClassSet.ExceptWith(inherited);
+			return implementorsPerEachDomainClassSet;
 		}
 
 		public virtual void AddToDomain(Type domainClass)
