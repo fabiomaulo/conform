@@ -310,19 +310,23 @@ namespace ConfOrm
 			IEnumerable<Type> result;
 			if (!polymorphismSolutions.TryGetValue(ancestor, out result))
 			{
-				var partialResult = new HashSet<Type>();
-				foreach (var implementor in
-					explicitDeclarations.DomainClasses.Select(type => type.GetFirstImplementorOf(ancestor)).Where(implementor => implementor != null && !IsExplicitlyExcluded(implementor)))
-				{
-					partialResult.Add(implementor);
-				}
-
-				var inherited = new HashSet<Type>(partialResult.SelectMany(implementor => partialResult.Where(t => !t.Equals(implementor) && implementor.IsAssignableFrom(t))));
-				partialResult.ExceptWith(inherited);
-				result = partialResult;
-				polymorphismSolutions[ancestor] = result;
+				polymorphismSolutions[ancestor] = result = GetBaseImplementorsPerHierarchy(ancestor);
 			}
 			return result;
+		}
+
+		private IEnumerable<Type> GetBaseImplementorsPerHierarchy(Type ancestor)
+		{
+			IEnumerable<Type> implementorsPerEachDomainClass =
+				explicitDeclarations.DomainClasses.Select(type => type.GetFirstImplementorOf(ancestor)).Where(implementor => implementor != null && !IsExplicitlyExcluded(implementor));
+
+			var implementorsPerEachDomainClassSet = new HashSet<Type>(implementorsPerEachDomainClass);
+
+			var inherited =
+				implementorsPerEachDomainClassSet.SelectMany(implementor => implementorsPerEachDomainClassSet.Where(t => !t.Equals(implementor) && implementor.IsAssignableFrom(t))).ToArray();
+
+			implementorsPerEachDomainClassSet.ExceptWith(inherited);
+			return implementorsPerEachDomainClassSet;
 		}
 
 		public virtual void AddToDomain(Type domainClass)
