@@ -457,7 +457,20 @@ namespace ConfOrm
 
 		public virtual bool IsHeterogeneousAssociation(MemberInfo member)
 		{
-			return explicitDeclarations.HeterogeneousAssociations.ContainsMember(member);
+			bool isHeterogeneousAssociation = explicitDeclarations.HeterogeneousAssociations.ContainsMember(member);
+
+			if (!isHeterogeneousAssociation)
+			{
+				// try to find the relation through PolymorphismResolver
+				var memberType = member.GetPropertyOrFieldType();
+				var baseImplementors = GetBaseImplementors(memberType).ToArray();
+				if (baseImplementors.Length > 1)
+				{
+					isHeterogeneousAssociation = baseImplementors.All(IsEntity);
+				}
+			}
+
+			return isHeterogeneousAssociation;
 		}
 
 		public virtual Cascade? ApplyCascade(Type from, MemberInfo on, Type to)

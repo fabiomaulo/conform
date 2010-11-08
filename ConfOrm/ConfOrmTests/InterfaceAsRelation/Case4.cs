@@ -62,7 +62,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			propertyDeepRelation.Should().Not.Be.InstanceOf<HbmManyToOne>();
 		}
 
-		[Test, Ignore("Not supported yet.")]
+		[Test]
 		public void WhenInterfaceIsImplementedByEntitiesThenRecognizeHeterogeneousAssociation()
 		{
 			var orm = new ObjectRelationalMapper();
