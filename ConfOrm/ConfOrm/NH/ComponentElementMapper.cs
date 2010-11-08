@@ -54,7 +54,7 @@ namespace ConfOrm.NH
 
 		public void Class(Type componentConcreteType)
 		{
-			// TODO : not supported yet.
+			component.@class = componentConcreteType.GetShortClassName(mapDoc);
 		}
 
 		public void Property(MemberInfo property, Action<IPropertyMapper> mapping)
