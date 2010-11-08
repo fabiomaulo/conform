@@ -461,8 +461,8 @@ namespace ConfOrm
 			}
 			bool areEntities = IsEntity(from) && IsEntity(to);
 			bool isFromComponentToEntity = IsComponent(from) && IsEntity(to);
-			return (areEntities || isFromComponentToEntity) && !IsOneToOne(from, to)
-			       && !explicitDeclarations.ManyToManyRelations.Contains(new Relation(from, to));
+			return !explicitDeclarations.ManyToManyRelations.Contains(new Relation(from, to)) &&
+			       !IsOneToOne(from, to) && (areEntities || isFromComponentToEntity);
 		}
 
 		public virtual bool IsHeterogeneousAssociation(MemberInfo member)
