@@ -52,7 +52,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			hbmBagOfIRelation.ElementRelationship.Should().Be.InstanceOf<HbmOneToMany>();
 		}
 
-		[Test, Ignore("Not supported yet.")]
+		[Test]
 		public void WhenInterfaceIsImplementedByEntityThenRecognizeOneTManyWithTheCorrectClass()
 		{
 			var orm = new ObjectRelationalMapper();
@@ -70,7 +70,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 				.And.ValueOf.Class.Should().Contain("MyRelation");
 		}
 
-		[Test, Ignore("Not supported yet.")]
+		[Test]
 		public void WhenClassIsImplementedByEntityThenRecognizeOneToManyWithTheCorrectClass()
 		{
 			var orm = new ObjectRelationalMapper();

@@ -57,6 +57,10 @@ namespace ConfOrm.NH
 			            	};
 			manyToOnePath = new List<IPatternApplier<PropertyPath, IManyToOneMapper>>
 			                	{new ComponentMultiUsageManyToOneColumnNameApplier()};
+			oneToMany = new List<IPatternApplier<MemberInfo, IOneToManyMapper>>
+									{
+										new PolymorphismOneToManyClassApplier(domainInspector)
+									};
 			oneToOne = new List<IPatternApplier<MemberInfo, IOneToOneMapper>>
 			           	{
 			           		new MemberReadOnlyAccessorApplier<IOneToOneMapper>(),

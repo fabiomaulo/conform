@@ -271,6 +271,7 @@
     <Compile Include="Patterns\MemberToFieldAccessorApplier.cs" />
     <Compile Include="Patterns\NoPoidGuidApplier.cs" />
     <Compile Include="Patterns\NoSetterPropertyToFieldPattern.cs" />
+    <Compile Include="Patterns\PolymorphismOneToManyClassApplier.cs" />
     <Compile Include="Patterns\PropertyToFieldPattern.cs" />
     <Compile Include="Patterns\NativePoidPattern.cs" />
     <Compile Include="Patterns\PoidGuidPattern.cs" />
