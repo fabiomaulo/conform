@@ -182,7 +182,7 @@ namespace ConfOrm.NH
 			{
 				throw new ArgumentNullException("types");
 			}
-			var typeToMap = types.ToArray();
+			var typeToMap = new HashSet<Type>(types);
 			DomainInspector.AddToDomain(typeToMap);
 
 			string defaultAssemblyName = null;
@@ -1112,7 +1112,7 @@ namespace ConfOrm.NH
 			{
 				throw new ArgumentNullException("types");
 			}
-			var typeToMap = types.ToArray();
+			var typeToMap = new HashSet<Type>(types);
 			DomainInspector.AddToDomain(typeToMap);
 
 			foreach (var type in RootClasses(typeToMap))
