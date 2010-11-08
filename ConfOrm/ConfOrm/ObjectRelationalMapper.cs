@@ -462,7 +462,17 @@ namespace ConfOrm
 			bool areEntities = IsEntity(from) && IsEntity(to);
 			bool isFromComponentToEntity = IsComponent(from) && IsEntity(to);
 			return !explicitDeclarations.ManyToManyRelations.Contains(new Relation(from, to)) &&
-			       !IsOneToOne(from, to) && (areEntities || isFromComponentToEntity);
+			       !IsOneToOne(from, to) && (areEntities || isFromComponentToEntity || IsPolymorphicOneToMany(from, to));
+		}
+
+		private bool IsPolymorphicOneToMany(Type from, Type to)
+		{
+			var baseImplementors = GetBaseImplementors(to).Where(t => t != to).ToArray();
+			if (baseImplementors.Length == 1)
+			{
+				return IsOneToMany(from, baseImplementors[0]);
+			}
+			return false;
 		}
 
 		public virtual bool IsHeterogeneousAssociation(MemberInfo member)
