@@ -84,6 +84,7 @@
     <Compile Include="ForClassTest.cs" />
     <Compile Include="GetMemberFromInterfacesTest.cs" />
     <Compile Include="InterfaceAsRelation\Case1.cs" />
+    <Compile Include="InterfaceAsRelation\Case1OneToMany.cs" />
     <Compile Include="InterfaceAsRelation\Case2.cs" />
     <Compile Include="InterfaceAsRelation\Case3.cs" />
     <Compile Include="InterfaceAsRelation\Case4.cs" />
