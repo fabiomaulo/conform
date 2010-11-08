@@ -311,15 +311,15 @@ namespace ConfOrm
 			if (!polymorphismSolutions.TryGetValue(ancestor, out result))
 			{
 				var partialResult = new HashSet<Type>();
-				foreach (var type in explicitDeclarations.DomainClasses)
+				foreach (var implementor in
+					explicitDeclarations.DomainClasses.Select(type => type.GetFirstImplementorOf(ancestor)).Where(implementor => implementor != null && !IsExplicitlyExcluded(implementor)))
 				{
-					var implementor = type.GetFirstImplementorOf(ancestor);
-					if (implementor != null)
-					{
-						partialResult.Add(implementor);
-					}
+					partialResult.Add(implementor);
 				}
-				result = partialResult.Where(t => !IsExplicitlyExcluded(t)).ToArray();
+
+				var inherited = new HashSet<Type>(partialResult.SelectMany(implementor => partialResult.Where(t => !t.Equals(implementor) && implementor.IsAssignableFrom(t))));
+				partialResult.ExceptWith(inherited);
+				result = partialResult;
 				polymorphismSolutions[ancestor] = result;
 			}
 			return result;

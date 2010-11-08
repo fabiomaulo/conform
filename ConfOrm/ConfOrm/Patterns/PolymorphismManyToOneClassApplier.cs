@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using ConfOrm.Mappers;
 
@@ -16,7 +17,9 @@ namespace ConfOrm.Patterns
 		public bool Match(MemberInfo subject)
 		{
 			// apply only when there is just one solution
-			return domainInspector.GetBaseImplementors(subject.GetPropertyOrFieldType()).IsSingle();
+			Type propertyOrFieldType = subject.GetPropertyOrFieldType();
+			var baseImplementors = domainInspector.GetBaseImplementors(propertyOrFieldType).ToArray();
+			return baseImplementors.Length == 1 && !propertyOrFieldType.Equals(baseImplementors[0]);
 		}
 
 		public void Apply(MemberInfo subject, IManyToOneMapper applyTo)
