@@ -211,6 +211,7 @@
     <Compile Include="NH\CustomizersImpl\PropertyContainerCustomizer.cs" />
     <Compile Include="NH\ComponentParentMapper.cs" />
     <Compile Include="NH\PatternsAppliersHolderExtensions.cs" />
+    <Compile Include="Patterns\PolymorphismBidirectionalOneToManyMemberPattern.cs" />
     <Compile Include="Patterns\PolymorphismComponentClassApplier.cs" />
     <Compile Include="Patterns\PolymorphismManyToOneClassApplier.cs" />
     <Compile Include="NH\PropertyMapper.cs" />
