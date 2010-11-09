@@ -65,9 +65,15 @@ namespace ConfOrm.Shop.CoolNaming
 			            		new MemberNoSetterToFieldAccessorApplier<IManyToOneMapper>(),
 			            		new MemberToFieldAccessorApplier<IManyToOneMapper>(),
 			            		new BidirectionalForeignKeyAssociationManyToOneApplier(domainInspector),
-			            		new UnidirectionalOneToOneUniqueCascadeApplier(domainInspector)
+			            		new UnidirectionalOneToOneUniqueCascadeApplier(domainInspector),
+											new PolymorphismManyToOneClassApplier(domainInspector),
 			            	};
-			manyToOnePath = new List<IPatternApplier<PropertyPath, IManyToOneMapper>> {new ManyToOneColumnApplier()};
+			manyToOnePath = new List<IPatternApplier<PropertyPath, IManyToOneMapper>> { new ManyToOneColumnApplier() };
+			oneToMany = new List<IPatternApplier<MemberInfo, IOneToManyMapper>>
+			            {
+			            	new PolymorphismOneToManyClassApplier(domainInspector)
+			            };
+
 			oneToOne = new List<IPatternApplier<MemberInfo, IOneToOneMapper>>
 			           	{
 			           		new MemberReadOnlyAccessorApplier<IOneToOneMapper>(),
@@ -88,6 +94,10 @@ namespace ConfOrm.Shop.CoolNaming
 			manyToMany = new List<IPatternApplier<MemberInfo, IManyToManyMapper>>();
 			manyToManyPath = new List<IPatternApplier<PropertyPath, IManyToManyMapper>>
 			                 	{new ManyToManyColumnApplier(domainInspector),};
+			component = new List<IPatternApplier<Type, IComponentAttributesMapper>>
+			            {
+			            	new PolymorphismComponentClassApplier(domainInspector),
+			            };
 			componentParent = new List<IPatternApplier<MemberInfo, IComponentParentMapper>>
 			                  	{
 			                  		new MemberNoSetterToFieldAccessorApplier<IComponentParentMapper>(),
