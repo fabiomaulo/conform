@@ -91,6 +91,9 @@
     <Compile Include="InterfaceAsRelation\CaseWithDeepInheritance.cs" />
     <Compile Include="InterfaceAsRelation\Case2OneToMany.cs" />
     <Compile Include="InterfaceAsRelation\Case3CompositeElement.cs" />
+    <Compile Include="InterfaceAsRelation\Case1CircularOneToMany.cs" />
+    <Compile Include="InterfaceAsRelation\Case1BidirectionalOneToManyInterfaceOnChild.cs" />
+    <Compile Include="InterfaceAsRelation\Case1BidirectionalOneToManyInterfaceOnParent.cs" />
     <Compile Include="InterfaceAsRelation\Domain.cs" />
     <Compile Include="PolymorphismRelationsTests\CaseWithHierarchyTest.cs" />
     <Compile Include="PolymorphismRelationsTests\SimpleCaseWithoutComplexHierarchyTest.cs" />
