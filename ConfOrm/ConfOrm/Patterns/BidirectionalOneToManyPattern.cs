@@ -43,7 +43,7 @@ namespace ConfOrm.Patterns
 				return false;
 			}
 
-			return HasCollectionOf(one, many) && HasPropertyOf(many, one);
+			return HasCollectionOf(one, many) && many.HasPublicPropertyOf(one);
 		}
 
 		#endregion
@@ -81,11 +81,6 @@ namespace ConfOrm.Patterns
 				}
 			}
 			return false;
-		}
-
-		protected bool HasPropertyOf(Type many, Type one)
-		{
-			return many.GetProperties(PublicPropertiesOfClassHierarchy).Select(p => p.PropertyType).Any(t => t == one);
 		}
 	}
 }

@@ -9,6 +9,9 @@ namespace ConfOrm
 {
 	public static class TypeExtensions
 	{
+		private const BindingFlags PublicPropertiesOfClassHierarchy =
+			BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
+
 		public static IEnumerable<Type> GetBaseTypes(this Type type)
 		{
 			foreach (var @interface in type.GetInterfaces())
@@ -388,6 +391,11 @@ namespace ConfOrm
 				return source;
 			}
 			return source.GetHierarchyFromBase().FirstOrDefault(t => !t.Equals(abstractType) && abstractType.IsAssignableFrom(t));
+		}
+
+		public static bool HasPublicPropertyOf(this Type source, Type typeOfProperty)
+		{
+			return source != null && source.GetProperties(PublicPropertiesOfClassHierarchy).Select(p => p.PropertyType).Any(t => t.Equals(typeOfProperty));
 		}
 	}
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Reflection;
 
@@ -11,8 +10,6 @@ namespace ConfOrm.Patterns
 	public class PolymorphismBidirectionalOneToManyMemberPattern : IPattern<MemberInfo>
 	{
 		private readonly IDomainInspector domainInspector;
-		private const BindingFlags PublicPropertiesOfClassHierarchy =
-			BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
 
 		public PolymorphismBidirectionalOneToManyMemberPattern(IDomainInspector domainInspector)
 		{
@@ -38,12 +35,7 @@ namespace ConfOrm.Patterns
 			var many = implementorsOfMany[0];
 			var one = subject.ReflectedType;
 
-			return HasPropertyOf(many, one);
-		}
-
-		protected bool HasPropertyOf(Type many, Type one)
-		{
-			return many.GetProperties(PublicPropertiesOfClassHierarchy).Select(p => p.PropertyType).Any(t => t == one);
+			return many.HasPublicPropertyOf(one);
 		}
 	}
 }
