@@ -13,7 +13,7 @@ namespace ConfOrm.Patterns
 		{
 			// does not match even when an explicit cascade is provided by DomainInspector
 			var relation = GetRelation(subject);
-			return relation != null && base.Match(relation) && !DomainInspector.ApplyCascade(relation.From, subject, relation.To).HasValue;
+			return relation != null && !DomainInspector.ApplyCascade(relation.From, subject, relation.To).HasValue && base.Match(relation);
 		}
 
 		public void Apply(MemberInfo subject, ICollectionPropertiesMapper applyTo)
