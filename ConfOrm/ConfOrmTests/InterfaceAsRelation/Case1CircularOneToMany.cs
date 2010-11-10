@@ -52,5 +52,51 @@ namespace ConfOrmTests.InterfaceAsRelation
 			var hbmBag = (HbmBag)hbmClass.Properties.Single(x => x.Name == "SubNodes");
 			hbmBag.Inverse.Should().Be.True();
 		}
+
+		[Test]
+		public void WhenInterfaceIsImplementedByEntityThenApplyCascade()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Node>();
+
+			var mapper = new Mapper(orm);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(Node) });
+
+			var hbmClass = mapping.RootClasses.Single(x => x.Name == "Node");
+			var hbmBag = (HbmBag)hbmClass.Properties.Single(x => x.Name == "SubNodes");
+			hbmBag.Cascade.Should().Contain("all").And.Contain("delete-orphan");
+		}
+
+		[Test, Ignore("Not supported yet.")]
+		public void WhenInterfaceIsImplementedByEntityAndExplicitCascadeDeclaredOnInterfaceThenApplyDeclaredCascade()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Node>();
+
+			orm.Cascade<INode, INode>(Cascade.Persist);
+
+			var mapper = new Mapper(orm);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(Node) });
+
+			var hbmClass = mapping.RootClasses.Single(x => x.Name == "Node");
+			var hbmBag = (HbmBag)hbmClass.Properties.Single(x => x.Name == "SubNodes");
+			hbmBag.Cascade.Should().Contain("persist").And.Not.Contain("delete-orphan");
+		}
+
+		[Test, Ignore("Not supported yet.")]
+		public void WhenInterfaceIsImplementedByEntityAndExplicitCascadeDeclaredOnConcreteThenApplyDeclaredCascade()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Node>();
+
+			orm.Cascade<Node, Node>(Cascade.Persist);
+
+			var mapper = new Mapper(orm);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(Node) });
+
+			var hbmClass = mapping.RootClasses.Single(x => x.Name == "Node");
+			var hbmBag = (HbmBag)hbmClass.Properties.Single(x => x.Name == "SubNodes");
+			hbmBag.Cascade.Should().Contain("persist").And.Not.Contain("delete-orphan");
+		}
 	}
 }

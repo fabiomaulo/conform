@@ -58,5 +58,54 @@ namespace ConfOrmTests.InterfaceAsRelation
 			var hbmBag = (HbmBag)hbmClass.Properties.Single(x => x.Name == "Children");
 			hbmBag.Inverse.Should().Be.True();
 		}
+
+		[Test]
+		public void WhenInterfaceIsImplementedByEntityThenApplyCascade()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Parent>();
+			orm.TablePerClass<Child>();
+
+			var mapper = new Mapper(orm);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(Parent) });
+
+			var hbmClass = mapping.RootClasses.Single(x => x.Name == "Parent");
+			var hbmBag = (HbmBag)hbmClass.Properties.Single(x => x.Name == "Children");
+			hbmBag.Cascade.Should().Contain("all").And.Contain("delete-orphan");
+		}
+
+		[Test, Ignore("Not supported yet.")]
+		public void WhenInterfaceIsImplementedByEntityAndExplicitCascadeDeclaredOnInterfaceThenApplyDeclaredCascade()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Parent>();
+			orm.TablePerClass<Child>();
+
+			orm.Cascade<Parent, IChild>(Cascade.Persist);
+
+			var mapper = new Mapper(orm);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(Parent) });
+
+			var hbmClass = mapping.RootClasses.Single(x => x.Name == "Parent");
+			var hbmBag = (HbmBag)hbmClass.Properties.Single(x => x.Name == "Children");
+			hbmBag.Cascade.Should().Contain("persist").And.Not.Contain("delete-orphan");
+		}
+
+		[Test, Ignore("Not supported yet.")]
+		public void WhenInterfaceIsImplementedByEntityAndExplicitCascadeDeclaredOnConcreteThenApplyDeclaredCascade()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Parent>();
+			orm.TablePerClass<Child>();
+
+			orm.Cascade<Parent, Child>(Cascade.Persist);
+
+			var mapper = new Mapper(orm);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(Parent) });
+
+			var hbmClass = mapping.RootClasses.Single(x => x.Name == "Parent");
+			var hbmBag = (HbmBag)hbmClass.Properties.Single(x => x.Name == "Children");
+			hbmBag.Cascade.Should().Contain("persist").And.Not.Contain("delete-orphan");
+		}
 	}
 }
