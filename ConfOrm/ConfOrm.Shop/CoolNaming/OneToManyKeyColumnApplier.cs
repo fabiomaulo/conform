@@ -32,6 +32,7 @@ namespace ConfOrm.Shop.CoolNaming
 			// Note: in a double usage of a collection of children the user can choose to solve it
 			// using a different 'key-column' or a specific 'where-clause'.
 			// Is better to delegate this responsibility case-by-case to a customizer instead use a general pattern.
+			// In case of unidirectional relation the UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier is available
 			Type propertyType = subject.LocalMember.GetPropertyOrFieldType();
 			Type childType = propertyType.DetermineCollectionElementType();
 			var entity = subject.GetContainerEntity(DomainInspector);
