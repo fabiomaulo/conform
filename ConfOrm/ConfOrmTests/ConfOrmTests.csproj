@@ -96,6 +96,7 @@
     <Compile Include="InterfaceAsRelation\Case1BidirectionalOneToManyInterfaceOnParent.cs" />
     <Compile Include="InterfaceAsRelation\Domain.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\PatternTests\InterfaceOnChildTest.cs" />
+    <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\PatternTests\InterfaceOnParentTest.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\PatternTests\NoPolymorphicParentChildTest.cs" />
     <Compile Include="PolymorphismRelationsTests\CaseWithHierarchyTest.cs" />
     <Compile Include="PolymorphismRelationsTests\SimpleCaseWithoutComplexHierarchyTest.cs" />
