@@ -23,7 +23,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			public IEnumerable<INode> SubNodes { get; set; }
 		}
 
-		[Test, Ignore("Not supported yet.")]
+		[Test]
 		public void WhenInterfaceIsImplementedByEntityThenRecognizeBidirectionalCircularOneToMany()
 		{
 			var orm = new ObjectRelationalMapper();
@@ -36,7 +36,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			var hbmBag = (HbmBag) hbmClass.Properties.Single(x => x.Name == "SubNodes");
 			hbmBag.Inverse.Should().Be.True();
 			hbmBag.Cascade.Should().Contain("all").And.Contain("delete-orphan");
-			hbmBag.Key.ondelete.Should().Be.Null();
+			hbmBag.Key.ondelete.Should().Be(HbmOndelete.Noaction);
 		}
 
 		[Test]
