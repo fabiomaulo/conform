@@ -69,5 +69,34 @@ namespace ConfOrm.Patterns
 		{
 			return candidateAncestors.Any(candidateAncestor => many.HasPublicPropertyOf(candidateAncestor));
 		}
+
+		protected IEnumerable<Relation> GetRelations(MemberInfo subject)
+		{
+			var declaredMany = subject.GetPropertyOrFieldType().DetermineCollectionElementType();
+			var declaredOne = subject.ReflectedType;
+			yield return new Relation(declaredOne, declaredMany);
+			var implementorsOfMany = DomainInspector.GetBaseImplementors(declaredMany).ToArray();
+			var implementorsOfOne = DomainInspector.GetBaseImplementors(declaredOne).ToArray();
+
+			var many = implementorsOfMany[0];
+			var one = implementorsOfOne[0];
+			if (declaredOne != one || declaredMany != many)
+			{
+				yield return new Relation(one, many);
+			}
+			foreach (var type in GetCandidateAncestorsOf(one))
+			{
+				yield return new Relation(type, declaredMany);
+				yield return new Relation(type, many);
+			}
+		}
+
+		protected Cascade? GetExplicitPolymorphismCascade(MemberInfo subject)
+		{
+			return (from relation in GetRelations(subject)
+							let cascade = DomainInspector.ApplyCascade(relation.From, subject, relation.To)
+							where cascade.HasValue
+							select cascade).FirstOrDefault();
+		}
 	}
 }

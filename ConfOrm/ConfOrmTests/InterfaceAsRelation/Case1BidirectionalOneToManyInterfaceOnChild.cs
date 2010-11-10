@@ -27,7 +27,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			public Parent Parent { get; set; }
 		}
 
-		[Test, Ignore("Not supported yet.")]
+		[Test]
 		public void WhenInterfaceIsImplementedByEntityThenRecognizeBidirectionalOneToMany()
 		{
 			var orm = new ObjectRelationalMapper();
@@ -106,6 +106,40 @@ namespace ConfOrmTests.InterfaceAsRelation
 			var hbmClass = mapping.RootClasses.Single(x => x.Name == "Parent");
 			var hbmBag = (HbmBag)hbmClass.Properties.Single(x => x.Name == "Children");
 			hbmBag.Cascade.Should().Contain("persist").And.Not.Contain("delete-orphan");
+		}
+
+		[Test]
+		public void WhenInterfaceIsImplementedByEntityAndExplicitCascadeDeclaredOnInterfaceThenNotApplyOnDelete()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Parent>();
+			orm.TablePerClass<Child>();
+
+			orm.Cascade<Parent, IChild>(Cascade.Persist);
+
+			var mapper = new Mapper(orm);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(Parent) });
+
+			var hbmClass = mapping.RootClasses.Single(x => x.Name == "Parent");
+			var hbmBag = (HbmBag)hbmClass.Properties.Single(x => x.Name == "Children");
+			hbmBag.Key.ondelete.Should().Be(HbmOndelete.Noaction);
+		}
+
+		[Test]
+		public void WhenInterfaceIsImplementedByEntityAndExplicitCascadeDeclaredOnConcreteThenNotApplyOnDelete()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Parent>();
+			orm.TablePerClass<Child>();
+
+			orm.Cascade<Parent, Child>(Cascade.Persist);
+
+			var mapper = new Mapper(orm);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(Parent) });
+
+			var hbmClass = mapping.RootClasses.Single(x => x.Name == "Parent");
+			var hbmBag = (HbmBag)hbmClass.Properties.Single(x => x.Name == "Children");
+			hbmBag.Key.ondelete.Should().Be(HbmOndelete.Noaction);
 		}
 	}
 }

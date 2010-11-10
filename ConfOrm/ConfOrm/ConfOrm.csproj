@@ -214,6 +214,7 @@
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyCascadeApplier.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyInverseApplier.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyMemberPattern.cs" />
+    <Compile Include="Patterns\PolymorphismBidirectionalOneToManyOnDeleteConstraintApplier.cs" />
     <Compile Include="Patterns\PolymorphismComponentClassApplier.cs" />
     <Compile Include="Patterns\PolymorphismManyToOneClassApplier.cs" />
     <Compile Include="NH\PropertyMapper.cs" />
