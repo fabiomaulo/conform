@@ -43,5 +43,20 @@ namespace ConfOrmTests.InterfaceAsRelation
 			hbmBag.Cascade.Should().Contain("all").And.Contain("delete-orphan");
 			hbmBag.Key.ondelete.Should().Be(HbmOndelete.Cascade);
 		}
+
+		[Test]
+		public void WhenInterfaceIsImplementedByEntityThenApplyInverse()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Parent>();
+			orm.TablePerClass<Child>();
+
+			var mapper = new Mapper(orm);
+			var mapping = mapper.CompileMappingFor(new[] { typeof(Parent) });
+
+			var hbmClass = mapping.RootClasses.Single(x => x.Name == "Parent");
+			var hbmBag = (HbmBag)hbmClass.Properties.Single(x => x.Name == "Children");
+			hbmBag.Inverse.Should().Be.True();
+		}
 	}
 }

@@ -18,7 +18,7 @@ namespace ConfOrm.Patterns
 			this.domainInspector = domainInspector;
 		}
 
-		public bool Match(MemberInfo subject)
+		public virtual bool Match(MemberInfo subject)
 		{
 			if (subject == null)
 			{
