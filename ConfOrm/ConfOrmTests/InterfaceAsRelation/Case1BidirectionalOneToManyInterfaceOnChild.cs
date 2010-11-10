@@ -74,7 +74,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			hbmBag.Cascade.Should().Contain("all").And.Contain("delete-orphan");
 		}
 
-		[Test, Ignore("Not supported yet.")]
+		[Test]
 		public void WhenInterfaceIsImplementedByEntityAndExplicitCascadeDeclaredOnInterfaceThenApplyDeclaredCascade()
 		{
 			var orm = new ObjectRelationalMapper();
@@ -91,7 +91,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			hbmBag.Cascade.Should().Contain("persist").And.Not.Contain("delete-orphan");
 		}
 
-		[Test, Ignore("Not supported yet.")]
+		[Test]
 		public void WhenInterfaceIsImplementedByEntityAndExplicitCascadeDeclaredOnConcreteThenApplyDeclaredCascade()
 		{
 			var orm = new ObjectRelationalMapper();

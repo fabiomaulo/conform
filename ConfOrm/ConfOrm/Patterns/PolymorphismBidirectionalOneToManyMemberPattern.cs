@@ -18,6 +18,11 @@ namespace ConfOrm.Patterns
 			this.domainInspector = domainInspector;
 		}
 
+		protected IDomainInspector DomainInspector
+		{
+			get { return domainInspector; }
+		}
+
 		public virtual bool Match(MemberInfo subject)
 		{
 			if (subject == null)
@@ -46,19 +51,18 @@ namespace ConfOrm.Patterns
 
 			var many = implementorsOfMany[0];
 			var one = implementorsOfOne[0];
-			var ancestorsOfOne = one.GetBaseTypes();
-			var candidateAncestorsOfOne = new List<Type>();
-			foreach (var ancestor in ancestorsOfOne)
-			{
-				var implementors = domainInspector.GetBaseImplementors(ancestor);
-				if (implementors.IsSingle() && implementors.Contains(one))
-				{
-					candidateAncestorsOfOne.Add(ancestor);
-				}
-			}
+			List<Type> candidateAncestorsOfOne = GetCandidateAncestorsOf(one).ToList();
 
 			bool isPolymorphicRelation = !declaredMany.Equals(many) || !declaredOne.Equals(one) || candidateAncestorsOfOne.Count > 0;
 			return isPolymorphicRelation && (many.HasPublicPropertyOf(one) || HasPublicPropertyOf(many, candidateAncestorsOfOne));
+		}
+
+		protected IEnumerable<Type> GetCandidateAncestorsOf(Type one)
+		{
+			return from ancestor in one.GetBaseTypes() 
+						 let implementors = domainInspector.GetBaseImplementors(ancestor) 
+						 where implementors.IsSingle() && implementors.Contains(one) 
+						 select ancestor;
 		}
 
 		protected bool HasPublicPropertyOf(Type many, IEnumerable<Type> candidateAncestors)
