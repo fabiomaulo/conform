@@ -28,12 +28,7 @@ namespace ConfOrm.Patterns
 				return false;
 			}
 		
-			var implementors = domainInspector.GetBaseImplementors(subject).ToArray();
-			if(!implementors.IsSingle())
-			{
-				return false;
-			}
-			return domainInspector.IsComponent(implementors[0]);
+			return domainInspector.GetBaseImplementors(subject).IsSingle(t=> domainInspector.IsComponent(t));
 		}
 
 		public void Apply(Type subject, IComponentAttributesMapper applyTo)

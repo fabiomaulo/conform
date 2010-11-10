@@ -59,10 +59,10 @@ namespace ConfOrm.Patterns
 
 		protected IEnumerable<Type> GetCandidateAncestorsOf(Type one)
 		{
-			return from ancestor in one.GetBaseTypes() 
-						 let implementors = domainInspector.GetBaseImplementors(ancestor) 
-						 where implementors.IsSingle() && implementors.Contains(one) 
-						 select ancestor;
+			return from ancestor in one.GetBaseTypes()
+			       let implementors = domainInspector.GetBaseImplementors(ancestor)
+			       where implementors.IsSingle(t => t.Equals(one))
+			       select ancestor;
 		}
 
 		protected bool HasPublicPropertyOf(Type many, IEnumerable<Type> candidateAncestors)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -35,6 +36,32 @@ namespace ConfOrm
 				}
 			}
 			return false; ;
+		}
+
+		public static bool IsSingle<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicateOfTheSingleFound)
+		{
+			if (source == null)
+			{
+				return false;
+			}
+			var list = source as IList<TSource>;
+			if (list != null)
+			{
+				return list.Count == 1 && predicateOfTheSingleFound(list[0]);
+			}
+			using (IEnumerator<TSource> enumerator = source.GetEnumerator())
+			{
+				if (!enumerator.MoveNext())
+				{
+					return false;
+				}
+				var mayBeSingleElement = enumerator.Current;
+				if (!enumerator.MoveNext())
+				{
+					return predicateOfTheSingleFound(mayBeSingleElement);
+				}
+			}
+			return false;
 		}
 	}
 }
