@@ -11,6 +11,12 @@ namespace ConfOrm.Shop.Packs
 	{
 		public PolymorphismPack(IDomainInspector domainInspector)
 		{
+			collection = new List<IPatternApplier<MemberInfo, ICollectionPropertiesMapper>>
+			                             	{
+																			new PolymorphismBidirectionalOneToManyInverseApplier(domainInspector),
+																			new PolymorphismBidirectionalOneToManyCascadeApplier(domainInspector),
+																			new PolymorphismBidirectionalOneToManyOnDeleteConstraintApplier(domainInspector),
+			                             	};
 			manyToOne = new List<IPatternApplier<MemberInfo, IManyToOneMapper>>
 			            	{
 											new PolymorphismManyToOneClassApplier(domainInspector),
