@@ -7,10 +7,6 @@ namespace ConfOrm
 	{
 		public DefaultNHibernatePatternsHolder(IDomainInspector domainInspector, IExplicitDeclarationsHolder explicitDeclarations)
 		{
-			if (domainInspector == null)
-			{
-				throw new ArgumentNullException("domainInspector");
-			}
 			Poids.Add(new PoIdPattern());
 			Sets.Add(new SetCollectionPattern());
 			Bags.Add(new BagCollectionPattern());
