@@ -3,7 +3,7 @@ using ConfOrm.Patterns;
 
 namespace ConfOrm
 {
-	public class DefaultNHibernatePatternsHolder: PatternsHolder
+	public class DefaultNHibernatePatternsHolder: EmptyPatternsHolder
 	{
 		public DefaultNHibernatePatternsHolder(IDomainInspector domainInspector, IExplicitDeclarationsHolder explicitDeclarations)
 		{

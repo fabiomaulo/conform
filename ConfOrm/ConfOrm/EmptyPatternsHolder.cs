@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace ConfOrm
 {
-	public class PatternsHolder : IPatternsHolder
+	public class EmptyPatternsHolder : IPatternsHolder
 	{
 		private readonly List<IPattern<MemberInfo>> arrayPatterns = new List<IPattern<MemberInfo>>();
 		private readonly List<IPattern<MemberInfo>> bagPatterns = new List<IPattern<MemberInfo>>();
