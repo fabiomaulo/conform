@@ -430,11 +430,7 @@ namespace ConfOrm
 			{
 				// TODO: find a way to use a injectable-not-expensive pattern instead this hard-coded solution
 				// try to find the relation through PolymorphismResolver
-				var baseImplementors = GetBaseImplementors(to).Where(t => t != to).ToArray();
-				if (baseImplementors.Length == 1)
-				{
-					isManyToOne = IsManyToOne(from, baseImplementors[0]);
-				}
+				isManyToOne = GetBaseImplementors(to).Where(t => t != to).IsSingle(implementor => IsManyToOne(from, implementor));
 			}
 
 			return isManyToOne;
