@@ -19,6 +19,7 @@ namespace ConfOrm
 
 			PersistentPropertiesExclusions.Add(new ReadOnlyPropertyPattern());
 			ManyToOneRelations.Add(new OneToOneUnidirectionalToManyToOnePattern(explicitDeclarations));
+			HeterogeneousAssociations.Add(new HeterogeneousAssociationOnPolymorphicPattern(domainInspector));
 		}
 	}
 }
