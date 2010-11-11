@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using ConfOrm;
@@ -27,6 +28,12 @@ namespace ConfOrmTests.Patterns
 			{
 				get { return others; }
 			}
+		}
+
+		[Test]
+		public void CtorProtection()
+		{
+			Executing.This(() => new ListCollectionPattern(null)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]

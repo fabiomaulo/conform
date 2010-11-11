@@ -12,6 +12,10 @@ namespace ConfOrm.Patterns
 
 		public ListCollectionPattern(IDomainInspector domainInspector)
 		{
+			if (domainInspector == null)
+			{
+				throw new ArgumentNullException("domainInspector");
+			}
 			this.domainInspector = domainInspector;
 		}
 
