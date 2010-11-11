@@ -1,3 +1,4 @@
+using System;
 using ConfOrm;
 using ConfOrm.Patterns;
 using NUnit.Framework;
@@ -21,6 +22,12 @@ namespace ConfOrmTests.Patterns
 		{
 			public int Id { get; set; }
 			public MyClass MyClass { get; set; }
+		}
+
+		[Test]
+		public void CtorProtection()
+		{
+			Executing.This(() => new OneToOneUnidirectionalToManyToOnePattern(null)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]
