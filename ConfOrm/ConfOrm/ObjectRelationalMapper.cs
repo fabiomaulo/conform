@@ -423,7 +423,7 @@ namespace ConfOrm
 			}
 			bool areEntities = IsEntity(from) && IsEntity(to);
 			bool isFromComponentToEntity = IsComponent(from) && IsEntity(to);
-			var isManyToOne = (areEntities && Patterns.ManyToOneRelations.Match(relation)) || (areEntities && !IsOneToOne(from, to)) || isFromComponentToEntity;
+			var isManyToOne = isFromComponentToEntity || (areEntities && Patterns.ManyToOneRelations.Match(relation)) || (areEntities && !IsOneToOne(from, to));
 			//&& !explicitDeclarations.ManyToManyRelations.Contains(relation) cause of CfgORM-5
 
 			if (!isManyToOne)
