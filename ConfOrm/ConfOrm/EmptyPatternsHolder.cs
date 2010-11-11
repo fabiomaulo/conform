@@ -26,6 +26,7 @@ namespace ConfOrm
 		private readonly List<IPattern<Relation>> manyToOneRelations = new List<IPattern<Relation>>();
 		private readonly List<IPattern<MemberInfo>> versionPropertyPatterns = new List<IPattern<MemberInfo>>();
 		private readonly List<IPattern<MemberInfo>> heterogeneousAssociations = new List<IPattern<MemberInfo>>();
+		private readonly List<IPattern<Relation>> oneToManyRelations= new List<IPattern<Relation>>();
 
 		#region Implementation of IPatternsHolder
 
@@ -87,6 +88,11 @@ namespace ConfOrm
 		public ICollection<IPattern<Relation>> ManyToOneRelations
 		{
 			get { return manyToOneRelations;}
+		}
+
+		public ICollection<IPattern<Relation>> OneToManyRelations
+		{
+			get { return oneToManyRelations; }
 		}
 
 		public ICollection<IPattern<MemberInfo>> HeterogeneousAssociations

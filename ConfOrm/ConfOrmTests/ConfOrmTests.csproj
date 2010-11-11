@@ -95,6 +95,7 @@
     <Compile Include="InterfaceAsRelation\Case1BidirectionalOneToManyInterfaceOnChild.cs" />
     <Compile Include="InterfaceAsRelation\Case1BidirectionalOneToManyInterfaceOnParent.cs" />
     <Compile Include="InterfaceAsRelation\Domain.cs" />
+    <Compile Include="Patterns\PolymorphicOneToManyPatternTest.cs" />
     <Compile Include="Patterns\DelegatedApplierTest.cs" />
     <Compile Include="Patterns\DelegatedAdvancedApplierTest.cs" />
     <Compile Include="Patterns\HeterogeneousAssociationOnPolymorphicPatternTest.cs" />

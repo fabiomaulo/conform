@@ -20,6 +20,7 @@ namespace ConfOrm
 			PersistentPropertiesExclusions.Add(new ReadOnlyPropertyPattern());
 			ManyToOneRelations.Add(new OneToOneUnidirectionalToManyToOnePattern(domainInspector, explicitDeclarations));
 			ManyToOneRelations.Add(new PolymorphicManyToOnePattern(domainInspector));
+			OneToManyRelations.Add(new PolymorphicOneToManyPattern(domainInspector));
 			HeterogeneousAssociations.Add(new HeterogeneousAssociationOnPolymorphicPattern(domainInspector));
 		}
 	}

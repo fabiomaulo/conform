@@ -22,6 +22,7 @@ namespace ConfOrm
 		ICollection<IPattern<MemberInfo>> Versions { get; }
 
 		ICollection<IPattern<Relation>> ManyToOneRelations { get; }
+		ICollection<IPattern<Relation>> OneToManyRelations { get; }
 		ICollection<IPattern<MemberInfo>> HeterogeneousAssociations { get; }
 	}
 }
