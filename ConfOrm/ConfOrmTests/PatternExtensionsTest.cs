@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using ConfOrm;
 using Moq;
 using NUnit.Framework;
@@ -88,6 +90,21 @@ namespace ConfOrmTests
 		{
 			List<IPattern<string>> patterns = null;
 			patterns.Match("").Should().Be.False();
+		}
+
+		[Test]
+		public void WhenAddToNullHolderThenThrow()
+		{
+			ICollection<IPattern<MemberInfo>> holder = null;
+			holder.Executing(h=> h.Add(x=> false)).Throws<ArgumentNullException>();
+		}
+
+		[Test]
+		public void WhenAddPatternMatcherThenAdd()
+		{
+			ICollection<IPattern<MemberInfo>> holder = new List<IPattern<MemberInfo>>();
+			holder.Add(x => false);
+			holder.Count.Should().Be(1);
 		}
 	}
 }

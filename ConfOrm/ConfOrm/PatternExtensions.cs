@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using ConfOrm.Patterns;
 
 namespace ConfOrm
 {
@@ -27,6 +30,15 @@ namespace ConfOrm
 				return false;
 			}
 			return patterns.Any(p => p.Match(subject));
+		}
+
+		public static void Add(this ICollection<IPattern<MemberInfo>> patterns, Predicate<MemberInfo> matcher)
+		{
+			if (patterns == null)
+			{
+				throw new ArgumentNullException("patterns");
+			}
+			patterns.Add(new DelegatedPattern<MemberInfo>(matcher));
 		}
 	}
 }
