@@ -423,17 +423,8 @@ namespace ConfOrm
 			}
 			bool areEntities = IsEntity(from) && IsEntity(to);
 			bool isFromComponentToEntity = IsComponent(from) && IsEntity(to);
-			var isManyToOne = isFromComponentToEntity || (areEntities && Patterns.ManyToOneRelations.Match(relation)) || (areEntities && !IsOneToOne(from, to));
+			return isFromComponentToEntity || Patterns.ManyToOneRelations.Match(relation) || (areEntities && !IsOneToOne(from, to));
 			//&& !explicitDeclarations.ManyToManyRelations.Contains(relation) cause of CfgORM-5
-
-			if (!isManyToOne)
-			{
-				// TODO: find a way to use a injectable-not-expensive pattern instead this hard-coded solution
-				// try to find the relation through PolymorphismResolver
-				isManyToOne = GetBaseImplementors(to).Where(t => t != to).IsSingle(implementor => IsManyToOne(from, implementor));
-			}
-
-			return isManyToOne;
 		}
 
 		public virtual bool IsManyToMany(Type role1, Type role2)

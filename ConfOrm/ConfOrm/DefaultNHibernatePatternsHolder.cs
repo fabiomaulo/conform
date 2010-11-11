@@ -18,7 +18,8 @@ namespace ConfOrm
 			PoidStrategies.Add(new GuidOptimizedPoidPattern());
 
 			PersistentPropertiesExclusions.Add(new ReadOnlyPropertyPattern());
-			ManyToOneRelations.Add(new OneToOneUnidirectionalToManyToOnePattern(explicitDeclarations));
+			ManyToOneRelations.Add(new OneToOneUnidirectionalToManyToOnePattern(domainInspector, explicitDeclarations));
+			ManyToOneRelations.Add(new PolymorphicManyToOnePattern(domainInspector));
 			HeterogeneousAssociations.Add(new HeterogeneousAssociationOnPolymorphicPattern(domainInspector));
 		}
 	}

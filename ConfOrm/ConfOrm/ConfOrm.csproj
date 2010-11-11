@@ -212,6 +212,7 @@
     <Compile Include="NH\ComponentParentMapper.cs" />
     <Compile Include="NH\PatternsAppliersHolderExtensions.cs" />
     <Compile Include="Patterns\HeterogeneousAssociationOnPolymorphicPattern.cs" />
+    <Compile Include="Patterns\PolymorphicManyToOnePattern.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyCascadeApplier.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyInverseApplier.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyMemberPattern.cs" />

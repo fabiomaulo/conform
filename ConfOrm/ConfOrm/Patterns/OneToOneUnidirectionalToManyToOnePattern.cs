@@ -9,14 +9,20 @@ namespace ConfOrm.Patterns
 		private const BindingFlags PublicPropertiesOfClassHierarchy =
 			BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly;
 
+		private readonly IDomainInspector domainInspector;
 		private readonly IExplicitDeclarationsHolder declarationsHolder;
 
-		public OneToOneUnidirectionalToManyToOnePattern(IExplicitDeclarationsHolder declarationsHolder)
+		public OneToOneUnidirectionalToManyToOnePattern(IDomainInspector domainInspector, IExplicitDeclarationsHolder declarationsHolder)
 		{
+			if (domainInspector == null)
+			{
+				throw new ArgumentNullException("domainInspector");
+			}
 			if (declarationsHolder == null)
 			{
 				throw new ArgumentNullException("declarationsHolder");
 			}
+			this.domainInspector = domainInspector;
 			this.declarationsHolder = declarationsHolder;
 		}
 
@@ -24,7 +30,8 @@ namespace ConfOrm.Patterns
 
 		public bool Match(Relation subject)
 		{
-			return declarationsHolder.OneToOneRelations.Contains(subject) && IsUnidirectional(subject);
+			bool isRelationBetweenEntities = domainInspector.IsEntity(subject.From) && domainInspector.IsEntity(subject.To);
+			return isRelationBetweenEntities && declarationsHolder.OneToOneRelations.Contains(subject) && IsUnidirectional(subject);
 		}
 
 		#endregion
