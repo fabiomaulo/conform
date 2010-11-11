@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using ConfOrm;
 using ConfOrm.Patterns;
@@ -33,6 +34,12 @@ namespace ConfOrmTests.Patterns
 			var orm = new Mock<IDomainInspector>();
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name.ToLowerInvariant() == "id"))).Returns(true);
 			return orm;
+		}
+
+		[Test]
+		public void CtorProtection()
+		{
+			Executing.This(() => new ComponentPattern(null)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]
