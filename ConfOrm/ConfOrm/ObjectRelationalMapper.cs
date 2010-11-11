@@ -463,12 +463,7 @@ namespace ConfOrm
 
 		private bool IsPolymorphicOneToMany(Type from, Type to)
 		{
-			var baseImplementors = GetBaseImplementors(to).Where(t => t != to).ToArray();
-			if (baseImplementors.Length == 1)
-			{
-				return IsOneToMany(from, baseImplementors[0]);
-			}
-			return false;
+			return GetBaseImplementors(to).Where(t => t != to).IsSingle(implementor => IsOneToMany(from, implementor));
 		}
 
 		public virtual bool IsHeterogeneousAssociation(MemberInfo member)
