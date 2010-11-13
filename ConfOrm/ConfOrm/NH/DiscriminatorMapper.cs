@@ -37,7 +37,8 @@ namespace ConfOrm.NH
 				  {
 					  name = discriminatorMapping.column,
 					  length = discriminatorMapping.length,
-					  notnull = discriminatorMapping.notnull,
+						notnull = discriminatorMapping.notnull,
+						notnullSpecified = discriminatorMapping.notnull,
 				  };
 			columnMapper(new ColumnMapper(hbm, defaultColumnName));
 			if (ColumnTagIsRequired(hbm))
@@ -64,7 +65,7 @@ namespace ConfOrm.NH
 		{
 			discriminatorMapping.column = null;
 			discriminatorMapping.length = null;
-			discriminatorMapping.notnull = false;
+			discriminatorMapping.notnull = true;
 			discriminatorMapping.formula = null;
 		}
 

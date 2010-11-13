@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ConfOrm.NH;
 using NHibernate;
 using NHibernate.Cfg.MappingSchema;
@@ -157,11 +158,11 @@ Line2";
 			mapper.Column(cm =>
 			{
 				cm.Length(50);
-				cm.NotNullable(true);
+				cm.NotNullable(false);
 			});
 			hbmDiscriminator.Item.Should().Be.Null();
 			hbmDiscriminator.length.Should().Be("50");
-			hbmDiscriminator.notnull.Should().Be(true);
+			hbmDiscriminator.notnull.Should().Be(false);
 		}
 
 		[Test]
@@ -172,7 +173,7 @@ Line2";
 			mapper.Column(cm =>
 			{
 				cm.SqlType("VARCHAR(50)");
-				cm.NotNullable(true);
+				cm.NotNullable(false);
 			});
 			hbmDiscriminator.Item.Should().Not.Be.Null();
 			hbmDiscriminator.Columns.Should().Have.Count.EqualTo(1);
@@ -184,11 +185,11 @@ Line2";
 			var hbmDiscriminator = new HbmDiscriminator();
 			var mapper = new DiscriminatorMapper(hbmDiscriminator);
 			mapper.Column(cm => cm.Length(50));
-			mapper.Column(cm => cm.NotNullable(true));
+			mapper.Column(cm => cm.NotNullable(false));
 
 			hbmDiscriminator.Item.Should().Be.Null();
 			hbmDiscriminator.length.Should().Be("50");
-			hbmDiscriminator.notnull.Should().Be(true);
+			hbmDiscriminator.notnull.Should().Be(false);
 		}
 
 		[Test]
@@ -209,12 +210,11 @@ Line2";
 			var mapper = new DiscriminatorMapper(hbmDiscriminator);
 			mapper.Column("colName");
 			mapper.Length(10);
-			mapper.NotNullable(true);
 			mapper.Formula("formula");
 			hbmDiscriminator.formula.Should().Be("formula");
 			hbmDiscriminator.column.Should().Be(null);
 			hbmDiscriminator.length.Should().Be(null);
-			hbmDiscriminator.notnull.Should().Be(false);
+			hbmDiscriminator.notnull.Should().Be(true);
 			hbmDiscriminator.Item.Should().Be.Null();
 		}
 
@@ -245,6 +245,45 @@ Line2";
 			One,
 			Two,
 			Three
+		}
+
+		[Test]
+		public void ByDefaultNotNullableShouldBeTrue()
+		{
+			var hbmDiscriminator = new HbmDiscriminator();
+			var mapper = new DiscriminatorMapper(hbmDiscriminator);
+			hbmDiscriminator.notnull.Should().Be(true);
+		}
+
+		[Test]
+		public void WhenSetColumnValuesThenOverrideDefaultNotNullable()
+		{
+			var hbmDiscriminator = new HbmDiscriminator();
+			var mapper = new DiscriminatorMapper(hbmDiscriminator);
+			mapper.Column(cm =>
+			{
+				cm.SqlType("VARCHAR(50)");
+				cm.NotNullable(false);
+			});
+			var hbmColumn = hbmDiscriminator.Columns.Single();
+			hbmColumn.notnullSpecified.Should().Be.False();
+			hbmColumn.notnull.Should().Be.False();
+			hbmDiscriminator.notnull.Should("the not-null should be the default and should not be present in the mapping.").Be.True();
+		}
+
+		[Test]
+		public void WhenSetColumnValuesThenDefaultNotNullableShouldBeTrue()
+		{
+			var hbmDiscriminator = new HbmDiscriminator();
+			var mapper = new DiscriminatorMapper(hbmDiscriminator);
+			mapper.Column(cm =>
+			{
+				cm.SqlType("VARCHAR(50)");
+			});
+			var hbmColumn = hbmDiscriminator.Columns.Single();
+			hbmColumn.notnullSpecified.Should().Be.True();
+			hbmColumn.notnull.Should().Be.True();
+			hbmDiscriminator.notnull.Should().Be.True();
 		}
 	}
 }
