@@ -20,6 +20,9 @@ namespace ConfOrmTests.InterfaceAsRelation
 	 * Case 5:
 	 * An interface is implemented by a root-entity, a no-root-entity, a component and it is used in a relation (close the house and go to the church).
 	 * 
+	 * Case 6:
+	 * An interface is implemented by more than one root-entity or no-root-entity and thus by its own hierarchies and it is used as a bidirection-one-to-many
+	 * 
 	 * ConfORM should discover all cases:
 	 * The ObjectRelationalMapper (IDomainInspector) should provide the correct response of IsEntity, IsRootEntity, IsManyToOne, IsComponent, IsHeterogeneousAssociation.
 	 * The Mapper (perhaps through the IDomainInspector) should have an applier to be able to apply the correct concrete-class in each case.
