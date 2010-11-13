@@ -15,6 +15,7 @@ namespace ConfOrm.Shop.Packs
 			rootClass = new List<IPatternApplier<Type, IClassAttributesMapper>>
 			            	{
 			            		new DiscriminatorColumnNameApplier(domainInspector),
+											new DiscriminatorIndexNameApplier(domainInspector),
 			            		new ClassDiscriminatorValueAsEnumValueApplier<TRootEntity, TEnum>(domainInspector)
 			            	};
 			subclass = new List<IPatternApplier<Type, ISubclassAttributesMapper>>
