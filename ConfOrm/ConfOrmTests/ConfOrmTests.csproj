@@ -88,6 +88,7 @@
     <Compile Include="InterfaceAsRelation\Case2.cs" />
     <Compile Include="InterfaceAsRelation\Case3.cs" />
     <Compile Include="InterfaceAsRelation\Case4.cs" />
+    <Compile Include="InterfaceAsRelation\Case6RootEntities.cs" />
     <Compile Include="InterfaceAsRelation\CaseWithDeepInheritance.cs" />
     <Compile Include="InterfaceAsRelation\Case2OneToMany.cs" />
     <Compile Include="InterfaceAsRelation\Case3CompositeElement.cs" />
