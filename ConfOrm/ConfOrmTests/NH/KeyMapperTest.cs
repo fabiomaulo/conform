@@ -91,5 +91,42 @@ namespace ConfOrmTests.NH
 			hbm.update.Should().Be.True();
 			hbm.updateSpecified.Should().Be.True();
 		}
+
+		[Test]
+		public void WhenAssignFKToNullThenSetToNull()
+		{
+			var hbm = new HbmKey();
+			hbm.foreignkey = "aPreviousValue";
+			var km = new KeyMapper(typeof(Animal), hbm);
+			km.ForeignKey(null);
+			hbm.foreignkey.Should().Be.Null();
+		}
+
+		[Test]
+		public void WhenAssignFKToEmptyThenAssignNone()
+		{
+			var hbm = new HbmKey();
+			var km = new KeyMapper(typeof(Animal), hbm);
+			km.ForeignKey("");
+			hbm.foreignkey.Should().Be("none");
+		}
+
+		[Test]
+		public void WhenAssignFKToWhiteSpacesThenAssignNone()
+		{
+			var hbm = new HbmKey();
+			var km = new KeyMapper(typeof(Animal), hbm);
+			km.ForeignKey("    ");
+			hbm.foreignkey.Should().Be("none");
+		}
+
+		[Test]
+		public void WhenAssignFKToValidNameThenAssignName()
+		{
+			var hbm = new HbmKey();
+			var km = new KeyMapper(typeof(Animal), hbm);
+			km.ForeignKey("FKDeLaPizza");
+			hbm.foreignkey.Should().Be("FKDeLaPizza");
+		}
 	}
 }

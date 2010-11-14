@@ -66,6 +66,22 @@ namespace ConfOrm.NH
 			mapping.updateSpecified = true;
 		}
 
+		public void ForeignKey(string foreingKeyName)
+		{
+			if(foreingKeyName == null)
+			{
+				mapping.foreignkey = null;
+				return;
+			}
+			string nameToAssign = foreingKeyName.Trim();
+			if (string.Empty.Equals(nameToAssign))
+			{
+				mapping.foreignkey = "none";
+				return;				
+			}
+			mapping.foreignkey = nameToAssign;
+		}
+
 		#endregion
 	}
 }

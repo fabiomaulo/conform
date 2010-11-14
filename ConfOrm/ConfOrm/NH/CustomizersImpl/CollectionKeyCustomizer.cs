@@ -40,6 +40,11 @@ namespace ConfOrm.NH.CustomizersImpl
 			CustomizersHolder.AddCustomizer(propertyPath, (ICollectionPropertiesMapper m) => m.Key(x => x.Update(consideredInUpdateQuery)));
 		}
 
+		public void ForeignKey(string foreingKeyName)
+		{
+			CustomizersHolder.AddCustomizer(propertyPath, (ICollectionPropertiesMapper m) => m.Key(x => x.ForeignKey(foreingKeyName)));
+		}
+
 		#endregion
 	}
 }
