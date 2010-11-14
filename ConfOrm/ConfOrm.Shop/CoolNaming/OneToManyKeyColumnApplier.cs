@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
 using ConfOrm.Shop.Appliers;
@@ -13,7 +14,17 @@ namespace ConfOrm.Shop.CoolNaming
 
 		public bool Match(PropertyPath subject)
 		{
-			return Match(subject.LocalMember);
+			var patternMatchs = Match(subject.LocalMember);
+			if (patternMatchs)
+			{
+				MemberInfo parentPropertyInChild = GetParentPropertyInChild(subject);
+				if (parentPropertyInChild != null && DomainInspector.IsHeterogeneousAssociation(parentPropertyInChild))
+				{
+					return false;
+				}
+			}
+
+			return patternMatchs;
 		}
 
 		#endregion
@@ -26,6 +37,14 @@ namespace ConfOrm.Shop.CoolNaming
 		}
 
 		#endregion
+
+		protected MemberInfo GetParentPropertyInChild(PropertyPath subject)
+		{
+			Type propertyType = subject.LocalMember.GetPropertyOrFieldType();
+			Type childType = propertyType.DetermineCollectionElementType();
+			var entity = subject.GetContainerEntity(DomainInspector);
+			return childType.GetFirstPropertyOfType(entity);
+		}
 
 		protected virtual string GetKeyColumnName(PropertyPath subject)
 		{
