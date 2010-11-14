@@ -96,12 +96,14 @@
     <Compile Include="InterfaceAsRelation\Case1BidirectionalOneToManyInterfaceOnChild.cs" />
     <Compile Include="InterfaceAsRelation\Case1BidirectionalOneToManyInterfaceOnParent.cs" />
     <Compile Include="InterfaceAsRelation\Domain.cs" />
+    <Compile Include="Patterns\HeterogeneousAssociationOnPolymorphicPatternTests\WithNoRootEntitiesTest.cs" />
     <Compile Include="Patterns\PolymorphicOneToManyPatternTest.cs" />
     <Compile Include="Patterns\DelegatedApplierTest.cs" />
     <Compile Include="Patterns\DelegatedAdvancedApplierTest.cs" />
-    <Compile Include="Patterns\HeterogeneousAssociationOnPolymorphicPatternTest.cs" />
+    <Compile Include="Patterns\HeterogeneousAssociationOnPolymorphicPatternTests\HeterogeneousAssociationOnPolymorphicPatternTest.cs" />
     <Compile Include="Patterns\PolymorphicManyToOnePatternTest.cs" />
-    <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\AnyToMany\Case6PatternTests.cs" />
+    <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\AnyToMany\Case6RootEntitiesPatternTests.cs" />
+    <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\AnyToMany\Case6NoRootEntitiesPatternTests.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\PatternTests\CircularReferenceTest.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\PatternTests\InterfaceOnChildTest.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\PatternTests\InterfaceOnParentTest.cs" />

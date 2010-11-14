@@ -3,7 +3,7 @@ using ConfOrm.Patterns;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace ConfOrmTests.Patterns
+namespace ConfOrmTests.Patterns.HeterogeneousAssociationOnPolymorphicPatternTests
 {
 	public class HeterogeneousAssociationOnPolymorphicPatternTest
 	{
