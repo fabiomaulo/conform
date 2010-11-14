@@ -1,30 +1,26 @@
 using System;
-using System.Reflection;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
+using ConfOrm.Patterns;
 using ConfOrm.Shop.Appliers;
 
 namespace ConfOrm.Shop.CoolNaming
 {
 	public class OneToManyKeyColumnApplier: OneToManyPattern, IPatternApplier<PropertyPath, ICollectionPropertiesMapper>
 	{
-		public OneToManyKeyColumnApplier(IDomainInspector domainInspector) : base(domainInspector) { }
+		private readonly PolymorphismBidirectionalAnyToManyPattern polymorphismBidirectionalAnyToManyPattern;
+
+		public OneToManyKeyColumnApplier(IDomainInspector domainInspector) : base(domainInspector)
+		{
+			polymorphismBidirectionalAnyToManyPattern = new PolymorphismBidirectionalAnyToManyPattern(domainInspector);
+		}
 
 		#region Implementation of IPattern<PropertyPath>
 
-		public bool Match(PropertyPath subject)
+		public virtual bool Match(PropertyPath subject)
 		{
-			var patternMatchs = Match(subject.LocalMember);
-			if (patternMatchs)
-			{
-				MemberInfo parentPropertyInChild = GetParentPropertyInChild(subject);
-				if (parentPropertyInChild != null && DomainInspector.IsHeterogeneousAssociation(parentPropertyInChild))
-				{
-					return false;
-				}
-			}
-
-			return patternMatchs;
+			var property = subject.LocalMember;
+			return Match(property) && !polymorphismBidirectionalAnyToManyPattern.Match(property);
 		}
 
 		#endregion
@@ -37,14 +33,6 @@ namespace ConfOrm.Shop.CoolNaming
 		}
 
 		#endregion
-
-		protected MemberInfo GetParentPropertyInChild(PropertyPath subject)
-		{
-			Type propertyType = subject.LocalMember.GetPropertyOrFieldType();
-			Type childType = propertyType.DetermineCollectionElementType();
-			var entity = subject.GetContainerEntity(DomainInspector);
-			return childType.GetFirstPropertyOfType(entity);
-		}
 
 		protected virtual string GetKeyColumnName(PropertyPath subject)
 		{

@@ -60,17 +60,6 @@ namespace ConfOrm.ShopTests.AppliersTests
 		}
 
 		[Test]
-		public void WhenHeterogeneousAssociationOnChildThenNoMatch()
-		{
-			var orm = new Mock<IDomainInspector>();
-			orm.Setup(x => x.IsOneToMany(It.Is<Type>(t => t == typeof(Parent)), It.Is<Type>(t => t == typeof(Child)))).Returns(true);
-			orm.Setup(x => x.IsHeterogeneousAssociation(It.Is<MemberInfo>(mi=> mi == ForClass<Child>.Property(c => c.MyParent)))).Returns(true);
-			var pattern = new OneToManyKeyColumnApplier(orm.Object);
-			var path = new PropertyPath(null, ForClass<Parent>.Property(p => p.Children));
-			pattern.Match(path).Should().Be.False();
-		}
-
-		[Test]
 		public void WhenRelationIsOneToManyThenMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
