@@ -65,6 +65,19 @@ namespace ConfOrmTests.InterfaceAsRelation
 			hbmBagInMyRelatedRoot2.Where.Should().Be(string.Format("{0} = '{1}'", columnNameForTypeInAny, typeof(MyRelatedRoot2).FullName));
 		}
 
+		[Test]
+		public void WhenInterfaceIsImplementedByEntitiesThenTheKeyShouldHaveFkToNone()
+		{
+			HbmMapping mapping = GetMapping();
+
+			HbmClass hbmMyRelatedRoot1 = mapping.RootClasses.First(r => r.Name.Contains("MyRelatedRoot1"));
+			HbmClass hbmMyRelatedRoot2 = mapping.RootClasses.First(r => r.Name.Contains("MyRelatedRoot2"));
+			HbmKey hbmKeyInMyRelatedRoot1 = ((HbmBag)hbmMyRelatedRoot1.Properties.Where(p => p.Name == "Items").Single()).Key;
+			HbmKey hbmKeyInMyRelatedRoot2 = ((HbmBag)hbmMyRelatedRoot2.Properties.Where(p => p.Name == "Items").Single()).Key;
+			hbmKeyInMyRelatedRoot1.foreignkey.Should().Be("none");
+			hbmKeyInMyRelatedRoot2.foreignkey.Should().Be("none");
+		}
+
 		private HbmMapping GetMapping()
 		{
 			var orm = new ObjectRelationalMapper();
