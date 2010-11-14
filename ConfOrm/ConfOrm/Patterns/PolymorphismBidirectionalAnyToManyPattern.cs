@@ -33,11 +33,22 @@ namespace ConfOrm.Patterns
 			{
 				return false;
 			}
+			PropertyInfo cadidatedBidirectional = GetCadidatedBidirectional(subject, declaredMany);
+			return cadidatedBidirectional != null;
+		}
+
+		private PropertyInfo GetCadidatedBidirectional(MemberInfo subject, Type declaredMany)
+		{
 			var declaredOne = subject.ReflectedType;
 			List<Type> ancestorsOfOne = declaredOne.GetBaseTypes().ToList();
-			var cadidatedBidirectional = declaredMany.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
-				.Where(p => ancestorsOfOne.Contains(p.PropertyType)).FirstOrDefault(p=> domainInspector.IsHeterogeneousAssociation(p));
-			return cadidatedBidirectional != null;
+			return declaredMany.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
+				.Where(p => ancestorsOfOne.Contains(p.PropertyType)).FirstOrDefault(p => domainInspector.IsHeterogeneousAssociation(p));
+		}
+
+		protected PropertyInfo GetCadidatedBidirectional(MemberInfo subject)
+		{
+			var declaredMany = subject.GetPropertyOrFieldType().DetermineCollectionElementType();
+			return GetCadidatedBidirectional(subject, declaredMany);
 		}
 	}
 }

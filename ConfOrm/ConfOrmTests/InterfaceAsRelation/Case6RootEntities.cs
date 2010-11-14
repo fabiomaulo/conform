@@ -31,7 +31,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			public IEnumerable<MyEntity> Items { get; set; }
 		}
 
-		[Test, Ignore("Not supported yet.")]
+		[Test]
 		public void WhenInterfaceIsImplementedByEntitiesThenTheColumnOfKeyShouldBeTheSameOfIdInTheAnyElement()
 		{
 			HbmMapping mapping = GetMapping();
