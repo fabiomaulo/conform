@@ -101,6 +101,7 @@
     <Compile Include="Patterns\DelegatedAdvancedApplierTest.cs" />
     <Compile Include="Patterns\HeterogeneousAssociationOnPolymorphicPatternTest.cs" />
     <Compile Include="Patterns\PolymorphicManyToOnePatternTest.cs" />
+    <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\AnyToMany\Case6PatternTests.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\PatternTests\CircularReferenceTest.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\PatternTests\InterfaceOnChildTest.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\PatternTests\InterfaceOnParentTest.cs" />
