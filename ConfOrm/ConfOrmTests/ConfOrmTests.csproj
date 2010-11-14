@@ -104,6 +104,7 @@
     <Compile Include="Patterns\PolymorphicManyToOnePatternTest.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\AnyToMany\Case6RootEntitiesPatternTests.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\AnyToMany\Case6NoRootEntitiesPatternTests.cs" />
+    <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\AnyToMany\Case6MixedEntitiesPatternTests.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\PatternTests\CircularReferenceTest.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\PatternTests\InterfaceOnChildTest.cs" />
     <Compile Include="Patterns\PolymorphismBidirectionalOneToManyTests\PatternTests\InterfaceOnParentTest.cs" />
