@@ -215,7 +215,7 @@
     <Compile Include="Patterns\PolymorphicOneToManyPattern.cs" />
     <Compile Include="Patterns\HeterogeneousAssociationOnPolymorphicPattern.cs" />
     <Compile Include="Patterns\PolymorphicManyToOnePattern.cs" />
-    <Compile Include="Patterns\PolymorphismBidirectionalAnyToManyColumnApplier.cs">
+    <Compile Include="Patterns\PolymorphismBidirectionalAnyToManyKeyColumnApplier.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Patterns\PolymorphismBidirectionalAnyToManyPattern.cs" />

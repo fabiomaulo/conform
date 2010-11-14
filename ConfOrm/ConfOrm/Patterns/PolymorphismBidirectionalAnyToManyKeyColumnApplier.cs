@@ -3,9 +3,9 @@ using ConfOrm.Mappers;
 
 namespace ConfOrm.Patterns
 {
-	public class PolymorphismBidirectionalAnyToManyColumnApplier : PolymorphismBidirectionalAnyToManyPattern, IPatternApplier<MemberInfo, ICollectionPropertiesMapper>
+	public class PolymorphismBidirectionalAnyToManyKeyColumnApplier : PolymorphismBidirectionalAnyToManyPattern, IPatternApplier<MemberInfo, ICollectionPropertiesMapper>
 	{
-		public PolymorphismBidirectionalAnyToManyColumnApplier(IDomainInspector domainInspector) : base(domainInspector) { }
+		public PolymorphismBidirectionalAnyToManyKeyColumnApplier(IDomainInspector domainInspector) : base(domainInspector) { }
 
 		public void Apply(MemberInfo subject, ICollectionPropertiesMapper applyTo)
 		{

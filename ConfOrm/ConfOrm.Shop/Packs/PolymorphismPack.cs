@@ -16,7 +16,7 @@ namespace ConfOrm.Shop.Packs
 																			new PolymorphismBidirectionalOneToManyInverseApplier(domainInspector),
 																			new PolymorphismBidirectionalOneToManyCascadeApplier(domainInspector),
 																			new PolymorphismBidirectionalOneToManyOnDeleteConstraintApplier(domainInspector),
-																			new PolymorphismBidirectionalAnyToManyColumnApplier(domainInspector),
+																			new PolymorphismBidirectionalAnyToManyKeyColumnApplier(domainInspector),
 																			new PolymorphismBidirectionalAnyToManyWhereApplier(domainInspector),
 			                             	};
 			manyToOne = new List<IPatternApplier<MemberInfo, IManyToOneMapper>>
