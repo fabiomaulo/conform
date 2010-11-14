@@ -7,7 +7,7 @@ using SharpTestsEx;
 
 namespace ConfOrmTests.Patterns.PolymorphismBidirectionalOneToManyTests.AnyToMany
 {
-	public class Case6PatternTests
+	public class Case6RootEntitiesPatternTests
 	{
 		private class MyEntity
 		{
