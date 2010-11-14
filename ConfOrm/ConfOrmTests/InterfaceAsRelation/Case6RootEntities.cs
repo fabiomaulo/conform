@@ -48,7 +48,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			hbmKeyInMyRelatedRoot2.column1.Should().Be(columnNameForIdInAny);
 		}
 
-		[Test, Ignore("Not supported yet.")]
+		[Test]
 		public void WhenInterfaceIsImplementedByEntitiesThenTheCollectionWhereShouldContainEntityName()
 		{
 			HbmMapping mapping = GetMapping();

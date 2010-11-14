@@ -45,6 +45,7 @@ namespace ConfOrm.NH
 																			new PolymorphismBidirectionalOneToManyCascadeApplier(domainInspector),
 																			new PolymorphismBidirectionalOneToManyOnDeleteConstraintApplier(domainInspector),
 																			new PolymorphismBidirectionalAnyToManyColumnApplier(domainInspector),
+																			new PolymorphismBidirectionalAnyToManyWhereApplier(domainInspector),
 			                             	};
 			propertyPath = new List<IPatternApplier<PropertyPath, IPropertyMapper>>
 			               	{new ComponentMultiUsagePropertyColumnNameApplier(),};
