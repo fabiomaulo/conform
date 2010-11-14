@@ -53,7 +53,7 @@ namespace ConfOrm.NH
 			var classHbmColumn = new HbmColumn();
 			var classColumnName = member == null ? DefaultMetaColumnNameWhenNoProperty : member.Name + "Class";
 			classColumnMapper = new ColumnMapper(classHbmColumn, classColumnName);
-			any.column = new[] {idHbmColumn, classHbmColumn};
+			any.column = new[] { classHbmColumn, idHbmColumn };
 		}
 
 		#region Implementation of IAccessorPropertyMapper

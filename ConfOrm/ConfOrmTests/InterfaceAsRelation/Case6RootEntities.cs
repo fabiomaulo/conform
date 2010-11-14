@@ -38,7 +38,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 
 			HbmClass hbmMyEntity = mapping.RootClasses.First(r => r.Name.Contains("MyEntity"));
 			var hbmAny = (HbmAny)hbmMyEntity.Properties.Where(p => p.Name == "RelatedRoot").Single();
-			var columnNameForIdInAny = hbmAny.Columns.First().name;
+			var columnNameForIdInAny = hbmAny.Columns.Skip(1).First().name;
 
 			HbmClass hbmMyRelatedRoot1 = mapping.RootClasses.First(r => r.Name.Contains("MyRelatedRoot1"));
 			HbmClass hbmMyRelatedRoot2 = mapping.RootClasses.First(r => r.Name.Contains("MyRelatedRoot2"));
@@ -55,7 +55,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 
 			HbmClass hbmMyEntity = mapping.RootClasses.First(r => r.Name.Contains("MyEntity"));
 			var hbmAny = (HbmAny)hbmMyEntity.Properties.Where(p => p.Name == "RelatedRoot").Single();
-			var columnNameForTypeInAny = hbmAny.Columns.Skip(1).First().name;
+			var columnNameForTypeInAny = hbmAny.Columns.First().name;
 
 			HbmClass hbmMyRelatedRoot1 = mapping.RootClasses.First(r => r.Name.Contains("MyRelatedRoot1"));
 			HbmClass hbmMyRelatedRoot2 = mapping.RootClasses.First(r => r.Name.Contains("MyRelatedRoot2"));

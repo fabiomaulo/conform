@@ -144,27 +144,30 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void WhenSetIdColumnPropertiesThenWorkOnSameHbmColumnCreatedAtCtor()
 		{
+			const int idColumnIndex = 1;
 			var hbmMapping = new HbmMapping();
 			var hbmAny = new HbmAny();
 			var mapper = new AnyMapper(null, typeof(int), hbmAny, hbmMapping);
 			var columnsBefore = hbmAny.Columns.ToArray();
 			mapper.Columns(idcm => idcm.Length(10), metacm => { });
 			var columnsAfter = hbmAny.Columns.ToArray();
-			columnsBefore[0].Should().Be.SameInstanceAs(columnsAfter[0]);
-			columnsBefore[0].length.Should().Be("10");
+			columnsBefore[idColumnIndex].Should().Be.SameInstanceAs(columnsAfter[idColumnIndex]);
+			columnsBefore[idColumnIndex].length.Should().Be("10");
 		}
 
 		[Test]
 		public void WhenSetMetaColumnPropertiesThenWorkOnSameHbmColumnCreatedAtCtor()
 		{
+			// The first column in the mapping is the MetaValue
+			const int metaValueColumnIndex = 0;
 			var hbmMapping = new HbmMapping();
 			var hbmAny = new HbmAny();
 			var mapper = new AnyMapper(null, typeof(int), hbmAny, hbmMapping);
 			var columnsBefore = hbmAny.Columns.ToArray();
 			mapper.Columns(idcm => { }, metacm => metacm.Length(500));
 			var columnsAfter = hbmAny.Columns.ToArray();
-			columnsBefore[1].Should().Be.SameInstanceAs(columnsAfter[1]);
-			columnsBefore[1].length.Should().Be("500");
+			columnsBefore[metaValueColumnIndex].Should().Be.SameInstanceAs(columnsAfter[metaValueColumnIndex]);
+			columnsBefore[metaValueColumnIndex].length.Should().Be("500");
 		}
 
 		[Test]
