@@ -46,6 +46,8 @@ namespace ConfOrm.Shop.CoolNaming
 			             		new PolymorphismBidirectionalOneToManyInverseApplier(domainInspector),
 			             		new PolymorphismBidirectionalOneToManyCascadeApplier(domainInspector),
 			             		new PolymorphismBidirectionalOneToManyOnDeleteConstraintApplier(domainInspector),
+			             		new PolymorphismBidirectionalAnyToManyKeyColumnApplier(domainInspector),
+			             		new PolymorphismBidirectionalAnyToManyWhereApplier(domainInspector),
 			             	};
 
 			collectionPath = new List<IPatternApplier<PropertyPath, ICollectionPropertiesMapper>>
