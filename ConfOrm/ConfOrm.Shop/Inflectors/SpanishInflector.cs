@@ -70,7 +70,7 @@ namespace ConfOrm.Shop.Inflectors
 			AddUncountable("déficit");
 		}
 
-		protected override void AddIrregular(string singular, string plural)
+		public override void AddIrregular(string singular, string plural)
 		{
 			base.AddIrregular(singular, plural);
 			base.AddIrregular(singular.Unaccent(), plural.Unaccent());

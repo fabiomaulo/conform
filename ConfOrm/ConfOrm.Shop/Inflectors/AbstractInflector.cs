@@ -29,7 +29,7 @@ namespace ConfOrm.Shop.Inflectors
 
 		#endregion
 
-		protected virtual void AddIrregular(string singular, string plural)
+		public virtual void AddIrregular(string singular, string plural)
 		{
 			AddPlural("(" + singular[0] + ")" + singular.Substring(1) + "$", "$1" + plural.Substring(1));
 			AddSingular("(" + plural[0] + ")" + plural.Substring(1) + "$", "$1" + singular.Substring(1));
