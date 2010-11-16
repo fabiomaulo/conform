@@ -114,6 +114,10 @@ namespace ConfOrm.Shop.CoolNaming
 			                    		new MemberNoSetterToFieldAccessorApplier<IComponentAttributesMapper>(),
 			                    		new MemberToFieldAccessorApplier<IComponentAttributesMapper>()
 			                    	};
+			elementPath = new List<IPatternApplier<PropertyPath, IElementMapper>>
+										{
+											new CollectionOfElementsColumnApplier(domainInspector),
+										};
 		}
 	}
 }

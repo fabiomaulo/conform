@@ -42,6 +42,10 @@ namespace ConfOrm.Shop.CoolNaming
 			                 	{
 			                 		new ManyToManyColumnApplier(domainInspector),
 			                 	};
+			elementPath = new List<IPatternApplier<PropertyPath, IElementMapper>>
+										{
+											new CollectionOfElementsColumnApplier(domainInspector),
+										};
 		}
 	}
 }
