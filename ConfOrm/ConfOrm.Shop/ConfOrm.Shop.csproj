@@ -159,7 +159,6 @@
     <Compile Include="Packs\SafePropertyAccessorPack.cs" />
     <Compile Include="Packs\DiscriminatorValueAsClassNamePack.cs" />
     <Compile Include="Packs\UseNoLazyForNoProxablePack.cs" />
-    <Compile Include="Patterns\PoidPropertyAsClassNameId.cs" />
     <Compile Include="Patterns\UseBagWhenGenericListPattern.cs" />
     <Compile Include="Patterns\UseSetWhenGenericCollectionPattern.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

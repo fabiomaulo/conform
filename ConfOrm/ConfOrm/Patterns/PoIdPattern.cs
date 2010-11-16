@@ -16,7 +16,8 @@ namespace ConfOrm.Patterns
 			var name = subject.Name;
 			return name.Equals("id", StringComparison.InvariantCultureIgnoreCase)
 						 || name.Equals("poid", StringComparison.InvariantCultureIgnoreCase)
-						 || name.Equals("oid", StringComparison.InvariantCultureIgnoreCase);
+						 || name.Equals("oid", StringComparison.InvariantCultureIgnoreCase)
+						 || (name.StartsWith(subject.DeclaringType.Name) && name.Equals(subject.DeclaringType.Name + "id", StringComparison.InvariantCultureIgnoreCase));
 		}
 
 		#endregion

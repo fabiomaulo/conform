@@ -120,7 +120,6 @@
     <Compile Include="InflectorsTests\InflectorRuleTest.cs" />
     <Compile Include="InflectorsTests\ItalianInflectorTest.cs" />
     <Compile Include="InflectorsTests\SpanishInflectorTest.cs" />
-    <Compile Include="PatternsTests\PoidPropertyAsClassNameIdTest.cs" />
     <Compile Include="PatternsTests\UseBagWhenGenericListPatternTest.cs" />
     <Compile Include="PatternsTests\UseSetWhenGenericCollectionPatternTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

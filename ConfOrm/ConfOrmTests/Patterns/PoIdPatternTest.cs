@@ -1,4 +1,5 @@
 using System.Reflection;
+using ConfOrm;
 using ConfOrm.Patterns;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -15,6 +16,12 @@ namespace ConfOrmTests.Patterns
 			public int POID { get; set; }
 			public int OId { get; set; }
 			public int Something { get; set; }
+		}
+
+		private class MyClass
+		{
+			public int MyClassId { get; set; }
+			public int myClassId { get; set; }
 		}
 
 		[Test]
@@ -34,5 +41,19 @@ namespace ConfOrmTests.Patterns
 			pi = typeof(TestEntity).GetProperty("Something");
 			pi.Satisfy(p => !pattern.Match(p));
 		}
+		[Test]
+		public void MatchWithMyClassIdProperty()
+		{
+			var pattern = new PoIdPattern();
+			pattern.Match(ForClass<MyClass>.Property(x => x.MyClassId)).Should().Be.True();
+		}
+
+		[Test]
+		public void NoMatchWith_myClassId_Property()
+		{
+			var pattern = new PoIdPattern();
+			pattern.Match(ForClass<MyClass>.Property(x => x.myClassId)).Should().Be.False();
+		}
+
 	}
 }
