@@ -110,6 +110,7 @@
     <Compile Include="CoolNamingsAppliersTests\OneToManyKeyColumnApplierWithPolymorphismAnyToManyTest.cs" />
     <Compile Include="DearDbaNamingTests\ManyToManyTableApplierTest.cs" />
     <Compile Include="InflectorNamingTests\ClassPluralizedTableApplierTest.cs" />
+    <Compile Include="InflectorNamingTests\CollectionOfElementsColumnApplierTest.cs" />
     <Compile Include="InflectorNamingTests\JoinedSubclassPluralizedTableApplierTest.cs" />
     <Compile Include="InflectorNamingTests\ManyToManyPluralizedTableApplierTest.cs" />
     <Compile Include="InflectorNamingTests\UnionSubclassPluralizedTableApplierTest.cs" />
