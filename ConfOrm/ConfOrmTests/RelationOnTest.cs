@@ -24,10 +24,10 @@ namespace ConfOrmTests
 		[Test]
 		public void CtorProtection()
 		{
-			ActionAssert.Throws<ArgumentNullException>(() => new RelationOn(null, null, null));
-			ActionAssert.Throws<ArgumentNullException>(() => new RelationOn(typeof(A), null, null));
-			ActionAssert.Throws<ArgumentNullException>(() => new RelationOn(null, null, typeof(A)));
-			ActionAssert.Throws<ArgumentNullException>(() => new RelationOn(typeof(A), null, typeof(A)));
+			Executing.This(() => new RelationOn(null, null, null)).Should().Throw<ArgumentNullException>();
+			Executing.This(() => new RelationOn(typeof(A), null, null)).Should().Throw<ArgumentNullException>();
+			Executing.This(() => new RelationOn(null, null, typeof(A))).Should().Throw<ArgumentNullException>();
+			Executing.This(() => new RelationOn(typeof(A), null, typeof(A))).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]

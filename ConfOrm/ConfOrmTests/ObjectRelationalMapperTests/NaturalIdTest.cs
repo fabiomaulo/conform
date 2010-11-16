@@ -30,7 +30,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		public void WhenDefineWithoutRootEntityThenThrow()
 		{
 			var orm = new ObjectRelationalMapper();
-			ActionAssert.Throws<ArgumentOutOfRangeException>(() => orm.NaturalId<MyClass>(x=> x.Any));
+			Executing.This(() => orm.NaturalId<MyClass>(x=> x.Any)).Should().Throw<ArgumentOutOfRangeException>();
 		}
 
 		[Test]
@@ -38,7 +38,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		{
 			var orm = new ObjectRelationalMapper();
 			orm.TablePerClass<MyClass>();
-			ActionAssert.NotThrow(() => orm.NaturalId<MyClass>());
+			Executing.This(() => orm.NaturalId<MyClass>()).Should().NotThrow();
 		}
 
 		[Test]

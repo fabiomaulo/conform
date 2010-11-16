@@ -47,7 +47,7 @@ namespace ConfOrmTests
 		{
 			List<IPatternValueGetter<string, string>> patterns = null;
 
-			ActionAssert.NotThrow(() => patterns.GetValueOfFirstMatch("pp"));
+			Executing.This(() => patterns.GetValueOfFirstMatch("pp")).Should().NotThrow();
 		}
 
 		[Test]

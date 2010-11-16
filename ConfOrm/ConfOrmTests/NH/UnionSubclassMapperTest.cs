@@ -72,7 +72,7 @@ namespace ConfOrmTests.NH
 			var subClass = typeof(Inherited);
 			var mapdoc = new HbmMapping();
 			var mapper = new UnionSubclassMapper(subClass, mapdoc);
-			ActionAssert.Throws<MappingException>(() => mapper.Proxy(typeof(Z)));
+			Executing.This(() => mapper.Proxy(typeof(Z))).Should().Throw<MappingException>();
 		}
 
 		[Test]
@@ -224,8 +224,8 @@ namespace ConfOrmTests.NH
 			var subClass = typeof(Inherited);
 			var mapdoc = new HbmMapping { assembly = subClass.Assembly.FullName, @namespace = subClass.Namespace };
 			var mapper = new JoinedSubclassMapper(subClass, mapdoc);
-			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.Extends(typeof(Z)));
-			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.Extends(typeof(Inherited2)));
+			Executing.This(() => mapper.Extends(typeof(Z))).Should().Throw<ArgumentOutOfRangeException>();
+			Executing.This(() => mapper.Extends(typeof(Inherited2))).Should().Throw<ArgumentOutOfRangeException>();
 		}
 	}
 }

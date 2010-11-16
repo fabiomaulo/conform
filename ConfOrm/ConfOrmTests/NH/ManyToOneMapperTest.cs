@@ -178,7 +178,7 @@ namespace ConfOrmTests.NH
 			var mapping = new HbmManyToOne();
 			var mapper = new ManyToOneMapper(member, mapping, hbmMapping);
 			mapper.Columns(cm => cm.Length(50), cm => cm.SqlType("VARCHAR(10)"));
-			ActionAssert.Throws<ConfOrm.MappingException>(() => mapper.Column(cm => cm.Length(50)));
+			Executing.This(() => mapper.Column(cm => cm.Length(50))).Should().Throw<MappingException>();
 		}
 
 		[Test]
@@ -251,7 +251,7 @@ namespace ConfOrmTests.NH
 			var mapping = new HbmManyToOne();
 			var mapper = new ManyToOneMapper(member, mapping, hbmMapping);
 
-			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.Class(typeof (Whatever)));
+			Executing.This(() => mapper.Class(typeof (Whatever))).Should().Throw<ArgumentOutOfRangeException>();
 		}
 
 		[Test]

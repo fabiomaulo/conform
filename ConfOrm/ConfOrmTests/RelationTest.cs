@@ -13,9 +13,9 @@ namespace ConfOrmTests
 		[Test]
 		public void CtorProtection()
 		{
-			ActionAssert.Throws<ArgumentNullException>(() => new Relation(null, null));
-			ActionAssert.Throws<ArgumentNullException>(() => new Relation(typeof(A), null));
-			ActionAssert.Throws<ArgumentNullException>(() => new Relation(null, typeof(A)));
+			Executing.This(() => new Relation(null, null)).Should().Throw<ArgumentNullException>();
+			Executing.This(() => new Relation(typeof(A), null)).Should().Throw<ArgumentNullException>();
+			Executing.This(() => new Relation(null, typeof(A))).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]

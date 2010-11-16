@@ -57,7 +57,7 @@ namespace ConfOrmTests.NH
 		public void WhenSourceIsNullThenThrow()
 		{
 			IPatternsAppliersHolder source = null;
-			ActionAssert.Throws<ArgumentNullException>(() => source.UnionWith(null));
+			Executing.This(() => source.UnionWith(null)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]

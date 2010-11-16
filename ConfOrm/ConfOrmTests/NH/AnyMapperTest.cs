@@ -177,8 +177,8 @@ namespace ConfOrmTests.NH
 			var hbmAny = new HbmAny();
 			var mapper = new AnyMapper(null, typeof(int), hbmAny, hbmMapping);
 			mapper.MetaValue('A', typeof(MyReferenceClass));
-			ActionAssert.Throws<ArgumentException>(() => mapper.MetaType(NHibernateUtil.Int32));
-			ActionAssert.Throws<ArgumentException>(mapper.MetaType<int>);
+			Executing.This(() => mapper.MetaType(NHibernateUtil.Int32)).Should().Throw<ArgumentException>();
+			Executing.This(mapper.MetaType<int>).Should().Throw<ArgumentException>();
 		}
 
 		[Test]
@@ -187,8 +187,8 @@ namespace ConfOrmTests.NH
 			var hbmMapping = new HbmMapping();
 			var hbmAny = new HbmAny();
 			var mapper = new AnyMapper(null, typeof(int), hbmAny, hbmMapping);
-			ActionAssert.Throws<ArgumentNullException>(() => mapper.MetaValue(null, typeof (MyReferenceClass)));
-			ActionAssert.Throws<ArgumentNullException>(() => mapper.MetaValue('A', null));
+			Executing.This(() => mapper.MetaValue(null, typeof (MyReferenceClass))).Should().Throw<ArgumentNullException>();
+			Executing.This(() => mapper.MetaValue('A', null)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]
@@ -207,7 +207,7 @@ namespace ConfOrmTests.NH
 			var hbmMapping = new HbmMapping();
 			var hbmAny = new HbmAny();
 			var mapper = new AnyMapper(null, typeof(int), hbmAny, hbmMapping);
-			ActionAssert.Throws<ArgumentOutOfRangeException>(()=>mapper.MetaValue(typeof(MyReferenceClass), typeof(MyReferenceClass)));
+			Executing.This(()=>mapper.MetaValue(typeof(MyReferenceClass), typeof(MyReferenceClass))).Should().Throw<ArgumentOutOfRangeException>();
 		}
 
 		[Test]
@@ -217,7 +217,7 @@ namespace ConfOrmTests.NH
 			var hbmAny = new HbmAny();
 			var mapper = new AnyMapper(null, typeof(int), hbmAny, hbmMapping);
 			mapper.MetaValue('A', typeof(MyReferenceClass));
-			ActionAssert.Throws<ArgumentException>(() => mapper.MetaValue(5, typeof(MyClass)));
+			Executing.This(() => mapper.MetaValue(5, typeof(MyClass))).Should().Throw<ArgumentException>();
 		}
 
 		[Test]
@@ -238,7 +238,7 @@ namespace ConfOrmTests.NH
 			var hbmAny = new HbmAny();
 			var mapper = new AnyMapper(null, typeof(int), hbmAny, hbmMapping);
 			mapper.MetaValue('A', typeof(MyReferenceClass));
-			ActionAssert.Throws<ArgumentException>(() => mapper.MetaValue('A', typeof (MyClass)));
+			Executing.This(() => mapper.MetaValue('A', typeof (MyClass))).Should().Throw<ArgumentException>();
 		}
 
 		[Test]
@@ -273,10 +273,10 @@ namespace ConfOrmTests.NH
 			var hbmAny = new HbmAny();
 			var mapper = new AnyMapper(null, typeof(int), hbmAny, hbmMapping);
 			mapper.MetaValue('A', typeof(MyReferenceClass));
-			ActionAssert.NotThrow(() => mapper.IdType(NHibernateUtil.Int32));
-			ActionAssert.NotThrow(mapper.IdType<int>);
-			ActionAssert.Throws<ArgumentException>(mapper.IdType<string>);
-			ActionAssert.Throws<ArgumentException>(()=> mapper.IdType(NHibernateUtil.String));
+			Executing.This(() => mapper.IdType(NHibernateUtil.Int32)).Should().NotThrow();
+			Executing.This(mapper.IdType<int>).Should().NotThrow();
+			Executing.This(mapper.IdType<string>).Should().Throw<ArgumentException>();
+			Executing.This(()=> mapper.IdType(NHibernateUtil.String)).Should().Throw<ArgumentException>();
 		}
 
 		[Test]

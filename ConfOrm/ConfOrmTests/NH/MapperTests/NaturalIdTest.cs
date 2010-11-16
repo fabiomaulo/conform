@@ -91,7 +91,7 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsMemberOfNaturalId(It.Is<MemberInfo>(p => p == typeof(MyClass).GetProperty("Related")))).Returns(true);
 			
 			var mapper = new Mapper(orm.Object);
-			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.CompileMappingFor(new[] {typeof (MyClass)}));
+			Executing.This(() => mapper.CompileMappingFor(new[] {typeof (MyClass)})).Should().Throw<ArgumentOutOfRangeException>();
 		}
 
 		[Test]

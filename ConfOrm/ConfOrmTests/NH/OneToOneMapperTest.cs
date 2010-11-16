@@ -98,7 +98,7 @@ namespace ConfOrmTests.NH
 
 			hbm.propertyref.Should().Be("Whatever");
 
-			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.PropertyReference(typeof(Array).GetProperty("Length")));
+			Executing.This(() => mapper.PropertyReference(typeof(Array).GetProperty("Length"))).Should().Throw<ArgumentOutOfRangeException>();
 		}
 
 

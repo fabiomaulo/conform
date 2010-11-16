@@ -9,6 +9,7 @@ using NHibernate.Type;
 using NHibernate.UserTypes;
 using NUnit.Framework;
 using SharpTestsEx;
+using MappingException = ConfOrm.MappingException;
 
 namespace ConfOrmTests.NH
 {
@@ -21,9 +22,9 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void WhenCreatedMustHaveAllParametersValid()
 		{
-			ActionAssert.Throws<ArgumentNullException>(() => new ElementMapper(null, null));
-			ActionAssert.Throws<ArgumentNullException>(() => new ElementMapper(typeof(string), null));
-			ActionAssert.Throws<ArgumentNullException>(() => new ElementMapper(null, new HbmElement()));
+			Executing.This(() => new ElementMapper(null, null)).Should().Throw<ArgumentNullException>();
+			Executing.This(() => new ElementMapper(typeof(string), null)).Should().Throw<ArgumentNullException>();
+			Executing.This(() => new ElementMapper(null, new HbmElement())).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]
@@ -104,8 +105,8 @@ namespace ConfOrmTests.NH
 		{
 			var mapping = new HbmElement();
 			var mapper = new ElementMapper(typeof(string), mapping);
-			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.Type(typeof(object), null));
-			ActionAssert.Throws<ArgumentNullException>(() => mapper.Type(null, null));
+			Executing.This(() => mapper.Type(typeof(object), null)).Should().Throw<ArgumentOutOfRangeException>();
+			Executing.This(() => mapper.Type(null, null)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]
@@ -195,7 +196,7 @@ namespace ConfOrmTests.NH
 			var mapping = new HbmElement();
 			var mapper = new ElementMapper(typeof(string), mapping);
 			mapper.Columns(cm => cm.Length(50), cm => cm.SqlType("VARCHAR(10)"));
-			ActionAssert.Throws<ConfOrm.MappingException>(() => mapper.Column(cm => cm.Length(50)));
+			Executing.This(() => mapper.Column(cm => cm.Length(50))).Should().Throw<MappingException>();
 		}
 
 		[Test]

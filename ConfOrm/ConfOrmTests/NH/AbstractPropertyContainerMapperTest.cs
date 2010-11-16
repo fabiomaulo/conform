@@ -35,13 +35,13 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void CantCreateWithoutHbmMapping()
 		{
-			ActionAssert.Throws<ArgumentNullException>(() => new HackPropertyContainerMapper(typeof(EntitySimple), null));
+			Executing.This(() => new HackPropertyContainerMapper(typeof(EntitySimple), null)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]
 		public void CantCreateWithoutContainerType()
 		{
-			ActionAssert.Throws<ArgumentNullException>(() => new HackPropertyContainerMapper(null, new HbmMapping()));
+			Executing.This(() => new HackPropertyContainerMapper(null, new HbmMapping())).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]
@@ -70,7 +70,7 @@ namespace ConfOrmTests.NH
 		public void CantAddPropertyOfNotInheritedType()
 		{
 			var map = new StubPropertyContainerMapper<OtherSimple>(new List<object>());
-			ActionAssert.Throws<ArgumentOutOfRangeException>(() => map.Property(typeof(EntitySimple).GetProperty("Name"), x => { }));
+			Executing.This(() => map.Property(typeof(EntitySimple).GetProperty("Name"), x => { })).Should().Throw<ArgumentOutOfRangeException>();
 		}
 
 		[Test]

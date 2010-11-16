@@ -17,14 +17,14 @@ namespace ConfOrmTests.NH
 		public void WhenSourceIsNullThenThrow()
 		{
 			IPatternsAppliersHolder source = null;
-			ActionAssert.Throws<ArgumentNullException>(() => source.Merge<PropertyPath, IPropertyMapper>(null));
+			Executing.This(() => source.Merge<PropertyPath, IPropertyMapper>(null)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]
 		public void WhenApplierIsNullThenNotThrow()
 		{
 			IPatternsAppliersHolder source = new EmptyPatternsAppliersHolder();
-			ActionAssert.NotThrow(() => source.Merge<PropertyPath, IPropertyMapper>(null));
+			Executing.This(() => source.Merge<PropertyPath, IPropertyMapper>(null)).Should().NotThrow();
 		}
 
 		private IPatternsAppliersHolder GetPatternsAppliersHolderWithApplierAdded<TSubject, TApplyTo>()
@@ -173,7 +173,7 @@ namespace ConfOrmTests.NH
 		{
 			IPatternsAppliersHolder source = new EmptyPatternsAppliersHolder();
 			var applier = new Mock<IPatternApplier<int, string>>();
-			ActionAssert.Throws<ArgumentOutOfRangeException>(()=>source.Merge(applier.Object));
+			Executing.This(()=>source.Merge(applier.Object)).Should().Throw<ArgumentOutOfRangeException>();
 		}
 
 		[Test]

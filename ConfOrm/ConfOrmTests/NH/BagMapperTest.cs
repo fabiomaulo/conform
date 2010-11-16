@@ -90,8 +90,8 @@ namespace ConfOrmTests.NH
 		{
 			var hbm = new HbmBag();
 			var mapper = new BagMapper(typeof(Animal), typeof(Animal), hbm);
-			ActionAssert.Throws<ArgumentNullException>(() => mapper.Type(null));
-			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.Type(typeof(object)));
+			Executing.This(() => mapper.Type(null)).Should().Throw<ArgumentNullException>();
+			Executing.This(() => mapper.Type(typeof(object))).Should().Throw<ArgumentOutOfRangeException>();
 		}
 
 		[Test]

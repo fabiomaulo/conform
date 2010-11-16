@@ -12,7 +12,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void CtorProtection()
 		{
-			ActionAssert.Throws<ArgumentNullException>(() => new CacheMapper(null));
+			Executing.This(() => new CacheMapper(null)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]

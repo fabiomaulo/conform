@@ -25,9 +25,9 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		{
 			var mapper = new ObjectRelationalMapper();
 			mapper.Component<AComponent>();
-			ActionAssert.Throws(() => mapper.TablePerClass<AComponent>()).Should().Be.InstanceOf<MappingException>();
-			ActionAssert.Throws(() => mapper.TablePerConcreteClass<AComponent>()).Should().Be.InstanceOf<MappingException>();
-			ActionAssert.Throws(() => mapper.TablePerClassHierarchy<AComponent>()).Should().Be.InstanceOf<MappingException>();
+			Executing.This(() => mapper.TablePerClass<AComponent>()).Should().Throw().And.Exception.Should().Be.InstanceOf<MappingException>();
+			Executing.This(() => mapper.TablePerConcreteClass<AComponent>()).Should().Throw().And.Exception.Should().Be.InstanceOf<MappingException>();
+			Executing.This(() => mapper.TablePerClassHierarchy<AComponent>()).Should().Throw().And.Exception.Should().Be.InstanceOf<MappingException>();
 		}
 
 		[Test]
@@ -35,7 +35,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 		{
 			var mapper = new ObjectRelationalMapper();
 			mapper.TablePerClass<AComponent>();
-			ActionAssert.Throws(() => mapper.Component<AComponent>()).Should().Be.InstanceOf<MappingException>();
+			Executing.This(() => mapper.Component<AComponent>()).Should().Throw().And.Exception.Should().Be.InstanceOf<MappingException>();
 		}
 
 		[Test]

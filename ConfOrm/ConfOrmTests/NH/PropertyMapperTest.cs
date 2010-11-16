@@ -11,6 +11,7 @@ using NHibernate.Type;
 using NHibernate.UserTypes;
 using NUnit.Framework;
 using SharpTestsEx;
+using MappingException = ConfOrm.MappingException;
 
 namespace ConfOrmTests.NH
 {
@@ -34,8 +35,8 @@ namespace ConfOrmTests.NH
 			var mapping = new HbmProperty();
 			var mapper = new PropertyMapper(member, mapping);
 
-			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.Access(typeof(object)));
-			ActionAssert.NotThrow(() => mapper.Access(typeof(FieldAccessor)));
+			Executing.This(() => mapper.Access(typeof(object))).Should().Throw<ArgumentOutOfRangeException>();
+			Executing.This(() => mapper.Access(typeof(FieldAccessor))).Should().NotThrow();
 			mapping.Access.Should().Be.EqualTo(typeof(FieldAccessor).AssemblyQualifiedName);
 		}
 
@@ -107,8 +108,8 @@ namespace ConfOrmTests.NH
 			var member = typeof(MyClass).GetProperty("ReadOnly");
 			var mapping = new HbmProperty();
 			var mapper = new PropertyMapper(member, mapping);
-			ActionAssert.Throws<ArgumentOutOfRangeException>(()=> mapper.Type(typeof(object), null));
-			ActionAssert.Throws<ArgumentNullException>(() => mapper.Type(null, null));
+			Executing.This(()=> mapper.Type(typeof(object), null)).Should().Throw<ArgumentOutOfRangeException>();
+			Executing.This(() => mapper.Type(null, null)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]
@@ -216,7 +217,7 @@ namespace ConfOrmTests.NH
 			var mapping = new HbmProperty();
 			var mapper = new PropertyMapper(member, mapping);
 			mapper.Columns(cm => cm.Length(50), cm => cm.SqlType("VARCHAR(10)"));
-			ActionAssert.Throws<ConfOrm.MappingException>(() => mapper.Column(cm => cm.Length(50)));
+			Executing.This(() => mapper.Column(cm => cm.Length(50))).Should().Throw<MappingException>();
 		}
 
 		[Test]

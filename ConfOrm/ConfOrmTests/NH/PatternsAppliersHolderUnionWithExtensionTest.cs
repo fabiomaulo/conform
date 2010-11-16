@@ -17,14 +17,14 @@ namespace ConfOrmTests.NH
 		public void WhenSourceIsNullThenThrow()
 		{
 			IPatternsAppliersHolder source = null;
-			ActionAssert.Throws<ArgumentNullException>(() => source.UnionWith<PropertyPath, IPropertyMapper>(null));
+			Executing.This(() => source.UnionWith<PropertyPath, IPropertyMapper>(null)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]
 		public void WhenApplierIsNullThenNotThrow()
 		{
 			IPatternsAppliersHolder source = new EmptyPatternsAppliersHolder();
-			ActionAssert.NotThrow(() => source.UnionWith<PropertyPath, IPropertyMapper>(null));
+			Executing.This(() => source.UnionWith<PropertyPath, IPropertyMapper>(null)).Should().NotThrow();
 		}
 
 		[Test]

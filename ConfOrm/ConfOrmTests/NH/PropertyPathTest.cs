@@ -32,9 +32,9 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void CtorProtection()
 		{
-			ActionAssert.Throws<ArgumentNullException>(() => new PropertyPath(null, null));
-			ActionAssert.NotThrow(() => new PropertyPath(null, myClassComponent1));
-			ActionAssert.Throws<ArgumentNullException>(() => new PropertyPath(new PropertyPath(null, myClassComponent1), null));
+			Executing.This(() => new PropertyPath(null, null)).Should().Throw<ArgumentNullException>();
+			Executing.This(() => new PropertyPath(null, myClassComponent1)).Should().NotThrow();
+			Executing.This(() => new PropertyPath(new PropertyPath(null, myClassComponent1), null)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]

@@ -14,7 +14,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void CtorProtection()
 		{
-			ActionAssert.Throws<ArgumentNullException>(() => new DiscriminatorMapper(null));
+			Executing.This(() => new DiscriminatorMapper(null)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]
@@ -146,8 +146,8 @@ Line2";
 		{
 			var hbmDiscriminator = new HbmDiscriminator();
 			var mapper = new DiscriminatorMapper(hbmDiscriminator);
-			ActionAssert.Throws<ArgumentOutOfRangeException>(() => mapper.Type(typeof(object)));
-			ActionAssert.Throws<ArgumentNullException>(() => mapper.Type((Type)null));
+			Executing.This(() => mapper.Type(typeof(object))).Should().Throw<ArgumentOutOfRangeException>();
+			Executing.This(() => mapper.Type((Type)null)).Should().Throw<ArgumentNullException>();
 		}
 
 		[Test]
