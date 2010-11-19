@@ -33,7 +33,7 @@ namespace ConfOrm.NH
 
 		public void Cascade(Cascade cascadeStyle)
 		{
-			oneToOne.cascade = (cascadeStyle & ~ConfOrm.Cascade.DeleteOrphans).ToCascadeString();
+			oneToOne.cascade = (cascadeStyle.Exclude(ConfOrm.Cascade.DeleteOrphans)).ToCascadeString();
 		}
 
 		#endregion

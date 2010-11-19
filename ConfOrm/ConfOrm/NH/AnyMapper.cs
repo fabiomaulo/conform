@@ -184,7 +184,7 @@ namespace ConfOrm.NH
 
 		public void Cascade(Cascade cascadeStyle)
 		{
-			any.cascade = (cascadeStyle & ~ConfOrm.Cascade.DeleteOrphans).ToCascadeString();
+			any.cascade = (cascadeStyle.Exclude(ConfOrm.Cascade.DeleteOrphans)).ToCascadeString();
 		}
 
 		public void Index(string indexName)

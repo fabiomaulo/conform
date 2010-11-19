@@ -48,7 +48,7 @@ namespace ConfOrm.NH
 
 		public void Cascade(Cascade cascadeStyle)
 		{
-			manyToOne.cascade = (cascadeStyle & ~ConfOrm.Cascade.DeleteOrphans).ToCascadeString();
+			manyToOne.cascade = (cascadeStyle.Exclude(ConfOrm.Cascade.DeleteOrphans)).ToCascadeString();
 		}
 
 		public void NotNullable(bool notnull)
