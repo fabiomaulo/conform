@@ -23,7 +23,7 @@ namespace ConfOrm
 		/// <example>
 		/// to exclude only the <see cref="Refresh"/>
 		/// <code>
-		/// ConfOrm.Cascade.Every & ~ConfOrm.Cascade.Refresh
+		/// ConfOrm.Cascade.Every.Exclude(ConfOrm.Cascade.Refresh)
 		/// </code>
 		/// </example>
 		/// </remarks>
