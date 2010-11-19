@@ -2,6 +2,15 @@ using System;
 
 namespace ConfOrm
 {
+	/// <summary>
+	/// Defines behavior of soft-cascade actions.
+	/// </summary>
+	/// <remarks>
+	/// To check the content or to include/exclude values, from cascade, is strongly recommanded the usage of extensions methods defined in <see cref="Extensions"/>
+	/// </remarks>
+	/// <seealso cref="Extensions.Has"/>
+	/// <seealso cref="Extensions.Include"/>
+	/// <seealso cref="Extensions.Exclude"/>
 	[Flags]
 	public enum Cascade
 	{
@@ -14,19 +23,5 @@ namespace ConfOrm
 		ReAttach= 64,
 		DeleteOrphans = 128,
 		All = 256,
-
-		/// <summary>
-		/// It include each single <see cref="Cascade"/> value.
-		/// </summary>
-		/// <remarks>
-		/// It can be useful as a shortcut when a specific exclusion is needed as for example:
-		/// <example>
-		/// to exclude only the <see cref="Refresh"/>
-		/// <code>
-		/// ConfOrm.Cascade.Every.Exclude(ConfOrm.Cascade.Refresh)
-		/// </code>
-		/// </example>
-		/// </remarks>
-		Every = Persist | Refresh | Merge | Remove | Detach | ReAttach | DeleteOrphans
 	}
 }
