@@ -72,5 +72,16 @@ namespace ConfOrmTests.DoubleBidirectionalTests
 			component.Parent.Should().Not.Be.Null();
 			component.Parent.name.Should().Be.EqualTo("Owner");
 		}
+
+		[Test, Ignore("Not fixed yet.")]
+		public void IntegrationWithObjectRelationalMapper()
+		{
+			var orm = new ObjectRelationalMapper();
+			
+			HbmMapping mapping = GetMapping(orm);
+
+			VerifyMappingContainsClassWithComponentAndParent(mapping);
+		}
+
 	}
 }
