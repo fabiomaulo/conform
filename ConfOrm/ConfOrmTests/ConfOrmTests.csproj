@@ -98,6 +98,7 @@
     <Compile Include="InterfaceAsRelation\Case1BidirectionalOneToManyInterfaceOnChild.cs" />
     <Compile Include="InterfaceAsRelation\Case1BidirectionalOneToManyInterfaceOnParent.cs" />
     <Compile Include="InterfaceAsRelation\Domain.cs" />
+    <Compile Include="ObjectRelationalMapperTests\BidirectionalRegistrationTests.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyInverseApplierTests.cs" />
     <Compile Include="Patterns\HeterogeneousAssociationOnPolymorphicPatternTests\WithNoRootEntitiesTest.cs" />
     <Compile Include="Patterns\PolymorphicOneToManyPatternTest.cs" />
