@@ -23,7 +23,6 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			public IEnumerable<A> Generic { get; set; }
 		}
 
-		[Test]
 		public void DefinitionOfApi()
 		{
 			// only to try the API
@@ -34,6 +33,36 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			orm.Bidirectional<A, B>(a => a.Generic, b => b.A);
 			orm.Bidirectional<B, A>(a => a.Generic, b => b.Generic);
 			orm.Bidirectional<B, A>(b => b.A, a => a.Generic);
+		}
+
+		[Test]
+		public void WhenRegisterCollectionToPropertyThenFindRelation()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.Bidirectional<A, B>(a => a.Bag, b => b.A);
+
+			orm.GetBidirectionalMember(typeof(A), ForClass<A>.Property(x => x.Bag), typeof(B)).Should().Be(ForClass<B>.Property(x => x.A));
+			orm.GetBidirectionalMember(typeof(B), ForClass<B>.Property(x => x.A), typeof(A)).Should().Be(ForClass<A>.Property(x => x.Bag));
+		}
+
+		[Test]
+		public void WhenRegisterPropertyToCollectionThenFindRelation()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.Bidirectional<B, A>(b => b.A, a => a.Bag);
+
+			orm.GetBidirectionalMember(typeof(A), ForClass<A>.Property(x => x.Bag), typeof(B)).Should().Be(ForClass<B>.Property(x => x.A));
+			orm.GetBidirectionalMember(typeof(B), ForClass<B>.Property(x => x.A), typeof(A)).Should().Be(ForClass<A>.Property(x => x.Bag));
+		}
+
+		[Test]
+		public void WhenRegisterCollectionToCollectionThenFindRelation()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.Bidirectional<B, A>(b => b.Generic, a => a.Bag);
+
+			orm.GetBidirectionalMember(typeof(A), ForClass<A>.Property(x => x.Bag), typeof(B)).Should().Be(ForClass<B>.Property(x => x.Generic));
+			orm.GetBidirectionalMember(typeof(B), ForClass<B>.Property(x => x.Generic), typeof(A)).Should().Be(ForClass<A>.Property(x => x.Bag));
 		}
 	}
 }

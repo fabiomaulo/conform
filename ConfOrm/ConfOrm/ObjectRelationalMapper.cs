@@ -257,14 +257,23 @@ namespace ConfOrm
 
 		public void Bidirectional<TEntity1, TEntity2>(Expression<Func<TEntity1, IEnumerable<TEntity2>>> propertyGetter1, Expression<Func<TEntity2, TEntity1>> propertyGetter2)
 		{
+			var member1 = TypeExtensions.DecodeMemberAccessExpression(propertyGetter1);
+			var member2 = TypeExtensions.DecodeMemberAccessExpression(propertyGetter2);
+			RegisterBidirectionalRelation<TEntity1, TEntity2>(member1, member2);
 		}
 
 		public void Bidirectional<TEntity1, TEntity2>(Expression<Func<TEntity1, TEntity2>> propertyGetter1, Expression<Func<TEntity2, IEnumerable<TEntity1>>> propertyGetter2)
 		{
+			var member1 = TypeExtensions.DecodeMemberAccessExpression(propertyGetter1);
+			var member2 = TypeExtensions.DecodeMemberAccessExpression(propertyGetter2);
+			RegisterBidirectionalRelation<TEntity1, TEntity2>(member1, member2);
 		}
 
 		public void Bidirectional<TEntity1, TEntity2>(Expression<Func<TEntity1, IEnumerable<TEntity2>>> propertyGetter1, Expression<Func<TEntity2, IEnumerable<TEntity1>>> propertyGetter2)
 		{
+			var member1 = TypeExtensions.DecodeMemberAccessExpression(propertyGetter1);
+			var member2 = TypeExtensions.DecodeMemberAccessExpression(propertyGetter2);
+			RegisterBidirectionalRelation<TEntity1, TEntity2>(member1, member2);
 		}
 
 		public virtual void Cascade<TFromEntity, TToEntity>(Cascade cascadeOptions)
