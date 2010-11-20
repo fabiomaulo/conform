@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="CascadeExtensionsTests.cs" />
     <Compile Include="DomainInspectorExtensionsTests.cs" />
+    <Compile Include="DoubleBidirectionalTests\DoubleParentOnComponentTest.cs" />
     <Compile Include="ForClassTest.cs" />
     <Compile Include="GetMemberFromInterfacesTest.cs" />
     <Compile Include="InterfaceAsRelation\Case1.cs" />
