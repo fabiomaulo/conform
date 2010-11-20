@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 using ConfOrm.Patterns;
 
 namespace ConfOrm
@@ -251,8 +252,28 @@ namespace ConfOrm
 
 		private void RegisterBidirectionalRelation<TEntity1, TEntity2>(MemberInfo member1, MemberInfo member2)
 		{
-			explicitDeclarations.BidirectionalMembers.Add(new RelationOn(typeof (TEntity1), member1, typeof (TEntity2)), member2);
-			explicitDeclarations.BidirectionalMembers.Add(new RelationOn(typeof (TEntity2), member2, typeof (TEntity1)), member1);
+			var relation1 = new RelationOn(typeof (TEntity1), member1, typeof (TEntity2));
+			var relation2 = new RelationOn(typeof(TEntity2), member2, typeof(TEntity1));
+			ThrowsWhereAmbiguous(relation1, member2);
+			ThrowsWhereAmbiguous(relation2, member1);
+			explicitDeclarations.BidirectionalMembers[relation1] = member2;
+			explicitDeclarations.BidirectionalMembers[relation2] = member1;
+		}
+
+		private void ThrowsWhereAmbiguous(RelationOn relation, MemberInfo actualMember)
+		{
+			MemberInfo alreadyRegisteredMember;
+			if(explicitDeclarations.BidirectionalMembers.TryGetValue(relation, out alreadyRegisteredMember))
+			{
+				if(!alreadyRegisteredMember.Equals(actualMember))
+				{
+					var message = new StringBuilder(500);
+					message.AppendLine("Ambiguous registration of bidirectional relation on specific property:");
+					message.AppendLine(string.Format("Was defined for '{0}.{1}' to '{2}.{3}' ", relation.From.FullName, relation.On.Name, relation.To.FullName, alreadyRegisteredMember.Name));
+					message.AppendLine(string.Format("Then defined for '{0}.{1}' to '{2}.{3}' ", relation.From.FullName, relation.On.Name, relation.To.FullName, actualMember.Name));
+					throw new MappingException(message.ToString());
+				}
+			}
 		}
 
 		public void Bidirectional<TEntity1, TEntity2>(Expression<Func<TEntity1, IEnumerable<TEntity2>>> propertyGetter1, Expression<Func<TEntity2, TEntity1>> propertyGetter2)

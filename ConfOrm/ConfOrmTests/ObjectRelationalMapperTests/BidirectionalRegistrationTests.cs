@@ -64,5 +64,22 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			orm.GetBidirectionalMember(typeof(A), ForClass<A>.Property(x => x.Bag), typeof(B)).Should().Be(ForClass<B>.Property(x => x.Generic));
 			orm.GetBidirectionalMember(typeof(B), ForClass<B>.Property(x => x.Generic), typeof(A)).Should().Be(ForClass<A>.Property(x => x.Bag));
 		}
+
+		[Test]
+		public void WhenDoubleRegistrationThenNotThrows()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.Bidirectional<B, A>(b => b.Generic, a => a.Bag);
+			orm.Executing(o => o.Bidirectional<B, A>(b => b.Generic, a => a.Bag)).NotThrows();
+		}
+
+		[Test]
+		public void WhenAmbiguousRegistrationThenThrows()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.Bidirectional<A, B>(a => a.Bag, b => b.A);
+			orm.Executing(o => o.Bidirectional<A, B>(a => a.Bag, b => b.Generic)).Throws<MappingException>()
+				.And.ValueOf.Message.ToLowerInvariant().Should().Contain("ambiguous");
+		}
 	}
 }
