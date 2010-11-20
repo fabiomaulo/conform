@@ -850,6 +850,7 @@ namespace ConfOrm.NH
 
 		private class ComponentRelationMapper : ICollectionElementRelationMapper
 		{
+			private readonly MemberInfo collectionMember;
 			private readonly Type ownerType;
 			private readonly Type componentType;
 			private readonly ICandidatePersistentMembersProvider membersProvider;
@@ -858,8 +859,9 @@ namespace ConfOrm.NH
 			private readonly ICustomizersHolder customizersHolder;
 			private readonly Mapper mapper;
 
-			public ComponentRelationMapper(Type ownerType, Type componentType, ICandidatePersistentMembersProvider membersProvider, IDomainInspector domainInspector, IPatternsAppliersHolder patternsAppliersHolder, ICustomizersHolder customizersHolder, Mapper mapper)
+			public ComponentRelationMapper(MemberInfo collectionMember, Type ownerType, Type componentType, ICandidatePersistentMembersProvider membersProvider, IDomainInspector domainInspector, IPatternsAppliersHolder patternsAppliersHolder, ICustomizersHolder customizersHolder, Mapper mapper)
 			{
+				this.collectionMember = collectionMember;
 				this.ownerType = ownerType;
 				this.componentType = componentType;
 				this.membersProvider = membersProvider;
@@ -875,10 +877,9 @@ namespace ConfOrm.NH
 			{
 				relation.Component(x =>
 					{
-						// Note: should, the Parent relation, be managed through DomainInspector ?
 						var persistentProperties = GetPersistentProperties(componentType);
-						var parentReferenceProperty =
-							persistentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == ownerType);
+						MemberInfo parentReferenceProperty = domainInspector.GetBidirectionalMember(ownerType, collectionMember, componentType) ??
+						                                     persistentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == ownerType);
 						if (parentReferenceProperty != null)
 						{
 							x.Parent(parentReferenceProperty,
@@ -927,7 +928,8 @@ namespace ConfOrm.NH
 					{
 						propertiesContainer.Component(member, x =>
 							{
-								// Note: for nested-components the Parent discovering is mandatory (recursive nested-component)
+								// Note: for nested-components the Parent discovering is mandatory (recursive nested-component); 
+								// for the same reason you can't have more than one property of the type of the Parent component
 								var componentOwnerType = type;
 								var componentPropertyType = propertyType;
 
@@ -975,7 +977,7 @@ namespace ConfOrm.NH
 			}
 			if (domainInspector.IsComponent(collectionElementType))
 			{
-				return new ComponentRelationMapper(ownerType, collectionElementType, membersProvider, domainInspector, PatternsAppliers, customizerHolder, this);
+				return new ComponentRelationMapper(property, ownerType, collectionElementType, membersProvider, domainInspector, PatternsAppliers, customizerHolder, this);
 			}
 			return new ElementRelationMapper(property, propertyPath, PatternsAppliers, customizerHolder);
 		}
