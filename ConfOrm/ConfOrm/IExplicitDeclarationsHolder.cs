@@ -31,5 +31,6 @@ namespace ConfOrm
 		ICollection<MemberInfo> HeterogeneousAssociations { get; }
 		ICollection<MemberInfo> NaturalIds { get; }
 		ICollection<MemberInfo> ExclusionProperties { get; }
+		IDictionary<RelationOn, MemberInfo> BidirectionalMembers { get; }
 	}
 }

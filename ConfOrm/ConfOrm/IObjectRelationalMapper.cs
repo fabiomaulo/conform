@@ -56,6 +56,7 @@ namespace ConfOrm
 		void Dictionary<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 		void Complex<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 		void HeterogeneousAssociation<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
+		void Bidirectional<TEntity1, TEntity2>(Expression<Func<TEntity1, TEntity2>> propertyGetter1, Expression<Func<TEntity2, TEntity1>> propertyGetter2);
 	
 		void Cascade<TFromEntity, TToEntity>(Cascade cascadeOptions);
 		

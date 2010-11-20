@@ -242,6 +242,14 @@ namespace ConfOrm
 			explicitDeclarations.HeterogeneousAssociations.Add(memberOf);
 		}
 
+		public void Bidirectional<TEntity1, TEntity2>(Expression<Func<TEntity1, TEntity2>> propertyGetter1, Expression<Func<TEntity2, TEntity1>> propertyGetter2)
+		{
+			var member1 = TypeExtensions.DecodeMemberAccessExpression(propertyGetter1);
+			var member2 = TypeExtensions.DecodeMemberAccessExpression(propertyGetter2);
+			explicitDeclarations.BidirectionalMembers.Add(new RelationOn(typeof(TEntity1), member1, typeof(TEntity2)), member2);
+			explicitDeclarations.BidirectionalMembers.Add(new RelationOn(typeof(TEntity2), member2, typeof(TEntity1)), member1);
+		}
+
 		public virtual void Cascade<TFromEntity, TToEntity>(Cascade cascadeOptions)
 		{
 			explicitDeclarations.Cascades.Add(new Relation(typeof(TFromEntity), typeof(TToEntity)), cascadeOptions);
@@ -475,6 +483,11 @@ namespace ConfOrm
 
 		public MemberInfo GetBidirectionalMember(Type from, MemberInfo on, Type to)
 		{
+			MemberInfo relatedProperty;
+			if (explicitDeclarations.BidirectionalMembers.TryGetValue(new RelationOn(from, on, to), out relatedProperty))
+			{
+				return relatedProperty;
+			}
 			return null;
 		}
 

@@ -31,6 +31,7 @@ namespace ConfOrm
 		private readonly HashSet<MemberInfo> heterogeneousAssociations = new HashSet<MemberInfo>();
 		private readonly HashSet<MemberInfo> naturalIds = new HashSet<MemberInfo>();
 		private readonly HashSet<MemberInfo> exclusionProperties = new HashSet<MemberInfo>();
+		private readonly IDictionary<RelationOn, MemberInfo> bidirectionalMembers = new Dictionary<RelationOn, MemberInfo>();
 
 		public HashSet<Type> DomainClasses
 		{
@@ -155,6 +156,11 @@ namespace ConfOrm
 		public ICollection<MemberInfo> ExclusionProperties
 		{
 			get { return exclusionProperties; }
+		}
+
+		public IDictionary<RelationOn, MemberInfo> BidirectionalMembers
+		{
+			get { return bidirectionalMembers; }
 		}
 	}
 }

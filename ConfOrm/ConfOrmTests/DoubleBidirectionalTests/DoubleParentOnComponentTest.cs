@@ -73,15 +73,26 @@ namespace ConfOrmTests.DoubleBidirectionalTests
 			component.Parent.name.Should().Be.EqualTo("Owner");
 		}
 
-		[Test, Ignore("Not fixed yet.")]
+		[Test]
 		public void IntegrationWithObjectRelationalMapper()
 		{
 			var orm = new ObjectRelationalMapper();
-			
+			orm.TablePerClass<MyClass>();
+			orm.Bidirectional<MyClass, Component>(mc => mc.Component, c => c.Owner);
 			HbmMapping mapping = GetMapping(orm);
 
 			VerifyMappingContainsClassWithComponentAndParent(mapping);
 		}
 
+		[Test]
+		public void IntegrationWithObjectRelationalMapperRegisteringTheInverse()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<MyClass>();
+			orm.Bidirectional<Component, MyClass>(component => component.Owner, myClass => myClass.Component);
+			HbmMapping mapping = GetMapping(orm);
+
+			VerifyMappingContainsClassWithComponentAndParent(mapping);
+		}
 	}
 }
