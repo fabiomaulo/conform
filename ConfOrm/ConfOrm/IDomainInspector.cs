@@ -23,6 +23,19 @@ namespace ConfOrm
 		bool IsHeterogeneousAssociation(MemberInfo member);
 		Cascade? ApplyCascade(Type from, MemberInfo on, Type to);
 
+		/// <summary>
+		/// Provide the bidirectional member of a relation where available.
+		/// </summary>
+		/// <param name="from">The class containing the member of <paramref name="on"/>.</param>
+		/// <param name="on">The member under inspection.</param>
+		/// <param name="to">The other side of the relation.</param>
+		/// <returns>The member representing the bidirectional side of the relation where available. null otherwise.</returns>
+		/// <remarks>
+		/// The bidirectional member even where present can be not explicitly provided by the implementor of <see cref="IDomainInspector"/>;
+		/// in this case the user of the method should try to find it in its way.
+		/// </remarks>
+		MemberInfo GetBidirectionalMember(Type from, MemberInfo on, Type to);
+
 		bool IsPersistentId(MemberInfo member);
 		IPersistentIdStrategy GetPersistentIdStrategy(MemberInfo member);
 		bool IsMemberOfNaturalId(MemberInfo member);

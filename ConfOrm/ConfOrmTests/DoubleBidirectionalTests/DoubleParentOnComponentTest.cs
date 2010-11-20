@@ -42,7 +42,7 @@ namespace ConfOrmTests.DoubleBidirectionalTests
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
 			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
 			orm.Setup(m => m.IsComponent(It.Is<Type>(t => t == typeof(Component)))).Returns(true);
-			// perhaps I need something more in the IDomainInspector
+			orm.Setup(m => m.GetBidirectionalMember(typeof(MyClass), It.Is<MemberInfo>(mi=> mi.Equals(ForClass<MyClass>.Property(x => x.Component))), typeof(Component))).Returns(ForClass<Component>.Property(x => x.Owner));
 			return orm;
 		}
 
@@ -52,7 +52,7 @@ namespace ConfOrmTests.DoubleBidirectionalTests
 			return mapper.CompileMappingFor(new[] { typeof(MyClass) });
 		}
 
-		[Test, Ignore("Not supported yet.")]
+		[Test]
 		public void MappingThroughMock()
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();

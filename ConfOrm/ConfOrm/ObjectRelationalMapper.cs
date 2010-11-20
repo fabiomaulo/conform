@@ -473,6 +473,11 @@ namespace ConfOrm
 			return Patterns.Cascades.GetValueOfFirstMatch(relationOn);
 		}
 
+		public MemberInfo GetBidirectionalMember(Type from, MemberInfo on, Type to)
+		{
+			return null;
+		}
+
 		public virtual bool IsPersistentId(MemberInfo member)
 		{
 			return explicitDeclarations.Poids.ContainsMember(member) || Patterns.Poids.Match(member);

@@ -570,12 +570,12 @@ namespace ConfOrm.NH
 		{
 			propertiesContainer.Component(member, componentMapper =>
 				{
-					// Note: should, the Parent relation, be managed through DomainInspector ?
 					Type componentType = propertyType;
 					IEnumerable<MemberInfo> persistentProperties =
 						membersProvider.GetComponentMembers(componentType).Where(p => domainInspector.IsPersistentProperty(p));
-					MemberInfo parentReferenceProperty =
-						persistentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == propertiesContainerType);
+
+					MemberInfo parentReferenceProperty = domainInspector.GetBidirectionalMember(propertiesContainerType, member, componentType) ??
+					                                     persistentProperties.FirstOrDefault(pp => pp.GetPropertyOrFieldType() == propertiesContainerType);
 					if (parentReferenceProperty != null)
 					{
 						componentMapper.Parent(parentReferenceProperty,
