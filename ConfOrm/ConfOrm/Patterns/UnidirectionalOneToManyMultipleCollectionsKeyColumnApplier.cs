@@ -95,7 +95,7 @@ namespace ConfOrm.Patterns
 		{
 			foreach (var propertyType in collectionOwner.GetProperties(PublicPropertiesOfClassHierarchy).Select(p => p.PropertyType))
 			{
-				if (DomainInspector.IsComponent(propertyType))
+				if (!propertyType.Equals(elementType) && DomainInspector.IsComponent(propertyType))
 				{
 					if (HasMultipleCollectionOf(propertyType, elementType, ref collectionCount))
 					{
@@ -105,7 +105,7 @@ namespace ConfOrm.Patterns
 				else
 				{
 					var propertyElementType = propertyType.DetermineCollectionElementOrDictionaryValueType();
-					if(elementType.Equals(propertyElementType))
+					if (elementType.Equals(propertyElementType))
 					{
 						collectionCount++;
 					}
