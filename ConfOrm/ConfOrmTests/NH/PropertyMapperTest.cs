@@ -5,6 +5,7 @@ using ConfOrm;
 using ConfOrm.NH;
 using NHibernate;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Engine;
 using NHibernate.Properties;
 using NHibernate.SqlTypes;
 using NHibernate.Type;
@@ -64,17 +65,29 @@ namespace ConfOrmTests.NH
 		}
 
 		[Test]
+		public void WhenSetTypeByICompositeUserTypeThenSetTypeName()
+		{
+			var member = typeof(MyClass).GetProperty("ReadOnly");
+			var mapping = new HbmProperty();
+			var mapper = new PropertyMapper(member, mapping);
+			mapper.Type<MyCompoType>();
+
+			mapping.Type.name.Should().Contain("MyCompoType");
+			mapping.type.Should().Be.Null();
+		}
+
+		[Test]
 		public void WhenSetTypeByIUserTypeWithParamsThenSetType()
 		{
 			var member = typeof(MyClass).GetProperty("ReadOnly");
 			var mapping = new HbmProperty();
 			var mapper = new PropertyMapper(member, mapping);
-			mapper.Type<MyType>(new { Param1="a", Param2=12 });
+			mapper.Type<MyType>(new { Param1 = "a", Param2 = 12 });
 
 			mapping.type1.Should().Be.Null();
 			mapping.Type.name.Should().Contain("MyType");
 			mapping.Type.param.Should().Have.Count.EqualTo(2);
-			mapping.Type.param.Select(p => p.name).Should().Have.SameValuesAs("Param1","Param2");
+			mapping.Type.param.Select(p => p.name).Should().Have.SameValuesAs("Param1", "Param2");
 			mapping.Type.param.Select(p => p.GetText()).Should().Have.SameValuesAs("a", "12");
 		}
 
@@ -93,7 +106,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void WhenSetTypeByITypeTypeThenSetType()
 		{
-			var member = ForClass<MyClass>.Property(c=> c.EnumProp);
+			var member = ForClass<MyClass>.Property(c => c.EnumProp);
 			var mapping = new HbmProperty();
 			var mapper = new PropertyMapper(member, mapping);
 			mapper.Type<EnumStringType<MyEnum>>();
@@ -108,7 +121,7 @@ namespace ConfOrmTests.NH
 			var member = typeof(MyClass).GetProperty("ReadOnly");
 			var mapping = new HbmProperty();
 			var mapper = new PropertyMapper(member, mapping);
-			Executing.This(()=> mapper.Type(typeof(object), null)).Should().Throw<ArgumentOutOfRangeException>();
+			Executing.This(() => mapper.Type(typeof(object), null)).Should().Throw<ArgumentOutOfRangeException>();
 			Executing.This(() => mapper.Type(null, null)).Should().Throw<ArgumentNullException>();
 		}
 
@@ -142,8 +155,11 @@ namespace ConfOrmTests.NH
 			var member = typeof(MyClass).GetProperty("Autoproperty");
 			var mapping = new HbmProperty();
 			var mapper = new PropertyMapper(member, mapping);
-			mapper.Column(cm => { cm.Length(50);
-			                    	cm.NotNullable(true); });
+			mapper.Column(cm =>
+			{
+				cm.Length(50);
+				cm.NotNullable(true);
+			});
 			mapping.Items.Should().Be.Null();
 			mapping.length.Should().Be("50");
 			mapping.notnull.Should().Be(true);
@@ -207,7 +223,7 @@ namespace ConfOrmTests.NH
 			var mapper = new PropertyMapper(member, mapping);
 			mapper.Columns(cm => cm.Length(50), cm => cm.SqlType("VARCHAR(10)"));
 			mapping.Columns.Should().Have.Count.EqualTo(2);
-			mapping.Columns.All(cm => cm.name.Satisfy(n=> !string.IsNullOrEmpty(n)));
+			mapping.Columns.All(cm => cm.name.Satisfy(n => !string.IsNullOrEmpty(n)));
 		}
 
 		[Test]
@@ -249,7 +265,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void WhenSetUpdateThenSetAttributes()
 		{
-			var member = ForClass<MyClass>.Property(x=> x.ReadOnly);
+			var member = ForClass<MyClass>.Property(x => x.ReadOnly);
 			var mapping = new HbmProperty();
 			var mapper = new PropertyMapper(member, mapping);
 
@@ -283,7 +299,7 @@ namespace ConfOrmTests.NH
 		}
 	}
 
-	public class MyType: IUserType
+	public class MyType : IUserType
 	{
 		#region Implementation of IUserType
 
@@ -343,5 +359,78 @@ namespace ConfOrmTests.NH
 		}
 
 		#endregion
+	}
+
+	public class MyCompoType : ICompositeUserType
+	{
+		public object GetPropertyValue(object component, int property)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SetPropertyValue(object component, int property, object value)
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool Equals(object x, object y)
+		{
+			throw new NotImplementedException();
+		}
+
+		public int GetHashCode(object x)
+		{
+			throw new NotImplementedException();
+		}
+
+		public object NullSafeGet(IDataReader dr, string[] names, ISessionImplementor session, object owner)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void NullSafeSet(IDbCommand cmd, object value, int index, bool[] settable, ISessionImplementor session)
+		{
+			throw new NotImplementedException();
+		}
+
+		public object DeepCopy(object value)
+		{
+			throw new NotImplementedException();
+		}
+
+		public object Disassemble(object value, ISessionImplementor session)
+		{
+			throw new NotImplementedException();
+		}
+
+		public object Assemble(object cached, ISessionImplementor session, object owner)
+		{
+			throw new NotImplementedException();
+		}
+
+		public object Replace(object original, object target, ISessionImplementor session, object owner)
+		{
+			throw new NotImplementedException();
+		}
+
+		public string[] PropertyNames
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		public IType[] PropertyTypes
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		public Type ReturnedClass
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		public bool IsMutable
+		{
+			get { throw new NotImplementedException(); }
+		}
 	}
 }

@@ -83,9 +83,9 @@ namespace ConfOrm.NH
 			{
 				throw new ArgumentNullException("persistentType");
 			}
-			if (!typeof(IUserType).IsAssignableFrom(persistentType) && !typeof(IType).IsAssignableFrom(persistentType))
+			if (!typeof (IUserType).IsAssignableFrom(persistentType) && !typeof (IType).IsAssignableFrom(persistentType) && !typeof (ICompositeUserType).IsAssignableFrom(persistentType))
 			{
-				throw new ArgumentOutOfRangeException("persistentType", "Expected type implementing IUserType or IType.");
+				throw new ArgumentOutOfRangeException("persistentType", "Expected type implementing IUserType, ICompositeUserType or IType.");
 			}
 			if (parameters != null)
 			{
