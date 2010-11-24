@@ -43,7 +43,7 @@ namespace ConfOrm.Shop.CoolNaming
 			Type propertyType = subject.LocalMember.GetPropertyOrFieldType();
 			Type childType = propertyType.DetermineCollectionElementType();
 			var entity = subject.GetContainerEntity(DomainInspector);
-			var parentPropertyInChild = childType.GetFirstPropertyOfType(entity);
+			var parentPropertyInChild = DomainInspector.GetBidirectionalMember(entity, subject.LocalMember, childType) ?? childType.GetFirstPropertyOfType(entity);
 			var baseName = parentPropertyInChild == null ? subject.PreviousPath == null ? entity.Name : entity.Name + subject.PreviousPath : parentPropertyInChild.Name;
 			return GetKeyColumnName(baseName);
 		}
