@@ -46,8 +46,8 @@ namespace ConfOrmTests.DoubleBidirectionalTests
 			orm.Setup(m => m.IsTablePerClass(It.IsAny<Type>())).Returns(true);
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
 			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
-			orm.Setup(m => m.IsBag(It.Is<MemberInfo>(mi => mi.Equals(ForClass<Team>.Property(x => x.MatchesAtHome))))).Returns(true);
-			orm.Setup(m => m.IsBag(It.Is<MemberInfo>(mi => mi.Equals(ForClass<Team>.Property(x => x.MatchesOnRoad))))).Returns(true);
+			orm.Setup(m => m.IsSet(It.Is<MemberInfo>(mi => mi.Equals(ForClass<Team>.Property(x => x.MatchesAtHome))))).Returns(true);
+			orm.Setup(m => m.IsSet(It.Is<MemberInfo>(mi => mi.Equals(ForClass<Team>.Property(x => x.MatchesOnRoad))))).Returns(true);
 			orm.Setup(m => m.IsOneToMany(typeof(Team), typeof(Match))).Returns(true);
 			orm.Setup(m => m.IsManyToOne(typeof(Match), typeof(Team))).Returns(true);
 
@@ -62,7 +62,7 @@ namespace ConfOrmTests.DoubleBidirectionalTests
 			return mapper.CompileMappingFor(new[] { typeof(Team), typeof(Match) });
 		}
 
-		[Test, Ignore("Not supported yet.")]
+		[Test]
 		public void WhenExplicitlyDeclaredThenEachCollectionMapToItsCorrectParentPropertyThroughMock()
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();
@@ -75,18 +75,20 @@ namespace ConfOrmTests.DoubleBidirectionalTests
 		private void VerifyBagsHasTheCorrectKey(HbmMapping mapping)
 		{
 			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Team"));
-			var relation1 = (HbmBag)rc.Properties.First(p => p.Name == "MatchesAtHome");
+			var relation1 = (HbmSet)rc.Properties.First(p => p.Name == "MatchesAtHome");
 			var hbmKey1 = relation1.Key;
 			hbmKey1.column1.Should().Contain("HomeTeam");
-			var relation2 = (HbmBag)rc.Properties.First(p => p.Name == "MatchesOnRoad");
+			var relation2 = (HbmSet)rc.Properties.First(p => p.Name == "MatchesOnRoad");
 			var hbmKey2 = relation2.Key;
 			hbmKey2.column1.Should().Contain("RoadTeam");
 		}
 
-		[Test, Ignore("Not supported yet.")]
+		[Test]
 		public void WhenExplicitlyDeclaredThenEachCollectionMapToItsCorrectParentPropertyIntegration()
 		{
 			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Team>();
+			orm.TablePerClass<Match>();
 			orm.Bidirectional<Team, Match>(t => t.MatchesAtHome, m => m.HomeTeam);
 			orm.Bidirectional<Match, Team>(m => m.RoadTeam, t => t.MatchesOnRoad);
 
