@@ -51,6 +51,11 @@ namespace ConfOrm.Patterns
 
 			var many = implementorsOfMany[0];
 			var one = implementorsOfOne[0];
+			if (domainInspector.IsManyToMany(one, many))
+			{
+				return false;
+			}
+
 			List<Type> candidateAncestorsOfOne = GetCandidateAncestorsOf(one).ToList();
 
 			bool isPolymorphicRelation = !declaredMany.Equals(many) || !declaredOne.Equals(one) || candidateAncestorsOfOne.Count > 0;
