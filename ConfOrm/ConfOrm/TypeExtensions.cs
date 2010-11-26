@@ -399,7 +399,7 @@ namespace ConfOrm
 
 		public static bool HasPublicPropertyOf(this Type source, Type typeOfProperty)
 		{
-			return source != null && source.GetProperties(PublicPropertiesOfClassHierarchy).Select(p => p.PropertyType).Any(t => t.Equals(typeOfProperty));
+			return GetFirstPropertyOfType(source, typeOfProperty, PublicPropertiesOfClassHierarchy) != null;
 		}
 	}
 }
