@@ -183,6 +183,10 @@ namespace ConfOrm
 			{
 				yield break;
 			}
+			if (source.ReflectedType.IsInterface)
+			{
+				yield break;
+			}
 			var interfaces = source.ReflectedType.GetInterfaces();
 			if(interfaces.Length == 0)
 			{

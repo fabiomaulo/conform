@@ -33,6 +33,12 @@ namespace ConfOrmTests
 			public string Something { get; set; }
 		}
 
+		private interface IInheritedHasSomething : IHasSomething
+		{
+			string Blah { get; set; }
+		}
+
+
 		[Test]
 		public void WhenNullArgumentThenThrows()
 		{
@@ -64,6 +70,13 @@ namespace ConfOrmTests
 			var members = ForClass<Person>.Property(x => x.Something).GetPropertyFromInterfaces();
 			members.Should().Contain(ForClass<IEntity>.Property(x => x.Something));
 			members.Should().Contain(ForClass<IHasSomething>.Property(x => x.Something));
+		}
+
+		[Test]
+		public void WhenPropertyOfInterfaceThenNotThrows()
+		{
+			var member = ForClass<IInheritedHasSomething>.Property(x => x.Blah);
+			member.Executing(x=> x.GetPropertyFromInterfaces().Any()).NotThrows();
 		}
 	}
 }
