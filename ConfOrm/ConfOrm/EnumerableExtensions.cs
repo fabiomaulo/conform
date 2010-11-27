@@ -13,31 +13,6 @@ namespace ConfOrm
 			                            item.GetPropertyFromInterfaces().Any(source.Contains));
 		}
 
-		public static bool IsSingle<TSource>(this IEnumerable<TSource> source)
-		{
-			if (source == null)
-			{
-				return false;
-			}
-			var list = source as ICollection<TSource>;
-			if (list != null)
-			{
-				return list.Count == 1;
-			}
-			using (IEnumerator<TSource> enumerator = source.GetEnumerator())
-			{
-				if (!enumerator.MoveNext())
-				{
-					return false;
-				}
-				if (!enumerator.MoveNext())
-				{
-					return true;
-				}
-			}
-			return false; ;
-		}
-
 		public static bool IsSingle<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicateOfTheSingleFound)
 		{
 			if (source == null)
