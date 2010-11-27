@@ -78,7 +78,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		}
 
 		[Test]
-		public void WhenDoubleCirsularRelationOnPolymorphicComponentThenNoMatch()
+		public void WhenDoubleCirsularRelationOnPolymorphicComponentThenMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
 			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
