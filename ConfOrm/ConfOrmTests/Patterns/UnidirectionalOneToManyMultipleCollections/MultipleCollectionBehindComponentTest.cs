@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Reflection;
 using ConfOrm;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
@@ -65,6 +66,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		public void WhenNoPropertyThenNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			var pattern = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
 			pattern.Match(null).Should().Be.False();
 		}
@@ -91,6 +93,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		private Mock<IDomainInspector> GetDomainInspectorMock()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			orm.Setup(
 				dm =>
 				dm.IsEntity(It.Is<Type>(t => (new[] { typeof(MyClass), typeof(Related), typeof(Bidirectional) }).Contains(t)))).Returns(true);
@@ -149,6 +152,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		private Mock<IDomainInspector> GetDomainInspectorMockForBaseTests()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			orm.Setup(
 				dm =>
 				dm.IsEntity(It.Is<Type>(t => (new[] { typeof(Contact), typeof(JobRecord) }).Contains(t)))).Returns(true);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using ConfOrm;
 using ConfOrm.NH;
 using ConfOrm.Patterns;
@@ -40,6 +41,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		public void WhenSingleCirsularRelationOnEntityThenNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			orm.Setup(dm => dm.IsEntity(It.Is<Type>(t => t == typeof(Node)))).Returns(true);
 			orm.Setup(dm => dm.IsManyToOne(typeof(Node), typeof(Node))).Returns(true);
 			orm.Setup(dm => dm.IsOneToMany(typeof(Node), typeof(Node))).Returns(true);
@@ -53,6 +55,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		public void WhenSingleCirsularRelationOnComponentThenNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			orm.Setup(dm => dm.IsOneToMany(typeof(Node), typeof(Node))).Returns(true);
 
 			var applier = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
@@ -64,6 +67,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		public void WhenSingleCirsularRelationOnPolymorphicComponentThenNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			orm.Setup(dm => dm.IsEntity(It.Is<Type>(t => t == typeof(PolyNode)))).Returns(true);
 			orm.Setup(dm => dm.IsComponent(typeof(INode))).Returns(true);
 			orm.Setup(dm => dm.IsOneToMany(typeof(PolyNode), typeof(INode))).Returns(true);
@@ -77,6 +81,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		public void WhenDoubleCirsularRelationOnPolymorphicComponentThenNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			orm.Setup(dm => dm.IsEntity(It.Is<Type>(t => t == typeof(PolyNodeDouble)))).Returns(true);
 			orm.Setup(dm => dm.IsComponent(typeof(INode))).Returns(true);
 			orm.Setup(dm => dm.IsOneToMany(typeof(PolyNodeDouble), typeof(INode))).Returns(true);

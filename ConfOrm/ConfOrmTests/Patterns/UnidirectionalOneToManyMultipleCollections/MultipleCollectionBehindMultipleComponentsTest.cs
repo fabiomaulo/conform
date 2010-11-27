@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Reflection;
 using ConfOrm;
 using ConfOrm.Mappers;
 using ConfOrm.NH;
@@ -34,6 +35,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		private Mock<IDomainInspector> GetDomainInspectorMockForBaseTests()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			orm.Setup(
 				dm =>
 				dm.IsEntity(It.Is<Type>(t => (new[] { typeof(Contact), typeof(JobRecord) }).Contains(t)))).Returns(true);
