@@ -30,6 +30,7 @@ namespace ConfOrmTests.Patterns
 		public void WhenCircularThenOneToManyMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			var pattern = new BidirectionalOneToManyCascadeApplier(orm.Object);
 			pattern.Match(subnodesProperty).Should().Be.True();
 		}
@@ -38,6 +39,7 @@ namespace ConfOrmTests.Patterns
 		public void WhenCircularThenManyToOneNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			var pattern = new BidirectionalOneToManyCascadeApplier(orm.Object);
 			pattern.Match(parentProperty).Should().Be.False();
 		}

@@ -43,7 +43,7 @@ namespace ConfOrm.Patterns
 				return false;
 			}
 
-			return HasCollectionOf(one, many) && many.HasPublicPropertyOf(one);
+			return HasCollectionOf(one, many) && many.HasPublicPropertyOf(one, p=> DomainInspector.IsPersistentProperty(p));
 		}
 
 		#endregion

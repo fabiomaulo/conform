@@ -33,6 +33,8 @@ namespace ConfOrmTests.Patterns
 		public void MatchOneToMany()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
+
 			var pattern = new BidirectionalOneToManyMemberPattern(orm.Object);
 			pattern.Match(parentChildren).Should().Be.True();
 		}
@@ -41,6 +43,7 @@ namespace ConfOrmTests.Patterns
 		public void NoMatchManyToOne()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			var pattern = new BidirectionalOneToManyMemberPattern(orm.Object);
 			pattern.Match(childParent).Should().Be.False();
 		}
@@ -49,6 +52,7 @@ namespace ConfOrmTests.Patterns
 		public void NoMatchManyToMany()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			orm.Setup(o => o.IsManyToMany(It.IsAny<Type>(), It.IsAny<Type>())).Returns(true);
 			var pattern = new BidirectionalOneToManyMemberPattern(orm.Object);
 			pattern.Match(childParent).Should().Be.False();
@@ -59,6 +63,7 @@ namespace ConfOrmTests.Patterns
 		public void NoMatchManyToManyInDictionaryValue()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			orm.Setup(o => o.IsManyToMany(It.IsAny<Type>(), It.IsAny<Type>())).Returns(true);
 			var pattern = new BidirectionalOneToManyMemberPattern(orm.Object);
 			pattern.Match(humanValueFriends).Should().Be.False();
@@ -68,6 +73,7 @@ namespace ConfOrmTests.Patterns
 		public void MatchOneToManyInDictionaryValue()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			var pattern = new BidirectionalOneToManyMemberPattern(orm.Object);
 			pattern.Match(humanValueFriends).Should().Be.False();
 		}

@@ -34,6 +34,7 @@ namespace ConfOrmTests.Patterns
 		public void WhenCircularThenOneToManyMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			var pattern = new BidirectionalOneToManyCascadeApplier(orm.Object);
 			pattern.Match(subnodesProperty).Should().Be.True();
 		}
@@ -42,6 +43,7 @@ namespace ConfOrmTests.Patterns
 		public void WhenCircularThenManyToOneNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			var pattern = new BidirectionalOneToManyCascadeApplier(orm.Object);
 			pattern.Match(parentProperty).Should().Be.False();
 		}
@@ -50,6 +52,7 @@ namespace ConfOrmTests.Patterns
 		public void WhenNoCircularThenOneToManyMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			var pattern = new BidirectionalOneToManyCascadeApplier(orm.Object);
 			pattern.Match(ForClass<Parent>.Property(p=> p.Children)).Should().Be.True();
 		}
@@ -58,6 +61,7 @@ namespace ConfOrmTests.Patterns
 		public void WhenNoCircularThenManyToOneNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			var pattern = new BidirectionalOneToManyCascadeApplier(orm.Object);
 			pattern.Match(ForClass<Child>.Property(c=> c.Parent)).Should().Be.False();
 		}
@@ -66,6 +70,7 @@ namespace ConfOrmTests.Patterns
 		public void ApplyAlwaysReturnCascade()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			var pattern = new BidirectionalOneToManyCascadeApplier(orm.Object);
 			var collectionMapping = new Mock<ICollectionPropertiesMapper>();
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using ConfOrm;
 using ConfOrm.Patterns;
 using Moq;
@@ -29,6 +30,7 @@ namespace ConfOrmTests.Patterns
 		public void MatchOneToMany()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			var pattern = new BidirectionalOneToManyPattern(orm.Object);
 			pattern.Match(new Relation(typeof (Parent), typeof (Child))).Should().Be.True();
 		}
@@ -37,6 +39,7 @@ namespace ConfOrmTests.Patterns
 		public void NoMatchManyToOne()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			var pattern = new BidirectionalOneToManyPattern(orm.Object);
 			pattern.Match(new Relation(typeof(Child), typeof(Parent))).Should().Be.False();
 		}
@@ -45,6 +48,7 @@ namespace ConfOrmTests.Patterns
 		public void NoMatchManyToMany()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			orm.Setup(o => o.IsManyToMany(It.IsAny<Type>(), It.IsAny<Type>())).Returns(true);
 			var pattern = new BidirectionalOneToManyPattern(orm.Object);
 			pattern.Match(new Relation(typeof(Child), typeof(Parent))).Should().Be.False();
@@ -55,6 +59,7 @@ namespace ConfOrmTests.Patterns
 		public void NoMatchManyToManyInDictionaryValue()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			orm.Setup(o => o.IsManyToMany(It.IsAny<Type>(), It.IsAny<Type>())).Returns(true);
 			var pattern = new BidirectionalOneToManyPattern(orm.Object);
 			pattern.Match(new Relation(typeof(HumanValue), typeof(HumanValue))).Should().Be.False();
@@ -64,8 +69,19 @@ namespace ConfOrmTests.Patterns
 		public void MatchOneToManyInDictionaryValue()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			var pattern = new BidirectionalOneToManyPattern(orm.Object);
 			pattern.Match(new Relation(typeof(HumanValue), typeof(HumanValue))).Should().Be.False();
+		}
+
+		[Test]
+		public void WhenParentPropExclusionThenNoMatch()
+		{
+			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
+			orm.Setup(x => x.IsPersistentProperty(It.Is<MemberInfo>(p => ForClass<Child>.Property(c => c.Parent).Equals(p)))).Returns(false);
+			var pattern = new BidirectionalOneToManyPattern(orm.Object);
+			pattern.Match(new Relation(typeof(Parent), typeof(Child))).Should().Be.False();
 		}
 	}
 }
