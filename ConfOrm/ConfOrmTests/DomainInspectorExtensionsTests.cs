@@ -1,3 +1,4 @@
+using System;
 using ConfOrm;
 using Moq;
 using NUnit.Framework;
@@ -61,6 +62,23 @@ namespace ConfOrmTests
 			orm.Setup(x => x.IsEntity(typeof(MyComponent))).Returns(false);
 
 			orm.Object.GetRootEntity(typeof (MyComponent)).Should().Be.Null();
+		}
+
+		[Test]
+		public void WhenNullDomainInspectorThenThrows()
+		{
+			Executing.This(() => typeof(InheritedEntity).GetRootEntity(null)).Should().Throw<ArgumentNullException>();
+		}
+
+		[Test]
+		public void WhenInheritedEntityUsingTypeThenReturnRoot()
+		{
+			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsEntity(typeof(MainEntity))).Returns(true);
+			orm.Setup(x => x.IsRootEntity(typeof(MainEntity))).Returns(true);
+			orm.Setup(x => x.IsEntity(typeof(InheritedEntity))).Returns(true);
+
+			typeof(InheritedEntity).GetRootEntity(orm.Object).Should().Be(typeof(MainEntity));
 		}
 	}
 }
