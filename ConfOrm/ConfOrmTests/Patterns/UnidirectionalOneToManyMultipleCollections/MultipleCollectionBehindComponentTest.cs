@@ -102,6 +102,18 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			return orm;
 		}
 
+		private Mock<IDomainInspector> GetDomainInspectorMockWithBidiPropExclusion()
+		{
+			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.Is<MemberInfo>(m => !m.Equals(ForClass<Bidirectional>.Property(y => y.MyClass))))).Returns(true);
+			orm.Setup(
+				dm =>
+				dm.IsEntity(It.Is<Type>(t => (new[] { typeof(MyClass), typeof(Related), typeof(Bidirectional) }).Contains(t)))).Returns(true);
+			orm.Setup(dm => dm.IsComponent(It.Is<Type>(t => t == typeof(Component)))).Returns(true);
+			orm.Setup(dm => dm.IsOneToMany(typeof(MyClass), It.Is<Type>(t => (new[] { typeof(Related), typeof(Bidirectional) }).Contains(t)))).Returns(true);
+			return orm;
+		}
+
 		[Test]
 		public void WhenCollectionBidirectionalThenNoMatch()
 		{
@@ -109,6 +121,15 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			var pattern = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
 			var property = new PropertyPath(null, ForClass<MyClass>.Property(mc => mc.Children));
 			pattern.Match(property).Should().Be.False();
+		}
+
+		[Test]
+		public void WhenCollectionSeemsBidirectionalWithPropExclusionThenMatch()
+		{
+			var orm = GetDomainInspectorMockWithBidiPropExclusion();
+			var pattern = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
+			var property = new PropertyPath(null, ForClass<MyClass>.Property(mc => mc.Children));
+			pattern.Match(property).Should().Be.True();
 		}
 
 		[Test]
@@ -137,6 +158,15 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			var pattern = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
 			var property = new PropertyPath(null, ForClass<MyClass>.Property(mc => mc.DicChildren));
 			pattern.Match(property).Should().Be.False();
+		}
+
+		[Test]
+		public void WhenDictionarySeemsBidirectionalWithPropExclusionThenMatch()
+		{
+			var orm = GetDomainInspectorMockWithBidiPropExclusion();
+			var pattern = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
+			var property = new PropertyPath(null, ForClass<MyClass>.Property(mc => mc.DicChildren));
+			pattern.Match(property).Should().Be.True();
 		}
 
 		[Test]

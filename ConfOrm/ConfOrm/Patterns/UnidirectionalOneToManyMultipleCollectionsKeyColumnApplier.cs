@@ -67,7 +67,7 @@ namespace ConfOrm.Patterns
 
 		private bool IsUnidirectionalOneToMany(Type from, Type to)
 		{
-			return DomainInspector.IsOneToMany(from, to) && to.GetFirstPropertyOfType(from) == null;
+			return DomainInspector.IsOneToMany(from, to) && to.GetFirstPropertyOfType(from, p=> DomainInspector.IsPersistentProperty(p)) == null;
 		}
 
 		public void Apply(PropertyPath subject, ICollectionPropertiesMapper applyTo)
@@ -93,7 +93,7 @@ namespace ConfOrm.Patterns
 
 		protected bool HasMultipleCollectionOf(Type collectionOwner, Type elementType, ref int collectionCount)
 		{
-			foreach (var propertyType in collectionOwner.GetProperties(PublicPropertiesOfClassHierarchy).Select(p => p.PropertyType))
+			foreach (var propertyType in collectionOwner.GetProperties(PublicPropertiesOfClassHierarchy).Where(p=> DomainInspector.IsPersistentProperty(p)).Select(p => p.PropertyType))
 			{
 				if (!propertyType.Equals(elementType) && DomainInspector.IsComponent(propertyType))
 				{
