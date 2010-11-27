@@ -35,5 +35,17 @@ namespace ConfOrmTests.Patterns.PolymorphismBidirectionalOneToManyTests.PatternT
 			var pattern = new PolymorphismBidirectionalOneToManyMemberPattern(orm);
 			pattern.Match(ForClass<Parent>.Property(x => x.Children)).Should().Be.True();
 		}
+
+		[Test]
+		public void WhenInterfaceOnParentAndPropertyExclusionThenNoMatch()
+		{
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass<Parent>();
+			orm.TablePerClass<Child>();
+			orm.ExcludeProperty<Child>(c=> c.Parent);
+
+			var pattern = new PolymorphismBidirectionalOneToManyMemberPattern(orm);
+			pattern.Match(ForClass<Parent>.Property(x => x.Children)).Should().Be.False();
+		}
 	}
 }

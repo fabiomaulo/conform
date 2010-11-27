@@ -59,7 +59,7 @@ namespace ConfOrm.Patterns
 			List<Type> candidateAncestorsOfOne = GetCandidateAncestorsOf(one).ToList();
 
 			bool isPolymorphicRelation = !declaredMany.Equals(many) || !declaredOne.Equals(one) || candidateAncestorsOfOne.Count > 0;
-			return isPolymorphicRelation && (many.HasPublicPropertyOf(one) || HasPublicPropertyOf(many, candidateAncestorsOfOne));
+			return isPolymorphicRelation && (many.HasPublicPropertyOf(one, p=> DomainInspector.IsPersistentProperty(p)) || HasPublicPropertyOf(many, candidateAncestorsOfOne));
 		}
 
 		protected IEnumerable<Type> GetCandidateAncestorsOf(Type one)
@@ -72,7 +72,7 @@ namespace ConfOrm.Patterns
 
 		protected bool HasPublicPropertyOf(Type many, IEnumerable<Type> candidateAncestors)
 		{
-			return candidateAncestors.Any(candidateAncestor => many.HasPublicPropertyOf(candidateAncestor));
+			return candidateAncestors.Any(candidateAncestor => many.HasPublicPropertyOf(candidateAncestor, p => DomainInspector.IsPersistentProperty(p)));
 		}
 
 		protected IEnumerable<Relation> GetRelations(MemberInfo subject)
