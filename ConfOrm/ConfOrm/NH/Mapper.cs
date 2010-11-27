@@ -796,7 +796,7 @@ namespace ConfOrm.NH
 			private string GetParentColumnNameInChild()
 			{
 				MemberInfo propertyInfo = domainInspector.GetBidirectionalMember(ownerType, member, collectionElementType) ??
-				                          collectionElementType.GetProperties(FlattenHierarchyBindingFlags).FirstOrDefault(p => p.PropertyType.IsAssignableFrom(ownerType));
+				                          collectionElementType.GetProperties(FlattenHierarchyBindingFlags).FirstOrDefault(p => p.PropertyType.IsAssignableFrom(ownerType) && domainInspector.IsPersistentProperty(p));
 				if (propertyInfo != null)
 				{
 					return propertyInfo.Name;
