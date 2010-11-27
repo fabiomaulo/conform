@@ -296,16 +296,25 @@ namespace ConfOrm
 
 		public static MemberInfo GetFirstPropertyOfType(this Type propertyContainerType, Type propertyType, BindingFlags bindingFlags)
 		{
+			return GetFirstPropertyOfType(propertyContainerType, propertyType, bindingFlags, x => true);
+		}
+
+		public static MemberInfo GetFirstPropertyOfType(this Type propertyContainerType, Type propertyType, BindingFlags bindingFlags, Func<PropertyInfo, bool> acceptPropertyClauses)
+		{
+			if (acceptPropertyClauses == null)
+			{
+				throw new ArgumentNullException("acceptPropertyClauses");
+			}
 			if (propertyContainerType == null || propertyType == null)
 			{
 				return null;
 			}
 			var propertyInfos = propertyContainerType.GetProperties(bindingFlags);
-			if(propertyInfos == null)
+			if (propertyInfos == null)
 			{
 				return null;
 			}
-			return propertyInfos.FirstOrDefault(p => p.PropertyType == propertyType);
+			return propertyInfos.FirstOrDefault(p => acceptPropertyClauses(p) && propertyType.Equals(p.PropertyType));
 		}
 
 		public static IEnumerable<MemberInfo> GetInterfaceProperties(this Type type)

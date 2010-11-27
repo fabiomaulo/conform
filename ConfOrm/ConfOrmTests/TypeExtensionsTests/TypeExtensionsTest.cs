@@ -154,5 +154,20 @@ namespace ConfOrmTests.TypeExtensionsTests
 			// excluding System.Object
 			typeof(MyEntity).GetHierarchyFromBase().Should().Have.SameSequenceAs(typeof(AbstractEntity<int>), typeof(BaseEntity), typeof(MyEntity));
 		}
+
+		[Test]
+		public void GetFirstPropertyOfType_WhenDelegateIsNullThenThrow()
+		{
+			var myType = typeof(Array);
+			Executing.This(()=> myType.GetFirstPropertyOfType(typeof(int), BindingFlagsIncludePrivate, null)).Should().Throw<ArgumentNullException>();
+		}
+
+		[Test]
+		public void GetFirstPropertyOfType_WhenAsDelegateThenUseDelegateToFilterProperties()
+		{
+			typeof (MyBaseClass).GetFirstPropertyOfType(typeof (string), BindingFlags.Public | BindingFlags.Instance, x => false).Should().Be.Null();
+			typeof (MyBaseClass).GetFirstPropertyOfType(typeof (string), BindingFlags.Public | BindingFlags.Instance, x => true).Should().Be(
+				typeof (MyBaseClass).GetProperty("BaseProperty"));
+		}
 	}
 }
