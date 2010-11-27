@@ -410,5 +410,10 @@ namespace ConfOrm
 		{
 			return GetFirstPropertyOfType(source, typeOfProperty, PublicPropertiesOfClassHierarchy) != null;
 		}
+
+		public static bool HasPublicPropertyOf(this Type source, Type typeOfProperty, Func<PropertyInfo, bool> acceptPropertyClauses)
+		{
+			return GetFirstPropertyOfType(source, typeOfProperty, PublicPropertiesOfClassHierarchy, acceptPropertyClauses) != null;
+		}
 	}
 }

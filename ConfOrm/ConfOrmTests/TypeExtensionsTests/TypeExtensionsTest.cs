@@ -169,5 +169,12 @@ namespace ConfOrmTests.TypeExtensionsTests
 			typeof (MyBaseClass).GetFirstPropertyOfType(typeof (string), BindingFlags.Public | BindingFlags.Instance, x => true).Should().Be(
 				typeof (MyBaseClass).GetProperty("BaseProperty"));
 		}
+
+		[Test]
+		public void HasPublicPropertyOf_WhenAsDelegateThenUseDelegateToFilterProperties()
+		{
+			typeof(MyBaseClass).HasPublicPropertyOf(typeof(string), x => false).Should().Be.False();
+			typeof(MyBaseClass).HasPublicPropertyOf(typeof(string), x => true).Should().Be.True();
+		}
 	}
 }
