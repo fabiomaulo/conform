@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Reflection;
 using ConfOrm;
 using ConfOrm.Patterns;
 using Moq;
@@ -70,6 +71,7 @@ namespace ConfOrmTests.Patterns
 		private Mock<IDomainInspector> GetDomainInspectorMock()
 		{
 			var orm = new Mock<IDomainInspector>();
+			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			orm.Setup(
 				dm =>
 				dm.IsEntity(It.Is<Type>(t => (new[] {typeof (MyClass), typeof (Related), typeof (Bidirectional)}).Contains(t)))).Returns(true);
