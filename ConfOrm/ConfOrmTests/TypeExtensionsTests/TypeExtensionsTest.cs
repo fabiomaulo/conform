@@ -49,11 +49,38 @@ namespace ConfOrmTests.TypeExtensionsTests
 		}
 
 		[Test]
+		public void DecodeMemberAccessExpressionShouldReturnMemberOfDeclaringClass()
+		{
+			ConfOrm.TypeExtensions.DecodeMemberAccessExpression<MyClass>(mc => mc.BaseProperty).Satisfy(
+				mi => mi.ReflectedType == typeof(MyBaseClass) && mi.DeclaringType == typeof(MyBaseClass));
+			ConfOrm.TypeExtensions.DecodeMemberAccessExpression<MyClass>(mc => mc.BaseBool).Satisfy(
+				mi => mi.ReflectedType == typeof(MyBaseClass) && mi.DeclaringType == typeof(MyBaseClass));
+		}
+
+		[Test]
+		public void GenericDecodeMemberAccessExpressionShouldReturnMemberOfDeclaringClass()
+		{
+			ConfOrm.TypeExtensions.DecodeMemberAccessExpression<MyClass, string>(mc => mc.BaseProperty).Satisfy(
+				mi => mi.ReflectedType == typeof(MyBaseClass) && mi.DeclaringType == typeof(MyBaseClass));
+			ConfOrm.TypeExtensions.DecodeMemberAccessExpression<MyClass, bool>(mc => mc.BaseBool).Satisfy(
+				mi => mi.ReflectedType == typeof(MyBaseClass) && mi.DeclaringType == typeof(MyBaseClass));
+		}
+
+		[Test]
 		public void DecodeMemberAccessExpressionOfShouldReturnMemberOfRequiredClass()
 		{
 			ConfOrm.TypeExtensions.DecodeMemberAccessExpressionOf<MyClass>(mc => mc.BaseProperty).Satisfy(
 				mi => mi.ReflectedType == typeof (MyClass) && mi.DeclaringType == typeof (MyBaseClass));
 			ConfOrm.TypeExtensions.DecodeMemberAccessExpressionOf<MyClass>(mc => mc.BaseBool).Satisfy(
+				mi => mi.ReflectedType == typeof(MyClass) && mi.DeclaringType == typeof(MyBaseClass));
+		}
+
+		[Test]
+		public void GenericDecodeMemberAccessExpressionOfShouldReturnMemberOfRequiredClass()
+		{
+			ConfOrm.TypeExtensions.DecodeMemberAccessExpressionOf<MyClass, string>(mc => mc.BaseProperty).Satisfy(
+				mi => mi.ReflectedType == typeof(MyClass) && mi.DeclaringType == typeof(MyBaseClass));
+			ConfOrm.TypeExtensions.DecodeMemberAccessExpressionOf<MyClass, bool>(mc => mc.BaseBool).Satisfy(
 				mi => mi.ReflectedType == typeof(MyClass) && mi.DeclaringType == typeof(MyBaseClass));
 		}
 
