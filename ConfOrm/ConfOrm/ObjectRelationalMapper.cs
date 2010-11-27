@@ -130,6 +130,15 @@ namespace ConfOrm
 		public virtual void Complex<TComplex>()
 		{
 			var type = typeof(TComplex);
+			Complex(type);
+		}
+
+		public void Complex(Type type)
+		{
+			if (type == null)
+			{
+				throw new ArgumentNullException("type");
+			}
 			explicitDeclarations.ComplexTypes.Add(type);
 		}
 

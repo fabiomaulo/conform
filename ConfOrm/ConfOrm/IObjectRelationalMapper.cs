@@ -16,6 +16,7 @@ namespace ConfOrm
 		
 		void Component<TComponent>();
 		void Complex<TComplex>();
+		void Complex(Type type);
 
 		/// <summary>
 		/// Exclude (jump) a class from a entity's hierarchy
