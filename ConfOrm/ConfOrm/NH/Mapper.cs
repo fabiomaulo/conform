@@ -1134,9 +1134,14 @@ namespace ConfOrm.NH
 
 		public void TypeDef<TComplex, TUserType>() where TUserType: IUserType
 		{
-			AddPropertyPattern(mi => mi.GetPropertyOrFieldType() == typeof(TComplex), pm => pm.Type<TUserType>());
-			PatternsAppliers.Element.Add(new CustomUserTypeInCollectionElementApplier(typeof(TComplex), typeof(TUserType)));
-			PatternsAppliers.MapKey.Add(new CustomUserTypeInDictionaryKeyApplier(typeof(TComplex), typeof(TUserType)));
+			TypeDef(typeof(TComplex), typeof(TUserType));
+		}
+
+		public void TypeDef(Type typeOfComplex, Type typeOfCustomPersistentType)
+		{
+			AddPropertyPattern(mi => mi.GetPropertyOrFieldType() == typeOfComplex, pm => pm.Type(typeOfCustomPersistentType, null));
+			PatternsAppliers.Element.Add(new CustomUserTypeInCollectionElementApplier(typeOfComplex, typeOfCustomPersistentType));
+			PatternsAppliers.MapKey.Add(new CustomUserTypeInDictionaryKeyApplier(typeOfComplex, typeOfCustomPersistentType));
 		}
 	}
 }
