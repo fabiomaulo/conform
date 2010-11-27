@@ -8,6 +8,7 @@ namespace ConfOrm
 		private static readonly Dictionary<Type, Func<object, object>> Converters;
 		static EnumUtil()
 		{
+			//The approved types for an enum are byte, sbyte, short, ushort, int, uint, long, or ulong.
 			Converters = new Dictionary<Type, Func<object, object>>
 			             	{
 			             		{typeof (int), x => Convert.ToInt32(x)},
@@ -35,11 +36,7 @@ namespace ConfOrm
 			{
 				throw new ArgumentException("enumType is not an Enum.");
 			}
-			Func<object, object> converter;
-			if(!Converters.TryGetValue(Enum.GetUnderlyingType(enumType), out converter))
-			{
-				throw new ArgumentException("Unknown how convert the underlying type of " + enumType.FullName, "enumType");
-			}
+			Func<object, object> converter = Converters[Enum.GetUnderlyingType(enumType)];
 			return converter(Enum.Parse(enumType, enumValueName));
 		}
 	}

@@ -85,6 +85,7 @@
     <Compile Include="DoubleBidirectionalTests\DoubleParentOnCollectionOfComponentTest.cs" />
     <Compile Include="DoubleBidirectionalTests\DoubleParentOnComponentTest.cs" />
     <Compile Include="DoubleBidirectionalTests\OneToManyTests.cs" />
+    <Compile Include="EntitiesTypesTests.cs" />
     <Compile Include="ForClassTest.cs" />
     <Compile Include="GetMemberFromInterfacesTest.cs" />
     <Compile Include="InterfaceAsRelation\Case1.cs" />
