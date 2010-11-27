@@ -315,10 +315,6 @@ namespace ConfOrm
 				return null;
 			}
 			var propertyInfos = propertyContainerType.GetProperties(bindingFlags);
-			if (propertyInfos == null)
-			{
-				return null;
-			}
 			return propertyInfos.FirstOrDefault(p => acceptPropertyClauses(p) && propertyType.Equals(p.PropertyType));
 		}
 
