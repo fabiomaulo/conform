@@ -45,7 +45,7 @@ namespace ConfOrm.UsageExamples
 		{
 			string baseDir = AppDomain.CurrentDomain.BaseDirectory;
 			string relativeSearchPath = AppDomain.CurrentDomain.RelativeSearchPath;
-			string binPath = Path.Combine(baseDir, relativeSearchPath);
+			string binPath = relativeSearchPath != null ? Path.Combine(baseDir, relativeSearchPath): baseDir;
 			string mappingsFolderPath = Path.Combine(binPath, "Mappings");
 
 			if (!Directory.Exists(mappingsFolderPath))
