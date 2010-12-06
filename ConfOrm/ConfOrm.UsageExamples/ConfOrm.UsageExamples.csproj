@@ -58,6 +58,8 @@
     <Compile Include="InflectorNaming\Demo.cs" />
     <Compile Include="InterfacePolymorphism\Demo.cs" />
     <Compile Include="InterfacePolymorphism\Domain.cs" />
+    <Compile Include="StringProperty\Demo.cs" />
+    <Compile Include="StringProperty\Domain.cs" />
     <Compile Include="TableAndColumnNaming\ComponentPropertyColumnNameApplier.cs" />
     <Compile Include="TableAndColumnNaming\Demo.cs" />
     <Compile Include="CreateXmlMappingsInBinFolder\ConfOrmInitializer.cs" />
