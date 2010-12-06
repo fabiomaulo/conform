@@ -123,6 +123,7 @@
     <Compile Include="PolymorphismRelationsTests\CaseWithHierarchyTest.cs" />
     <Compile Include="PolymorphismRelationsTests\SimpleCaseWithoutComplexHierarchyTest.cs" />
     <Compile Include="PolymorphismRelationsTests\CaseWithComplexHierarchyTest.cs" />
+    <Compile Include="TypeExtensionsTests\CompatibilityWithCandidatePersistentMembers.cs" />
     <Compile Include="TypeExtensionsTests\GetFirstImplementorConcreteClassesTest.cs">
       <SubType>Code</SubType>
     </Compile>

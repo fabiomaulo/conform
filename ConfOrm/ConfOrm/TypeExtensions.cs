@@ -291,12 +291,12 @@ namespace ConfOrm
 
 		public static MemberInfo GetFirstPropertyOfType(this Type propertyContainerType, Type propertyType)
 		{
-			return GetFirstPropertyOfType(propertyContainerType, propertyType, BindingFlags.Public | BindingFlags.Instance);
+			return GetFirstPropertyOfType(propertyContainerType, propertyType, BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
 		}
 
 		public static MemberInfo GetFirstPropertyOfType(this Type propertyContainerType, Type propertyType, Func<PropertyInfo, bool> acceptPropertyClauses)
 		{
-			return GetFirstPropertyOfType(propertyContainerType, propertyType, BindingFlags.Public | BindingFlags.Instance, acceptPropertyClauses);
+			return GetFirstPropertyOfType(propertyContainerType, propertyType, BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic, acceptPropertyClauses);
 		}
 
 		public static MemberInfo GetFirstPropertyOfType(this Type propertyContainerType, Type propertyType, BindingFlags bindingFlags)
