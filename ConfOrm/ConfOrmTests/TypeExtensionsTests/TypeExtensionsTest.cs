@@ -160,7 +160,7 @@ namespace ConfOrmTests.TypeExtensionsTests
 		public void GetFirstPropertyOfType_WhenPropertyNotExistThenNull()
 		{
 			typeof (MyBaseClass).GetFirstPropertyOfType(typeof (float)).Should().Be.Null();
-			typeof (MyBaseClass).GetFirstPropertyOfType(typeof (double)).Should().Be.Null();
+			// typeof (MyBaseClass).GetFirstPropertyOfType(typeof (double)).Should().Be.Null(); <= by default check private prop.
 		}
 
 		private interface IMyEntity : IEntity<Guid>
