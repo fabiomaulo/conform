@@ -289,5 +289,18 @@ namespace ConfOrmTests.NH
 			mapper.Insert(false);
 			hbm.insert.Should().Be.False();
 		}
+
+		[Test]
+		public void CanSetFk()
+		{
+			var hbmMapping = new HbmMapping();
+			var member = typeof(MyClass).GetProperty("Relation");
+			var hbm = new HbmManyToOne();
+			var mapper = new ManyToOneMapper(member, hbm, hbmMapping);
+
+			mapper.ForeignKey("MyFkName");
+
+			hbm.foreignkey.Should().Be("MyFkName");
+		}
 	}
 }

@@ -207,5 +207,18 @@ namespace ConfOrmTests.NH
 			mapping.Lazy.Should().Have.Value();
 			mapping.Lazy.Should().Be(HbmRestrictedLaziness.Proxy);
 		}
+
+		[Test]
+		public void CanSetFk()
+		{
+			var hbmMapping = new HbmMapping();
+			var member = typeof(MyComponent).GetProperty("Relation");
+			var hbm = new HbmKeyManyToOne();
+			var mapper = new KeyManyToOneMapper(member, hbm, hbmMapping);
+
+			mapper.ForeignKey("MyFkName");
+
+			hbm.foreignkey.Should().Be("MyFkName");
+		}
 	}
 }

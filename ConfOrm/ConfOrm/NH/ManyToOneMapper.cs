@@ -113,6 +113,11 @@ namespace ConfOrm.NH
 			manyToOne.insert = consideredInInsertQuery;
 		}
 
+		public void ForeignKey(string foreignKeyName)
+		{
+			manyToOne.foreignkey = foreignKeyName;
+		}
+
 		#endregion
 
 		#region Implementation of IAccessorPropertyMapper

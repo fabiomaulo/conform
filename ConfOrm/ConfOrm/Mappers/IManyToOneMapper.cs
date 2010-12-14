@@ -23,5 +23,6 @@ namespace ConfOrm.Mappers
 		void Lazy(LazyRelation lazyRelation);
 		void Update(bool consideredInUpdateQuery);
 		void Insert(bool consideredInInsertQuery);
+		void ForeignKey(string foreignKeyName);
 	}
 }

@@ -112,6 +112,11 @@ namespace ConfOrm.NH
 			// not supported by HbmKeyManyToOne
 		}
 
+		public void ForeignKey(string foreignKeyName)
+		{
+			manyToOne.foreignkey = foreignKeyName;
+		}
+
 		#endregion
 
 		#region Implementation of IAccessorPropertyMapper
