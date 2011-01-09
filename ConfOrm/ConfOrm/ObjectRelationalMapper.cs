@@ -85,7 +85,7 @@ namespace ConfOrm
 		{
 			if (explicitDeclarations.Components.Contains(type))
 			{
-				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
+				throw new MappingException("Ambiguous type registered as component and as entity; type:" + type);
 			}
 		}
 
@@ -122,7 +122,7 @@ namespace ConfOrm
 			var type = typeof(TComponent);
 			if(IsEntity(type))
 			{
-				throw new MappingException("Ambiguos type registered as component and as entity; type:" + type);
+				throw new MappingException("Ambiguous type registered as component and as entity; type:" + type);
 			}
 			explicitDeclarations.Components.Add(type);
 		}
