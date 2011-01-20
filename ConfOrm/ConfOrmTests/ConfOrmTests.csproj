@@ -105,6 +105,8 @@
     <Compile Include="Mappers\JoinedSubclassMapperTests\SetPersisterTests.cs" />
     <Compile Include="Mappers\SubclassMapperTests\SetPersisterTests.cs" />
     <Compile Include="Mappers\UnionSubclassMapperTests\SetPersisterTests.cs" />
+    <Compile Include="NH\Customizers\UnionSubclassCustomizerTest.cs" />
+    <Compile Include="NH\Customizers\JoinedSubclassCustomizerTest.cs" />
     <Compile Include="NH\Customizers\SubclassCustomizerTest.cs" />
     <Compile Include="ObjectRelationalMapperTests\BidirectionalRegistrationTests.cs" />
     <Compile Include="ObjectRelationalMapperTests\RegisteringComplexTypeTest.cs" />
