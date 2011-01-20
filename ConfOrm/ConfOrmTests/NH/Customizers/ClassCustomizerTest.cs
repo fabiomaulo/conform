@@ -3,6 +3,7 @@ using ConfOrm.Mappers;
 using ConfOrm.NH;
 using ConfOrm.NH.CustomizersImpl;
 using Moq;
+using NHibernate.Persister.Entity;
 using NUnit.Framework;
 
 namespace ConfOrmTests.NH.Customizers
@@ -43,5 +44,17 @@ namespace ConfOrmTests.NH.Customizers
 			classMapper.Verify(x => x.SchemaAction(SchemaAction.None));
 		}
 
+		[Test]
+		public void InvokeSetOfPersister()
+		{
+			var customizersHolder = new CustomizersHolder();
+			var customizer = new ClassCustomizer<MyClass>(customizersHolder);
+			var classMapper = new Mock<IClassAttributesMapper>();
+
+			customizer.Persister<SingleTableEntityPersister>();
+			customizersHolder.InvokeCustomizers(typeof(MyClass), classMapper.Object);
+
+			classMapper.Verify(x => x.Persister<SingleTableEntityPersister>());
+		}
 	}
 }
