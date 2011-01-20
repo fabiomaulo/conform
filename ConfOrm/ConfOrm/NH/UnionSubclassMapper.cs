@@ -78,6 +78,7 @@ namespace ConfOrm.NH
 
 		public void Persister<T>() where T : IEntityPersister
 		{
+			classMapping.persister = typeof(T).GetShortClassName(MapDoc);
 		}
 
 		#endregion
