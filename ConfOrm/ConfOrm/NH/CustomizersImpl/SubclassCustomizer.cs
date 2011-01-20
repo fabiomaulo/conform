@@ -52,6 +52,7 @@ namespace ConfOrm.NH.CustomizersImpl
 
 		public void Persister<T>() where T : IEntityPersister
 		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.Persister<T>());
 		}
 
 		#endregion
