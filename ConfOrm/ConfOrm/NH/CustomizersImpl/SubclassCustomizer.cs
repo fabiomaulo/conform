@@ -1,5 +1,6 @@
 using System;
 using ConfOrm.Mappers;
+using NHibernate.Persister.Entity;
 
 namespace ConfOrm.NH.CustomizersImpl
 {
@@ -47,6 +48,10 @@ namespace ConfOrm.NH.CustomizersImpl
 		public void SelectBeforeUpdate(bool value)
 		{
 			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.SelectBeforeUpdate(value));
+		}
+
+		public void Persister<T>() where T : IEntityPersister
+		{
 		}
 
 		#endregion

@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Persister.Entity;
 
 namespace ConfOrm.NH
 {
@@ -73,6 +74,10 @@ namespace ConfOrm.NH
 		public void SelectBeforeUpdate(bool value)
 		{
 			classMapping.selectbeforeupdate = value;
+		}
+
+		public void Persister<T>() where T : IEntityPersister
+		{
 		}
 
 		#endregion

@@ -1,4 +1,5 @@
 using System;
+using NHibernate.Persister.Entity;
 
 namespace ConfOrm.Mappers
 {
@@ -11,5 +12,6 @@ namespace ConfOrm.Mappers
 		void DynamicInsert(bool value);
 		void BatchSize(int value);
 		void SelectBeforeUpdate(bool value);
+		void Persister<T>() where T : IEntityPersister;
 	}
 }
