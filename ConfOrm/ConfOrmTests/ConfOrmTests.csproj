@@ -102,6 +102,7 @@
     <Compile Include="InterfaceAsRelation\Case1BidirectionalOneToManyInterfaceOnParent.cs" />
     <Compile Include="InterfaceAsRelation\Domain.cs" />
     <Compile Include="Mappers\ClassMapperTests\SetPersisterTests.cs" />
+    <Compile Include="Mappers\SubclassMapperTests\SetPersisterTests.cs" />
     <Compile Include="ObjectRelationalMapperTests\BidirectionalRegistrationTests.cs" />
     <Compile Include="ObjectRelationalMapperTests\RegisteringComplexTypeTest.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyInverseApplierTests.cs" />
