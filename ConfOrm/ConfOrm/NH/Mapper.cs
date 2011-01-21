@@ -891,7 +891,8 @@ namespace ConfOrm.NH
 						patternsAppliersHolder.Component.ApplyAllMatchs(componentType, x);
 						customizersHolder.InvokeCustomizers(componentType, x);
 
-						MapProperties(componentType, x, persistentProperties.Where(pi => pi != parentReferenceProperty));
+						PropertyPath propertyPath = null;
+						MapProperties(componentType, propertyPath, x, persistentProperties.Where(pi => pi != parentReferenceProperty));
 					});
 			}
 
@@ -907,14 +908,14 @@ namespace ConfOrm.NH
 				return properties.Where(p => domainInspector.IsPersistentProperty(p));
 			}
 
-			private void MapProperties(Type type, IComponentElementMapper propertiesContainer, IEnumerable<MemberInfo> persistentProperties)
+			private void MapProperties(Type type, PropertyPath memberPath, IComponentElementMapper propertiesContainer, IEnumerable<MemberInfo> persistentProperties)
 			{
 				// TODO check PropertyPath behaviour when the component is in a collection
 				foreach (var property in persistentProperties)
 				{
 					var member = property;
 					var propertyType = property.GetPropertyOrFieldType();
-					var propertyPath = new PropertyPath(null, member);
+					var propertyPath = new PropertyPath(memberPath, member);
 
 					if (domainInspector.IsManyToOne(type, propertyType))
 					{
@@ -949,7 +950,7 @@ namespace ConfOrm.NH
 								customizersHolder.InvokeCustomizers(componentPropertyType, x);
 								customizersHolder.InvokeCustomizers(propertyPath, x);
 
-								MapProperties(componentPropertyType, x, componentProperties.Where(pi => pi != parentReferenceProperty));
+								MapProperties(componentPropertyType, propertyPath, x, componentProperties.Where(pi => pi != parentReferenceProperty));
 							});
 					}
 					else

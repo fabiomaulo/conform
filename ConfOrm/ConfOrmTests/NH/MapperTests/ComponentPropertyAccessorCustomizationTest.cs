@@ -94,5 +94,24 @@ namespace ConfOrmTests.NH.MapperTests
 			component.access.Should().Contain("field");
 		}
 
+		[Test, Description("issue CfgORM-20")]
+		public void WhenCustomizeNestedCompositeElementPropertiesThenExecuteTheCustomizationOnTheSpecificMemberPath()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+
+			var domainInspector = orm.Object;
+			var mapper = new Mapper(domainInspector);
+
+			mapper.Component<ComponentLevel0>(cm => cm.Component(myclass => myclass.ComponentLevel1, compo => compo.Property(cl1=> cl1.SomethingElse, m=> m.Column("MyColName"))));
+
+			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(MyClass) });
+			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("MyClass"));
+			var collection = (HbmBag)rc.Properties.First(p => p.Name == "Components");
+			var relation = (HbmCompositeElement)collection.ElementRelationship;
+			relation.Should().Be.OfType<HbmCompositeElement>();
+			var component = (HbmNestedCompositeElement)relation.Properties.First(p => p.Name == "ComponentLevel1");
+			var property = (HbmProperty)component.Properties.First(p => p.Name == "SomethingElse");
+			property.column.Should().Be("MyColName");
+		}
 	}
 }
