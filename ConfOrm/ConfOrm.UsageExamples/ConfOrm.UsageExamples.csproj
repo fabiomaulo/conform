@@ -55,6 +55,8 @@
     <Compile Include="ClassExclusion\MovementDetail.cs" />
     <Compile Include="ClassExclusion\Outcome.cs" />
     <Compile Include="ClassExclusion\OutcomeDetail.cs" />
+    <Compile Include="CustomMulticolumnsType\LoveEvent.cs" />
+    <Compile Include="CustomMulticolumnsType\Demo.cs" />
     <Compile Include="InflectorNaming\Demo.cs" />
     <Compile Include="InterfacePolymorphism\Demo.cs" />
     <Compile Include="InterfacePolymorphism\Domain.cs" />
