@@ -46,7 +46,7 @@ namespace ConfOrm.UsageExamples.CustomMulticolumnsType
 
 			var mapper = new Mapper(orm);
 
-			// In this case I'm using the customizer for the specific property
+			// In this case I'm using a PatternApplier (directly with delegates instead a specific class) to define the persistent representation of the bool array
 			mapper.AddPropertyPattern(mi => typeof(bool[]).Equals(mi.GetPropertyOrFieldType()) && mi.Name.Contains("Days"), (mi, pm) =>
 			{
 				pm.Type(typeof(MulticolumnsBoolArrayType), new { ArraySize = DaysOfTheWeekColumnsNames.Length });
