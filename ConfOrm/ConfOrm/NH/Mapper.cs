@@ -537,7 +537,21 @@ namespace ConfOrm.NH
 			// To ensure that a customizer is called just once I can't use a set because all customizers
 			// needs to be called in a certain sequence starting from the most general (interfaces) to the
 			// most specific (on progressivePath).
-			// I can use some if.
+
+			// There are three levels of direct-customization of a property of the class under-mapping:
+			// 1) at interface level
+			// 2) at class implementation level
+			// 3) at inherited class implementation level
+			// After these three levels we have a special behavior for componets mapping.
+			// As example :
+			// We three components classes named C1, C2, C3. The C1 has a property of C2 and C2 has a property of C3.
+			// Given a class X with a collection or a property of type C1 we can customize C3 starting from:
+			// a) C3 itself (the cases 1-2-3 above)
+			// b) from C2
+			// c) from C1 then from C2
+			// d) from the collection in X then C1 then from C2
+			// The full-progressive-path of the property is : X.Collection->C1.C2.C3.MyProp
+			// I have to execute the customization at each possible level (a,b,c,d).
 
 			// paths on interfaces (note: when a property is the implementation of more then one interface a specific order can't be applied...AFAIK)
 			var propertiesOnInterfaces = member.GetPropertyFromInterfaces();
