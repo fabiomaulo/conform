@@ -553,6 +553,8 @@ namespace ConfOrm.NH
 			// The full-progressive-path of the property is : X.Collection->C1.C2.C3.MyProp
 			// I have to execute the customization at each possible level (a,b,c,d).
 
+			var invokedPaths = new HashSet<PropertyPath>();
+
 			// paths on interfaces (note: when a property is the implementation of more then one interface a specific order can't be applied...AFAIK)
 			var propertiesOnInterfaces = member.GetPropertyFromInterfaces();
 			foreach (var propertyOnInterface in propertiesOnInterfaces)
@@ -565,17 +567,21 @@ namespace ConfOrm.NH
 			var propertyPathLevel0 = new PropertyPath(null, member.GetMemberFromDeclaringType());
 			// path on reflected type
 			var propertyPathLevel1 = new PropertyPath(null, member);
-			//full path
-			var propertyPathLevel2 = progressivePath;
 
-			invoke(propertyPathLevel0);
+			invoke(propertyPathLevel0); invokedPaths.Add(propertyPathLevel0);
+
 			if(!propertyPathLevel0.Equals(propertyPathLevel1))
 			{
-				invoke(propertyPathLevel1);
+				invoke(propertyPathLevel1); invokedPaths.Add(propertyPathLevel1);
 			}
-			if(!propertyPathLevel2.Equals(propertyPathLevel0) && !propertyPathLevel2.Equals(propertyPathLevel1))
+
+			foreach (var propertyPath in progressivePath.InverseProgressivePath())
 			{
-				invoke(propertyPathLevel2);
+				if (!invokedPaths.Contains(propertyPath))
+				{
+					invoke(propertyPath);
+					invokedPaths.Add(propertyPath);
+				}
 			}
 		}
 
@@ -601,7 +607,7 @@ namespace ConfOrm.NH
 					PatternsAppliers.ComponentProperty.ApplyAllMatchs(member, componentMapper);
 					PatternsAppliers.ComponentPropertyPath.ApplyAllMatchs(memberPath, componentMapper);
 					customizerHolder.InvokeCustomizers(componentType, componentMapper);
-					customizerHolder.InvokeCustomizers(memberPath, componentMapper);
+					ForEachMemberPath(member, memberPath, pp=> customizerHolder.InvokeCustomizers(pp, componentMapper));
 
 					MapProperties(propertyType, persistentProperties.Where(pi => pi != parentReferenceProperty), componentMapper, memberPath);
 				});
@@ -962,7 +968,7 @@ namespace ConfOrm.NH
 								patternsAppliersHolder.ComponentProperty.ApplyAllMatchs(member, x);
 								patternsAppliersHolder.ComponentPropertyPath.ApplyAllMatchs(propertyPath, x);
 								customizersHolder.InvokeCustomizers(componentPropertyType, x);
-								customizersHolder.InvokeCustomizers(propertyPath, x);
+								mapper.ForEachMemberPath(member, propertyPath, pp => customizersHolder.InvokeCustomizers(pp, x));
 
 								MapProperties(componentPropertyType, propertyPath, x, componentProperties.Where(pi => pi != parentReferenceProperty));
 							});
