@@ -81,5 +81,28 @@ namespace ConfOrmTests.NH.MapperTests.NestedComponetInCollectionCustomization
 			property.column.Should().Be("MyColName");
 		}
 
+		[Test]
+		public void WhenCustomizeNestedCompositeElementPropertiesAt3thLevelThenExecuteTheCustomizationOnTheSpecificMemberPath()
+		{
+			Mock<IDomainInspector> orm = GetMockedDomainInspector();
+
+			var domainInspector = orm.Object;
+			var mapper = new Mapper(domainInspector);
+
+			mapper.Component<ComponentLevel0>(cm =>
+				cm.Component(myclass => myclass.ComponentLevel1, 
+					c1m=> c1m.Component(c1 => c1.ComponentLevel2, compo => compo.Property(cl1 => cl1.Something2, m => m.Column("MyColName"))))
+				);
+
+			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(MyClass) });
+			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("MyClass"));
+			var collection = (HbmBag)rc.Properties.First(p => p.Name == "Components");
+			var relation = (HbmCompositeElement)collection.ElementRelationship;
+			relation.Should().Be.OfType<HbmCompositeElement>();
+			var component1 = (HbmNestedCompositeElement)relation.Properties.First(p => p.Name == "ComponentLevel1");
+			var component2 = (HbmNestedCompositeElement)component1.Properties.First(p => p.Name == "ComponentLevel2");
+			var property = (HbmProperty)component2.Properties.First(p => p.Name == "Something2");
+			property.column.Should().Be("MyColName");
+		}
 	}
 }
