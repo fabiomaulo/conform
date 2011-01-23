@@ -891,7 +891,7 @@ namespace ConfOrm.NH
 						patternsAppliersHolder.Component.ApplyAllMatchs(componentType, x);
 						customizersHolder.InvokeCustomizers(componentType, x);
 
-						PropertyPath propertyPath = null;
+						PropertyPath propertyPath = new PropertyPath(null, collectionMember);
 						MapProperties(componentType, propertyPath, x, persistentProperties.Where(pi => pi != parentReferenceProperty));
 					});
 			}

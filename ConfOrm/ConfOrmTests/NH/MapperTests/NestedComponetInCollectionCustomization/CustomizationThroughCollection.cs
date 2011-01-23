@@ -11,6 +11,9 @@ using SharpTestsEx;
 
 namespace ConfOrmTests.NH.MapperTests.NestedComponetInCollectionCustomization
 {
+	/// <summary>
+	/// customization of nested components through the customization of the collection which elements are components
+	/// </summary>
 	public class CustomizationThroughCollection
 	{
 		private class MyClass
