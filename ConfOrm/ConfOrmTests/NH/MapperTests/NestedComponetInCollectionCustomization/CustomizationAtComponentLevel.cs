@@ -3,34 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ConfOrm;
-using ConfOrm.Mappers;
 using ConfOrm.NH;
 using Moq;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
 using SharpTestsEx;
 
-namespace ConfOrmTests.NH.MapperTests
+namespace ConfOrmTests.NH.MapperTests.NestedComponetInCollectionCustomization
 {
-	public class ComponentPropertyAccessorCustomizationTest
+	public class CustomizationAtComponentLevel
 	{
 		private class MyClass
 		{
 			public int Id { get; set; }
-			private ComponentLevel0 componentLevel0;
-
-			public ComponentLevel0 ComponentLevel0
-			{
-				get { return componentLevel0; }
-			}
-
 			public IEnumerable<ComponentLevel0> Components { get; set; }
 		}
 
 		private class ComponentLevel0
 		{
 			private ComponentLevel1 componentLevel1;
-			public string Something { get; set; }
+			public string Something0 { get; set; }
 
 			public ComponentLevel1 ComponentLevel1
 			{
@@ -40,7 +32,18 @@ namespace ConfOrmTests.NH.MapperTests
 
 		private class ComponentLevel1
 		{
-			public string SomethingElse { get; set; }
+			private ComponentLevel2 componentLevel2;
+			public string Something1 { get; set; }
+
+			public ComponentLevel2 ComponentLevel2
+			{
+				get { return componentLevel2; }
+			}
+		}
+
+		private class ComponentLevel2
+		{
+			public string Something2 { get; set; }
 		}
 
 		private Mock<IDomainInspector> GetMockedDomainInspector()
@@ -54,36 +57,19 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsBag(It.Is<MemberInfo>(mi => mi == ForClass<MyClass>.Property(mc => mc.Components)))).Returns(true);
 			orm.Setup(m => m.IsComponent(It.Is<Type>(t => t == typeof(ComponentLevel0)))).Returns(true);
 			orm.Setup(m => m.IsComponent(It.Is<Type>(t => t == typeof(ComponentLevel1)))).Returns(true);
+			orm.Setup(m => m.IsComponent(It.Is<Type>(t => t == typeof(ComponentLevel2)))).Returns(true);
 			return orm;
 		}
 
-		[Test]
-		public void WhenCustomizeAccessorForComponentThenMapToField()
+		[Test, Description("issue CfgORM-20")]
+		public void WhenCustomizeNestedCompositeElementPropertiesThenExecuteTheCustomizationOnTheSpecificMemberPath()
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();
 
 			var domainInspector = orm.Object;
 			var mapper = new Mapper(domainInspector);
 
-			mapper.Class<MyClass>(cm=> cm.Component(myclass=> myclass.ComponentLevel0, compo=> compo.Access(Accessor.Field)));
-			
-			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(MyClass) });
-			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("MyClass"));
-			var relation = rc.Properties.First(p => p.Name == "ComponentLevel0");
-			relation.Should().Be.OfType<HbmComponent>();
-			var component = (HbmComponent)relation;
-			component.access.Should().Contain("field");
-		}
-
-		[Test]
-		public void WhenCustomizeNestedCompositeElementAccessorThenMapToField()
-		{
-			Mock<IDomainInspector> orm = GetMockedDomainInspector();
-
-			var domainInspector = orm.Object;
-			var mapper = new Mapper(domainInspector);
-
-			mapper.Component<ComponentLevel0>(cm => cm.Component(myclass => myclass.ComponentLevel1, compo => compo.Access(Accessor.Field)));
+			mapper.Component<ComponentLevel0>(cm => cm.Component(myclass => myclass.ComponentLevel1, compo => compo.Property(cl1 => cl1.Something1, m => m.Column("MyColName"))));
 
 			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(MyClass) });
 			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("MyClass"));
@@ -91,7 +77,9 @@ namespace ConfOrmTests.NH.MapperTests
 			var relation = (HbmCompositeElement)collection.ElementRelationship;
 			relation.Should().Be.OfType<HbmCompositeElement>();
 			var component = (HbmNestedCompositeElement)relation.Properties.First(p => p.Name == "ComponentLevel1");
-			component.access.Should().Contain("field");
+			var property = (HbmProperty)component.Properties.First(p => p.Name == "Something1");
+			property.column.Should().Be("MyColName");
 		}
+
 	}
 }
