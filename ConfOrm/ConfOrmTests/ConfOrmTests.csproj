@@ -110,6 +110,7 @@
     <Compile Include="NH\Customizers\SubclassCustomizerTest.cs" />
     <Compile Include="NH\MapperTests\NestedComponetInCollectionCustomization\CustomizationAtComponentLevel.cs" />
     <Compile Include="NH\MapperTests\NestedComponetInCollectionCustomization\CustomizationThroughCollection.cs" />
+    <Compile Include="NH\PropertyPathExtensionsInversePropertyPath.cs" />
     <Compile Include="ObjectRelationalMapperTests\BidirectionalRegistrationTests.cs" />
     <Compile Include="ObjectRelationalMapperTests\RegisteringComplexTypeTest.cs" />
     <Compile Include="Patterns\BidirectionalOneToManyInverseApplierTests.cs" />
