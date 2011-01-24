@@ -58,6 +58,11 @@ namespace ConfOrm.NH.CustomizersImpl
 			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.OrderBy(member));
 		}
 
+		public void OrderBy(string sqlOrderByClause)
+		{
+			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.OrderBy(sqlOrderByClause));
+		}
+
 		public void Sort()
 		{
 			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.Sort());

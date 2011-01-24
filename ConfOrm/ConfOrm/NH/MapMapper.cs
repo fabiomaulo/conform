@@ -119,6 +119,11 @@ namespace ConfOrm.NH
 			mapping.orderby = property.Name;
 		}
 
+		public void OrderBy(string sqlOrderByClause)
+		{
+			mapping.orderby = sqlOrderByClause;
+		}
+
 		public void Sort()
 		{
 			mapping.sort = "natural";

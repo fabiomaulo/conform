@@ -14,6 +14,7 @@ namespace ConfOrm.Mappers
 		void Lazy(CollectionLazy collectionLazy);
 		void Key(Action<IKeyMapper> keyMapping);
 		void OrderBy(MemberInfo property);
+		void OrderBy(string sqlOrderByClause);
 		void Sort();
 		void Sort<TComparer>();
 		void Cascade(Cascade cascadeStyle);
@@ -37,6 +38,7 @@ namespace ConfOrm.Mappers
 		void Lazy(CollectionLazy collectionLazy);
 		void Key(Action<IKeyMapper<TEntity>> keyMapping);
 		void OrderBy<TProperty>(Expression<Func<TElement, TProperty>> property);
+		void OrderBy(string sqlOrderByClause);
 		void Sort();
 		void Sort<TComparer>();
 		void Cascade(Cascade cascadeStyle);
