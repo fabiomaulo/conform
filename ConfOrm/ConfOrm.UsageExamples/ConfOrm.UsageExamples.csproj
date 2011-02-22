@@ -55,6 +55,10 @@
     <Compile Include="ClassExclusion\MovementDetail.cs" />
     <Compile Include="ClassExclusion\Outcome.cs" />
     <Compile Include="ClassExclusion\OutcomeDetail.cs" />
+    <Compile Include="CustomAttributeUsage\CourseList.cs" />
+    <Compile Include="CustomAttributeUsage\Demo.cs" />
+    <Compile Include="CustomAttributeUsage\IdAttribute.cs" />
+    <Compile Include="CustomAttributeUsage\PoidByAttributePattern.cs" />
     <Compile Include="CustomMulticolumnsType\LoveEvent.cs" />
     <Compile Include="CustomMulticolumnsType\Demo.cs" />
     <Compile Include="InflectorNaming\Demo.cs" />
