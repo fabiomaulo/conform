@@ -21,7 +21,7 @@ namespace ConfOrm.UsageExamples.CustomAttributeUsage
 		}
 
 		[Test, Explicit]
-		public void UsageOfAttributeToSpecifyUsingDelegatesThePoID()
+		public void UsageOfAttributeToSpecifyThePoIDUsingDelegates()
 		{
 			var orm = new ObjectRelationalMapper();
 			orm.Patterns.Poids.Add(mi => mi.GetCustomAttributes(typeof(IdAttribute), true).Any());
