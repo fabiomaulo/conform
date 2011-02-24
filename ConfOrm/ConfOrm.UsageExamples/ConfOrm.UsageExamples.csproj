@@ -56,6 +56,8 @@
     <Compile Include="ClassExclusion\MovementDetail.cs" />
     <Compile Include="ClassExclusion\Outcome.cs" />
     <Compile Include="ClassExclusion\OutcomeDetail.cs" />
+    <Compile Include="ComponentAsDictionaryKey\Demo.cs" />
+    <Compile Include="ComponentAsDictionaryKey\Domain.cs" />
     <Compile Include="CustomAttributeUsage\CourseList.cs" />
     <Compile Include="CustomAttributeUsage\Demo.cs" />
     <Compile Include="CustomAttributeUsage\IdAttribute.cs" />
