@@ -14,7 +14,7 @@ namespace ConfOrm.UsageExamples.HighLowPerEntity
 	public class Demo
 	{
 		[Test, Explicit]
-		public void ComposingPatternsAppliersPacksUsingInflector()
+		public void HighLowCustomization()
 		{
 			// In this example you can see how configure the HighLowPoidPattern with a per hierarchy 'where' clause
 
