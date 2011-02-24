@@ -1,9 +1,11 @@
+using System;
 using System.Reflection;
 
 namespace ConfOrm.Patterns
 {
 	public class HighLowPoidPattern : PoidIntPattern, IPatternValueGetter<MemberInfo, IPersistentIdStrategy>
 	{
+		private readonly Func<MemberInfo, object> parametersGetter;
 		private readonly object parameters;
 		public HighLowPoidPattern() {}
 		public HighLowPoidPattern(object parameters)
@@ -11,10 +13,23 @@ namespace ConfOrm.Patterns
 			this.parameters = parameters;
 		}
 
+		public HighLowPoidPattern(Func<MemberInfo,object> parametersGetter)
+		{
+			if (parametersGetter == null)
+			{
+				throw new ArgumentNullException("parametersGetter");
+			}
+			this.parametersGetter = parametersGetter;
+		}
+
 		#region Implementation of IPatternApplier<MemberInfo,IPersistentIdStrategy>
 
 		public IPersistentIdStrategy Get(MemberInfo element)
 		{
+			if (parametersGetter != null)
+			{
+				return new HighLowIdStrategy { Params = parametersGetter(element) };
+			}
 			return new HighLowIdStrategy {Params = parameters};
 		}
 

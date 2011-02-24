@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using ConfOrm;
 using ConfOrm.Patterns;
 using NUnit.Framework;
@@ -44,6 +45,21 @@ namespace ConfOrmTests.Patterns
 		public void ApplyHasHighLowGeneratorParams()
 		{
 			var pattern = new HighLowPoidPattern(new {max_lo = 99});
+			pattern.Get(typeof(TestEntity).GetProperty("Int")).Satisfy(
+				poidi => poidi.Strategy == PoIdStrategy.HighLow && poidi.Params != null);
+		}
+
+		[Test]
+		public void WhenUseNullFuncThenThrows()
+		{
+			Func<MemberInfo, object> wrong = null;
+			Executing.This(() => new HighLowPoidPattern(wrong)).Should().Throw<ArgumentNullException>();
+		}
+
+		[Test]
+		public void WhenCreateWithDelegateThenUseDelegateToCreateParams()
+		{
+			var pattern = new HighLowPoidPattern(x=> new { max_lo = 99 });
 			pattern.Get(typeof(TestEntity).GetProperty("Int")).Satisfy(
 				poidi => poidi.Strategy == PoIdStrategy.HighLow && poidi.Params != null);
 		}
