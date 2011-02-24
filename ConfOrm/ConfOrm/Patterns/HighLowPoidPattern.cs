@@ -24,7 +24,7 @@ namespace ConfOrm.Patterns
 
 		#region Implementation of IPatternApplier<MemberInfo,IPersistentIdStrategy>
 
-		public IPersistentIdStrategy Get(MemberInfo element)
+		public virtual IPersistentIdStrategy Get(MemberInfo element)
 		{
 			if (parametersGetter != null)
 			{
