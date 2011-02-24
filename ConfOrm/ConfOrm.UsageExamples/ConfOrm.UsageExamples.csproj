@@ -64,6 +64,8 @@
     <Compile Include="CustomAttributeUsage\StringLengthApplier.cs" />
     <Compile Include="CustomMulticolumnsType\LoveEvent.cs" />
     <Compile Include="CustomMulticolumnsType\Demo.cs" />
+    <Compile Include="HighLowPerEntity\Demo.cs" />
+    <Compile Include="HighLowPerEntity\Domain.cs" />
     <Compile Include="InflectorNaming\Demo.cs" />
     <Compile Include="InterfacePolymorphism\Demo.cs" />
     <Compile Include="InterfacePolymorphism\Domain.cs" />
