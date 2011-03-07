@@ -56,6 +56,7 @@ namespace ConfOrm.ShopTests.AppliersTests
 		[Test]
 		public void WhenNoMasterManyToManyCollectionWithBidirectionalSpecifiedThenApplyTableAlphabeticEntityWithPropertiesNames()
 		{
+			// does not have a specified Master-Slave
 			var orm = new Mock<IDomainInspector>();
 			orm.Setup(x => x.IsManyToMany(It.Is<Type>(t => t == typeof(Person)), It.Is<Type>(t => t == typeof(Book)))).Returns(true);
 			orm.Setup(x => x.IsManyToMany(It.Is<Type>(t => t == typeof(Book)), It.Is<Type>(t => t == typeof(Person)))).Returns(true);
