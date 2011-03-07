@@ -81,7 +81,7 @@ namespace ConfOrmTests.NH.MapperTests.MapKeyRelationCustomizersCalling
 		}
 
 
-		[Test, Ignore("Not fixed yet.")]
+		[Test]
 		public void WhenCustomizeComponentKeyPropertyThenInvokeCustomizers()
 		{
 			Mock<IDomainInspector> orm = GetMockedDomainInspector();

@@ -1014,7 +1014,7 @@ namespace ConfOrm.NH
 			}
 			if (domainInspector.IsComponent(dictionaryKeyType))
 			{
-				return new KeyComponentRelationMapper(dictionaryKeyType, membersProvider, domainInspector, PatternsAppliers, customizerHolder);
+				return new KeyComponentRelationMapper(dictionaryKeyType, propertyPath, membersProvider, domainInspector, PatternsAppliers, customizerHolder, this);
 			}
 			return new KeyElementRelationMapper(member, propertyPath, PatternsAppliers, customizerHolder);
 		}
@@ -1048,18 +1048,22 @@ namespace ConfOrm.NH
 		private class KeyComponentRelationMapper : IMapKeyRelationMapper
 		{
 			private readonly Type dictionaryKeyType;
+			private readonly PropertyPath propertyPath;
 			private readonly ICandidatePersistentMembersProvider membersProvider;
 			private readonly IDomainInspector domainInspector;
 			private readonly IPatternsAppliersHolder patternsAppliersHolder;
 			private readonly ICustomizersHolder customizersHolder;
+			private readonly Mapper mapper;
 
-			public KeyComponentRelationMapper(Type dictionaryKeyType, ICandidatePersistentMembersProvider membersProvider, IDomainInspector domainInspector, IPatternsAppliersHolder patternsAppliersHolder, ICustomizersHolder customizersHolder)
+			public KeyComponentRelationMapper(Type dictionaryKeyType, PropertyPath propertyPath, ICandidatePersistentMembersProvider membersProvider, IDomainInspector domainInspector, IPatternsAppliersHolder patternsAppliersHolder, ICustomizersHolder customizersHolder, Mapper mapper)
 			{
 				this.dictionaryKeyType = dictionaryKeyType;
+				this.propertyPath = propertyPath;
 				this.membersProvider = membersProvider;
 				this.domainInspector = domainInspector;
 				this.patternsAppliersHolder = patternsAppliersHolder;
 				this.customizersHolder = customizersHolder;
+				this.mapper = mapper;
 			}
 
 			public void Map(IMapKeyRelation relation)
@@ -1089,7 +1093,8 @@ namespace ConfOrm.NH
 						propertiesContainer.ManyToOne(member, manyToOneMapper =>
 						                                      	{
 																											patternsAppliersHolder.ManyToOne.ApplyAllMatchs(member, manyToOneMapper);
-																											customizersHolder.InvokeCustomizers(new PropertyPath(null, member), manyToOneMapper);
+																											var progressivePath = new PropertyPath(propertyPath, member);
+																											mapper.ForEachMemberPath(member, progressivePath, pp => customizersHolder.InvokeCustomizers(pp, manyToOneMapper));
 						                                      	});
 					}
 					else
@@ -1097,8 +1102,9 @@ namespace ConfOrm.NH
 						propertiesContainer.Property(member, propertyMapper =>
 						                                     	{
 																										patternsAppliersHolder.Property.ApplyAllMatchs(member, propertyMapper);
-																										customizersHolder.InvokeCustomizers(new PropertyPath(null, member), propertyMapper);
-						                                     	});
+																										var progressivePath = new PropertyPath(propertyPath, member);
+																										mapper.ForEachMemberPath(member, progressivePath, pp => customizersHolder.InvokeCustomizers(pp, propertyMapper));
+																									});
 					}
 				}
 			}

@@ -28,6 +28,8 @@ namespace ConfOrm.NH.CustomizersImpl
 
 		public void Component(Action<IComponentMapKeyMapper<TKey>> mapping)
 		{
+			var manyToManyCustomizer = new MapKeyComponentCustomizer<TKey>(propertyPath, customizersHolder);
+			mapping(manyToManyCustomizer);
 		}
 	}
 }
