@@ -26,5 +26,26 @@ namespace ConfOrm.UsageExamples.ComponentAsDictionaryKey
 			var mapping = mapper.CompileMappingFor(entities);
 			Console.Write(mapping.AsString());
 		}
+
+		[Test, Explicit]
+		public void LongWayCustomizationOfComponent()
+		{
+			var entities = new[] { typeof(Person), typeof(Skill) };
+			var orm = new ObjectRelationalMapper();
+			orm.TablePerClass(entities);
+			var mapper = new Mapper(orm, new CoolPatternsAppliersHolder(orm));
+			mapper.Class<Person>(cm =>
+								cm.Map(person => person.Skills, mapm => mapm.Table("PersonSkill"),
+					 mapk => mapk.Component(cmkm =>
+										 cmkm.ManyToOne(toyskill => toyskill.Skill,
+										 mtom =>
+										 {
+											 mtom.Column("SkillId");
+											 mtom.Fetch(FetchMode.Join);
+										 })),
+			cer => cer.Element(em => em.Column("Lel"))));
+			var mapping = mapper.CompileMappingFor(entities);
+			Console.Write(mapping.AsString());
+		}
 	}
 }
