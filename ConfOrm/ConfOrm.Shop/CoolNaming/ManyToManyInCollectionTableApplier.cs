@@ -7,9 +7,9 @@ namespace ConfOrm.Shop.CoolNaming
 	{
 		public ManyToManyInCollectionTableApplier(IDomainInspector domainInspector) : base(domainInspector) {}
 
-		public override string GetTableNameForRelation(string[] names)
+		public override string GetTableNameForRelation(Relation fromRelation, Relation toRelation)
 		{
-			return string.Format("{0}To{1}", names[0], names[1]);
+			return string.Format("{0}To{1}", fromRelation.From.Name, fromRelation.To.Name);
 		}
 
 		public override string GetTableNameForRelationOnProperty(RelationOn fromRelation, RelationOn toRelation)

@@ -18,9 +18,9 @@ namespace ConfOrm.Shop.DearDbaNaming
 			this.inflector = inflector;
 		}
 
-		public override string GetTableNameForRelation(string[] names)
+		public override string GetTableNameForRelation(Relation fromRelation, Relation toRelation)
 		{
-			return string.Format("{0}_{1}", inflector.Pluralize(names[0]), inflector.Pluralize(names[1])).ToUpperInvariant();
+			return string.Format("{0}_{1}", inflector.Pluralize(fromRelation.From.Name), inflector.Pluralize(fromRelation.To.Name)).ToUpperInvariant();
 		}
 
 		public override string GetTableNameForRelationOnProperty(RelationOn fromRelation, RelationOn toRelation)

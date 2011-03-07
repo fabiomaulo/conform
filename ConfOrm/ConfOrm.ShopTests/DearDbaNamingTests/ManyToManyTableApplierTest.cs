@@ -9,6 +9,14 @@ namespace ConfOrm.ShopTests.DearDbaNamingTests
 {
 	public class ManyToManyTableApplierTest
 	{
+		private class Person
+		{
+			
+		}
+		private class Role
+		{
+
+		}
 		[Test]
 		public void CtorProtection()
 		{
@@ -22,7 +30,7 @@ namespace ConfOrm.ShopTests.DearDbaNamingTests
 		{
 			var inflector = new EnglishInflector();
 			var applier = new ManyToManyPluralizedTableApplier((new Mock<IDomainInspector>()).Object, inflector);
-			applier.GetTableNameForRelation(new[] {"Person", "Role"}).Should().Be("PEOPLE_ROLES");
+			applier.GetTableNameForRelation(new Relation(typeof(Person), typeof(Role)), new Relation(typeof(Role), typeof(Person))).Should().Be("PEOPLE_ROLES");
 		}
 	}
 }
