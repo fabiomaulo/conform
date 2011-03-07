@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using ConfOrm.Mappers;
-using ConfOrm.NH;
-using ConfOrm.Shop.Appliers;
 using ConfOrm.Shop.NamingAppliers;
 
 namespace ConfOrm.Shop.CoolNaming
