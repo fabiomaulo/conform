@@ -74,7 +74,8 @@ namespace ConfOrm.Shop.NamingAppliers
 				RelationOn toRelation;
 				if (fromIsMaster == toIsMaster)
 				{
-					var orderedByEntityClassName = (from t in (new[] { new RelationOn(fromMany, subject.LocalMember, toMany), new RelationOn(toMany, explicitBidirectionalMember, fromMany) }) orderby t.From.Name select t).ToArray();
+					var twoRelationOn = new[] { new RelationOn(fromMany, subject.LocalMember, toMany), new RelationOn(toMany, explicitBidirectionalMember, fromMany) };
+					var orderedByEntityClassName = (from relationOn in twoRelationOn orderby relationOn.From.Name select relationOn).ToArray();
 					fromRelation = orderedByEntityClassName[0];
 					toRelation = orderedByEntityClassName[1];
 				}
