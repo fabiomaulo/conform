@@ -28,7 +28,7 @@ namespace ConfOrm.Shop.InflectorNaming
 			return string.Format("{0}To{1}", inflector.Pluralize(names[0]), inflector.Pluralize(names[1]));
 		}
 
-		public override string GetTableNameForRelationOnProperty(string masterMany, string slaveMany, string propertyNameOnMaster)
+		public override string GetTableNameForRelationOnProperty(RelationOn fromRelation, RelationOn toRelation)
 		{
 			throw new NotImplementedException();
 		}

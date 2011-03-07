@@ -70,14 +70,32 @@ namespace ConfOrm.Shop.NamingAppliers
 			}
 			else
 			{
-				string masterMany= fromIsMaster ? fromMany.Name: toMany.Name;
-				string slaveMany = fromIsMaster ? toMany.Name : fromMany.Name;
-				string propertyNameOnMaster = fromIsMaster ? subject.LocalMember.Name : explicitBidirectionalMember.Name;
-				return GetTableNameForRelationOnProperty(masterMany, slaveMany, propertyNameOnMaster);
+				RelationOn fromRelation;
+				RelationOn toRelation;
+				if (fromIsMaster == toIsMaster)
+				{
+					var orderedByEntityClassName = (from t in (new[] { new RelationOn(fromMany, subject.LocalMember, toMany), new RelationOn(toMany, explicitBidirectionalMember, fromMany) }) orderby t.From.Name select t).ToArray();
+					fromRelation = orderedByEntityClassName[0];
+					toRelation = orderedByEntityClassName[1];
+				}
+				else
+				{
+					if(fromIsMaster)
+					{
+						fromRelation = new RelationOn(fromMany, subject.LocalMember, toMany, Declared.Explicit);
+						toRelation = new RelationOn(toMany, explicitBidirectionalMember, fromMany, Declared.Implicit);
+					}
+					else
+					{
+						fromRelation = new RelationOn(toMany, explicitBidirectionalMember, fromMany, Declared.Explicit);
+						toRelation = new RelationOn(fromMany, subject.LocalMember, toMany, Declared.Implicit);
+					}
+				}
+				return GetTableNameForRelationOnProperty(fromRelation, toRelation);
 			}
 		}
 
 		public abstract string GetTableNameForRelation(string[] names);
-		public abstract string GetTableNameForRelationOnProperty(string masterMany, string slaveMany, string propertyNameOnMaster);
+		public abstract string GetTableNameForRelationOnProperty(RelationOn fromRelation, RelationOn toRelation);
 	}
 }

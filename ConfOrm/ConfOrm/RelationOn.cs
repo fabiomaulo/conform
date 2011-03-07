@@ -7,6 +7,17 @@ namespace ConfOrm
 	{
 		private readonly int hashCode;
 
+		public RelationOn(Type from, MemberInfo on, Type to, Declared declared)
+			: base(from, to, declared)
+		{
+			if (on == null)
+			{
+				throw new ArgumentNullException("on");
+			}
+			On = on;
+			hashCode = On.GetHashCode();
+		}
+
 		public RelationOn(Type from, MemberInfo on, Type to) : base(from, to)
 		{
 			if (on == null)

@@ -12,9 +12,16 @@ namespace ConfOrm.Shop.CoolNaming
 			return string.Format("{0}To{1}", names[0], names[1]);
 		}
 
-		public override string GetTableNameForRelationOnProperty(string masterMany, string slaveMany, string propertyNameOnMaster)
+		public override string GetTableNameForRelationOnProperty(RelationOn fromRelation, RelationOn toRelation)
 		{
-			return masterMany + propertyNameOnMaster;
+			if(fromRelation.DeclaredAs != toRelation.DeclaredAs)
+			{
+				return fromRelation.From.Name + fromRelation.On.Name;
+			}
+			else
+			{
+				return fromRelation.From.Name + fromRelation.On.Name + toRelation.From.Name + toRelation.On.Name;				
+			}
 		}
 	}
 }

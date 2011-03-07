@@ -23,7 +23,7 @@ namespace ConfOrm.Shop.DearDbaNaming
 			return string.Format("{0}_{1}", inflector.Pluralize(names[0]), inflector.Pluralize(names[1])).ToUpperInvariant();
 		}
 
-		public override string GetTableNameForRelationOnProperty(string masterMany, string slaveMany, string propertyNameOnMaster)
+		public override string GetTableNameForRelationOnProperty(RelationOn fromRelation, RelationOn toRelation)
 		{
 			throw new NotImplementedException();
 		}
