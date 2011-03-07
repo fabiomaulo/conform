@@ -54,18 +54,30 @@ namespace ConfOrm.Shop.NamingAppliers
 			bool fromIsMaster = DomainInspector.IsMasterManyToMany(fromMany, toMany);
 			bool toIsMaster = DomainInspector.IsMasterManyToMany(toMany, fromMany);
 			fromMany = subject.GetContainerEntity(DomainInspector);
-			string[] names;
-			if (fromIsMaster == toIsMaster)
+			var explicitBidirectionalMember = DomainInspector.GetBidirectionalMember(fromMany, subject.LocalMember, toMany);
+			if (explicitBidirectionalMember == null)
 			{
-				names = (from t in (new[] {fromMany, toMany}) orderby t.Name select t.Name).ToArray();
+				string[] names;
+				if (fromIsMaster == toIsMaster)
+				{
+					names = (from t in (new[] {fromMany, toMany}) orderby t.Name select t.Name).ToArray();
+				}
+				else
+				{
+					names = fromIsMaster ? new[] {fromMany.Name, toMany.Name} : new[] {toMany.Name, fromMany.Name};
+				}
+				return GetTableNameForRelation(names);
 			}
 			else
 			{
-				names = fromIsMaster ? new[] {fromMany.Name, toMany.Name} : new[] {toMany.Name, fromMany.Name};
+				string masterMany= fromIsMaster ? fromMany.Name: toMany.Name;
+				string slaveMany = fromIsMaster ? toMany.Name : fromMany.Name;
+				string propertyNameOnMaster = fromIsMaster ? subject.LocalMember.Name : explicitBidirectionalMember.Name;
+				return GetTableNameForRelationOnProperty(masterMany, slaveMany, propertyNameOnMaster);
 			}
-			return GetTableNameForRelation(names);
 		}
 
 		public abstract string GetTableNameForRelation(string[] names);
+		public abstract string GetTableNameForRelationOnProperty(string masterMany, string slaveMany, string propertyNameOnMaster);
 	}
 }

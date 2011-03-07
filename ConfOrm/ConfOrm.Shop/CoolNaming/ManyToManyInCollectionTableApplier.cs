@@ -1,3 +1,4 @@
+using System;
 using ConfOrm.Shop.NamingAppliers;
 
 namespace ConfOrm.Shop.CoolNaming
@@ -9,6 +10,11 @@ namespace ConfOrm.Shop.CoolNaming
 		public override string GetTableNameForRelation(string[] names)
 		{
 			return string.Format("{0}To{1}", names[0], names[1]);
+		}
+
+		public override string GetTableNameForRelationOnProperty(string masterMany, string slaveMany, string propertyNameOnMaster)
+		{
+			return masterMany + propertyNameOnMaster;
 		}
 	}
 }
