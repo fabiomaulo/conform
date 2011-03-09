@@ -17,8 +17,6 @@
   <ItemGroup Label="NHibernate dependencies">
     <NHibernateFiles Include="$(RootDir)\Lib\NHibernate.dll" />
     <NHibernateFiles Include="$(RootDir)\Lib\Iesi.Collections.dll" />
-    <NHibernateFiles Include="$(RootDir)\Lib\Antlr3.Runtime.dll" />
-    <NHibernateFiles Include="$(RootDir)\Lib\Remotion.Data.Linq.dll" />
   </ItemGroup>
 
   <Target Name = "Build" DependsOnTargets="RunBuild;CopyAllFilesToBuild"/>
