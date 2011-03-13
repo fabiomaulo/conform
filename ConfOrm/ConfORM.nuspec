@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package>
+  <metadata>
+    <id>ConfOrm</id>
+    <version>1.0.1.4</version>
+    <authors>Fabio Maulo, OSS community</authors>
+    <summary>ORM configuration by code.</summary>
+    <description>
+      ConfORM is a powerfull tool to integrate your domain with NHibernate, avoiding XML mappings.
+      Really strongly typed and based in well known mapping-patterns.
+    </description>
+    <language>en-US</language>
+    <tags>ORM, ObjectRelationalMapping, NHibernate</tags>
+    <projectUrl>http://code.google.com/p/codeconform/</projectUrl>
+    <licenseUrl>http://www.gnu.org/licenses/lgpl.html</licenseUrl>
+    <iconUrl>http://code.google.com/p/codeconform/logo?cct=1298449979</iconUrl>
+    <dependencies>
+      <dependency id="NHibernate" version="3.1.0.4000" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Build\NuDeploy\*" target="lib\Net35" />
+  </files>
+</package>
