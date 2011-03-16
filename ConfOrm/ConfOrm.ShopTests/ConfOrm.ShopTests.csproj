@@ -80,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppliersTests\AccessToPropertyWhereNoFiledApplierTests.cs" />
     <Compile Include="AppliersTests\AlwaysAccessToFieldWhereAvailableApplierTests.cs" />
     <Compile Include="AppliersTests\CollectionOfComponentsKeyColumnApplierTest.cs" />
     <Compile Include="AppliersTests\CollectionOfComponentsPatternTest.cs" />
