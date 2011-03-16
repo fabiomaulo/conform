@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlwaysAccessToField\Demo.cs" />
+    <Compile Include="AlwaysAccessToField\Domain.cs" />
     <Compile Include="ClassExclusion\Demo.cs" />
     <Compile Include="ClassExclusion\Income.cs" />
     <Compile Include="ClassExclusion\IncomeDetail.cs" />
@@ -125,6 +127,7 @@
   <ItemGroup>
     <None Include="EnumsVersionAndSoftDeleteUsingWhere\Domain\Domain.cd" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
