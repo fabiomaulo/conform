@@ -5,7 +5,7 @@ using NHibernate.UserTypes;
 
 namespace ConfOrm.Mappers
 {
-	public interface ICollectionPropertiesMapper: IEntityPropertyMapper
+	public interface ICollectionPropertiesMapper : IEntityPropertyMapper, ICollectionSqlsMapper
 	{
 		void Inverse(bool value);
 		void Mutable(bool value);

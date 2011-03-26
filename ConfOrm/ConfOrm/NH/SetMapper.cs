@@ -212,5 +212,59 @@ namespace ConfOrm.NH
 		}
 
 		#endregion
+
+		public void Loader(string namedQueryReference)
+		{
+			if (mapping.SqlLoader == null)
+			{
+				mapping.loader = new HbmLoader();
+			}
+			mapping.loader.queryref = namedQueryReference;
+		}
+
+		public void SqlInsert(string sql)
+		{
+			if (mapping.SqlInsert == null)
+			{
+				mapping.sqlinsert = new HbmCustomSQL();
+			}
+			mapping.sqlinsert.Text = new[] {sql};
+		}
+
+		public void SqlUpdate(string sql)
+		{
+			if (mapping.SqlUpdate == null)
+			{
+				mapping.sqlupdate = new HbmCustomSQL();
+			}
+			mapping.sqlupdate.Text = new[] {sql};
+		}
+
+		public void SqlDelete(string sql)
+		{
+			if (mapping.SqlDelete == null)
+			{
+				mapping.sqldelete = new HbmCustomSQL();
+			}
+			mapping.sqldelete.Text = new[] {sql};
+		}
+
+		public void SqlDeleteAll(string sql)
+		{
+			if (mapping.SqlDeleteAll == null)
+			{
+				mapping.sqldeleteall = new HbmCustomSQL();
+			}
+			mapping.sqldeleteall.Text = new[] { sql };
+		}
+
+		public void Subselect(string sql)
+		{
+			if (mapping.Subselect == null)
+			{
+				mapping.subselect = new HbmSubselect();
+			}
+			mapping.subselect.Text = new[] {sql};
+		}
 	}
 }

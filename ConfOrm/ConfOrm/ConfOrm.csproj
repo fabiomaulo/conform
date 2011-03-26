@@ -97,6 +97,7 @@
     <Compile Include="Mappers\IAnyMapper.cs" />
     <Compile Include="Mappers\IBagPropertiesMapper.cs" />
     <Compile Include="Mappers\ICacheMapper.cs" />
+    <Compile Include="Mappers\ICollectionSqlsMapper.cs" />
     <Compile Include="Mappers\IComponentMapKeyMapper.cs" />
     <Compile Include="Mappers\IElementMapper.cs" />
     <Compile Include="Mappers\IColumnMapper.cs" />
