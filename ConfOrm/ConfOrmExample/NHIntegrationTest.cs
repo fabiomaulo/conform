@@ -4,7 +4,6 @@ using System.Data;
 using System.Diagnostics;
 using ConfOrmExample.Domain;
 using NHibernate;
-using NHibernate.ByteCode.Castle;
 using NHibernate.Cfg;
 using NHibernate.Cfg.Loquacious;
 using NHibernate.Cfg.MappingSchema;
@@ -27,7 +26,6 @@ namespace ConfOrmExample
 			configure.Proxy(p =>
 			{
 				p.Validation = false;
-				p.ProxyFactoryFactory<ProxyFactoryFactory>();
 			});
 			configure.DataBaseIntegration(db =>
 			{
