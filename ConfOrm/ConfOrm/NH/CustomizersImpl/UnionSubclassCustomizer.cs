@@ -74,6 +74,11 @@ namespace ConfOrm.NH.CustomizersImpl
 			CustomizersHolder.AddCustomizer(typeof(TEntity), (IUnionSubclassAttributesMapper m) => m.SqlDelete(sql));
 		}
 
+		public void Subselect(string sql)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IUnionSubclassAttributesMapper m) => m.Subselect(sql));
+		}
+
 		#endregion
 
 		#region Implementation of IUnionSubclassAttributesMapper<TEntity>

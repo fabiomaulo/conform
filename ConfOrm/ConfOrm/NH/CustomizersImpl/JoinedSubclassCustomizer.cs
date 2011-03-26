@@ -83,6 +83,11 @@ namespace ConfOrm.NH.CustomizersImpl
 			CustomizersHolder.AddCustomizer(typeof(TEntity), (IJoinedSubclassAttributesMapper m) => m.SqlDelete(sql));
 		}
 
+		public void Subselect(string sql)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IJoinedSubclassAttributesMapper m) => m.Subselect(sql));
+		}
+
 		#endregion
 
 		#region Implementation of IJoinedSubclassAttributesMapper<TEntity>

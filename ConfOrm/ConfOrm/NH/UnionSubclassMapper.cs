@@ -121,6 +121,11 @@ namespace ConfOrm.NH
 			classMapping.sqldelete.Text = new[] { sql };
 		}
 
+		public void Subselect(string sql)
+		{
+			
+		}
+
 		#endregion
 
 		#region Implementation of IUnionSubclassAttributesMapper

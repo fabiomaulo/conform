@@ -6,5 +6,6 @@ namespace ConfOrm.Mappers
 		void SqlInsert(string sql);
 		void SqlUpdate(string sql);
 		void SqlDelete(string sql);
+		void Subselect(string sql);
 	}
 }

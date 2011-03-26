@@ -138,6 +138,11 @@ namespace ConfOrm.NH
 			classMapping.sqldelete.Text = new[] { sql };
 		}
 
+		public void Subselect(string sql)
+		{
+			
+		}
+
 		#endregion
 	}
 }
