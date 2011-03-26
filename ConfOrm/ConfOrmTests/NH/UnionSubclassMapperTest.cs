@@ -200,6 +200,20 @@ namespace ConfOrmTests.NH
 		}
 
 		[Test]
+		public void SetSqlSubselect()
+		{
+			var subClass = typeof(Inherited);
+			var mapdoc = new HbmMapping();
+			var mapper = new UnionSubclassMapper(subClass, mapdoc);
+			mapper.Subselect("blah");
+
+			var hbmEntity = mapdoc.UnionSubclasses[0];
+
+			hbmEntity.Subselect.Should().Not.Be.Null();
+			hbmEntity.subselect.Text[0].Should().Be("blah");
+		}
+
+		[Test]
 		public void WhenSetExtendsExplicitlyThenSetDifferentBaseType()
 		{
 			var subClass = typeof(Inherited2);

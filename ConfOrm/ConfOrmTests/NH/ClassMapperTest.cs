@@ -314,5 +314,18 @@ namespace ConfOrmTests.NH
 			var rc = new ClassMapper(typeof(EntityProxable), mapdoc, ForClass<EntityProxable>.Property(x => x.Id));
 			rc.Executing(m => m.Proxy(typeof(IAnotherInterface))).Throws<MappingException>();
 		}
+
+		[Test]
+		public void SetSqlSubselect()
+		{
+			var mapdoc = new HbmMapping();
+			var mapper = new ClassMapper(typeof(EntityProxable), mapdoc, ForClass<EntityProxable>.Property(x => x.Id));
+			mapper.Subselect("blah");
+
+			var hbmEntity = mapdoc.RootClasses[0];
+
+			hbmEntity.Subselect.Should().Not.Be.Null();
+			hbmEntity.subselect.Text[0].Should().Be("blah");
+		}
 	}
 }

@@ -127,7 +127,11 @@ namespace ConfOrm.NH
 
 		public void Subselect(string sql)
 		{
-			
+			if (classMapping.Subselect == null)
+			{
+				classMapping.subselect = new HbmSubselect();
+			}
+			classMapping.subselect.Text = new[] { sql };
 		}
 
 		#endregion
