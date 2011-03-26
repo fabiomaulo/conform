@@ -836,6 +836,21 @@
             <param name="ctorArgs">An array of constructor arguments.</param>
             <returns>A reference to the created object.</returns>
         </member>
+        <member name="T:NHibernate.Bytecode.IProxyFactoryFactory">
+            <summary> 
+            An interface for factories of <see cref="T:NHibernate.Proxy.IProxyFactory">proxy factory</see> instances.
+            </summary>
+            <remarks>
+            Used to abstract from the tupizer.
+            </remarks>
+        </member>
+        <member name="M:NHibernate.Bytecode.IProxyFactoryFactory.BuildProxyFactory">
+            <summary> 
+            Build a proxy factory specifically for handling runtime
+            lazy loading. 
+            </summary>
+            <returns> The lazy-load proxy factory. </returns>
+        </member>
         <member name="M:NHibernate.Bytecode.EmitUtil.EmitFastInt(System.Reflection.Emit.ILGenerator,System.Int32)">
             <summary>
             Emits an <c>ldc.i4</c> opcode using the fastest available opcode choice.
@@ -1091,21 +1106,6 @@
             <returns>
             A <see cref="T:NHibernate.Type.MapType"/> for the specified role.
             </returns>
-        </member>
-        <member name="T:NHibernate.Bytecode.IProxyFactoryFactory">
-            <summary> 
-            An interface for factories of <see cref="T:NHibernate.Proxy.IProxyFactory">proxy factory</see> instances.
-            </summary>
-            <remarks>
-            Used to abstract from the tupizer.
-            </remarks>
-        </member>
-        <member name="M:NHibernate.Bytecode.IProxyFactoryFactory.BuildProxyFactory">
-            <summary> 
-            Build a proxy factory specifically for handling runtime
-            lazy loading. 
-            </summary>
-            <returns> The lazy-load proxy factory. </returns>
         </member>
         <member name="T:NHibernate.Bytecode.NullBytecodeProvider">
             <summary>
@@ -6317,6 +6317,9 @@
         </member>
         <member name="F:NHibernate.Cfg.Environment.GenerateStatistics">
             <summary> Enable statistics collection</summary>
+        </member>
+        <member name="F:NHibernate.Cfg.Environment.OrderInserts">
+            <summary> Enable ordering of insert statements for the purpose of more effecient batching.</summary>
         </member>
         <member name="M:NHibernate.Cfg.Environment.VerifyProperties(System.Collections.Generic.IDictionary{System.String,System.String})">
             <summary>
@@ -11984,6 +11987,13 @@
             <param name="scale">The datatype scale </param>
             <returns>The database type name used by ddl.</returns>
         </member>
+        <member name="M:NHibernate.Dialect.Dialect.GetLongestTypeName(System.Data.DbType)">
+            <summary>
+            Gets the name of the longest registered type for a particular DbType.
+            </summary>
+            <param name="dbType"></param>
+            <returns></returns>
+        </member>
         <member name="M:NHibernate.Dialect.Dialect.GetCastTypeName(NHibernate.SqlTypes.SqlType)">
             <summary> 
             Get the name of the database type appropriate for casting operations
@@ -12714,6 +12724,11 @@
         </member>
         <member name="P:NHibernate.Dialect.Dialect.SupportsUniqueConstraintInCreateAlterTable">
             <summary> Does this dialect support adding Unique constraints via create and alter table ?</summary>
+        </member>
+        <member name="P:NHibernate.Dialect.Dialect.SupportsForeignKeyConstraintInAlterTable">
+            <summary>
+            Does this dialect support adding foreign key constraints via alter table?  If not, it's assumed they can only be added through create table.
+            </summary>
         </member>
         <member name="P:NHibernate.Dialect.Dialect.SupportsIfExistsBeforeTableName">
             <summary>
@@ -13563,10 +13578,6 @@
             		<description>Default Value</description>
             	</listheader>
             	<item>
-            		<term>use_outer_join</term>
-            		<description><see langword="true"/></description>
-            	</item>
-            	<item>
             		<term>connection.driver_class</term>
             		<description><see cref="T:NHibernate.Driver.IngresDriver"/></description>
             	</item>
@@ -13580,22 +13591,22 @@
             <remarks>
             The MsSql2000Dialect defaults the following configuration properties:
             <list type="table">
-            	<listheader>
-            		<term>Property</term>
-            		<description>Default Value</description>
-            	</listheader>
-            	<item>
-            		<term>use_outer_join</term>
-            		<description><see langword="true"/></description>
-            	</item>
-            	<item>
-            		<term>connection.driver_class</term>
-            		<description><see cref="T:NHibernate.Driver.SqlClientDriver"/></description>
-            	</item>
-            	<item>
-            		<term>prepare_sql</term>
-            		<description><see langword="false"/></description>
-            	</item>
+            <listheader>
+            	<term>Property</term>
+            	<description>Default Value</description>
+            </listheader>
+            <item>
+            	<term>connection.driver_class</term>
+            	<description><see cref="T:NHibernate.Driver.SqlClientDriver"/></description>
+            </item>
+            <item>
+            	<term>adonet.batch_size</term>
+            	<description>10</description>
+            </item>
+            <item>
+            	<term>query.substitutions</term>
+            	<description>true 1, false 0, yes 'Y', no 'N'</description>
+            </item>
             </list>
             </remarks>
         </member>
@@ -13616,46 +13627,13 @@
             <returns>A new SqlString that contains the <c>LIMIT</c> clause.</returns>
         </member>
         <member name="M:NHibernate.Dialect.MsSql2000Dialect.Quote(System.String)">
-            <summary>
-            
-            </summary>
+            <summary />
             <param name="name"></param>
             <returns></returns>
             <remarks>
             MsSql does not require the OpenQuote to be escaped as long as the first char
             is an OpenQuote.
             </remarks>
-        </member>
-        <member name="M:NHibernate.Dialect.MsSql2000Dialect.UnQuote(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="quoted"></param>
-            <returns></returns>
-        </member>
-        <member name="P:NHibernate.Dialect.MsSql2000Dialect.AddColumnString">
-            <summary></summary>
-        </member>
-        <member name="P:NHibernate.Dialect.MsSql2000Dialect.NullColumnString">
-            <summary></summary>
-        </member>
-        <member name="P:NHibernate.Dialect.MsSql2000Dialect.QualifyIndexName">
-            <summary></summary>
-        </member>
-        <member name="P:NHibernate.Dialect.MsSql2000Dialect.SupportsIdentityColumns">
-            <summary></summary>
-        </member>
-        <member name="P:NHibernate.Dialect.MsSql2000Dialect.IdentityColumnString">
-            <summary></summary>
-        </member>
-        <member name="P:NHibernate.Dialect.MsSql2000Dialect.NoColumnsInsertString">
-            <summary></summary>
-        </member>
-        <member name="P:NHibernate.Dialect.MsSql2000Dialect.CloseQuote">
-            <summary></summary>
-        </member>
-        <member name="P:NHibernate.Dialect.MsSql2000Dialect.OpenQuote">
-            <summary></summary>
         </member>
         <member name="P:NHibernate.Dialect.MsSql2000Dialect.SupportsLimit">
             <summary>
@@ -13760,10 +13738,6 @@
             		<term>Property</term>
             		<description>Default Value</description>
             	</listheader>
-            	<item>
-            		<term>use_outer_join</term>
-            		<description><see langword="true"/></description>
-            	</item>
             	<item>
             		<term>connection.driver_class</term>
             		<description><see cref="T:NHibernate.Driver.MySqlDataDriver"/></description>
@@ -13891,10 +13865,6 @@
             		<description>Default Value</description>
             	</listheader>
             	<item>
-            		<term>use_outer_join</term>
-            		<description><see langword="true"/></description>
-            	</item>
-            	<item>
             		<term>connection.driver_class</term>
             		<description><see cref="T:NHibernate.Driver.OracleLiteDataClientDriver"/></description>
             	</item>
@@ -13948,10 +13918,6 @@
             		<term>Property</term>
             		<description>Default Value</description>
             	</listheader>
-            	<item>
-            		<term>use_outer_join</term>
-            		<description><see langword="true"/></description>
-            	</item>
             	<item>
             		<term>connection.driver_class</term>
             		<description><see cref="T:NHibernate.Driver.NpgsqlDriver"/></description>
@@ -14489,6 +14455,14 @@
             The associated name with smallest capacity >= size if available and the
             default type name otherwise
             </returns>
+        </member>
+        <member name="M:NHibernate.Dialect.TypeNames.GetLongest(System.Data.DbType)">
+            <summary>
+            For types with a simple length, this method returns the definition
+            for the longest registered type.
+            </summary>
+            <param name="typecode"></param>
+            <returns></returns>
         </member>
         <member name="M:NHibernate.Dialect.TypeNames.Put(System.Data.DbType,System.Int32,System.String)">
             <summary>
@@ -28353,10 +28327,6 @@
         <member name="T:NHibernate.Intercept.IFieldInterceptor">
             <summary> Contract for field interception handlers. </summary>
         </member>
-        <member name="M:NHibernate.Intercept.IFieldInterceptor.SetSession(NHibernate.Engine.ISessionImplementor)">
-            <summary> Use to associate the entity to which we are bound to the given session. </summary>
-            <param name="session">The session to which we are now associated. </param>
-        </member>
         <member name="M:NHibernate.Intercept.IFieldInterceptor.IsInitializedField(System.String)">
             <summary> The the given field initialized for the entity to which we are bound? </summary>
             <param name="field">The name of the field to check </param>
@@ -28374,6 +28344,9 @@
         <member name="P:NHibernate.Intercept.IFieldInterceptor.IsDirty">
             <summary> Is the entity considered dirty? </summary>
             <value> True if the entity is dirty; otherwise false. </value>
+        </member>
+        <member name="P:NHibernate.Intercept.IFieldInterceptor.Session">
+            <summary> Use to associate the entity to which we are bound to the given session. </summary>
         </member>
         <member name="P:NHibernate.Intercept.IFieldInterceptor.IsInitialized">
             <summary> Is the entity to which we are bound completely initialized? </summary>
