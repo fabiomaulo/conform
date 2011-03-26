@@ -29,7 +29,7 @@ namespace ConfOrm.Mappers
 		void Fetch(CollectionFetchMode fetchMode);
 	}
 
-	public interface ICollectionPropertiesMapper<TEntity, TElement> : IEntityPropertyMapper where TEntity : class
+	public interface ICollectionPropertiesMapper<TEntity, TElement> : IEntityPropertyMapper, ICollectionSqlsMapper where TEntity : class
 	{
 		void Inverse(bool value);
 		void Mutable(bool value);

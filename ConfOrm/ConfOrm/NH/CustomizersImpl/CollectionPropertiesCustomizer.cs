@@ -134,5 +134,35 @@ namespace ConfOrm.NH.CustomizersImpl
 		{
 			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.OptimisticLock(takeInConsiderationForOptimisticLock));
 		}
+
+		public void Loader(string namedQueryReference)
+		{
+			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.Loader(namedQueryReference));
+		}
+
+		public void SqlInsert(string sql)
+		{
+			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.SqlInsert(sql));
+		}
+
+		public void SqlUpdate(string sql)
+		{
+			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.SqlUpdate(sql));
+		}
+
+		public void SqlDelete(string sql)
+		{
+			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.SqlDelete(sql));
+		}
+
+		public void SqlDeleteAll(string sql)
+		{
+			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.SqlDeleteAll(sql));
+		}
+
+		public void Subselect(string sql)
+		{
+			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.Subselect(sql));
+		}
 	}
 }
