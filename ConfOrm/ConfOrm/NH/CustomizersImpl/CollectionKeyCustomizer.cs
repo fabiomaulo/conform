@@ -4,7 +4,7 @@ using ConfOrm.Mappers;
 
 namespace ConfOrm.NH.CustomizersImpl
 {
-	public class CollectionKeyCustomizer<TEntity>: IKeyMapper<TEntity> 
+	public class CollectionKeyCustomizer<TEntity> : IKeyMapper<TEntity> 
 		where TEntity : class
 	{
 		private readonly PropertyPath propertyPath;
@@ -18,6 +18,14 @@ namespace ConfOrm.NH.CustomizersImpl
 		public ICustomizersHolder CustomizersHolder { get; private set; }
 
 		#region Implementation of IKeyMapper<TEntity>
+
+		public void Column(Action<IColumnMapper> columnMapper) {
+			CustomizersHolder.AddCustomizer(propertyPath, (ICollectionPropertiesMapper m) => m.Key(x => x.Column(columnMapper)));
+		}
+
+		public void Columns(params Action<IColumnMapper>[] columnMapper) {
+			CustomizersHolder.AddCustomizer(propertyPath, (ICollectionPropertiesMapper m) => m.Key(x => x.Columns(columnMapper)));
+		}
 
 		public void Column(string columnName)
 		{

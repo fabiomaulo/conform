@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using ConfOrm.Mappers;
 using NHibernate.Cfg.MappingSchema;
@@ -24,13 +26,53 @@ namespace ConfOrm.NH
 
 		#region Implementation of IKeyMapper
 
-		public void Column(string columnName)
-		{
-			if (string.IsNullOrEmpty(columnName))
+		public void Column(Action<IColumnMapper> columnMapper) {
+			if (mapping.Columns.Count() > 1)
 			{
-				throw new ArgumentNullException("columnName","Valid column name required.");
+				throw new MappingException("Multi-columns property can't be mapped through singlr-column API.");
 			}
-			mapping.column1 = columnName;
+			HbmColumn hbm = mapping.Columns.SingleOrDefault();
+			hbm = hbm
+						??
+						new HbmColumn
+						{
+							name = mapping.column1,
+							notnull = mapping.notnull,
+							unique = mapping.unique,
+							uniqueSpecified = mapping.unique,
+						};
+			columnMapper(new ColumnMapper(hbm, DefaultColumnName(ownerEntityType)));
+			if (ColumnTagIsRequired(hbm))
+			{
+				mapping.column = new[] { hbm };
+				ResetColumnPlainValues();
+			}
+			else
+			{
+				mapping.column1 = !DefaultColumnName(ownerEntityType).Equals(hbm.name) ? hbm.name : null;
+				mapping.notnull = hbm.notnull;
+				mapping.unique = hbm.unique;
+			}
+		}
+
+
+		public void Columns(params Action<IColumnMapper>[] columnMapper) {
+			ResetColumnPlainValues();
+			int i = 1;
+			var columns = new List<HbmColumn>(columnMapper.Length);
+			foreach (var action in columnMapper)
+			{
+				var hbm = new HbmColumn();
+				var defaultColumnName = DefaultColumnName(ownerEntityType) + i++;
+				action(new ColumnMapper(hbm, defaultColumnName));
+				columns.Add(hbm);
+			}
+			mapping.column = columns.ToArray();
+		}
+
+		public void Column(string name)
+		{
+			Column(x => x.Name(name));
 		}
 
 		public void OnDelete(OnDeleteAction deleteAction)
@@ -80,6 +122,18 @@ namespace ConfOrm.NH
 				return;				
 			}
 			mapping.foreignkey = nameToAssign;
+		}
+
+		private bool ColumnTagIsRequired(HbmColumn hbm)
+		{
+			return hbm.uniquekey != null || hbm.sqltype != null || hbm.index != null || hbm.@default != null || hbm.check != null || hbm.length != null || hbm.precision != null || hbm.scale != null;
+		}
+
+		private void ResetColumnPlainValues()
+		{
+			mapping.column1 = null;
+			mapping.notnull = false;
+			mapping.unique = false;
 		}
 
 		#endregion

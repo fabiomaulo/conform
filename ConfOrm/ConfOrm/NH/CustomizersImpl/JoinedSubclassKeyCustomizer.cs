@@ -4,7 +4,7 @@ using ConfOrm.Mappers;
 
 namespace ConfOrm.NH.CustomizersImpl
 {
-	public class JoinedSubclassKeyCustomizer<TEntity>: IKeyMapper<TEntity> 
+	public class JoinedSubclassKeyCustomizer<TEntity> : IKeyMapper<TEntity> 
 		where TEntity : class
 	{
 		public JoinedSubclassKeyCustomizer(ICustomizersHolder customizersHolder)
@@ -16,30 +16,38 @@ namespace ConfOrm.NH.CustomizersImpl
 
 		#region Implementation of IKeyMapper<TEntity>
 
+		public void Column(Action<IColumnMapper> columnMapper) {
+			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.Key(x => x.Column(columnMapper)));
+		}
+
+		public void Columns(params Action<IColumnMapper>[] columnMapper) {
+			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.Key(x => x.Columns(columnMapper)));
+		}
+
 		public void Column(string columnName)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IJoinedSubclassAttributesMapper m) => m.Key(x => x.Column(columnName)));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.Key(x => x.Column(columnName)));
 		}
 
 		public void OnDelete(OnDeleteAction deleteAction)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IJoinedSubclassAttributesMapper m) => m.Key(x => x.OnDelete(deleteAction)));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.Key(x => x.OnDelete(deleteAction)));
 		}
 
 		public void PropertyRef<TProperty>(Expression<Func<TEntity, TProperty>> propertyGetter)
 		{
 			var member = TypeExtensions.DecodeMemberAccessExpression(propertyGetter);
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IJoinedSubclassAttributesMapper m) => m.Key(x => x.PropertyRef(member)));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.Key(x => x.PropertyRef(member)));
 		}
 
 		public void Update(bool consideredInUpdateQuery)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IJoinedSubclassAttributesMapper m) => m.Key(x => x.Update(consideredInUpdateQuery)));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.Key(x => x.Update(consideredInUpdateQuery)));
 		}
 
 		public void ForeignKey(string foreingKeyName)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (IJoinedSubclassAttributesMapper m) => m.Key(x => x.ForeignKey(foreingKeyName)));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), m => m.Key(x => x.ForeignKey(foreingKeyName)));
 		}
 
 		#endregion

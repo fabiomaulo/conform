@@ -10,9 +10,8 @@ namespace ConfOrm.Mappers
 		Cascade,
 	}
 
-	public interface IKeyMapper
+	public interface IKeyMapper : IColumnsMapper
 	{
-		void Column(string columnName);
 		void OnDelete(OnDeleteAction deleteAction);
 		void PropertyRef(MemberInfo property);
 		void Update(bool consideredInUpdateQuery);
@@ -28,9 +27,8 @@ namespace ConfOrm.Mappers
 		void ForeignKey(string foreingKeyName);
 	}
 
-	public interface IKeyMapper<TEntity> where TEntity: class
+	public interface IKeyMapper<TEntity> : IColumnsMapper where TEntity: class
 	{
-		void Column(string columnName);
 		void OnDelete(OnDeleteAction deleteAction);
 		void PropertyRef<TProperty>(Expression<Func<TEntity, TProperty>> propertyGetter);
 		void Update(bool consideredInUpdateQuery);
