@@ -77,7 +77,35 @@ namespace ConfOrm.NH
 		/// </summary>
 		public event SubclassMappingHandler AfterMapSubclass;
 
-		public void InvokeBeforeMapSubclass(Type type, ISubclassAttributesMapper subclasscustomizer)
+		/// <summary>
+		/// Occurs before apply pattern-appliers on a joined-subclass.
+		/// </summary>
+		public event JoinedSubclassMappingHandler BeforeMapJoinedSubclass;
+
+		/// <summary>
+		/// Occurs after apply the last customizer on a joined-subclass..
+		/// </summary>
+		public event JoinedSubclassMappingHandler AfterMapJoinedSubclass;
+
+		protected void InvokeAfterMapJoinedSubclass(Type type, IJoinedSubclassAttributesMapper joinedsubclasscustomizer)
+		{
+			JoinedSubclassMappingHandler handler = AfterMapJoinedSubclass;
+			if (handler != null)
+			{
+				handler(DomainInspector, type, joinedsubclasscustomizer);
+			}
+		}
+
+		protected void InvokeBeforeMapJoinedSubclass(Type type, IJoinedSubclassAttributesMapper joinedsubclasscustomizer)
+		{
+			JoinedSubclassMappingHandler handler = BeforeMapJoinedSubclass;
+			if (handler != null)
+			{
+				handler(DomainInspector, type, joinedsubclasscustomizer);
+			}
+		}
+
+		private void InvokeBeforeMapSubclass(Type type, ISubclassAttributesMapper subclasscustomizer)
 		{
 			SubclassMappingHandler handler = BeforeMapSubclass;
 			if (handler != null)
@@ -86,7 +114,7 @@ namespace ConfOrm.NH
 			}
 		}
 
-		public void InvokeAfterMapSubclass(Type type, ISubclassAttributesMapper subclasscustomizer)
+		private void InvokeAfterMapSubclass(Type type, ISubclassAttributesMapper subclasscustomizer)
 		{
 			SubclassMappingHandler handler = AfterMapSubclass;
 			if (handler != null)
@@ -360,8 +388,11 @@ namespace ConfOrm.NH
 			var propertiesToMap =
 				candidateProperties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p));
 
+			InvokeBeforeMapJoinedSubclass(type, classMapper);
 			PatternsAppliers.JoinedSubclass.ApplyAllMatchs(type, classMapper);
 			customizerHolder.InvokeCustomizers(type, classMapper);
+			InvokeAfterMapJoinedSubclass(type, classMapper);
+
 			MapProperties(type, propertiesToMap, classMapper);
 		}
 
