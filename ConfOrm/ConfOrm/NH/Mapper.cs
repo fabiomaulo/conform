@@ -87,6 +87,34 @@ namespace ConfOrm.NH
 		/// </summary>
 		public event JoinedSubclassMappingHandler AfterMapJoinedSubclass;
 
+		/// <summary>
+		/// Occurs before apply pattern-appliers on a union-subclass.
+		/// </summary>
+		public event UnionSubclassMappingHandler BeforeMapUnionSubclass;
+
+		/// <summary>
+		/// Occurs after apply the last customizer on a union-subclass..
+		/// </summary>
+		public event UnionSubclassMappingHandler AfterMapUnionSubclass;
+
+		protected void InvokeAfterMapUnionSubclass(Type type, IUnionSubclassAttributesMapper unionsubclasscustomizer)
+		{
+			UnionSubclassMappingHandler handler = AfterMapUnionSubclass;
+			if (handler != null)
+			{
+				handler(DomainInspector, type, unionsubclasscustomizer);
+			}
+		}
+
+		protected void InvokeBeforeMapUnionSubclass(Type type, IUnionSubclassAttributesMapper unionsubclasscustomizer)
+		{
+			UnionSubclassMappingHandler handler = BeforeMapUnionSubclass;
+			if (handler != null)
+			{
+				handler(DomainInspector, type, unionsubclasscustomizer);
+			}
+		}
+
 		protected void InvokeAfterMapJoinedSubclass(Type type, IJoinedSubclassAttributesMapper joinedsubclasscustomizer)
 		{
 			JoinedSubclassMappingHandler handler = AfterMapJoinedSubclass;
@@ -340,8 +368,11 @@ namespace ConfOrm.NH
 			var propertiesToMap =
 				candidateProperties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p));
 
+			InvokeBeforeMapUnionSubclass(type, classMapper);
 			PatternsAppliers.UnionSubclass.ApplyAllMatchs(type, classMapper);
 			customizerHolder.InvokeCustomizers(type, classMapper);
+			InvokeAfterMapUnionSubclass(type, classMapper);
+
 			MapProperties(type, propertiesToMap, classMapper);
 		}
 

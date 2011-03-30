@@ -86,6 +86,7 @@
     <Compile Include="DoubleBidirectionalTests\DoubleParentOnComponentTest.cs" />
     <Compile Include="DoubleBidirectionalTests\OneToManyTests.cs" />
     <Compile Include="EntitiesTypesTests.cs" />
+    <Compile Include="Events\UnionSubclassEventsTests.cs" />
     <Compile Include="Events\JoinedSubclassEventsTests.cs" />
     <Compile Include="Events\SubclassEventsTests.cs" />
     <Compile Include="Events\RootClassEventsTests.cs" />
