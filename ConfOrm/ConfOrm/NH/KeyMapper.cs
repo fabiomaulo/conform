@@ -26,25 +26,26 @@ namespace ConfOrm.NH
 
 		#region Implementation of IKeyMapper
 
-		public void Column(Action<IColumnMapper> columnMapper) {
+		public void Column(Action<IColumnMapper> columnMapper)
+		{
 			if (mapping.Columns.Count() > 1)
 			{
-				throw new MappingException("Multi-columns property can't be mapped through singlr-column API.");
+				throw new MappingException("Multi-columns property can't be mapped through single-column API.");
 			}
 			HbmColumn hbm = mapping.Columns.SingleOrDefault();
 			hbm = hbm
-						??
-						new HbmColumn
-						{
-							name = mapping.column1,
-							notnull = mapping.notnull,
-							unique = mapping.unique,
-							uniqueSpecified = mapping.unique,
-						};
+			      ??
+			      new HbmColumn
+			      {
+			      	name = mapping.column1,
+			      	notnull = mapping.notnull,
+			      	unique = mapping.unique,
+			      	uniqueSpecified = mapping.unique,
+			      };
 			columnMapper(new ColumnMapper(hbm, DefaultColumnName(ownerEntityType)));
 			if (ColumnTagIsRequired(hbm))
 			{
-				mapping.column = new[] { hbm };
+				mapping.column = new[] {hbm};
 				ResetColumnPlainValues();
 			}
 			else
@@ -56,7 +57,8 @@ namespace ConfOrm.NH
 		}
 
 
-		public void Columns(params Action<IColumnMapper>[] columnMapper) {
+		public void Columns(params Action<IColumnMapper>[] columnMapper)
+		{
 			ResetColumnPlainValues();
 			int i = 1;
 			var columns = new List<HbmColumn>(columnMapper.Length);

@@ -19,11 +19,13 @@ namespace ConfOrm.NH.CustomizersImpl
 
 		#region Implementation of IKeyMapper<TEntity>
 
-		public void Column(Action<IColumnMapper> columnMapper) {
+		public void Column(Action<IColumnMapper> columnMapper)
+		{
 			CustomizersHolder.AddCustomizer(propertyPath, (ICollectionPropertiesMapper m) => m.Key(x => x.Column(columnMapper)));
 		}
 
-		public void Columns(params Action<IColumnMapper>[] columnMapper) {
+		public void Columns(params Action<IColumnMapper>[] columnMapper)
+		{
 			CustomizersHolder.AddCustomizer(propertyPath, (ICollectionPropertiesMapper m) => m.Key(x => x.Columns(columnMapper)));
 		}
 
