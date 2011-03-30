@@ -63,19 +63,9 @@ namespace ConfOrm.NH
 		public event RootClassMappingHandler BeforeMapClass;
 
 		/// <summary>
-		/// Occurs after apply the last customizer on a root class.
-		/// </summary>
-		public event RootClassMappingHandler AfterMapClass;
-
-		/// <summary>
 		/// Occurs before apply pattern-appliers on a subclass.
 		/// </summary>
 		public event SubclassMappingHandler BeforeMapSubclass;
-
-		/// <summary>
-		/// Occurs after apply the last customizer on a subclass.
-		/// </summary>
-		public event SubclassMappingHandler AfterMapSubclass;
 
 		/// <summary>
 		/// Occurs before apply pattern-appliers on a joined-subclass.
@@ -83,30 +73,86 @@ namespace ConfOrm.NH
 		public event JoinedSubclassMappingHandler BeforeMapJoinedSubclass;
 
 		/// <summary>
-		/// Occurs after apply the last customizer on a joined-subclass..
-		/// </summary>
-		public event JoinedSubclassMappingHandler AfterMapJoinedSubclass;
-
-		/// <summary>
 		/// Occurs before apply pattern-appliers on a union-subclass.
 		/// </summary>
 		public event UnionSubclassMappingHandler BeforeMapUnionSubclass;
+
+		public event PropertyMappingHandler BeforeMapProperty;
+
+		public event ManyToOneMappingHandler BeforeMapManyToOne;
+
+		public event OneToOneMappingHandler BeforeMapOneToOne;
+
+		public event AnyMappingHandler BeforeMapAny;
+
+		public event ComponentMappingHandler BeforeMapComponent;
+
+		public event SetMappingHandler BeforeMapSet;
+
+		public event BagMappingHandler BeforeMapBag;
+
+		public event ListMappingHandler BeforeMapList;
+
+		public event MapMappingHandler BeforeMapMap;
+
+		public event ManyToManyMappingHandler BeforeMapManyToMany;
+
+		public event ElementMappingHandler BeforeMapElement;
+
+		public event OneToManyMappingHandler BeforeMapOneToMany;
+
+		public event MapKeyManyToManyMappingHandler BeforeMapMapKeyManyToMany;
+		public event MapKeyMappingHandler BeforeMapMapKey;
+
+		/// <summary>
+		/// Occurs after apply the last customizer on a root class.
+		/// </summary>
+		public event RootClassMappingHandler AfterMapClass;
+
+		/// <summary>
+		/// Occurs after apply the last customizer on a subclass.
+		/// </summary>
+		public event SubclassMappingHandler AfterMapSubclass;
+
+		/// <summary>
+		/// Occurs after apply the last customizer on a joined-subclass..
+		/// </summary>
+		public event JoinedSubclassMappingHandler AfterMapJoinedSubclass;
 
 		/// <summary>
 		/// Occurs after apply the last customizer on a union-subclass..
 		/// </summary>
 		public event UnionSubclassMappingHandler AfterMapUnionSubclass;
 
-		protected void InvokeAfterMapUnionSubclass(Type type, IUnionSubclassAttributesMapper unionsubclasscustomizer)
-		{
-			UnionSubclassMappingHandler handler = AfterMapUnionSubclass;
-			if (handler != null)
-			{
-				handler(DomainInspector, type, unionsubclasscustomizer);
-			}
-		}
+		public event PropertyMappingHandler AfterMapProperty;
 
-		protected void InvokeBeforeMapUnionSubclass(Type type, IUnionSubclassAttributesMapper unionsubclasscustomizer)
+		public event ManyToOneMappingHandler AfterMapManyToOne;
+
+		public event OneToOneMappingHandler AfterMapOneToOne;
+
+		public event AnyMappingHandler AfterMapAny;
+
+		public event ComponentMappingHandler AfterMapComponent;
+
+		public event SetMappingHandler AfterMapSet;
+
+		public event BagMappingHandler AfterMapBag;
+
+		public event ListMappingHandler AfterMapList;
+
+		public event MapMappingHandler AfterMapMap;
+
+		public event ManyToManyMappingHandler AfterMapManyToMany;
+
+		public event ElementMappingHandler AfterMapElement;
+
+		public event OneToManyMappingHandler AfterMapOneToMany;
+
+		public event MapKeyManyToManyMappingHandler AfterMapMapKeyManyToMany;
+
+		public event MapKeyMappingHandler AfterMapMapKey;
+
+		private void InvokeBeforeMapUnionSubclass(Type type, IUnionSubclassAttributesMapper unionsubclasscustomizer)
 		{
 			UnionSubclassMappingHandler handler = BeforeMapUnionSubclass;
 			if (handler != null)
@@ -115,16 +161,7 @@ namespace ConfOrm.NH
 			}
 		}
 
-		protected void InvokeAfterMapJoinedSubclass(Type type, IJoinedSubclassAttributesMapper joinedsubclasscustomizer)
-		{
-			JoinedSubclassMappingHandler handler = AfterMapJoinedSubclass;
-			if (handler != null)
-			{
-				handler(DomainInspector, type, joinedsubclasscustomizer);
-			}
-		}
-
-		protected void InvokeBeforeMapJoinedSubclass(Type type, IJoinedSubclassAttributesMapper joinedsubclasscustomizer)
+		private void InvokeBeforeMapJoinedSubclass(Type type, IJoinedSubclassAttributesMapper joinedsubclasscustomizer)
 		{
 			JoinedSubclassMappingHandler handler = BeforeMapJoinedSubclass;
 			if (handler != null)
@@ -133,7 +170,7 @@ namespace ConfOrm.NH
 			}
 		}
 
-		protected void InvokeBeforeMapSubclass(Type type, ISubclassAttributesMapper subclasscustomizer)
+		private void InvokeBeforeMapSubclass(Type type, ISubclassAttributesMapper subclasscustomizer)
 		{
 			SubclassMappingHandler handler = BeforeMapSubclass;
 			if (handler != null)
@@ -142,16 +179,7 @@ namespace ConfOrm.NH
 			}
 		}
 
-		protected void InvokeAfterMapSubclass(Type type, ISubclassAttributesMapper subclasscustomizer)
-		{
-			SubclassMappingHandler handler = AfterMapSubclass;
-			if (handler != null)
-			{
-				handler(DomainInspector, type, subclasscustomizer);
-			}
-		}
-
-		protected void InvokeBeforeMapClass(Type type, IClassAttributesMapper classcustomizer)
+		private void InvokeBeforeMapClass(Type type, IClassAttributesMapper classcustomizer)
 		{
 			RootClassMappingHandler handler = BeforeMapClass;
 			if (handler != null)
@@ -160,12 +188,291 @@ namespace ConfOrm.NH
 			}
 		}
 
-		protected void InvokeAfterMapClass(Type type, IClassAttributesMapper classcustomizer)
+		private void InvokeBeforeMapProperty(PropertyPath member, IPropertyMapper propertycustomizer)
+		{
+			PropertyMappingHandler handler = BeforeMapProperty;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeBeforeMapManyToOne(PropertyPath member, IManyToOneMapper propertycustomizer)
+		{
+			ManyToOneMappingHandler handler = BeforeMapManyToOne;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeBeforeMapOneToOne(PropertyPath member, IOneToOneMapper propertycustomizer)
+		{
+			OneToOneMappingHandler handler = BeforeMapOneToOne;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeBeforeMapAny(PropertyPath member, IAnyMapper propertycustomizer)
+		{
+			AnyMappingHandler handler = BeforeMapAny;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeBeforeMapComponent(PropertyPath member, IComponentAttributesMapper propertycustomizer)
+		{
+			ComponentMappingHandler handler = BeforeMapComponent;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeBeforeMapSet(PropertyPath member, ISetPropertiesMapper propertycustomizer)
+		{
+			SetMappingHandler handler = BeforeMapSet;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeBeforeMapBag(PropertyPath member, IBagPropertiesMapper propertycustomizer)
+		{
+			BagMappingHandler handler = BeforeMapBag;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeBeforeMapList(PropertyPath member, IListPropertiesMapper propertycustomizer)
+		{
+			ListMappingHandler handler = BeforeMapList;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeBeforeMapMap(PropertyPath member, IMapPropertiesMapper propertycustomizer)
+		{
+			MapMappingHandler handler = BeforeMapMap;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeBeforeMapManyToMany(PropertyPath member, IManyToManyMapper collectionrelationmanytomanycustomizer)
+		{
+			ManyToManyMappingHandler handler = BeforeMapManyToMany;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, collectionrelationmanytomanycustomizer);
+			}
+		}
+
+		private void InvokeBeforeMapElement(PropertyPath member, IElementMapper collectionrelationelementcustomizer)
+		{
+			ElementMappingHandler handler = BeforeMapElement;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, collectionrelationelementcustomizer);
+			}
+		}
+
+		private void InvokeBeforeMapOneToMany(PropertyPath member, IOneToManyMapper collectionrelationonetomanycustomizer)
+		{
+			OneToManyMappingHandler handler = BeforeMapOneToMany;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, collectionrelationonetomanycustomizer);
+			}
+		}
+
+		private void InvokeBeforeMapMapKeyManyToMany(PropertyPath member, IMapKeyManyToManyMapper mapkeymanytomanycustomizer)
+		{
+			MapKeyManyToManyMappingHandler handler = BeforeMapMapKeyManyToMany;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, mapkeymanytomanycustomizer);
+			}
+		}
+
+		private void InvokeBeforeMapMapKey(PropertyPath member, IMapKeyMapper mapkeyelementcustomizer)
+		{
+			MapKeyMappingHandler handler = BeforeMapMapKey;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, mapkeyelementcustomizer);
+			}
+		}
+
+		private void InvokeAfterMapUnionSubclass(Type type, IUnionSubclassAttributesMapper unionsubclasscustomizer)
+		{
+			UnionSubclassMappingHandler handler = AfterMapUnionSubclass;
+			if (handler != null)
+			{
+				handler(DomainInspector, type, unionsubclasscustomizer);
+			}
+		}
+
+		private void InvokeAfterMapJoinedSubclass(Type type, IJoinedSubclassAttributesMapper joinedsubclasscustomizer)
+		{
+			JoinedSubclassMappingHandler handler = AfterMapJoinedSubclass;
+			if (handler != null)
+			{
+				handler(DomainInspector, type, joinedsubclasscustomizer);
+			}
+		}
+
+		private void InvokeAfterMapSubclass(Type type, ISubclassAttributesMapper subclasscustomizer)
+		{
+			SubclassMappingHandler handler = AfterMapSubclass;
+			if (handler != null)
+			{
+				handler(DomainInspector, type, subclasscustomizer);
+			}
+		}
+
+		private void InvokeAfterMapClass(Type type, IClassAttributesMapper classcustomizer)
 		{
 			RootClassMappingHandler handler = AfterMapClass;
 			if (handler != null)
 			{
 				handler(DomainInspector, type, classcustomizer);
+			}
+		}
+
+		private void InvokeAfterMapProperty(PropertyPath member, IPropertyMapper propertycustomizer)
+		{
+			PropertyMappingHandler handler = AfterMapProperty;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeAfterMapManyToOne(PropertyPath member, IManyToOneMapper propertycustomizer)
+		{
+			ManyToOneMappingHandler handler = AfterMapManyToOne;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeAfterMapOneToOne(PropertyPath member, IOneToOneMapper propertycustomizer)
+		{
+			OneToOneMappingHandler handler = AfterMapOneToOne;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeAfterMapAny(PropertyPath member, IAnyMapper propertycustomizer)
+		{
+			AnyMappingHandler handler = AfterMapAny;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeAfterMapComponent(PropertyPath member, IComponentAttributesMapper propertycustomizer)
+		{
+			ComponentMappingHandler handler = AfterMapComponent;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeAfterMapSet(PropertyPath member, ISetPropertiesMapper propertycustomizer)
+		{
+			SetMappingHandler handler = AfterMapSet;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeAfterMapBag(PropertyPath member, IBagPropertiesMapper propertycustomizer)
+		{
+			BagMappingHandler handler = AfterMapBag;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeAfterMapList(PropertyPath member, IListPropertiesMapper propertycustomizer)
+		{
+			ListMappingHandler handler = AfterMapList;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeAfterMapMap(PropertyPath member, IMapPropertiesMapper propertycustomizer)
+		{
+			MapMappingHandler handler = AfterMapMap;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, propertycustomizer);
+			}
+		}
+
+		private void InvokeAfterMapManyToMany(PropertyPath member, IManyToManyMapper collectionrelationmanytomanycustomizer)
+		{
+			ManyToManyMappingHandler handler = AfterMapManyToMany;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, collectionrelationmanytomanycustomizer);
+			}
+		}
+
+		private void InvokeAfterMapElement(PropertyPath member, IElementMapper collectionrelationelementcustomizer)
+		{
+			ElementMappingHandler handler = AfterMapElement;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, collectionrelationelementcustomizer);
+			}
+		}
+
+		private void InvokeAfterMapOneToMany(PropertyPath member, IOneToManyMapper collectionrelationonetomanycustomizer)
+		{
+			OneToManyMappingHandler handler = AfterMapOneToMany;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, collectionrelationonetomanycustomizer);
+			}
+		}
+
+		private void InvokeAfterMapMapKeyManyToMany(PropertyPath member, IMapKeyManyToManyMapper mapkeymanytomanycustomizer)
+		{
+			MapKeyManyToManyMappingHandler handler = AfterMapMapKeyManyToMany;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, mapkeymanytomanycustomizer);
+			}
+		}
+
+		private void InvokeAfterMapMapKey(PropertyPath member, IMapKeyMapper mapkeyelementcustomizer)
+		{
+			MapKeyMappingHandler handler = AfterMapMapKey;
+			if (handler != null)
+			{
+				handler(DomainInspector, member, mapkeyelementcustomizer);
 			}
 		}
 
@@ -646,6 +953,7 @@ namespace ConfOrm.NH
 		{
 			propertiesContainer.Any(member, typeof(int), anyMapper =>
 			{
+				InvokeBeforeMapAny(memberPath, anyMapper);
 				var poidPropertyOrField =
 					membersProvider.GetEntityMembersForPoid(memberPath.GetRootMember().DeclaringType).FirstOrDefault(
 						mi => domainInspector.IsPersistentId(mi));
@@ -657,6 +965,7 @@ namespace ConfOrm.NH
 				PatternsAppliers.Any.ApplyAllMatchs(member, anyMapper);
 				PatternsAppliers.AnyPath.ApplyAllMatchs(memberPath, anyMapper);
 				ForEachMemberPath(member, memberPath, pp => customizerHolder.InvokeCustomizers(pp, anyMapper));
+				InvokeAfterMapAny(memberPath, anyMapper);
 			});
 		}
 
@@ -664,9 +973,11 @@ namespace ConfOrm.NH
 		{
 			propertiesContainer.Property(member, propertyMapper =>
 				{
+					InvokeBeforeMapProperty(propertyPath, propertyMapper);
 					PatternsAppliers.Property.ApplyAllMatchs(member, propertyMapper);
 					PatternsAppliers.PropertyPath.ApplyAllMatchs(propertyPath, propertyMapper);
 					ForEachMemberPath(member, propertyPath, pp => customizerHolder.InvokeCustomizers(pp, propertyMapper));
+					InvokeAfterMapProperty(propertyPath, propertyMapper);
 				});
 		}
 
@@ -728,6 +1039,7 @@ namespace ConfOrm.NH
 		{
 			propertiesContainer.Component(member, componentMapper =>
 				{
+					InvokeBeforeMapComponent(memberPath, componentMapper);
 					Type componentType = propertyType;
 					IEnumerable<MemberInfo> persistentProperties =
 						membersProvider.GetComponentMembers(componentType).Where(p => domainInspector.IsPersistentProperty(p));
@@ -746,6 +1058,7 @@ namespace ConfOrm.NH
 					PatternsAppliers.ComponentPropertyPath.ApplyAllMatchs(memberPath, componentMapper);
 					customizerHolder.InvokeCustomizers(componentType, componentMapper);
 					ForEachMemberPath(member, memberPath, pp=> customizerHolder.InvokeCustomizers(pp, componentMapper));
+					InvokeAfterMapComponent(memberPath, componentMapper);
 
 					MapProperties(propertyType, persistentProperties.Where(pi => pi != parentReferenceProperty), componentMapper, memberPath);
 				});
@@ -758,12 +1071,14 @@ namespace ConfOrm.NH
 			ICollectionElementRelationMapper cert = DetermineCollectionElementRelationType(member, propertyPath, collectionElementType);
 			propertiesContainer.Bag(member, collectionPropertiesMapper =>
 				{
+					InvokeBeforeMapBag(propertyPath, collectionPropertiesMapper);
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					PatternsAppliers.Collection.ApplyAllMatchs(member, collectionPropertiesMapper);
 					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					PatternsAppliers.Bag.ApplyAllMatchs(member, collectionPropertiesMapper);
 					PatternsAppliers.BagPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					ForEachMemberPath(member, propertyPath, pp => customizerHolder.InvokeCustomizers(pp, collectionPropertiesMapper));
+					InvokeAfterMapBag(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
 		}
 
@@ -774,12 +1089,14 @@ namespace ConfOrm.NH
 			ICollectionElementRelationMapper cert = DetermineCollectionElementRelationType(member, propertyPath, collectionElementType);
 			propertiesContainer.List(member, collectionPropertiesMapper =>
 				{
+					InvokeBeforeMapList(propertyPath, collectionPropertiesMapper);
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					PatternsAppliers.Collection.ApplyAllMatchs(member, collectionPropertiesMapper);
 					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					PatternsAppliers.List.ApplyAllMatchs(member, collectionPropertiesMapper);
 					PatternsAppliers.ListPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					ForEachMemberPath(member, propertyPath, pp => customizerHolder.InvokeCustomizers(pp, collectionPropertiesMapper));
+					InvokeAfterMapList(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
 		}
 
@@ -799,12 +1116,14 @@ namespace ConfOrm.NH
 			
 			propertiesContainer.Map(member, collectionPropertiesMapper =>
 				{
+					InvokeBeforeMapMap(propertyPath, collectionPropertiesMapper);
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					PatternsAppliers.Collection.ApplyAllMatchs(member, collectionPropertiesMapper);
 					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					PatternsAppliers.Map.ApplyAllMatchs(member, collectionPropertiesMapper);
 					PatternsAppliers.MapPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					ForEachMemberPath(member, propertyPath, pp => customizerHolder.InvokeCustomizers(pp, collectionPropertiesMapper));
+					InvokeAfterMapMap(propertyPath, collectionPropertiesMapper);
 				}, mkrm.Map, cert.Map);
 		}
 
@@ -815,12 +1134,14 @@ namespace ConfOrm.NH
 			ICollectionElementRelationMapper cert = DetermineCollectionElementRelationType(member, propertyPath, collectionElementType);
 			propertiesContainer.Set(member, collectionPropertiesMapper =>
 				{
+					InvokeBeforeMapSet(propertyPath, collectionPropertiesMapper);
 					cert.MapCollectionProperties(collectionPropertiesMapper);
 					PatternsAppliers.Collection.ApplyAllMatchs(member, collectionPropertiesMapper);
 					PatternsAppliers.CollectionPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					PatternsAppliers.Set.ApplyAllMatchs(member, collectionPropertiesMapper);
 					PatternsAppliers.SetPath.ApplyAllMatchs(propertyPath, collectionPropertiesMapper);
 					ForEachMemberPath(member, propertyPath, pp => customizerHolder.InvokeCustomizers(pp, collectionPropertiesMapper));
+					InvokeAfterMapSet(propertyPath, collectionPropertiesMapper);
 				}, cert.Map);
 		}
 
@@ -829,11 +1150,13 @@ namespace ConfOrm.NH
 		{
 			propertiesContainer.OneToOne(member, oneToOneMapper =>
 				{
+					InvokeBeforeMapOneToOne(propertyPath, oneToOneMapper);
 					Cascade? cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
 					oneToOneMapper.Cascade(cascade.GetValueOrDefault(Cascade.None));
 					PatternsAppliers.OneToOne.ApplyAllMatchs(member, oneToOneMapper);
 					PatternsAppliers.OneToOnePath.ApplyAllMatchs(propertyPath, oneToOneMapper);
 					ForEachMemberPath(member, propertyPath, pp => customizerHolder.InvokeCustomizers(pp, oneToOneMapper));
+					InvokeAfterMapOneToOne(propertyPath, oneToOneMapper);
 				});
 		}
 
@@ -842,11 +1165,13 @@ namespace ConfOrm.NH
 		{
 			propertiesContainer.ManyToOne(member, manyToOneMapper =>
 				{
+					InvokeBeforeMapManyToOne(propertyPath, manyToOneMapper);
 					Cascade? cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
 					manyToOneMapper.Cascade(cascade.GetValueOrDefault(Cascade.None));
 					PatternsAppliers.ManyToOne.ApplyAllMatchs(member, manyToOneMapper);
 					PatternsAppliers.ManyToOnePath.ApplyAllMatchs(propertyPath, manyToOneMapper);
 					ForEachMemberPath(member, propertyPath, pp => customizerHolder.InvokeCustomizers(pp, manyToOneMapper));
+					InvokeAfterMapManyToOne(propertyPath, manyToOneMapper);
 				});
 		}
 
@@ -878,13 +1203,15 @@ namespace ConfOrm.NH
 			private readonly PropertyPath propertyPath;
 			private readonly IPatternsAppliersHolder appliers;
 			private readonly ICustomizersHolder customizersHolder;
+			private readonly Mapper mapper;
 
-			public ElementRelationMapper(MemberInfo member, PropertyPath propertyPath, IPatternsAppliersHolder appliers, ICustomizersHolder customizersHolder)
+			public ElementRelationMapper(MemberInfo member, PropertyPath propertyPath, IPatternsAppliersHolder appliers, ICustomizersHolder customizersHolder, Mapper mapper)
 			{
 				this.member = member;
 				this.propertyPath = propertyPath;
 				this.appliers = appliers;
 				this.customizersHolder = customizersHolder;
+				this.mapper = mapper;
 			}
 
 			#region Implementation of ICollectionElementRelationMapper
@@ -893,9 +1220,11 @@ namespace ConfOrm.NH
 			{
 				relation.Element(x =>
 					{
+						mapper.InvokeBeforeMapElement(propertyPath, x);
 						appliers.Element.ApplyAllMatchs(member, x);
 						appliers.ElementPath.ApplyAllMatchs(propertyPath, x);
 						customizersHolder.InvokeCustomizers(propertyPath, x);
+						mapper.InvokeAfterMapElement(propertyPath, x);
 					});
 			}
 
@@ -916,8 +1245,9 @@ namespace ConfOrm.NH
 			private readonly IDomainInspector domainInspector;
 			private readonly IPatternsAppliersHolder appliers;
 			private readonly ICustomizersHolder customizersHolder;
+			private readonly Mapper mapper;
 
-			public OneToManyRelationMapper(MemberInfo member, PropertyPath propertyPath, Type ownerType, Type collectionElementType, IDomainInspector domainInspector, IPatternsAppliersHolder appliers, ICustomizersHolder customizersHolder)
+			public OneToManyRelationMapper(MemberInfo member, PropertyPath propertyPath, Type ownerType, Type collectionElementType, IDomainInspector domainInspector, IPatternsAppliersHolder appliers, ICustomizersHolder customizersHolder, Mapper mapper)
 			{
 				this.member = member;
 				this.propertyPath = propertyPath;
@@ -926,6 +1256,7 @@ namespace ConfOrm.NH
 				this.domainInspector = domainInspector;
 				this.appliers = appliers;
 				this.customizersHolder = customizersHolder;
+				this.mapper = mapper;
 			}
 
 			#region Implementation of ICollectionElementRelationMapper
@@ -934,9 +1265,11 @@ namespace ConfOrm.NH
 			{
 				relation.OneToMany(x =>
 					{
+						mapper.InvokeBeforeMapOneToMany(propertyPath, x);
 						appliers.OneToMany.ApplyAllMatchs(member, x);
 						appliers.OneToManyPath.ApplyAllMatchs(propertyPath, x);
 						customizersHolder.InvokeCustomizers(propertyPath, x);
+						mapper.InvokeAfterMapOneToMany(propertyPath, x);
 					});
 			}
 
@@ -974,8 +1307,9 @@ namespace ConfOrm.NH
 			private readonly IDomainInspector domainInspector;
 			private readonly IPatternsAppliersHolder appliers;
 			private readonly ICustomizersHolder customizersHolder;
+			private readonly Mapper mapper;
 
-			public ManyToManyRelationMapper(MemberInfo member, PropertyPath propertyPath, Type ownerType, Type collectionElementType, IDomainInspector domainInspector, IPatternsAppliersHolder appliers, ICustomizersHolder customizersHolder)
+			public ManyToManyRelationMapper(MemberInfo member, PropertyPath propertyPath, Type ownerType, Type collectionElementType, IDomainInspector domainInspector, IPatternsAppliersHolder appliers, ICustomizersHolder customizersHolder, Mapper mapper)
 			{
 				this.member = member;
 				this.propertyPath = propertyPath;
@@ -984,6 +1318,7 @@ namespace ConfOrm.NH
 				this.domainInspector = domainInspector;
 				this.appliers = appliers;
 				this.customizersHolder = customizersHolder;
+				this.mapper = mapper;
 			}
 
 			#region Implementation of ICollectionElementRelationMapper
@@ -992,9 +1327,11 @@ namespace ConfOrm.NH
 			{
 				relation.ManyToMany(x =>
 					{
+						mapper.InvokeBeforeMapManyToMany(propertyPath, x);
 						appliers.ManyToMany.ApplyAllMatchs(member, x);
 						appliers.ManyToManyPath.ApplyAllMatchs(propertyPath, x);
 						customizersHolder.InvokeCustomizers(propertyPath, x);
+						mapper.InvokeAfterMapManyToMany(propertyPath, x);
 					});
 			}
 
@@ -1079,15 +1416,18 @@ namespace ConfOrm.NH
 					{
 						propertiesContainer.ManyToOne(member, manyToOneMapper =>
 							{
+								mapper.InvokeBeforeMapManyToOne(propertyPath, manyToOneMapper);
 								patternsAppliersHolder.ManyToOne.ApplyAllMatchs(member, manyToOneMapper);
 								patternsAppliersHolder.ManyToOnePath.ApplyAllMatchs(propertyPath, manyToOneMapper);
 								mapper.ForEachMemberPath(member, propertyPath, pp => customizersHolder.InvokeCustomizers(pp, manyToOneMapper));
+								mapper.InvokeAfterMapManyToOne(propertyPath, manyToOneMapper);
 							});
 					}
 					else if (domainInspector.IsComponent(propertyType))
 					{
 						propertiesContainer.Component(member, x =>
 							{
+								mapper.InvokeBeforeMapComponent(propertyPath, x);
 								// Note: for nested-components the Parent discovering is mandatory (recursive nested-component); 
 								// for the same reason you can't have more than one property of the type of the Parent component
 								var componentOwnerType = type;
@@ -1107,6 +1447,7 @@ namespace ConfOrm.NH
 								patternsAppliersHolder.ComponentPropertyPath.ApplyAllMatchs(propertyPath, x);
 								customizersHolder.InvokeCustomizers(componentPropertyType, x);
 								mapper.ForEachMemberPath(member, propertyPath, pp => customizersHolder.InvokeCustomizers(pp, x));
+								mapper.InvokeAfterMapComponent(propertyPath, x);
 
 								MapProperties(componentPropertyType, propertyPath, x, componentProperties.Where(pi => pi != parentReferenceProperty));
 							});
@@ -1115,9 +1456,11 @@ namespace ConfOrm.NH
 					{
 						propertiesContainer.Property(member, propertyMapper =>
 							{
+								mapper.InvokeBeforeMapProperty(propertyPath, propertyMapper);
 								patternsAppliersHolder.Property.ApplyAllMatchs(member, propertyMapper);
 								patternsAppliersHolder.PropertyPath.ApplyAllMatchs(propertyPath, propertyMapper);
 								mapper.ForEachMemberPath(member, propertyPath, pp => customizersHolder.InvokeCustomizers(pp, propertyMapper));
+								mapper.InvokeAfterMapProperty(propertyPath, propertyMapper);
 							});
 					}
 				}
@@ -1129,17 +1472,17 @@ namespace ConfOrm.NH
 			var ownerType = property.ReflectedType;
 			if (domainInspector.IsOneToMany(ownerType, collectionElementType))
 			{
-				return new OneToManyRelationMapper(property, propertyPath, ownerType, collectionElementType, domainInspector, PatternsAppliers, customizerHolder);
+				return new OneToManyRelationMapper(property, propertyPath, ownerType, collectionElementType, domainInspector, PatternsAppliers, customizerHolder, this);
 			}
 			if (domainInspector.IsManyToMany(ownerType, collectionElementType))
 			{
-				return new ManyToManyRelationMapper(property, propertyPath, ownerType, collectionElementType, domainInspector, PatternsAppliers, customizerHolder);
+				return new ManyToManyRelationMapper(property, propertyPath, ownerType, collectionElementType, domainInspector, PatternsAppliers, customizerHolder, this);
 			}
 			if (domainInspector.IsComponent(collectionElementType))
 			{
 				return new ComponentRelationMapper(property, ownerType, collectionElementType, membersProvider, domainInspector, PatternsAppliers, customizerHolder, this);
 			}
-			return new ElementRelationMapper(property, propertyPath, PatternsAppliers, customizerHolder);
+			return new ElementRelationMapper(property, propertyPath, PatternsAppliers, customizerHolder, this);
 		}
 
 		private IMapKeyRelationMapper DetermineMapKeyRelationType(MemberInfo member, PropertyPath propertyPath, Type dictionaryKeyType)
@@ -1148,13 +1491,13 @@ namespace ConfOrm.NH
 			if (domainInspector.IsManyToMany(ownerType, dictionaryKeyType) || domainInspector.IsOneToMany(ownerType, dictionaryKeyType))
 			{
 				// OneToMany is not possible as map-key so we map it as many-to-many instead ignore the case
-				return new KeyManyToManyRelationMapper(member, propertyPath, PatternsAppliers, customizerHolder);
+				return new KeyManyToManyRelationMapper(member, propertyPath, PatternsAppliers, customizerHolder, this);
 			}
 			if (domainInspector.IsComponent(dictionaryKeyType))
 			{
 				return new KeyComponentRelationMapper(dictionaryKeyType, propertyPath, membersProvider, domainInspector, PatternsAppliers, customizerHolder, this);
 			}
-			return new KeyElementRelationMapper(member, propertyPath, PatternsAppliers, customizerHolder);
+			return new KeyElementRelationMapper(member, propertyPath, PatternsAppliers, customizerHolder, this);
 		}
 
 		private class KeyElementRelationMapper : IMapKeyRelationMapper
@@ -1163,23 +1506,27 @@ namespace ConfOrm.NH
 			private readonly PropertyPath propertyPath;
 			private readonly IPatternsAppliersHolder patternsAppliersHolder;
 			private readonly ICustomizersHolder customizersHolder;
+			private readonly Mapper mapper;
 
-			public KeyElementRelationMapper(MemberInfo member, PropertyPath propertyPath, IPatternsAppliersHolder patternsAppliersHolder, ICustomizersHolder customizersHolder)
+			public KeyElementRelationMapper(MemberInfo member, PropertyPath propertyPath, IPatternsAppliersHolder patternsAppliersHolder, ICustomizersHolder customizersHolder, Mapper mapper)
 			{
 				this.member = member;
 				this.propertyPath = propertyPath;
 				this.patternsAppliersHolder = patternsAppliersHolder;
 				this.customizersHolder = customizersHolder;
+				this.mapper = mapper;
 			}
 
 			public void Map(IMapKeyRelation relation)
 			{
 				relation.Element(x=>
 				                 	{
+														mapper.InvokeBeforeMapMapKey(propertyPath, x);
 														patternsAppliersHolder.MapKey.ApplyAllMatchs(member, x);
 														patternsAppliersHolder.MapKeyPath.ApplyAllMatchs(propertyPath, x);
 														customizersHolder.InvokeCustomizers(propertyPath, x);
-				                 	});
+														mapper.InvokeAfterMapMapKey(propertyPath, x);
+													});
 			}
 		}
 
@@ -1230,18 +1577,22 @@ namespace ConfOrm.NH
 					{
 						propertiesContainer.ManyToOne(member, manyToOneMapper =>
 						                                      	{
-																											patternsAppliersHolder.ManyToOne.ApplyAllMatchs(member, manyToOneMapper);
 																											var progressivePath = new PropertyPath(propertyPath, member);
+																											mapper.InvokeBeforeMapManyToOne(progressivePath, manyToOneMapper);
+																											patternsAppliersHolder.ManyToOne.ApplyAllMatchs(member, manyToOneMapper);
 																											mapper.ForEachMemberPath(member, progressivePath, pp => customizersHolder.InvokeCustomizers(pp, manyToOneMapper));
-						                                      	});
+																											mapper.InvokeAfterMapManyToOne(progressivePath, manyToOneMapper);
+																										});
 					}
 					else
 					{
 						propertiesContainer.Property(member, propertyMapper =>
 						                                     	{
-																										patternsAppliersHolder.Property.ApplyAllMatchs(member, propertyMapper);
 																										var progressivePath = new PropertyPath(propertyPath, member);
+																										mapper.InvokeBeforeMapProperty(progressivePath, propertyMapper);
+																										patternsAppliersHolder.Property.ApplyAllMatchs(member, propertyMapper);
 																										mapper.ForEachMemberPath(member, progressivePath, pp => customizersHolder.InvokeCustomizers(pp, propertyMapper));
+																										mapper.InvokeAfterMapProperty(progressivePath, propertyMapper);
 																									});
 					}
 				}
@@ -1254,23 +1605,27 @@ namespace ConfOrm.NH
 			private readonly PropertyPath propertyPath;
 			private readonly IPatternsAppliersHolder patternsAppliers;
 			private readonly ICustomizersHolder customizersHolder;
+			private readonly Mapper mapper;
 
-			public KeyManyToManyRelationMapper(MemberInfo member, PropertyPath propertyPath, IPatternsAppliersHolder patternsAppliers, ICustomizersHolder customizersHolder)
+			public KeyManyToManyRelationMapper(MemberInfo member, PropertyPath propertyPath, IPatternsAppliersHolder patternsAppliers, ICustomizersHolder customizersHolder, Mapper mapper)
 			{
 				this.member = member;
 				this.propertyPath = propertyPath;
 				this.patternsAppliers = patternsAppliers;
 				this.customizersHolder = customizersHolder;
+				this.mapper = mapper;
 			}
 
 			public void Map(IMapKeyRelation relation)
 			{
 				relation.ManyToMany(x=>
 				                    	{
+																mapper.InvokeBeforeMapMapKeyManyToMany(propertyPath, x);
 																patternsAppliers.MapKeyManyToMany.ApplyAllMatchs(member, x);
 																patternsAppliers.MapKeyManyToManyPath.ApplyAllMatchs(propertyPath, x);
 																customizersHolder.InvokeCustomizers(propertyPath, x);
-				                    	});
+																mapper.InvokeAfterMapMapKeyManyToMany(propertyPath, x);
+															});
 			}
 		}
 
