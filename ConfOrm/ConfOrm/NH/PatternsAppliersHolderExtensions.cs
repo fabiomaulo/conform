@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using ConfOrm.Mappers;
 using ConfOrm.Patterns;
 
 namespace ConfOrm.NH
@@ -306,6 +307,12 @@ namespace ConfOrm.NH
 			{
 				PerformUnionWith(destination, patternApplier);
 			}
+		}
+
+		public static void Add<TSubject, TApplyTo>(this	ICollection<IPatternApplier<TSubject, TApplyTo>> holder, Predicate<TSubject> matcher, Action<TSubject, TApplyTo> applier)
+		{
+			var patternApplier = new DelegatedAdvancedApplier<TSubject, TApplyTo>(matcher, applier);
+			holder.Add(patternApplier);
 		}
 	}
 }
