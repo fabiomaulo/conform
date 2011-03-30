@@ -55,6 +55,38 @@ namespace ConfOrm.NH
 			this.membersProvider = membersProvider;
 		}
 
+		#region Events
+
+		/// <summary>
+		/// Occurs before apply pattern-appliers on a root class.
+		/// </summary>
+		public event RootClassMappingHandler BeforeMapClass;
+
+		public void InvokeBeforeMapClass(Type type, IClassAttributesMapper classcustomizer)
+		{
+			RootClassMappingHandler handler = BeforeMapClass;
+			if (handler != null)
+			{
+				handler(DomainInspector, type, classcustomizer);
+			}
+		}
+
+		/// <summary>
+		/// Occurs after apply the last customizer on a root class.
+		/// </summary>
+		public event RootClassMappingHandler AfterMapClass;
+
+		public void InvokeAfterMapClass(Type type, IClassAttributesMapper classcustomizer)
+		{
+			RootClassMappingHandler handler = AfterMapClass;
+			if (handler != null)
+			{
+				handler(DomainInspector, type, classcustomizer);
+			}
+		}
+
+		#endregion
+
 		public IDomainInspector DomainInspector
 		{
 			get { return domainInspector; }
@@ -330,8 +362,11 @@ namespace ConfOrm.NH
 					p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p)).ToArray();
 			var versionMember = persistentProperties.SingleOrDefault(mi => domainInspector.IsVersion(mi));
 			MapVersion(classMapper, versionMember);
+
+			InvokeBeforeMapClass(type, classMapper);
 			PatternsAppliers.RootClass.ApplyAllMatchs(type, classMapper);
 			InvokeClassCustomizers(type, classMapper);
+			InvokeAfterMapClass(type, classMapper);
 
 			var naturalIdPropeties = persistentProperties.Where(mi => domainInspector.IsMemberOfNaturalId(mi)).ToArray();
 			if (naturalIdPropeties.Length > 0)
