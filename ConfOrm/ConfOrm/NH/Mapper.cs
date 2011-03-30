@@ -62,6 +62,39 @@ namespace ConfOrm.NH
 		/// </summary>
 		public event RootClassMappingHandler BeforeMapClass;
 
+		/// <summary>
+		/// Occurs after apply the last customizer on a root class.
+		/// </summary>
+		public event RootClassMappingHandler AfterMapClass;
+
+		/// <summary>
+		/// Occurs before apply pattern-appliers on a subclass.
+		/// </summary>
+		public event SubclassMappingHandler BeforeMapSubclass;
+
+		/// <summary>
+		/// Occurs after apply the last customizer on a subclass.
+		/// </summary>
+		public event SubclassMappingHandler AfterMapSubclass;
+
+		public void InvokeBeforeMapSubclass(Type type, ISubclassAttributesMapper subclasscustomizer)
+		{
+			SubclassMappingHandler handler = BeforeMapSubclass;
+			if (handler != null)
+			{
+				handler(DomainInspector, type, subclasscustomizer);
+			}
+		}
+
+		public void InvokeAfterMapSubclass(Type type, ISubclassAttributesMapper subclasscustomizer)
+		{
+			SubclassMappingHandler handler = AfterMapSubclass;
+			if (handler != null)
+			{
+				handler(DomainInspector, type, subclasscustomizer);
+			}
+		}
+
 		public void InvokeBeforeMapClass(Type type, IClassAttributesMapper classcustomizer)
 		{
 			RootClassMappingHandler handler = BeforeMapClass;
@@ -70,11 +103,6 @@ namespace ConfOrm.NH
 				handler(DomainInspector, type, classcustomizer);
 			}
 		}
-
-		/// <summary>
-		/// Occurs after apply the last customizer on a root class.
-		/// </summary>
-		public event RootClassMappingHandler AfterMapClass;
 
 		public void InvokeAfterMapClass(Type type, IClassAttributesMapper classcustomizer)
 		{
@@ -306,8 +334,11 @@ namespace ConfOrm.NH
 			var propertiesToMap =
 				candidateProperties.Where(p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p));
 
+			InvokeBeforeMapSubclass(type, classMapper);
 			PatternsAppliers.Subclass.ApplyAllMatchs(type, classMapper);
 			customizerHolder.InvokeCustomizers(type, classMapper);
+			InvokeAfterMapSubclass(type, classMapper);
+
 			MapProperties(type, propertiesToMap, classMapper);
 		}
 
