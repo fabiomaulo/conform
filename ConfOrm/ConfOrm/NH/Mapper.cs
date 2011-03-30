@@ -105,7 +105,7 @@ namespace ConfOrm.NH
 			}
 		}
 
-		private void InvokeBeforeMapSubclass(Type type, ISubclassAttributesMapper subclasscustomizer)
+		protected void InvokeBeforeMapSubclass(Type type, ISubclassAttributesMapper subclasscustomizer)
 		{
 			SubclassMappingHandler handler = BeforeMapSubclass;
 			if (handler != null)
@@ -114,7 +114,7 @@ namespace ConfOrm.NH
 			}
 		}
 
-		private void InvokeAfterMapSubclass(Type type, ISubclassAttributesMapper subclasscustomizer)
+		protected void InvokeAfterMapSubclass(Type type, ISubclassAttributesMapper subclasscustomizer)
 		{
 			SubclassMappingHandler handler = AfterMapSubclass;
 			if (handler != null)
@@ -123,7 +123,7 @@ namespace ConfOrm.NH
 			}
 		}
 
-		public void InvokeBeforeMapClass(Type type, IClassAttributesMapper classcustomizer)
+		protected void InvokeBeforeMapClass(Type type, IClassAttributesMapper classcustomizer)
 		{
 			RootClassMappingHandler handler = BeforeMapClass;
 			if (handler != null)
@@ -132,7 +132,7 @@ namespace ConfOrm.NH
 			}
 		}
 
-		public void InvokeAfterMapClass(Type type, IClassAttributesMapper classcustomizer)
+		protected void InvokeAfterMapClass(Type type, IClassAttributesMapper classcustomizer)
 		{
 			RootClassMappingHandler handler = AfterMapClass;
 			if (handler != null)
