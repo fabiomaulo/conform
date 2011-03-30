@@ -199,7 +199,7 @@ namespace ConfOrm.NH
 			var mapping = new HbmMapping {assembly = defaultAssemblyName, @namespace = defaultNamespace};
 			foreach (var type in RootClasses(typeToMap))
 			{
-				AddRootClassMapping(type, mapping);
+				MapRootClass(type, mapping);
 			}
 			foreach (var type in Subclasses(typeToMap))
 			{
@@ -316,25 +316,11 @@ namespace ConfOrm.NH
 			return type.GetInterfaces().FirstOrDefault(i => domainInspector.IsEntity(i));
 		}
 
-		private void AddRootClassMapping(Type type, HbmMapping mapping)
+		private void MapRootClass(Type type, HbmMapping mapping)
 		{
 			var poidPropertyOrField = membersProvider.GetEntityMembersForPoid(type).FirstOrDefault(mi => domainInspector.IsPersistentId(mi));
 			var classMapper = new ClassMapper(type, mapping, poidPropertyOrField);
-			classMapper.Id(idMapper =>
-				{
-					var persistentIdStrategy = domainInspector.GetPersistentIdStrategy(poidPropertyOrField);
-					if (persistentIdStrategy != null && persistentIdStrategy.Strategy != PoIdStrategy.Assigned)
-					{
-						idMapper.Generator(GetGenerator(persistentIdStrategy.Strategy), gm =>
-						{
-							if (persistentIdStrategy.Params != null)
-							{
-								gm.Params(persistentIdStrategy.Params);
-							}
-						});
-					}
-					PatternsAppliers.Poid.ApplyAllMatchs(poidPropertyOrField, idMapper);
-				});
+			MapId(classMapper, poidPropertyOrField);
 			if (domainInspector.IsTablePerClassHierarchy(type))
 			{
 				classMapper.Discriminator(x => { });
@@ -343,13 +329,7 @@ namespace ConfOrm.NH
 				membersProvider.GetRootEntityMembers(type).Where(
 					p => domainInspector.IsPersistentProperty(p) && !domainInspector.IsPersistentId(p)).ToArray();
 			var versionMember = persistentProperties.SingleOrDefault(mi => domainInspector.IsVersion(mi));
-			if (versionMember!= null)
-			{
-				classMapper.Version(versionMember, versionMapper =>
-					{
-						PatternsAppliers.Version.ApplyAllMatchs(versionMember, versionMapper);
-					});
-			}
+			MapVersion(classMapper, versionMember);
 			PatternsAppliers.RootClass.ApplyAllMatchs(type, classMapper);
 			InvokeClassCustomizers(type, classMapper);
 
@@ -366,6 +346,36 @@ namespace ConfOrm.NH
 			}
 
 			MapProperties(type, persistentProperties.Where(mi => !domainInspector.IsVersion(mi)).Except(naturalIdPropeties), classMapper);
+		}
+
+		private void MapVersion(ClassMapper classMapper, MemberInfo versionMember)
+		{
+			if (versionMember!= null)
+			{
+				classMapper.Version(versionMember, versionMapper =>
+				                                   {
+				                                   	PatternsAppliers.Version.ApplyAllMatchs(versionMember, versionMapper);
+				                                   });
+			}
+		}
+
+		private void MapId(ClassMapper classMapper, MemberInfo poidPropertyOrField)
+		{
+			classMapper.Id(idMapper =>
+			               {
+			               	var persistentIdStrategy = domainInspector.GetPersistentIdStrategy(poidPropertyOrField);
+			               	if (persistentIdStrategy != null && persistentIdStrategy.Strategy != PoIdStrategy.Assigned)
+			               	{
+			               		idMapper.Generator(GetGenerator(persistentIdStrategy.Strategy), gm =>
+			               		                                                                {
+			               		                                                                	if (persistentIdStrategy.Params != null)
+			               		                                                                	{
+			               		                                                                		gm.Params(persistentIdStrategy.Params);
+			               		                                                                	}
+			               		                                                                });
+			               	}
+			               	PatternsAppliers.Poid.ApplyAllMatchs(poidPropertyOrField, idMapper);
+			               });
 		}
 
 		private void InvokeClassCustomizers(Type type, IClassAttributesMapper classMapper)
@@ -1148,7 +1158,7 @@ namespace ConfOrm.NH
 			foreach (var type in RootClasses(typeToMap))
 			{
 				var mapping = new HbmMapping { assembly = type.Assembly.GetName().Name, @namespace = type.Namespace };
-				AddRootClassMapping(type, mapping);
+				MapRootClass(type, mapping);
 				yield return mapping;
 			}
 			foreach (var type in Subclasses(typeToMap))
