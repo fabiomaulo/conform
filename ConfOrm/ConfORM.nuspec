@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>ConfOrm</id>
-    <version>1.0.1.4</version>
+    <version>1.0.1.5</version>
     <authors>Fabio Maulo, OSS community</authors>
     <summary>ORM configuration by code.</summary>
     <description>
