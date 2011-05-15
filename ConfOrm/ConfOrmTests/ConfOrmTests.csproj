@@ -150,7 +150,6 @@
     <Compile Include="Mappers\VersionGenerationTest.cs" />
     <Compile Include="NH\AbstractPropertyContainerMapperTest.cs" />
     <Compile Include="NH\AccessorPropertyMapperTest.cs" />
-    <Compile Include="NH\AnyMapperTest.cs" />
     <Compile Include="NH\BagMapperTest.cs" />
     <Compile Include="NH\CacheMapperTest.cs" />
     <Compile Include="NH\CascadeConverterTest.cs" />
@@ -176,7 +175,6 @@
     <Compile Include="NH\ElementMapperTest.cs" />
     <Compile Include="NH\FakeUserCollectionType.cs" />
     <Compile Include="NH\FilterMapperTest.cs" />
-    <Compile Include="NH\IdMapperTest.cs" />
     <Compile Include="NH\JoinedSubclassMapperTest.cs" />
     <Compile Include="NH\KeyManyToOneMapperTest.cs" />
     <Compile Include="NH\KeyMapperTest.cs" />
@@ -184,7 +182,6 @@
     <Compile Include="NH\LazyRelationTest.cs" />
     <Compile Include="NH\ListMapperTest.cs" />
     <Compile Include="NH\ManyToManyMapperTest.cs" />
-    <Compile Include="NH\ManyToOneMapperTest.cs" />
     <Compile Include="NH\MapKeyManyToManyMapperTest.cs" />
     <Compile Include="NH\MapKeyMapperTest.cs" />
     <Compile Include="NH\MapKeyRelationTest.cs" />
@@ -294,10 +291,8 @@
     <Compile Include="NH\MapperTests\VersionInterfacePolymorphicCustomizationTest.cs" />
     <Compile Include="NH\MapperTests\VersionPolymorphicCustomizationTest.cs" />
     <Compile Include="NH\MapperTests\VersionPropertyTest.cs" />
-    <Compile Include="NH\NaturalIdMapperTest.cs" />
     <Compile Include="NH\NotFoundModeTest.cs" />
     <Compile Include="NH\OneToManyMapperTest.cs" />
-    <Compile Include="NH\OneToOneMapperTest.cs" />
     <Compile Include="NH\PatternsAppliersHolderMergeExtensionTest.cs" />
     <Compile Include="NH\PatternsAppliersHolderMergeHoldersTest.cs" />
     <Compile Include="NH\PatternsAppliersHolderPropertyCallingMock.cs" />

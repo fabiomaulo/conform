@@ -1,5 +1,5 @@
 using System;
-using ConfOrm;
+using NHibernate;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Mapping.ByCode.Impl;
 using NUnit.Framework;

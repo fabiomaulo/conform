@@ -12,7 +12,6 @@ using NHibernate.Type;
 using NHibernate.UserTypes;
 using NUnit.Framework;
 using SharpTestsEx;
-using MappingException = ConfOrm.MappingException;
 
 namespace ConfOrmTests.NH
 {

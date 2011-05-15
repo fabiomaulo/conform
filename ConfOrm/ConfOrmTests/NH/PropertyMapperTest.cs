@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Data;
-using ConfOrm;
 using NHibernate;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Engine;
@@ -12,7 +11,6 @@ using NHibernate.Type;
 using NHibernate.UserTypes;
 using NUnit.Framework;
 using SharpTestsEx;
-using MappingException = ConfOrm.MappingException;
 
 namespace ConfOrmTests.NH
 {
@@ -106,7 +104,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void WhenSetTypeByITypeTypeThenSetType()
 		{
-			var member = ForClass<MyClass>.Property(c => c.EnumProp);
+			var member = ConfOrm.ForClass<MyClass>.Property(c => c.EnumProp);
 			var mapping = new HbmProperty();
 			var mapper = new PropertyMapper(member, mapping);
 			mapper.Type<EnumStringType<MyEnum>>();
@@ -265,7 +263,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void WhenSetUpdateThenSetAttributes()
 		{
-			var member = ForClass<MyClass>.Property(x => x.ReadOnly);
+			var member = ConfOrm.ForClass<MyClass>.Property(x => x.ReadOnly);
 			var mapping = new HbmProperty();
 			var mapper = new PropertyMapper(member, mapping);
 
@@ -277,7 +275,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void WhenSetInsertThenSetAttributes()
 		{
-			var member = ForClass<MyClass>.Property(x => x.ReadOnly);
+			var member = ConfOrm.ForClass<MyClass>.Property(x => x.ReadOnly);
 			var mapping = new HbmProperty();
 			var mapper = new PropertyMapper(member, mapping);
 
@@ -289,7 +287,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void WhenSetLazyThenSetAttributes()
 		{
-			var member = ForClass<MyClass>.Property(x => x.ReadOnly);
+			var member = ConfOrm.ForClass<MyClass>.Property(x => x.ReadOnly);
 			var mapping = new HbmProperty();
 			var mapper = new PropertyMapper(member, mapping);
 

@@ -105,7 +105,7 @@ namespace ConfOrmTests.NH
 			var mapping = new HbmMapKey();
 			var mapper = new MapKeyMapper(mapping);
 			mapper.Columns(cm => cm.Length(50), cm => cm.SqlType("VARCHAR(10)"));
-			mapper.Executing(m => m.Column(cm => cm.Length(50))).Throws<ConfOrm.MappingException>();
+			mapper.Executing(m => m.Column(cm => cm.Length(50))).Throws<MappingException>();
 		}
 
 		[Test]

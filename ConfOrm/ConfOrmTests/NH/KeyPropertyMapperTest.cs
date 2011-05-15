@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using ConfOrm;
 using NHibernate;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Mapping.ByCode.Impl;
@@ -99,7 +98,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void WhenSetTypeByITypeTypeThenSetType()
 		{
-			var member = ForClass<MyClass>.Property(c => c.EnumProp);
+			var member = ConfOrm.ForClass<MyClass>.Property(c => c.EnumProp);
 			var mapping = new HbmKeyProperty();
 			var mapper = new KeyPropertyMapper(member, mapping);
 			mapper.Type<EnumStringType<MyEnum>>();
@@ -209,7 +208,7 @@ namespace ConfOrmTests.NH
 			var mapping = new HbmKeyProperty();
 			var mapper = new KeyPropertyMapper(member, mapping);
 			mapper.Columns(cm => cm.Length(50), cm => cm.SqlType("VARCHAR(10)"));
-			mapper.Executing(m => m.Column(cm => cm.Length(50))).Throws<ConfOrm.MappingException>();
+			mapper.Executing(m => m.Column(cm => cm.Length(50))).Throws<MappingException>();
 		}
 	}
 }

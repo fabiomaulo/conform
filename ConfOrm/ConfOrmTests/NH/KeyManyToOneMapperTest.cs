@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using NHibernate;
 using NHibernate.Mapping.ByCode;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Mapping.ByCode.Impl;
@@ -148,7 +149,7 @@ namespace ConfOrmTests.NH
 			var mapping = new HbmKeyManyToOne();
 			var mapper = new KeyManyToOneMapper(member, mapping, hbmMapping);
 			mapper.Columns(cm => cm.Length(50), cm => cm.SqlType("VARCHAR(10)"));
-			mapper.Executing(m=> m.Column(cm => cm.Length(50))).Throws<ConfOrm.MappingException>();
+			mapper.Executing(m=> m.Column(cm => cm.Length(50))).Throws<MappingException>();
 		}
 
 		[Test]

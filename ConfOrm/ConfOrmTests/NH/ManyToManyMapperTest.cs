@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using NHibernate;
 using NHibernate.Mapping.ByCode;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Mapping.ByCode.Impl;
@@ -91,7 +92,7 @@ namespace ConfOrmTests.NH
 			var mapper = new ManyToManyMapper(typeof(MyClass), mapping, null);
 			mapper.Columns(cm => cm.Length(50), cm => cm.SqlType("VARCHAR(10)"));
 
-			mapper.Executing(x => x.Column(cm => cm.Length(50))).Throws<ConfOrm.MappingException>();
+			mapper.Executing(x => x.Column(cm => cm.Length(50))).Throws<MappingException>();
 		}
 
 		[Test]
