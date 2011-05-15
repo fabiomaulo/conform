@@ -1,9 +1,8 @@
 using System;
 using System.Linq;
-using ConfOrm;
-using ConfOrm.Mappers;
-using ConfOrm.NH;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping.ByCode.Impl;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -55,8 +54,8 @@ namespace ConfOrmTests.NH
 		{
 			var hbm = new HbmKey();
 			var km = new KeyMapper(typeof(Animal), hbm);
-			
-			km.PropertyRef(ForClass<Animal>.Property(x=> x.Name));
+
+			km.PropertyRef(ConfOrm.ForClass<Animal>.Property(x => x.Name));
 			hbm.propertyref.Should().Be("Name");
 		}
 
@@ -74,7 +73,7 @@ namespace ConfOrmTests.NH
 		{
 			var hbm = new HbmKey();
 			var km = new KeyMapper(typeof(Animal), hbm);
-			Executing.This(() => km.PropertyRef(ForClass<B>.Property(x => x.Name))).Should().Throw<ArgumentOutOfRangeException>();
+			Executing.This(() => km.PropertyRef(ConfOrm.ForClass<B>.Property(x => x.Name))).Should().Throw<ArgumentOutOfRangeException>();
 		}
 
 		[Test]

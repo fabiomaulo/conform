@@ -1,11 +1,11 @@
 using System;
 using System.Linq;
 using System.Data;
-using ConfOrm.Mappers;
-using ConfOrm.NH;
+using NHibernate.Mapping.ByCode;
 using NHibernate;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Engine;
+using NHibernate.Mapping.ByCode.Impl;
 using NHibernate.Properties;
 using NHibernate.SqlTypes;
 using NHibernate.Type;

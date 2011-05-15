@@ -1,5 +1,5 @@
-using ConfOrm.NH;
 using ConfOrm.Shop.Inflectors;
+using NHibernate.Mapping.ByCode;
 
 namespace ConfOrm.Shop.InflectorNaming
 {

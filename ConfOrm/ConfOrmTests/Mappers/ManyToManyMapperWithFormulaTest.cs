@@ -1,6 +1,6 @@
 using System.Linq;
-using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping.ByCode.Impl;
 using NUnit.Framework;
 using SharpTestsEx;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using Moq;
 using NHibernate.Cfg.MappingSchema;
@@ -33,7 +33,7 @@ namespace ConfOrmTests.NH.MapperTests.MapKeyRelationCustomizersCalling
 			orm.Setup(m => m.IsTablePerClass(It.IsAny<Type>())).Returns(true);
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
 			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
-			orm.Setup(m => m.IsDictionary(It.Is<MemberInfo>(mi => mi == ForClass<MyClass>.Property(p => p.Dictionary)))).Returns(true);
+			orm.Setup(m => m.IsDictionary(It.Is<MemberInfo>(mi => mi == ConfOrm.ForClass<MyClass>.Property(p => p.Dictionary)))).Returns(true);
 			orm.Setup(m => m.IsManyToMany(It.Is<Type>(t => t == typeof(MyClass)), It.Is<Type>(t => t == typeof(Relation)))).Returns(true);
 			return orm;
 		}

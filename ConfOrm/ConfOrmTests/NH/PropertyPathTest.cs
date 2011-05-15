@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using ConfOrm.NH;
+using NHibernate.Mapping.ByCode;
 using NUnit.Framework;
 using SharpTestsEx;
 

@@ -1,4 +1,4 @@
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using ConfOrm.NH.CustomizersImpl;
 using Moq;
@@ -19,7 +19,7 @@ namespace ConfOrmTests.NH.Customizers
 		{
 			var customizersHolder = new CustomizersHolder();
 			var customizer = new SubclassCustomizer<MyClass>(customizersHolder);
-			var classMapper = new Mock<ISubclassAttributesMapper>();
+			var classMapper = new Mock<ISubclassMapper>();
 
 			customizer.Persister<SingleTableEntityPersister>();
 			customizersHolder.InvokeCustomizers(typeof(MyClass), classMapper.Object);

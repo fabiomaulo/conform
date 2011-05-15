@@ -1,3 +1,5 @@
+using NHibernate.Mapping.ByCode;
+
 namespace ConfOrm.Shop.CoolNaming
 {
 	public class UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier : ConfOrm.Patterns.UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier
@@ -6,7 +8,7 @@ namespace ConfOrm.Shop.CoolNaming
 		{
 		}
 
-		protected override string GetColumnName(NH.PropertyPath subject)
+		protected override string GetColumnName(PropertyPath subject)
 		{
 			return GetBaseColumnName(subject) + "Id";
 		}

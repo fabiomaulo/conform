@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using ConfOrm.Patterns;
 using Moq;
@@ -51,7 +51,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			var orm = GetDomainInspectorMockForBaseTests();
 
 			var applier = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var property = new PropertyPath(null, ForClass<MySingleUsage>.Property(x => x.CurrentPositions));
+			var property = new PropertyPath(null, ConfOrm.ForClass<MySingleUsage>.Property(x => x.CurrentPositions));
 			applier.Match(property).Should().Be.False();
 		}
 
@@ -61,10 +61,10 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			var orm = GetDomainInspectorMockForBaseTests();
 
 			var applier = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var property1 = new PropertyPath(null, ForClass<Contact>.Property(x => x.CurrentPositions));
+			var property1 = new PropertyPath(null, ConfOrm.ForClass<Contact>.Property(x => x.CurrentPositions));
 			applier.Match(property1).Should().Be.True();
 
-			var property2 = new PropertyPath(null, ForClass<Contact>.Property(x => x.PastPositions));
+			var property2 = new PropertyPath(null, ConfOrm.ForClass<Contact>.Property(x => x.PastPositions));
 			applier.Match(property2).Should().Be.True();
 		}
 
@@ -78,7 +78,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			collectionMapper.Setup(x => x.Key(It.IsAny<Action<IKeyMapper>>())).Callback<Action<IKeyMapper>>(
 				x => x.Invoke(keyMapper.Object));
 
-			var property = new PropertyPath(null, ForClass<Contact>.Property(x => x.CurrentPositions));
+			var property = new PropertyPath(null, ConfOrm.ForClass<Contact>.Property(x => x.CurrentPositions));
 			applier.Apply(property, collectionMapper.Object);
 
 			keyMapper.Verify(km => km.Column(It.Is<string>(s => s == "ContactCurrentPositions_key")));
@@ -94,7 +94,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			collectionMapper.Setup(x => x.Key(It.IsAny<Action<IKeyMapper>>())).Callback<Action<IKeyMapper>>(
 				x => x.Invoke(keyMapper.Object));
 
-			var property = new PropertyPath(null, ForClass<Contact>.Property(x => x.PastPositions));
+			var property = new PropertyPath(null, ConfOrm.ForClass<Contact>.Property(x => x.PastPositions));
 			applier.Apply(property, collectionMapper.Object);
 
 			keyMapper.Verify(km => km.Column(It.Is<string>(s => s == "ContactPastPositions_key")));

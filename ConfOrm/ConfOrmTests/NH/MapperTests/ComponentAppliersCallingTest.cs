@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using Moq;
 using NUnit.Framework;
@@ -76,8 +76,8 @@ namespace ConfOrmTests.NH.MapperTests
 			var mapper = new Mapper(orm.Object);
 
 			var parentApplier = new Mock<IPatternApplier<MemberInfo, IComponentParentMapper>>();
-			var myClassParentProperty = ForClass<MyComponent>.Property(mc => mc.Parent);
-			var myNestedParentProperty = ForClass<MyNestedComponent>.Property(mc => mc.Parent);
+			var myClassParentProperty = ConfOrm.ForClass<MyComponent>.Property(mc => mc.Parent);
+			var myNestedParentProperty = ConfOrm.ForClass<MyNestedComponent>.Property(mc => mc.Parent);
 			parentApplier.Setup(x => x.Match(myClassParentProperty)).Returns(true);
 			parentApplier.Setup(x => x.Match(myNestedParentProperty)).Returns(true);
 

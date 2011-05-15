@@ -1,5 +1,5 @@
 using System;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Persister.Entity;
 
 namespace ConfOrm.NH.CustomizersImpl
@@ -48,6 +48,11 @@ namespace ConfOrm.NH.CustomizersImpl
 		public void Persister<T>() where T : IEntityPersister
 		{
 			CustomizersHolder.AddCustomizer(typeof(TEntity), (IUnionSubclassAttributesMapper m) => m.Persister<T>());
+		}
+
+		public void Synchronize(params string[] table)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IUnionSubclassAttributesMapper m) => m.Synchronize(table));
 		}
 
 		#endregion

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using ConfOrm.Patterns;
 using Moq;
@@ -51,8 +51,8 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			var orm = GetDomainInspectorMockForBaseTests();
 
 			var applier = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var componentProperty = new PropertyPath(null, ForClass<Contact>.Property(x => x.Component1));
-			var property = new PropertyPath(componentProperty, ForClass<MyComponent>.Property(x => x.PastPositions));
+			var componentProperty = new PropertyPath(null, ConfOrm.ForClass<Contact>.Property(x => x.Component1));
+			var property = new PropertyPath(componentProperty, ConfOrm.ForClass<MyComponent>.Property(x => x.PastPositions));
 			applier.Match(property).Should().Be.True();
 		}
 
@@ -66,8 +66,8 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			collectionMapper.Setup(x => x.Key(It.IsAny<Action<IKeyMapper>>())).Callback<Action<IKeyMapper>>(
 				x => x.Invoke(keyMapper.Object));
 
-			var componentProperty = new PropertyPath(null, ForClass<Contact>.Property(x => x.Component1));
-			var property = new PropertyPath(componentProperty, ForClass<MyComponent>.Property(x => x.PastPositions));
+			var componentProperty = new PropertyPath(null, ConfOrm.ForClass<Contact>.Property(x => x.Component1));
+			var property = new PropertyPath(componentProperty, ConfOrm.ForClass<MyComponent>.Property(x => x.PastPositions));
 			applier.Apply(property, collectionMapper.Object);
 
 			keyMapper.Verify(km => km.Column(It.Is<string>(s => s == "ContactComponent1PastPositions_key")));

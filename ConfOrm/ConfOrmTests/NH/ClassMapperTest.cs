@@ -1,8 +1,9 @@
 using System.Linq;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping.ByCode.Impl;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -300,7 +301,7 @@ namespace ConfOrmTests.NH
 		public void CanSetProxy()
 		{
 			var mapdoc = new HbmMapping();
-			var rc = new ClassMapper(typeof(EntityProxable), mapdoc, ForClass<EntityProxable>.Property(x=> x.Id));
+			var rc = new ClassMapper(typeof(EntityProxable), mapdoc, ConfOrm.ForClass<EntityProxable>.Property(x => x.Id));
 			rc.Proxy(typeof(IEntityProxable));
 
 			var hbmEntity = mapdoc.RootClasses[0];
@@ -311,7 +312,7 @@ namespace ConfOrmTests.NH
 		public void WhenSetWrongProxyThenThrow()
 		{
 			var mapdoc = new HbmMapping();
-			var rc = new ClassMapper(typeof(EntityProxable), mapdoc, ForClass<EntityProxable>.Property(x => x.Id));
+			var rc = new ClassMapper(typeof(EntityProxable), mapdoc, ConfOrm.ForClass<EntityProxable>.Property(x => x.Id));
 			rc.Executing(m => m.Proxy(typeof(IAnotherInterface))).Throws<MappingException>();
 		}
 
@@ -319,7 +320,7 @@ namespace ConfOrmTests.NH
 		public void SetSqlSubselect()
 		{
 			var mapdoc = new HbmMapping();
-			var mapper = new ClassMapper(typeof(EntityProxable), mapdoc, ForClass<EntityProxable>.Property(x => x.Id));
+			var mapper = new ClassMapper(typeof(EntityProxable), mapdoc, ConfOrm.ForClass<EntityProxable>.Property(x => x.Id));
 			mapper.Subselect("blah");
 
 			var hbmEntity = mapdoc.RootClasses[0];

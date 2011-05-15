@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using ConfOrm.NH.CustomizersImpl;
 using Moq;
@@ -81,7 +81,7 @@ namespace ConfOrmTests.NH.Customizers
 		[Test]
 		public void InvokeDirectMethods()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyCollection));
 			var customizersHolder = new CustomizersHolder();
 			var customizer = new CollectionElementCustomizer(propertyPath, customizersHolder);
 			var elementMapper = new Mock<IElementMapper>();
@@ -115,7 +115,7 @@ namespace ConfOrmTests.NH.Customizers
 		[Test]
 		public void InvokeColumnCustomizer()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyCollection));
 			var customizersHolder = new CustomizersHolder();
 			var customizer = new CollectionElementCustomizer(propertyPath, customizersHolder);
 			var elementMapper = new Mock<IElementMapper>();

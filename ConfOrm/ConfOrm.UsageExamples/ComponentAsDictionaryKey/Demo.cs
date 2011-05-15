@@ -1,5 +1,5 @@
 using System;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using ConfOrm.Shop.CoolNaming;
 using NUnit.Framework;
@@ -17,7 +17,7 @@ namespace ConfOrm.UsageExamples.ComponentAsDictionaryKey
 
 			// Instancing the Mapper using the result of Merge
 			var mapper = new Mapper(orm, new CoolPatternsAppliersHolder(orm));
-			mapper.Component<ToySkill>(x => x.ManyToOne(toySkill => toySkill.Skill, map => { map.Column("SkillId"); map.Fetch(FetchMode.Join); }));
+			mapper.Component<ToySkill>(x => x.ManyToOne(toySkill => toySkill.Skill, map => { map.Column("SkillId"); map.Fetch(FetchKind.Join); }));
 			mapper.Class<Person>(cm => cm.Map(person => person.Skills, mapm => mapm.Table("PersonSkill"), mapk => { }, cer => cer.Element(em => em.Column("Lel"))));
 
 			orm.TablePerClass(entities);
@@ -41,7 +41,7 @@ namespace ConfOrm.UsageExamples.ComponentAsDictionaryKey
 										 mtom =>
 										 {
 											 mtom.Column("SkillId");
-											 mtom.Fetch(FetchMode.Join);
+											 mtom.Fetch(FetchKind.Join);
 										 })),
 			cer => cer.Element(em => em.Column("Lel"))));
 			var mapping = mapper.CompileMappingFor(entities);

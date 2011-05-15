@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using ConfOrm.Patterns;
 using Moq;
@@ -76,7 +76,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		{
 			var orm = GetDomainInspectorMock();
 			var pattern = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var property = new PropertyPath(null, ForClass<MyClass>.Property(mc => mc.Something));
+			var property = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(mc => mc.Something));
 			pattern.Match(property).Should().Be.False();
 		}
 
@@ -86,7 +86,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			var orm = GetDomainInspectorMock();
 
 			var pattern = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var property = new PropertyPath(null, ForClass<MyClass>.Property(mc => mc.Components));
+			var property = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(mc => mc.Components));
 			pattern.Match(property).Should().Be.False();
 		}
 
@@ -105,7 +105,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		private Mock<IDomainInspector> GetDomainInspectorMockWithBidiPropExclusion()
 		{
 			var orm = new Mock<IDomainInspector>();
-			orm.Setup(x => x.IsPersistentProperty(It.Is<MemberInfo>(m => !m.Equals(ForClass<Bidirectional>.Property(y => y.MyClass))))).Returns(true);
+			orm.Setup(x => x.IsPersistentProperty(It.Is<MemberInfo>(m => !m.Equals(ConfOrm.ForClass<Bidirectional>.Property(y => y.MyClass))))).Returns(true);
 			orm.Setup(
 				dm =>
 				dm.IsEntity(It.Is<Type>(t => (new[] { typeof(MyClass), typeof(Related), typeof(Bidirectional) }).Contains(t)))).Returns(true);
@@ -119,7 +119,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		{
 			var orm = GetDomainInspectorMock();
 			var pattern = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var property = new PropertyPath(null, ForClass<MyClass>.Property(mc => mc.Children));
+			var property = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(mc => mc.Children));
 			pattern.Match(property).Should().Be.False();
 		}
 
@@ -128,7 +128,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		{
 			var orm = GetDomainInspectorMockWithBidiPropExclusion();
 			var pattern = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var property = new PropertyPath(null, ForClass<MyClass>.Property(mc => mc.Children));
+			var property = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(mc => mc.Children));
 			pattern.Match(property).Should().Be.True();
 		}
 
@@ -137,7 +137,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		{
 			var orm = GetDomainInspectorMock();
 			var pattern = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var property = new PropertyPath(null, ForClass<MyClass>.Property(mc => mc.Elements));
+			var property = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(mc => mc.Elements));
 			pattern.Match(property).Should().Be.False();
 		}
 
@@ -147,7 +147,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			var orm = GetDomainInspectorMock();
 
 			var pattern = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var property = new PropertyPath(null, ForClass<MyClass>.Property(mc => mc.Relateds));
+			var property = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(mc => mc.Relateds));
 			pattern.Match(property).Should().Be.True();
 		}
 
@@ -156,7 +156,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		{
 			var orm = GetDomainInspectorMock();
 			var pattern = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var property = new PropertyPath(null, ForClass<MyClass>.Property(mc => mc.DicChildren));
+			var property = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(mc => mc.DicChildren));
 			pattern.Match(property).Should().Be.False();
 		}
 
@@ -165,7 +165,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		{
 			var orm = GetDomainInspectorMockWithBidiPropExclusion();
 			var pattern = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var property = new PropertyPath(null, ForClass<MyClass>.Property(mc => mc.DicChildren));
+			var property = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(mc => mc.DicChildren));
 			pattern.Match(property).Should().Be.True();
 		}
 
@@ -175,7 +175,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			var orm = GetDomainInspectorMock();
 
 			var pattern = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var property = new PropertyPath(null, ForClass<MyClass>.Property(mc => mc.DicRelateds));
+			var property = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(mc => mc.DicRelateds));
 			pattern.Match(property).Should().Be.True();
 		}
 
@@ -198,8 +198,8 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			var orm = GetDomainInspectorMockForBaseTests();
 
 			var applier = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var componentProperty = new PropertyPath(null, ForClass<Contact>.Property(x => x.Component));
-			var property = new PropertyPath(componentProperty, ForClass<MyComponent>.Property(x => x.PastPositions));
+			var componentProperty = new PropertyPath(null, ConfOrm.ForClass<Contact>.Property(x => x.Component));
+			var property = new PropertyPath(componentProperty, ConfOrm.ForClass<MyComponent>.Property(x => x.PastPositions));
 			applier.Match(property).Should().Be.True();
 		}
 
@@ -213,8 +213,8 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			collectionMapper.Setup(x => x.Key(It.IsAny<Action<IKeyMapper>>())).Callback<Action<IKeyMapper>>(
 				x => x.Invoke(keyMapper.Object));
 
-			var componentProperty = new PropertyPath(null, ForClass<Contact>.Property(x => x.Component));
-			var property = new PropertyPath(componentProperty, ForClass<MyComponent>.Property(x => x.PastPositions));
+			var componentProperty = new PropertyPath(null, ConfOrm.ForClass<Contact>.Property(x => x.Component));
+			var property = new PropertyPath(componentProperty, ConfOrm.ForClass<MyComponent>.Property(x => x.PastPositions));
 			applier.Apply(property, collectionMapper.Object);
 
 			keyMapper.Verify(km => km.Column(It.Is<string>(s => s == "ContactComponentPastPositions_key")));

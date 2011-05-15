@@ -1,8 +1,10 @@
+using NHibernate.Mapping.ByCode;
+
 namespace ConfOrm.UsageExamples.TableAndColumnNaming
 {
 	public class ListIndexAsPropertyPosColumnNameApplier : ConfOrm.Shop.CoolNaming.ListIndexAsPropertyPosColumnNameApplier
 	{
-		protected override string GetIndexColumnName(NH.PropertyPath subject)
+		protected override string GetIndexColumnName(PropertyPath subject)
 		{
 			return base.GetIndexColumnName(subject).Underscore();
 		}

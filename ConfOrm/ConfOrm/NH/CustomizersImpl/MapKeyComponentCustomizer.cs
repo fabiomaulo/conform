@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 
 namespace ConfOrm.NH.CustomizersImpl
 {
@@ -22,6 +22,11 @@ namespace ConfOrm.NH.CustomizersImpl
 		{
 			MemberInfo member = TypeExtensions.DecodeMemberAccessExpression(property);
 			customizersHolder.AddCustomizer(new PropertyPath(propertyPath, member), mapping);
+		}
+
+		public void Property<TProperty>(Expression<Func<TKey, TProperty>> property)
+		{
+			Property(property, x => { });
 		}
 
 		public void ManyToOne<TProperty>(Expression<Func<TKey, TProperty>> property, Action<IManyToOneMapper> mapping) where TProperty : class

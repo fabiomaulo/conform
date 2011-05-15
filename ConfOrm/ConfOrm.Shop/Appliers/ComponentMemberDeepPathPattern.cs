@@ -1,5 +1,4 @@
-using System;
-using ConfOrm.NH;
+using NHibernate.Mapping.ByCode;
 
 namespace ConfOrm.Shop.Appliers
 {

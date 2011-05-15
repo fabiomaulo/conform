@@ -1,4 +1,4 @@
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.Shop.Subclassing;
 using Moq;
 using NUnit.Framework;

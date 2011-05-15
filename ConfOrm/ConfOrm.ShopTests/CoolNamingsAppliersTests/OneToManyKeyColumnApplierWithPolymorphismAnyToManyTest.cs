@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using ConfOrm.NH;
 using ConfOrm.Shop.CoolNaming;
+using NHibernate.Mapping.ByCode;
 using NUnit.Framework;
 using SharpTestsEx;
 

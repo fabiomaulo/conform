@@ -1,5 +1,5 @@
 using System;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 
 namespace ConfOrm.NH.CustomizersImpl
 {
@@ -14,10 +14,20 @@ namespace ConfOrm.NH.CustomizersImpl
 			this.customizersHolder = customizersHolder;
 		}
 
+		public void Element()
+		{
+			Element(x => { });
+		}
+
 		public void Element(Action<IMapKeyMapper> mapping)
 		{
 			var mapKeyCustomizer = new MapKeyCustomizer(propertyPath, customizersHolder);
 			mapping(mapKeyCustomizer);
+		}
+
+		public void ManyToMany()
+		{
+			ManyToMany(x => { });
 		}
 
 		public void ManyToMany(Action<IMapKeyManyToManyMapper> mapping)

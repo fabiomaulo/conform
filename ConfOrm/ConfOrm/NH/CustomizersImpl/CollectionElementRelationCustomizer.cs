@@ -1,5 +1,5 @@
 using System;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 
 namespace ConfOrm.NH.CustomizersImpl
 {
@@ -14,16 +14,31 @@ namespace ConfOrm.NH.CustomizersImpl
 			this.customizersHolder = customizersHolder;
 		}
 
+		public void Element()
+		{
+			Element(x => { });
+		}
+
 		public void Element(Action<IElementMapper> mapping)
 		{
 			var collectionElementCustomizer = new CollectionElementCustomizer(propertyPath, customizersHolder);
 			mapping(collectionElementCustomizer);
 		}
 
+		public void OneToMany()
+		{
+			OneToMany(x => { });
+		}
+
 		public void OneToMany(Action<IOneToManyMapper> mapping)
 		{
 			var oneToManyCustomizer = new OneToManyCustomizer(propertyPath, customizersHolder);
 			mapping(oneToManyCustomizer);
+		}
+
+		public void ManyToMany()
+		{
+			ManyToMany(x => { });
 		}
 
 		public void ManyToMany(Action<IManyToManyMapper> mapping)

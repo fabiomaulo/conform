@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using Moq;
 using NHibernate.Cfg.MappingSchema;
@@ -51,7 +51,7 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsTablePerClass(It.IsAny<Type>())).Returns(true);
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
 			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
-			orm.Setup(m => m.IsBag(It.Is<MemberInfo>(mi => mi == ForClass<MyClass>.Property(mc => mc.Components)))).Returns(true);
+			orm.Setup(m => m.IsBag(It.Is<MemberInfo>(mi => mi == ConfOrm.ForClass<MyClass>.Property(mc => mc.Components)))).Returns(true);
 			orm.Setup(m => m.IsComponent(It.Is<Type>(t => t == typeof(ComponentLevel0)))).Returns(true);
 			orm.Setup(m => m.IsComponent(It.Is<Type>(t => t == typeof(ComponentLevel1)))).Returns(true);
 			return orm;

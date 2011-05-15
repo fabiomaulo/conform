@@ -1,6 +1,6 @@
 using System;
 using System.Linq.Expressions;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 
 namespace ConfOrm.NH.CustomizersImpl
 {

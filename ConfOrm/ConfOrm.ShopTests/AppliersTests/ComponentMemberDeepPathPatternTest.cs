@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ConfOrm.NH;
 using ConfOrm.Shop.Appliers;
+using NHibernate.Mapping.ByCode;
 using NUnit.Framework;
 using SharpTestsEx;
 

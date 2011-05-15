@@ -1,5 +1,5 @@
 using System;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Persister.Entity;
 
 namespace ConfOrm.NH.CustomizersImpl
@@ -17,6 +17,11 @@ namespace ConfOrm.NH.CustomizersImpl
 		public void Key(Action<IKeyMapper<TEntity>> keyMapping)
 		{
 			keyMapping(keyMapper);
+		}
+
+		public void SchemaAction(SchemaAction action)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IJoinedSubclassAttributesMapper m) => m.SchemaAction(action));
 		}
 
 		public void EntityName(string value)
@@ -57,6 +62,11 @@ namespace ConfOrm.NH.CustomizersImpl
 		public void Persister<T>() where T : IEntityPersister
 		{
 			CustomizersHolder.AddCustomizer(typeof(TEntity), (IJoinedSubclassAttributesMapper m) => m.Persister<T>());
+		}
+
+		public void Synchronize(params string[] table)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (IJoinedSubclassAttributesMapper m) => m.Synchronize(table));
 		}
 
 		#endregion

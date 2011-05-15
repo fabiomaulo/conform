@@ -1,5 +1,5 @@
 using System.Reflection;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 
 namespace ConfOrm.Patterns
 {
@@ -12,11 +12,11 @@ namespace ConfOrm.Patterns
 			CascadeOn? explicitPolymorphismCascade = GetExplicitPolymorphismCascade(subject);
 			if(explicitPolymorphismCascade.HasValue)
 			{
-				applyTo.Cascade(explicitPolymorphismCascade.Value);								
+				applyTo.Cascade(explicitPolymorphismCascade.Value.ToCascade());								
 			}
 			else
 			{
-				applyTo.Cascade(CascadeOn.All | CascadeOn.DeleteOrphans);				
+				applyTo.Cascade(Cascade.All | Cascade.DeleteOrphans);				
 			}
 		}
 	}

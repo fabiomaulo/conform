@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using Moq;
 using NUnit.Framework;

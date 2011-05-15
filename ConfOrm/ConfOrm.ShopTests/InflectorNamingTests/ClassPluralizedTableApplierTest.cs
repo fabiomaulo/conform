@@ -1,5 +1,5 @@
 using System;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.Shop.InflectorNaming;
 using ConfOrm.Shop.Inflectors;
 using Moq;

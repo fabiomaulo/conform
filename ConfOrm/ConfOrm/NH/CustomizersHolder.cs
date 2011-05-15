@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 
 namespace ConfOrm.NH
 {
@@ -33,14 +33,14 @@ namespace ConfOrm.NH
 		private readonly Dictionary<PropertyPath, List<Action<IPropertyMapper>>> propertyCustomizers =
 			new Dictionary<PropertyPath, List<Action<IPropertyMapper>>>();
 
-		private readonly Dictionary<Type, List<Action<IClassAttributesMapper>>> rootClassCustomizers =
-			new Dictionary<Type, List<Action<IClassAttributesMapper>>>();
+		private readonly Dictionary<Type, List<Action<IClassMapper>>> rootClassCustomizers =
+			new Dictionary<Type, List<Action<IClassMapper>>>();
 
 		private readonly Dictionary<PropertyPath, List<Action<ISetPropertiesMapper>>> setCustomizers =
 			new Dictionary<PropertyPath, List<Action<ISetPropertiesMapper>>>();
 
-		private readonly Dictionary<Type, List<Action<ISubclassAttributesMapper>>> subclassCustomizers =
-			new Dictionary<Type, List<Action<ISubclassAttributesMapper>>>();
+		private readonly Dictionary<Type, List<Action<ISubclassMapper>>> subclassCustomizers =
+			new Dictionary<Type, List<Action<ISubclassMapper>>>();
 
 		private readonly Dictionary<Type, List<Action<IUnionSubclassAttributesMapper>>> unionClassCustomizers =
 			new Dictionary<Type, List<Action<IUnionSubclassAttributesMapper>>>();
@@ -68,12 +68,12 @@ namespace ConfOrm.NH
 
 		#region ICustomizersHolder Members
 
-		public void AddCustomizer(Type type, Action<IClassAttributesMapper> classCustomizer)
+		public void AddCustomizer(Type type, Action<IClassMapper> classCustomizer)
 		{
 			AddCustomizer(rootClassCustomizers, type, classCustomizer);
 		}
 
-		public void AddCustomizer(Type type, Action<ISubclassAttributesMapper> classCustomizer)
+		public void AddCustomizer(Type type, Action<ISubclassMapper> classCustomizer)
 		{
 			AddCustomizer(subclassCustomizers, type, classCustomizer);
 		}
@@ -168,12 +168,12 @@ namespace ConfOrm.NH
 			AddCustomizer(mapKeyElementCustomizers, member, mapKeyElementCustomizer);
 		}
 
-		public void InvokeCustomizers(Type type, IClassAttributesMapper mapper)
+		public void InvokeCustomizers(Type type, IClassMapper mapper)
 		{
 			InvokeCustomizers(rootClassCustomizers, type, mapper);
 		}
 
-		public void InvokeCustomizers(Type type, ISubclassAttributesMapper mapper)
+		public void InvokeCustomizers(Type type, ISubclassMapper mapper)
 		{
 			InvokeCustomizers(subclassCustomizers, type, mapper);
 		}

@@ -6,6 +6,7 @@ using ConfOrm;
 using ConfOrm.NH;
 using Moq;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping.ByCode;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -67,7 +68,7 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.TablePerClass<Node>();
 
 			var mapper = new Mapper(orm);
-			mapper.Customize<Node>(node=> node.ManyToOne(n=>n.Parent, m=> m.Cascade(CascadeOn.Persist)));
+			mapper.Customize<Node>(node=> node.ManyToOne(n=>n.Parent, m=> m.Cascade(Cascade.Persist)));
 
 			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(Node) });
 
@@ -85,7 +86,7 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.TablePerClass<Node>();
 
 			var mapper = new Mapper(orm);
-			mapper.Class<Node>(node => node.ManyToOne(n => n.Parent, m => m.Cascade(CascadeOn.Persist)));
+			mapper.Class<Node>(node => node.ManyToOne(n => n.Parent, m => m.Cascade(Cascade.Persist)));
 
 			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(Node) });
 

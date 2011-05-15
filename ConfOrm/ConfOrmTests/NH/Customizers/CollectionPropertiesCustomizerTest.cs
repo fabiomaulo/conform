@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using ConfOrm.NH.CustomizersImpl;
 using Moq;
 using NUnit.Framework;
-using SharpTestsEx;
 
 namespace ConfOrmTests.NH.Customizers
 {
@@ -25,7 +23,7 @@ namespace ConfOrmTests.NH.Customizers
 		[Test]
 		public void InvokeDirectMethods()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyCollection));
 			var customizersHolder = new CustomizersHolder();
 			var customizer = new CollectionPropertiesCustomizer<MyClass, MyEle>(propertyPath, customizersHolder);
 			var collectionMapper = new Mock<ISetPropertiesMapper>();
@@ -38,7 +36,7 @@ namespace ConfOrmTests.NH.Customizers
 			customizer.OrderBy(x=>x.Name);
 			customizer.Sort();
 			customizer.Sort<object>();
-			customizer.Cascade(CascadeOn.DeleteOrphans);
+			customizer.Cascade(Cascade.DeleteOrphans);
 			customizer.Type<FakeUserCollectionType>();
 			customizer.Type(typeof(FakeUserCollectionType));
 			customizer.Table("table");
@@ -55,10 +53,10 @@ namespace ConfOrmTests.NH.Customizers
 			collectionMapper.Verify(x => x.Where(It.Is<string>(v => v == "aa")), Times.Once());
 			collectionMapper.Verify(x => x.BatchSize(It.Is<int>(v => v == 10)), Times.Once());
 			collectionMapper.Verify(x => x.Lazy(It.Is<CollectionLazy>(v => v == CollectionLazy.Extra)), Times.Once());
-			collectionMapper.Verify(x => x.OrderBy(It.Is<MemberInfo>(v => v == ForClass<MyEle>.Property(p=>p.Name))), Times.Once());
+			collectionMapper.Verify(x => x.OrderBy(It.Is<MemberInfo>(v => v == ConfOrm.ForClass<MyEle>.Property(p => p.Name))), Times.Once());
 			collectionMapper.Verify(x => x.Sort(), Times.Once());
 			collectionMapper.Verify(x => x.Sort<object>(), Times.Once());
-			collectionMapper.Verify(x => x.Cascade(It.Is<CascadeOn>(v => v == CascadeOn.DeleteOrphans)), Times.Once());
+			collectionMapper.Verify(x => x.Cascade(It.Is<Cascade>(v => v == Cascade.DeleteOrphans)), Times.Once());
 			collectionMapper.Verify(x => x.Type<FakeUserCollectionType>(), Times.Once());
 			collectionMapper.Verify(x => x.Type(It.Is<Type>(v => v == typeof(FakeUserCollectionType))), Times.Once());
 			collectionMapper.Verify(x => x.Table(It.Is<string>(v => v == "table")), Times.Once());
@@ -72,7 +70,7 @@ namespace ConfOrmTests.NH.Customizers
 		[Test]
 		public void InvokeCache()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyCollection));
 			var customizersHolder = new CustomizersHolder();
 			var customizer = new CollectionPropertiesCustomizer<MyClass, MyEle>(propertyPath, customizersHolder);
 			var collectionMapper = new Mock<ISetPropertiesMapper>();
@@ -89,7 +87,7 @@ namespace ConfOrmTests.NH.Customizers
 		[Test]
 		public void InvokeFilter()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyCollection));
 			var customizersHolder = new CustomizersHolder();
 			var customizer = new CollectionPropertiesCustomizer<MyClass, MyEle>(propertyPath, customizersHolder);
 			var collectionMapper = new Mock<ISetPropertiesMapper>();

@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using System.Reflection;
 using ConfOrm.NH;
+using NHibernate.Mapping.ByCode;
+
 namespace ConfOrm.Patterns
 {
 	/// <summary>

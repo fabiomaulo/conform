@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Type;
 
 namespace ConfOrm.Shop.Appliers

@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Reflection;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 
 namespace ConfOrm.Patterns
 {

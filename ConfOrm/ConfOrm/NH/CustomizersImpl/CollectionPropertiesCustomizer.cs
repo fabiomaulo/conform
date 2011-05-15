@@ -1,6 +1,6 @@
 using System;
 using System.Linq.Expressions;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using NHibernate.UserTypes;
 
 namespace ConfOrm.NH.CustomizersImpl
@@ -73,7 +73,7 @@ namespace ConfOrm.NH.CustomizersImpl
 			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.Sort<TComparer>());
 		}
 
-		public void Cascade(CascadeOn cascadeStyle)
+		public void Cascade(Cascade cascadeStyle)
 		{
 			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.Cascade(cascadeStyle));
 		}

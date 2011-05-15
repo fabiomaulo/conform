@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using ConfOrm.NH.CustomizersImpl;
 using Moq;
@@ -21,7 +20,7 @@ namespace ConfOrmTests.NH.Customizers
 		[Test]
 		public void InvokeColumn()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyCollection));
 			var customizersHolder = new CustomizersHolder();
 			var customizer = new CollectionKeyCustomizer<MyClass>(propertyPath, customizersHolder);
 			var collectionMapper = new Mock<ISetPropertiesMapper>();
@@ -38,7 +37,7 @@ namespace ConfOrmTests.NH.Customizers
 		[Test]
 		public void InvokeOnDelete()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyCollection));
 			var customizersHolder = new CustomizersHolder();
 			var customizer = new CollectionKeyCustomizer<MyClass>(propertyPath, customizersHolder);
 			var collectionMapper = new Mock<ISetPropertiesMapper>();
@@ -55,7 +54,7 @@ namespace ConfOrmTests.NH.Customizers
 		[Test]
 		public void InvokePropertyRef()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyCollection));
 			var customizersHolder = new CustomizersHolder();
 			var customizer = new CollectionKeyCustomizer<MyClass>(propertyPath, customizersHolder);
 			var collectionMapper = new Mock<ISetPropertiesMapper>();
@@ -66,7 +65,7 @@ namespace ConfOrmTests.NH.Customizers
 			customizer.PropertyRef(x=> x.AProp);
 			customizersHolder.InvokeCustomizers(propertyPath, collectionMapper.Object);
 
-			keyMapper.Verify(x => x.PropertyRef(It.Is<MemberInfo>(v => v == ForClass<MyClass>.Property(p=> p.AProp))), Times.Once());
+			keyMapper.Verify(x => x.PropertyRef(It.Is<MemberInfo>(v => v == ConfOrm.ForClass<MyClass>.Property(p => p.AProp))), Times.Once());
 		}
 	}
 }

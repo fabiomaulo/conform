@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 
 namespace ConfOrm.Patterns
 {
@@ -37,7 +37,7 @@ namespace ConfOrm.Patterns
 			var from = subject.DeclaringType;
 			var to = subject.GetPropertyOrFieldType();
 			CascadeOn? applyCascade = domainInspector.ApplyCascade(from, subject, to);
-			applyTo.Cascade(applyCascade.HasValue ? applyCascade.Value : CascadeOn.All);
+			applyTo.Cascade(applyCascade.HasValue ? applyCascade.Value.ToCascade() : Cascade.All);
 		}
 
 		#endregion

@@ -1,5 +1,5 @@
 using System;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using ConfOrm.NH.CustomizersImpl;
 using Moq;
@@ -20,7 +20,7 @@ namespace ConfOrmTests.NH.Customizers
 		{
 			var customizersHolder = new CustomizersHolder();
 			var customizer = new ClassCustomizer<MyClass>(customizersHolder);
-			var classMapper = new Mock<IClassAttributesMapper>();
+			var classMapper = new Mock<IClassMapper>();
 			var filterMapper = new Mock<IFilterMapper>();
 			classMapper.Setup(x => x.Filter(It.IsAny<string>(), It.IsAny<Action<IFilterMapper>>())).Callback<string, Action<IFilterMapper>>(
 				(name, x) => x.Invoke(filterMapper.Object));
@@ -36,7 +36,7 @@ namespace ConfOrmTests.NH.Customizers
 		{
 			var customizersHolder = new CustomizersHolder();
 			var customizer = new ClassCustomizer<MyClass>(customizersHolder);
-			var classMapper = new Mock<IClassAttributesMapper>();
+			var classMapper = new Mock<IClassMapper>();
 
 			customizer.SchemaAction(SchemaAction.None);
 			customizersHolder.InvokeCustomizers(typeof(MyClass), classMapper.Object);
@@ -49,7 +49,7 @@ namespace ConfOrmTests.NH.Customizers
 		{
 			var customizersHolder = new CustomizersHolder();
 			var customizer = new ClassCustomizer<MyClass>(customizersHolder);
-			var classMapper = new Mock<IClassAttributesMapper>();
+			var classMapper = new Mock<IClassMapper>();
 
 			customizer.Persister<SingleTableEntityPersister>();
 			customizersHolder.InvokeCustomizers(typeof(MyClass), classMapper.Object);

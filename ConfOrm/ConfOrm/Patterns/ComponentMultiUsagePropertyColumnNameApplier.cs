@@ -1,4 +1,4 @@
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 
 namespace ConfOrm.Patterns

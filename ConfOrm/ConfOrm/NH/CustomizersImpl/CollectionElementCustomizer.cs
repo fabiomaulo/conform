@@ -1,7 +1,6 @@
 using System;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Type;
-using NHibernate.UserTypes;
 
 namespace ConfOrm.NH.CustomizersImpl
 {

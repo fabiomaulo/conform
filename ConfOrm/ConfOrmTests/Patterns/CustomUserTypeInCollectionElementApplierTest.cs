@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.Patterns;
 using Moq;
 using NHibernate.SqlTypes;
@@ -104,35 +104,35 @@ namespace ConfOrmTests.Patterns
 		public void WhenNotCollectionShouldNotMatch()
 		{
 			var pattern = new CustomUserTypeInCollectionElementApplier(typeof(MyType), typeof(MyTypeUserType));
-			pattern.Match(ForClass<MyClass>.Property(x => x.MyType)).Should().Be.False();
+			pattern.Match(ConfOrm.ForClass<MyClass>.Property(x => x.MyType)).Should().Be.False();
 		}
 
 		[Test]
 		public void WhenUsedInCollectionShouldMatch()
 		{
 			var pattern = new CustomUserTypeInCollectionElementApplier(typeof(MyType), typeof(MyTypeUserType));
-			pattern.Match(ForClass<MyClass>.Property(x => x.Enumerable)).Should().Be.True();
+			pattern.Match(ConfOrm.ForClass<MyClass>.Property(x => x.Enumerable)).Should().Be.True();
 		}
 
 		[Test]
 		public void WhenNotUsedInCollectionShouldNotMatch()
 		{
 			var pattern = new CustomUserTypeInCollectionElementApplier(typeof(MyType), typeof(MyTypeUserType));
-			pattern.Match(ForClass<MyClass>.Property(x => x.EnumerableString)).Should().Be.False();
+			pattern.Match(ConfOrm.ForClass<MyClass>.Property(x => x.EnumerableString)).Should().Be.False();
 		}
 
 		[Test]
 		public void WhenUsedInDictionaryValueShouldMatch()
 		{
 			var pattern = new CustomUserTypeInCollectionElementApplier(typeof(MyType), typeof(MyTypeUserType));
-			pattern.Match(ForClass<MyClass>.Property(x => x.Dictionary)).Should().Be.True();
+			pattern.Match(ConfOrm.ForClass<MyClass>.Property(x => x.Dictionary)).Should().Be.True();
 		}
 
 		[Test]
 		public void WhenNotUsedInDictionaryValueShouldNotMatch()
 		{
 			var pattern = new CustomUserTypeInCollectionElementApplier(typeof(MyType), typeof(MyTypeUserType));
-			pattern.Match(ForClass<MyClass>.Property(x => x.DictionaryString)).Should().Be.False();
+			pattern.Match(ConfOrm.ForClass<MyClass>.Property(x => x.DictionaryString)).Should().Be.False();
 		}
 
 		[Test]

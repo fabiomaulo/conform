@@ -1,8 +1,9 @@
 using System.Linq;
 using System.Reflection;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping.ByCode.Impl;
 using NUnit.Framework;
 using SharpTestsEx;
 

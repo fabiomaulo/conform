@@ -5,6 +5,7 @@ using ConfOrm;
 using ConfOrm.NH;
 using ConfOrm.Patterns;
 using Moq;
+using NHibernate.Mapping.ByCode;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -47,7 +48,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			orm.Setup(dm => dm.IsOneToMany(typeof(Node), typeof(Node))).Returns(true);
 
 			var applier = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var property = new PropertyPath(null, ForClass<Node>.Property(x => x.Nodes));
+			var property = new PropertyPath(null, ConfOrm.ForClass<Node>.Property(x => x.Nodes));
 			applier.Match(property).Should().Be.False();
 		}
 
@@ -59,7 +60,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			orm.Setup(dm => dm.IsOneToMany(typeof(Node), typeof(Node))).Returns(true);
 
 			var applier = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var property = new PropertyPath(null, ForClass<Node>.Property(x => x.Nodes));
+			var property = new PropertyPath(null, ConfOrm.ForClass<Node>.Property(x => x.Nodes));
 			applier.Match(property).Should().Be.False();
 		}
 
@@ -73,7 +74,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			orm.Setup(dm => dm.IsOneToMany(typeof(PolyNode), typeof(INode))).Returns(true);
 
 			var applier = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var property = new PropertyPath(null, ForClass<PolyNode>.Property(x => x.Nodes));
+			var property = new PropertyPath(null, ConfOrm.ForClass<PolyNode>.Property(x => x.Nodes));
 			applier.Match(property).Should().Be.False();
 		}
 
@@ -87,7 +88,7 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 			orm.Setup(dm => dm.IsOneToMany(typeof(PolyNodeDouble), typeof(INode))).Returns(true);
 
 			var applier = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var property = new PropertyPath(null, ForClass<PolyNodeDouble>.Property(x => x.Nodes));
+			var property = new PropertyPath(null, ConfOrm.ForClass<PolyNodeDouble>.Property(x => x.Nodes));
 			applier.Match(property).Should().Be.True();
 		}
 
@@ -95,13 +96,13 @@ namespace ConfOrmTests.Patterns.UnidirectionalOneToManyMultipleCollections
 		public void WhenSeemsDoubleCirsularRelationOnPolymorphicComponentWithNoPersistentCollectionThenNoMatch()
 		{
 			var orm = new Mock<IDomainInspector>();
-			orm.Setup(x => x.IsPersistentProperty(It.Is<MemberInfo>(m => !m.Equals(ForClass<PolyNodeDouble>.Property(y=> y.OthersNodes))))).Returns(true);
+			orm.Setup(x => x.IsPersistentProperty(It.Is<MemberInfo>(m => !m.Equals(ConfOrm.ForClass<PolyNodeDouble>.Property(y=> y.OthersNodes))))).Returns(true);
 			orm.Setup(dm => dm.IsEntity(It.Is<Type>(t => t == typeof(PolyNodeDouble)))).Returns(true);
 			orm.Setup(dm => dm.IsComponent(typeof(INode))).Returns(true);
 			orm.Setup(dm => dm.IsOneToMany(typeof(PolyNodeDouble), typeof(INode))).Returns(true);
 
 			var applier = new UnidirectionalOneToManyMultipleCollectionsKeyColumnApplier(orm.Object);
-			var property = new PropertyPath(null, ForClass<PolyNodeDouble>.Property(x => x.Nodes));
+			var property = new PropertyPath(null, ConfOrm.ForClass<PolyNodeDouble>.Property(x => x.Nodes));
 			applier.Match(property).Should().Be.False();
 		}
 	}

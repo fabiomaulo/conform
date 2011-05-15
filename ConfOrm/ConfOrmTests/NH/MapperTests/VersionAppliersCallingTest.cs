@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using Moq;
 using NUnit.Framework;
@@ -40,8 +40,8 @@ namespace ConfOrmTests.NH.MapperTests
 			mapper.PatternsAppliers.Version.Add(applier.Object);
 			mapper.CompileMappingFor(new[] { typeof(MyClass) });
 
-			applier.Verify(x => x.Match(It.Is<MemberInfo>(member => member == ForClass<MyClass>.Property(c=> c.Version))), Times.Once());
-			applier.Verify(x => x.Apply(It.Is<MemberInfo>(member => member == ForClass<MyClass>.Property(c => c.Version)), It.Is<IVersionMapper>(vm => vm != null)), Times.Once());
+			applier.Verify(x => x.Match(It.Is<MemberInfo>(member => member == ConfOrm.ForClass<MyClass>.Property(c => c.Version))), Times.Once());
+			applier.Verify(x => x.Apply(It.Is<MemberInfo>(member => member == ConfOrm.ForClass<MyClass>.Property(c => c.Version)), It.Is<IVersionMapper>(vm => vm != null)), Times.Once());
 		}
 	}
 }

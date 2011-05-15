@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using ConfOrm.NH.CustomizersImpl;
 using Moq;
@@ -19,7 +18,7 @@ namespace ConfOrmTests.NH.Customizers
 		[Test]
 		public void InvokeIndex()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyCollection));
 			var customizersHolder = new CustomizersHolder();
 			var customizer = new ListPropertiesCustomizer<MyClass, int>(propertyPath, customizersHolder);
 			var collectionMapper = new Mock<IListPropertiesMapper>();

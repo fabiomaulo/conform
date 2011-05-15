@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using Moq;
 using NUnit.Framework;
@@ -42,9 +42,9 @@ namespace ConfOrmTests.NH.MapperTests
 		public void WhenRegisteredCustomizerForBagThenInvokeElementMapperAction()
 		{
 			Mock<IDomainInspector> orm = GetBaseMockedDomainInspector();
-			orm.Setup(x => x.IsBag(It.Is<MemberInfo>(m => m == ForClass<Person>.Property(p => p.Pets)))).Returns(true);
+			orm.Setup(x => x.IsBag(It.Is<MemberInfo>(m => m == ConfOrm.ForClass<Person>.Property(p => p.Pets)))).Returns(true);
 			bool customizerInvoked = false;
-			var propertyPath = new PropertyPath(null, ForClass<Person>.Property(p => p.Pets));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<Person>.Property(p => p.Pets));
 			var customizersHolder = new CustomizersHolder();
 			customizersHolder.AddCustomizer(propertyPath, (IOneToManyMapper x) => customizerInvoked = true);
 
@@ -58,9 +58,9 @@ namespace ConfOrmTests.NH.MapperTests
 		public void WhenRegisteredCustomizerForDictionaryThenCallElementMapperAction()
 		{
 			var orm = GetBaseMockedDomainInspector();
-			orm.Setup(x => x.IsDictionary(It.Is<MemberInfo>(m => m == ForClass<Person>.Property(p => p.Farm)))).Returns(true);
+			orm.Setup(x => x.IsDictionary(It.Is<MemberInfo>(m => m == ConfOrm.ForClass<Person>.Property(p => p.Farm)))).Returns(true);
 			bool customizerInvoked = false;
-			var propertyPath = new PropertyPath(null, ForClass<Person>.Property(p => p.Farm));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<Person>.Property(p => p.Farm));
 			var customizersHolder = new CustomizersHolder();
 			customizersHolder.AddCustomizer(propertyPath, (IOneToManyMapper x) => customizerInvoked = true);
 

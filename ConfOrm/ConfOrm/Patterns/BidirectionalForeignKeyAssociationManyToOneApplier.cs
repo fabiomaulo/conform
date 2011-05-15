@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 
 namespace ConfOrm.Patterns
 {
@@ -37,7 +37,7 @@ namespace ConfOrm.Patterns
 		public void Apply(MemberInfo subject, IManyToOneMapper applyTo)
 		{
 			applyTo.Unique(true);
-			applyTo.Cascade(CascadeOn.All);
+			applyTo.Cascade(Cascade.All);
 		}
 
 		#endregion

@@ -1,9 +1,9 @@
 using System;
 using System.Data;
 using System.Linq;
-using ConfOrm.NH;
 using NHibernate;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping.ByCode.Impl;
 using NHibernate.SqlTypes;
 using NHibernate.Type;
 using NHibernate.UserTypes;

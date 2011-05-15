@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using NHibernate.UserTypes;
 
 namespace ConfOrm.Patterns

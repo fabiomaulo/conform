@@ -1,7 +1,7 @@
 using System;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping.ByCode.Impl;
 using NUnit.Framework;
-using ConfOrm.NH;
 using SharpTestsEx;
 
 namespace ConfOrmTests.NH.TypeNamesUtilsTests

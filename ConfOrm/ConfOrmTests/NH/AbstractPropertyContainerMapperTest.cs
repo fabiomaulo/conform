@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping.ByCode.Impl;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -88,7 +89,7 @@ namespace ConfOrmTests.NH
 		public void CallAnyMapper()
 		{
 			var properties = new List<object>();
-			var map = new StubPropertyContainerMapper<EntitySimple>(properties);
+			var map = new StubPropertyContainerMapper<MyClass>(properties);
 			var called = false;
 			map.Any(typeof(MyClass).GetProperty("Reference"), typeof(int), x => called = true);
 
@@ -99,7 +100,7 @@ namespace ConfOrmTests.NH
 		public void CallDictionaryMappers()
 		{
 			var properties = new List<object>();
-			var map = new StubPropertyContainerMapper<EntitySimple>(properties);
+			var map = new StubPropertyContainerMapper<MyClassWithDictionary>(properties);
 			var collectionPropsCalled = false;
 			var keyRelationCalled = false;
 			var elementRelationCalled = false;

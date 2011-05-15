@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using ConfOrm.Shop.InflectorNaming;
 using ConfOrm.Shop.Inflectors;

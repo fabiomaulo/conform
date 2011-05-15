@@ -142,8 +142,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TypeExtensionsTests\GetFirstImplementorTest.cs" />
-    <Compile Include="Mappers\CacheIncludeTest.cs" />
-    <Compile Include="Mappers\CacheUsageTest.cs" />
     <Compile Include="Mappers\ElementMapperWithFormulaTest.cs" />
     <Compile Include="Mappers\ManyToManyMapperWithFormulaTest.cs" />
     <Compile Include="Mappers\ManyToOneMapperWithFormulaTest.cs" />

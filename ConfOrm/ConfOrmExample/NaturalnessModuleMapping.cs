@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using ConfOrmExample.Domain;
 
@@ -52,20 +52,20 @@ namespace ConfOrmExample
 			});
 			mapper.Class<Human>(cm => cm.Bag(human => human.Pets, bagm =>
 			{
-				bagm.Cascade(CascadeOn.None);
+				bagm.Cascade(Cascade.None);
 				bagm.Key(km => km.OnDelete(OnDeleteAction.NoAction));
 			}, cer => { }));
 			mapper.Class<Zoo>(cm =>
 			{
 				cm.Map(zoo => zoo.Mammals, mapm =>
 				{
-					mapm.Cascade(CascadeOn.None);
+					mapm.Cascade(Cascade.None);
 					mapm.Key(km => km.OnDelete(OnDeleteAction.NoAction));
 					mapm.Inverse(false);
 				}, x=> { }, cer => { });
 				cm.Map(zoo => zoo.Animals, mapm =>
 				{
-					mapm.Cascade(CascadeOn.None);
+					mapm.Cascade(Cascade.None);
 					mapm.Key(km => km.OnDelete(OnDeleteAction.NoAction));
 				}, x => { }, cer => { });
 			});

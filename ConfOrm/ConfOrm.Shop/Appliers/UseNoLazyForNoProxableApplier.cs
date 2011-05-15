@@ -1,5 +1,5 @@
 using System;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Proxy;
 
 namespace ConfOrm.Shop.Appliers

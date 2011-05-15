@@ -1,5 +1,5 @@
 using System;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Persister.Entity;
 
 namespace ConfOrm.NH.CustomizersImpl
@@ -10,49 +10,59 @@ namespace ConfOrm.NH.CustomizersImpl
 
 		public void DiscriminatorValue(object value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.DiscriminatorValue(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassMapper m) => m.DiscriminatorValue(value));
 		}
 
 		#region Implementation of IEntityAttributesMapper
 
+		public void Join(string splitGroupId, Action<IJoinMapper<TEntity>> splittedMapping)
+		{
+			throw new NotSupportedException();
+		}
+
 		public void EntityName(string value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.EntityName(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassMapper m) => m.EntityName(value));
 		}
 
 		public void Proxy(Type proxy)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.Proxy(proxy));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassMapper m) => m.Proxy(proxy));
 		}
 
 		public void Lazy(bool value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.Lazy(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassMapper m) => m.Lazy(value));
 		}
 
 		public void DynamicUpdate(bool value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.DynamicUpdate(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassMapper m) => m.DynamicUpdate(value));
 		}
 
 		public void DynamicInsert(bool value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.DynamicInsert(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassMapper m) => m.DynamicInsert(value));
 		}
 
 		public void BatchSize(int value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.BatchSize(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassMapper m) => m.BatchSize(value));
 		}
 
 		public void SelectBeforeUpdate(bool value)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.SelectBeforeUpdate(value));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassMapper m) => m.SelectBeforeUpdate(value));
 		}
 
 		public void Persister<T>() where T : IEntityPersister
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.Persister<T>());
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassMapper m) => m.Persister<T>());
+		}
+
+		public void Synchronize(params string[] table)
+		{
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassMapper m) => m.Synchronize(table));
 		}
 
 		#endregion
@@ -61,27 +71,27 @@ namespace ConfOrm.NH.CustomizersImpl
 
 		public void Loader(string namedQueryReference)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.Loader(namedQueryReference));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassMapper m) => m.Loader(namedQueryReference));
 		}
 
 		public void SqlInsert(string sql)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.SqlInsert(sql));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassMapper m) => m.SqlInsert(sql));
 		}
 
 		public void SqlUpdate(string sql)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.SqlUpdate(sql));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassMapper m) => m.SqlUpdate(sql));
 		}
 
 		public void SqlDelete(string sql)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.SqlDelete(sql));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassMapper m) => m.SqlDelete(sql));
 		}
 
 		public void Subselect(string sql)
 		{
-			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassAttributesMapper m) => m.Subselect(sql));
+			CustomizersHolder.AddCustomizer(typeof(TEntity), (ISubclassMapper m) => m.Subselect(sql));
 		}
 
 		#endregion

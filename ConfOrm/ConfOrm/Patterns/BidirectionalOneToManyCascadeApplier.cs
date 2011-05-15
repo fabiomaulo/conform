@@ -1,5 +1,5 @@
 using System.Reflection;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 
 namespace ConfOrm.Patterns
 {
@@ -18,7 +18,7 @@ namespace ConfOrm.Patterns
 
 		public void Apply(MemberInfo subject, ICollectionPropertiesMapper applyTo)
 		{
-			applyTo.Cascade(CascadeOn.All | CascadeOn.DeleteOrphans);
+			applyTo.Cascade(Cascade.All | Cascade.DeleteOrphans);
 		}
 	}
 }

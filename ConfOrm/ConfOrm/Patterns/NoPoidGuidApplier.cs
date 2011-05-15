@@ -1,5 +1,5 @@
 using System.Reflection;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using NHibernate;
 using NHibernate.Type;

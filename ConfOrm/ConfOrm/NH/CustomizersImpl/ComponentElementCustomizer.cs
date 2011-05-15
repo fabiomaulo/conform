@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 
 namespace ConfOrm.NH.CustomizersImpl
 {
@@ -56,6 +56,11 @@ namespace ConfOrm.NH.CustomizersImpl
 			customizersHolder.AddCustomizer(new PropertyPath(propertyPath, memberOf), mapping);
 		}
 
+		public void Property<TProperty>(Expression<Func<TComponent, TProperty>> property)
+		{
+			Property(property, x => { });
+		}
+
 		public void Component<TNestedComponent>(Expression<Func<TComponent, TNestedComponent>> property, Action<IComponentElementMapper<TNestedComponent>> mapping) where TNestedComponent : class
 		{
 			MemberInfo member = TypeExtensions.DecodeMemberAccessExpression(property);
@@ -70,6 +75,11 @@ namespace ConfOrm.NH.CustomizersImpl
 			customizersHolder.AddCustomizer(new PropertyPath(propertyPath, member), mapping);
 			MemberInfo memberOf = TypeExtensions.DecodeMemberAccessExpressionOf(property);
 			customizersHolder.AddCustomizer(new PropertyPath(propertyPath, memberOf), mapping);
+		}
+
+		public void ManyToOne<TProperty>(Expression<Func<TComponent, TProperty>> property) where TProperty : class
+		{
+			ManyToOne(property, x => { });
 		}
 
 		public void Access(Accessor accessor)

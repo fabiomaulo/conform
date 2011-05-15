@@ -1,9 +1,8 @@
 using System;
 using System.Linq;
-using ConfOrm;
-using ConfOrm.Mappers;
-using ConfOrm.NH;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping.ByCode.Impl;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -26,7 +25,7 @@ namespace ConfOrmTests.NH
 		{
 			var hbm = new HbmOneToOne();
 			var mapper = new OneToOneMapper(null, hbm);
-			mapper.Cascade(CascadeOn.Persist | CascadeOn.Remove);
+			mapper.Cascade(Cascade.Persist | Cascade.Remove);
 			hbm.cascade.Split(',').Select(w=> w.Trim()).Should().Contain("persist").And.Contain("delete");
 		}
 
@@ -35,7 +34,7 @@ namespace ConfOrmTests.NH
 		{
 			var hbm = new HbmOneToOne();
 			var mapper = new OneToOneMapper(null, hbm);
-			mapper.Cascade(CascadeOn.Persist | CascadeOn.DeleteOrphans | CascadeOn.Remove);
+			mapper.Cascade(Cascade.Persist | Cascade.DeleteOrphans | Cascade.Remove);
 			hbm.cascade.Split(',').Select(w => w.Trim()).All(w=> w.Satisfy(cascade=> !cascade.Contains("orphan")));
 		}
 
@@ -105,7 +104,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void CanSetFormula()
 		{
-			var member = ForClass<MyClass>.Property(c => c.Relation);
+			var member = ConfOrm.ForClass<MyClass>.Property(c => c.Relation);
 			var mapping = new HbmOneToOne();
 			var mapper = new OneToOneMapper(member, mapping);
 
@@ -116,7 +115,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void WhenSetFormulaWithNullThenSetFormulaWithNull()
 		{
-			var member = ForClass<MyClass>.Property(c => c.Relation);
+			var member = ConfOrm.ForClass<MyClass>.Property(c => c.Relation);
 			var mapping = new HbmOneToOne();
 			var mapper = new OneToOneMapper(member, mapping);
 			mapper.Formula(null);
@@ -127,7 +126,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void WhenSetFormulaWithMultipleLinesThenSetFormulaNode()
 		{
-			var member = ForClass<MyClass>.Property(c => c.Relation);
+			var member = ConfOrm.ForClass<MyClass>.Property(c => c.Relation);
 			var mapping = new HbmOneToOne();
 			var mapper = new OneToOneMapper(member, mapping);
 			var formula = @"Line1

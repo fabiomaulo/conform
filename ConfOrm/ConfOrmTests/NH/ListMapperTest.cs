@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
 using SharpTestsEx;
-using ListMapper = ConfOrm.NH.ListMapper;
+using ListMapper = NHibernate.Mapping.ByCode.Impl.ListMapper;
 
 namespace ConfOrmTests.NH
 {

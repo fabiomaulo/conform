@@ -1,12 +1,12 @@
 using System;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 
 namespace ConfOrm.NH
 {
 	public interface ICustomizersHolder
 	{
-		void AddCustomizer(Type type, Action<IClassAttributesMapper> classCustomizer);
-		void AddCustomizer(Type type, Action<ISubclassAttributesMapper> classCustomizer);
+		void AddCustomizer(Type type, Action<IClassMapper> classCustomizer);
+		void AddCustomizer(Type type, Action<ISubclassMapper> classCustomizer);
 		void AddCustomizer(Type type, Action<IJoinedSubclassAttributesMapper> classCustomizer);
 		void AddCustomizer(Type type, Action<IUnionSubclassAttributesMapper> classCustomizer);
 		void AddCustomizer(Type type, Action<IComponentAttributesMapper> classCustomizer);
@@ -38,8 +38,8 @@ namespace ConfOrm.NH
 
 		#endregion
 
-		void InvokeCustomizers(Type type, IClassAttributesMapper mapper);
-		void InvokeCustomizers(Type type, ISubclassAttributesMapper mapper);
+		void InvokeCustomizers(Type type, IClassMapper mapper);
+		void InvokeCustomizers(Type type, ISubclassMapper mapper);
 		void InvokeCustomizers(Type type, IJoinedSubclassAttributesMapper mapper);
 		void InvokeCustomizers(Type type, IUnionSubclassAttributesMapper mapper);
 		void InvokeCustomizers(Type type, IComponentAttributesMapper mapper);

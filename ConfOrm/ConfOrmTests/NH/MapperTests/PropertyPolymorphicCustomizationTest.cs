@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;

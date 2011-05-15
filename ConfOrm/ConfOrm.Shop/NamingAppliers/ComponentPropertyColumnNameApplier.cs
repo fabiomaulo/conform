@@ -1,5 +1,5 @@
 using System.Linq;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using ConfOrm.Shop.Appliers;
 

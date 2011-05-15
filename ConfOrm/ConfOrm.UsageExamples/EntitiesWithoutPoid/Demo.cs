@@ -1,5 +1,5 @@
 using System;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using ConfOrm.Patterns;
 using NHibernate;
@@ -34,6 +34,16 @@ namespace ConfOrm.UsageExamples.EntitiesWithoutPoid
 			}
 
 			public object Params{get;set;}
+
+			public Type DefaultReturnType
+			{
+				get { return typeof(int); }
+			}
+
+			public bool SupportedAsCollectionElementId
+			{
+				get { return true; }
+			}
 		}
 
 		[Test, Explicit]

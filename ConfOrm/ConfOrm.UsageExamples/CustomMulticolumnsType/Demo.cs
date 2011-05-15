@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ConfOrm.NH;
+using NHibernate.Mapping.ByCode;
 using NUnit.Framework;
 
 namespace ConfOrm.UsageExamples.CustomMulticolumnsType
@@ -26,7 +27,7 @@ namespace ConfOrm.UsageExamples.CustomMulticolumnsType
 			mapper.Customize<LoveEvent>(x => x.Property(le => le.AllowedWeekDays, pm =>
 			{
 				pm.Type(typeof(MulticolumnsBoolArrayType), new { ArraySize = DaysOfTheWeekColumnsNames.Length });
-				pm.Columns(DaysOfTheWeekColumnsNames.Select(colName => new Action<Mappers.IColumnMapper>(cm => cm.Name(colName))).ToArray());
+				pm.Columns(DaysOfTheWeekColumnsNames.Select(colName => new Action<IColumnMapper>(cm => cm.Name(colName))).ToArray());
 			}));
 
 			var mapping = mapper.CompileMappingFor(new[] { typeof(LoveEvent) });
@@ -50,7 +51,7 @@ namespace ConfOrm.UsageExamples.CustomMulticolumnsType
 			mapper.AddPropertyPattern(mi => typeof(bool[]).Equals(mi.GetPropertyOrFieldType()) && mi.Name.Contains("Days"), (mi, pm) =>
 			{
 				pm.Type(typeof(MulticolumnsBoolArrayType), new { ArraySize = DaysOfTheWeekColumnsNames.Length });
-				pm.Columns(DaysOfTheWeekColumnsNames.Select(colName => new Action<Mappers.IColumnMapper>(cm => cm.Name(mi.Name + colName))).ToArray());
+				pm.Columns(DaysOfTheWeekColumnsNames.Select(colName => new Action<IColumnMapper>(cm => cm.Name(mi.Name + colName))).ToArray());
 			});
 
 			var mapping = mapper.CompileMappingFor(new[] { typeof(LoveEvent) });

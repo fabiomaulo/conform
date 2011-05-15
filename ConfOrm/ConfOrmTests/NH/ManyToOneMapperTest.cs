@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
 using ConfOrm;
-using ConfOrm.Mappers;
-using ConfOrm.NH;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping.ByCode.Impl;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -38,7 +38,7 @@ namespace ConfOrmTests.NH
 			var hbmMapping = new HbmMapping();
 			var hbm = new HbmManyToOne();
 			var mapper = new ManyToOneMapper(null, hbm, hbmMapping);
-			mapper.Cascade(CascadeOn.Persist | CascadeOn.Remove);
+			mapper.Cascade(Cascade.Persist | Cascade.Remove);
 			hbm.cascade.Split(',').Select(w => w.Trim()).Should().Contain("persist").And.Contain("delete");
 		}
 
@@ -48,7 +48,7 @@ namespace ConfOrmTests.NH
 			var hbmMapping = new HbmMapping();
 			var hbm = new HbmManyToOne();
 			var mapper = new ManyToOneMapper(null, hbm, hbmMapping);
-			mapper.Cascade(CascadeOn.Persist | CascadeOn.DeleteOrphans | CascadeOn.Remove);
+			mapper.Cascade(Cascade.Persist | Cascade.DeleteOrphans | Cascade.Remove);
 			hbm.cascade.Split(',').Select(w => w.Trim()).All(w => w.Satisfy(cascade => !cascade.Contains("orphan")));
 		}
 
@@ -210,7 +210,7 @@ namespace ConfOrmTests.NH
 			var mapping = new HbmManyToOne();
 			var mapper = new ManyToOneMapper(member, mapping, hbmMapping);
 
-			mapper.Fetch(FetchMode.Join);
+			mapper.Fetch(FetchKind.Join);
 
 			mapping.fetch.Should().Be(HbmFetchMode.Join);
 			mapping.fetchSpecified.Should().Be.True();
@@ -224,7 +224,7 @@ namespace ConfOrmTests.NH
 			var mapping = new HbmManyToOne();
 			var mapper = new ManyToOneMapper(member, mapping, hbmMapping);
 
-			mapper.Fetch(FetchMode.Select);
+			mapper.Fetch(FetchKind.Select);
 
 			mapping.fetch.Should().Be(HbmFetchMode.Select);
 			mapping.fetchSpecified.Should().Be.False();

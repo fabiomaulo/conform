@@ -1,6 +1,6 @@
 using System;
 using System.Reflection;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.Shop.Appliers;
 using ConfOrm.Shop.CoolNaming;
 using Moq;

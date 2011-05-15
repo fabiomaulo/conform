@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using Moq;
 using NUnit.Framework;
@@ -18,7 +18,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void InvokingCustomizerOnSetThenInvokeCollectionPropertiesCustomizer()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyCollection));
 			var customizersHolder = new CustomizersHolder();
 			var concreteCollectionMapper = new Mock<ISetPropertiesMapper>();
 
@@ -31,7 +31,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void InvokingCustomizerOnBagThenInvokeCollectionPropertiesCustomizer()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyCollection));
 			var customizersHolder = new CustomizersHolder();
 			var concreteCollectionMapper = new Mock<IBagPropertiesMapper>();
 
@@ -44,7 +44,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void InvokingCustomizerOnListThenInvokeCollectionPropertiesCustomizer()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyCollection));
 			var customizersHolder = new CustomizersHolder();
 			var concreteCollectionMapper = new Mock<IListPropertiesMapper>();
 
@@ -57,7 +57,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void InvokingCustomizerOnMapThenInvokeCollectionPropertiesCustomizer()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyCollection));
 			var customizersHolder = new CustomizersHolder();
 			var concreteCollectionMapper = new Mock<IMapPropertiesMapper>();
 
@@ -70,7 +70,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void InvokeCustomizerOfCollectionElementRelation()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyCollection));
 			var customizersHolder = new CustomizersHolder();
 			var elementMapper = new Mock<IElementMapper>();
 
@@ -83,7 +83,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void InvokeCustomizerOfCollectionOneToManyRelation()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyCollection));
 			var customizersHolder = new CustomizersHolder();
 			var elementMapper = new Mock<IOneToManyMapper>();
 
@@ -96,7 +96,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void InvokeCustomizerOfCollectionManyToManyRelation()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyCollection));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyCollection));
 			var customizersHolder = new CustomizersHolder();
 			var elementMapper = new Mock<IManyToManyMapper>();
 
@@ -109,7 +109,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void InvokeCustomizerOfDictionaryKeyManyToManyRelation()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyDictionary));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyDictionary));
 			var customizersHolder = new CustomizersHolder();
 			var elementMapper = new Mock<IMapKeyManyToManyMapper>();
 
@@ -122,7 +122,7 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void InvokeCustomizerOfDictionaryKeyElementRelation()
 		{
-			var propertyPath = new PropertyPath(null, ForClass<MyClass>.Property(x => x.MyDictionary));
+			var propertyPath = new PropertyPath(null, ConfOrm.ForClass<MyClass>.Property(x => x.MyDictionary));
 			var customizersHolder = new CustomizersHolder();
 			var elementMapper = new Mock<IMapKeyMapper>();
 

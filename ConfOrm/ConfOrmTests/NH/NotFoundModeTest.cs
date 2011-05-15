@@ -1,4 +1,4 @@
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
 using SharpTestsEx;

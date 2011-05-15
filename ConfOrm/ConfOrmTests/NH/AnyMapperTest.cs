@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
-using ConfOrm;
-using ConfOrm.NH;
 using NHibernate;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping.ByCode;
+using NHibernate.Mapping.ByCode.Impl;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -107,7 +107,7 @@ namespace ConfOrmTests.NH
 			var hbmMapping = new HbmMapping();
 			var hbmAny = new HbmAny();
 			var mapper = new AnyMapper(null, typeof(int), hbmAny, hbmMapping);
-			mapper.Cascade(CascadeOn.All);
+			mapper.Cascade(Cascade.All);
 			hbmAny.cascade.Should().Be("all");
 		}
 
@@ -117,7 +117,7 @@ namespace ConfOrmTests.NH
 			var hbmMapping = new HbmMapping();
 			var hbmAny = new HbmAny();
 			var mapper = new AnyMapper(null, typeof(int), hbmAny, hbmMapping);
-			mapper.Cascade(CascadeOn.All | CascadeOn.DeleteOrphans);
+			mapper.Cascade(Cascade.All | Cascade.DeleteOrphans);
 			hbmAny.cascade.Should().Be("all");
 		}
 

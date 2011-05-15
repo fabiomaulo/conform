@@ -1,6 +1,7 @@
 using System.Linq;
-using ConfOrm.NH;
+using NHibernate;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping.ByCode.Impl;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -84,7 +85,7 @@ namespace ConfOrmTests.Mappers
 			var mapping = new HbmMapKeyManyToMany();
 			var mapper = new MapKeyManyToManyMapper(mapping);
 			mapper.Columns(cm => cm.Length(50), cm => cm.SqlType("VARCHAR(10)"));
-			mapper.Executing(x => x.Column(cm => cm.Length(50))).Throws<ConfOrm.MappingException>();
+			mapper.Executing(x => x.Column(cm => cm.Length(50))).Throws<MappingException>();
 		}
 
 		[Test]

@@ -1,9 +1,8 @@
 using System;
 using System.Linq;
-using ConfOrm;
-using ConfOrm.Mappers;
-using ConfOrm.NH;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping.ByCode.Impl;
 using NUnit.Framework;
 using SharpTestsEx;
 
@@ -38,7 +37,7 @@ namespace ConfOrmTests.NH
 			var hbmMapping = new HbmMapping();
 			var hbm = new HbmKeyManyToOne();
 			var mapper = new KeyManyToOneMapper(null, hbm, hbmMapping);
-			mapper.Executing(m => m.Cascade(CascadeOn.Persist | CascadeOn.Remove)).NotThrows();
+			mapper.Executing(m => m.Cascade(Cascade.Persist | Cascade.Remove)).NotThrows();
 		}
 
 		[Test]
@@ -160,7 +159,7 @@ namespace ConfOrmTests.NH
 			var mapping = new HbmKeyManyToOne();
 			var mapper = new KeyManyToOneMapper(member, mapping, hbmMapping);
 
-			mapper.Executing(m=> m.Fetch(FetchMode.Join)).NotThrows();
+			mapper.Executing(m=> m.Fetch(FetchKind.Join)).NotThrows();
 		}
 
 		[Test]

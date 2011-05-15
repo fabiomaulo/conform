@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using Moq;
 using NHibernate.Cfg.MappingSchema;
@@ -43,11 +43,11 @@ namespace ConfOrmTests.NH.MapperTests
 
 			var mapper = new Mapper(orm.Object);
 			var manyToManyApplier = new Mock<IPatternApplier<MemberInfo, IManyToManyMapper>>();
-			manyToManyApplier.Setup(x => x.Match(It.Is<MemberInfo>(mi => mi.Equals(ForClass<Person>.Property(p => p.Pets))))).Returns(true);
+			manyToManyApplier.Setup(x => x.Match(It.Is<MemberInfo>(mi => mi.Equals(ConfOrm.ForClass<Person>.Property(p => p.Pets))))).Returns(true);
 			mapper.PatternsAppliers.ManyToMany.Add(manyToManyApplier.Object);
 			mapper.CompileMappingFor(new[] { typeof(Person), typeof(Animal) });
 
-			manyToManyApplier.Verify(x => x.Apply(It.Is<MemberInfo>(mi => mi.Equals(ForClass<Person>.Property(p => p.Pets))), It.IsAny<IManyToManyMapper>()));
+			manyToManyApplier.Verify(x => x.Apply(It.Is<MemberInfo>(mi => mi.Equals(ConfOrm.ForClass<Person>.Property(p => p.Pets))), It.IsAny<IManyToManyMapper>()));
 		}
 	}
 }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.Patterns;
 using Moq;
 using NUnit.Framework;
@@ -54,7 +54,7 @@ namespace ConfOrmTests.Patterns
 			var orm = new Mock<IDomainInspector>();
 			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			var pattern = new BidirectionalOneToManyCascadeApplier(orm.Object);
-			pattern.Match(ForClass<Parent>.Property(p=> p.Children)).Should().Be.True();
+			pattern.Match(ConfOrm.ForClass<Parent>.Property(p => p.Children)).Should().Be.True();
 		}
 
 		[Test]
@@ -63,7 +63,7 @@ namespace ConfOrmTests.Patterns
 			var orm = new Mock<IDomainInspector>();
 			orm.Setup(x => x.IsPersistentProperty(It.IsAny<MemberInfo>())).Returns(true);
 			var pattern = new BidirectionalOneToManyCascadeApplier(orm.Object);
-			pattern.Match(ForClass<Child>.Property(c=> c.Parent)).Should().Be.False();
+			pattern.Match(ConfOrm.ForClass<Child>.Property(c => c.Parent)).Should().Be.False();
 		}
 
 		[Test]
@@ -75,7 +75,7 @@ namespace ConfOrmTests.Patterns
 			var collectionMapping = new Mock<ICollectionPropertiesMapper>();
 
 			pattern.Apply(null, collectionMapping.Object);
-			collectionMapping.Verify(cm=> cm.Cascade(It.Is<CascadeOn>(cascade=> cascade.Has(CascadeOn.All) && cascade.Has(CascadeOn.DeleteOrphans))));
+			collectionMapping.Verify(cm=> cm.Cascade(It.Is<Cascade>(cascade=> cascade.Has(Cascade.All) && cascade.Has(Cascade.DeleteOrphans))));
 		}
 	}
 }

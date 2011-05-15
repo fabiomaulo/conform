@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH.CustomizersImpl;
 using ConfOrm.Patterns;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping.ByCode.Impl;
 using NHibernate.UserTypes;
 
 namespace ConfOrm.NH
@@ -813,14 +814,14 @@ namespace ConfOrm.NH
 			               });
 		}
 
-		private void InvokeClassCustomizers(Type type, IClassAttributesMapper classMapper)
+		private void InvokeClassCustomizers(Type type, IClassMapper classMapper)
 		{
 			InvokeAncestorsCustomizers(type.GetInterfaces(), classMapper);
 			InvokeAncestorsCustomizers(type.GetHierarchyFromBase(), classMapper);
 			customizerHolder.InvokeCustomizers(type, classMapper);
 		}
 
-		private void InvokeAncestorsCustomizers(IEnumerable<Type> typeAncestors, IClassAttributesMapper classMapper)
+		private void InvokeAncestorsCustomizers(IEnumerable<Type> typeAncestors, IClassMapper classMapper)
 		{
 			// only apply the polymorphic mapping for no entities:
 			// this is to avoid a possible caos in entity-subclassing:
@@ -1152,7 +1153,7 @@ namespace ConfOrm.NH
 				{
 					InvokeBeforeMapOneToOne(propertyPath, oneToOneMapper);
 					CascadeOn? cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
-					oneToOneMapper.Cascade(cascade.GetValueOrDefault(CascadeOn.None));
+					oneToOneMapper.Cascade(cascade.GetValueOrDefault(CascadeOn.None).ToCascade());
 					PatternsAppliers.OneToOne.ApplyAllMatchs(member, oneToOneMapper);
 					PatternsAppliers.OneToOnePath.ApplyAllMatchs(propertyPath, oneToOneMapper);
 					ForEachMemberPath(member, propertyPath, pp => customizerHolder.InvokeCustomizers(pp, oneToOneMapper));
@@ -1167,7 +1168,7 @@ namespace ConfOrm.NH
 				{
 					InvokeBeforeMapManyToOne(propertyPath, manyToOneMapper);
 					CascadeOn? cascade = domainInspector.ApplyCascade(propertiesContainerType, member, propertyType);
-					manyToOneMapper.Cascade(cascade.GetValueOrDefault(CascadeOn.None));
+					manyToOneMapper.Cascade(cascade.GetValueOrDefault(CascadeOn.None).ToCascade());
 					PatternsAppliers.ManyToOne.ApplyAllMatchs(member, manyToOneMapper);
 					PatternsAppliers.ManyToOnePath.ApplyAllMatchs(propertyPath, manyToOneMapper);
 					ForEachMemberPath(member, propertyPath, pp => customizerHolder.InvokeCustomizers(pp, manyToOneMapper));
@@ -1281,7 +1282,7 @@ namespace ConfOrm.NH
 					mapped.Key(k => k.Column(parentColumnNameInChild));
 				}
 				var cascadeToApply = domainInspector.ApplyCascade(ownerType, member, collectionElementType);
-				mapped.Cascade(cascadeToApply.GetValueOrDefault(CascadeOn.None));
+				mapped.Cascade(cascadeToApply.GetValueOrDefault(CascadeOn.None).ToCascade());
 			}
 
 			private string GetParentColumnNameInChild()
@@ -1338,7 +1339,7 @@ namespace ConfOrm.NH
 			public void MapCollectionProperties(ICollectionPropertiesMapper mapped)
 			{
 				var cascadeToApply = domainInspector.ApplyCascade(ownerType, member, collectionElementType);
-				mapped.Cascade(cascadeToApply.GetValueOrDefault(CascadeOn.None));
+				mapped.Cascade(cascadeToApply.GetValueOrDefault(CascadeOn.None).ToCascade());
 			}
 
 			#endregion

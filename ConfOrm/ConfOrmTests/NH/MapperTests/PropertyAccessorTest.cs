@@ -8,7 +8,7 @@ using Moq;
 using NHibernate.Cfg.MappingSchema;
 using NUnit.Framework;
 using SharpTestsEx;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 
 namespace ConfOrmTests.NH.MapperTests
 {

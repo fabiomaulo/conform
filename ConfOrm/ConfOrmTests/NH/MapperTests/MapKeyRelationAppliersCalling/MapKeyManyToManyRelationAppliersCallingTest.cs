@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.NH;
 using Moq;
 using NUnit.Framework;
@@ -30,7 +30,7 @@ namespace ConfOrmTests.NH.MapperTests.MapKeyRelationAppliersCalling
 			orm.Setup(m => m.IsTablePerClass(It.IsAny<Type>())).Returns(true);
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
 			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
-			orm.Setup(m => m.IsDictionary(It.Is<MemberInfo>(mi => mi == ForClass<MyClass>.Property(p => p.Dictionary)))).Returns(true);
+			orm.Setup(m => m.IsDictionary(It.Is<MemberInfo>(mi => mi == ConfOrm.ForClass<MyClass>.Property(p => p.Dictionary)))).Returns(true);
 			orm.Setup(m => m.IsManyToMany(It.Is<Type>(t => t == typeof(MyClass)), It.Is<Type>(t => t == typeof(Relation)))).Returns(true);
 			return orm;
 		}
@@ -46,8 +46,8 @@ namespace ConfOrmTests.NH.MapperTests.MapKeyRelationAppliersCalling
 
 			mapper.CompileMappingFor(new[] { typeof(MyClass) });
 
-			applier.Verify(x => x.Match(It.Is<MemberInfo>(mi => mi == ForClass<MyClass>.Property(p => p.Dictionary))));
-			applier.Verify(x => x.Apply(It.Is<MemberInfo>(mi => mi == ForClass<MyClass>.Property(p => p.Dictionary)), It.Is<IMapKeyManyToManyMapper>(mkm => mkm != null)));
+			applier.Verify(x => x.Match(It.Is<MemberInfo>(mi => mi == ConfOrm.ForClass<MyClass>.Property(p => p.Dictionary))));
+			applier.Verify(x => x.Apply(It.Is<MemberInfo>(mi => mi == ConfOrm.ForClass<MyClass>.Property(p => p.Dictionary)), It.Is<IMapKeyManyToManyMapper>(mkm => mkm != null)));
 		}
 
 		[Test]
@@ -61,8 +61,8 @@ namespace ConfOrmTests.NH.MapperTests.MapKeyRelationAppliersCalling
 
 			mapper.CompileMappingFor(new[] { typeof(MyClass) });
 
-			applier.Verify(x => x.Match(It.Is<PropertyPath>(pp => pp.LocalMember == ForClass<MyClass>.Property(p => p.Dictionary))));
-			applier.Verify(x => x.Apply(It.Is<PropertyPath>(pp => pp.LocalMember == ForClass<MyClass>.Property(p => p.Dictionary)), It.Is<IMapKeyManyToManyMapper>(mkm => mkm != null)));
+			applier.Verify(x => x.Match(It.Is<PropertyPath>(pp => pp.LocalMember == ConfOrm.ForClass<MyClass>.Property(p => p.Dictionary))));
+			applier.Verify(x => x.Apply(It.Is<PropertyPath>(pp => pp.LocalMember == ConfOrm.ForClass<MyClass>.Property(p => p.Dictionary)), It.Is<IMapKeyManyToManyMapper>(mkm => mkm != null)));
 		}
 
 	}

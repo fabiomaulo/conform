@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using ConfOrm;
-using ConfOrm.Mappers;
+using NHibernate.Mapping.ByCode;
 using ConfOrm.Patterns;
 using Moq;
 using NHibernate.Cfg.MappingSchema;
