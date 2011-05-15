@@ -1,3 +1,6 @@
+using System;
+using NHibernate.Mapping.ByCode;
+
 namespace ConfOrm
 {
 	public static class Extensions
@@ -35,6 +38,53 @@ namespace ConfOrm
 				return Cleanup(((source & ~CascadeOn.All) | AnyButOrphans) & ~value);
 			}
 			return Cleanup(source & ~value);
+		}
+
+		public static Cascade ToCascade(this CascadeOn source)
+		{
+			// so far can be done with another trick but I want prevent problems if the values/names will change in NHibernate
+			var result = Cascade.None;
+			result = IncludeIfNeeded(source, CascadeOn.Persist, result);
+			result = IncludeIfNeeded(source, CascadeOn.Refresh, result);
+			result = IncludeIfNeeded(source, CascadeOn.Merge, result);
+			result = IncludeIfNeeded(source, CascadeOn.Remove, result);
+			result = IncludeIfNeeded(source, CascadeOn.Detach, result);
+			result = IncludeIfNeeded(source, CascadeOn.ReAttach, result);
+			result = IncludeIfNeeded(source, CascadeOn.DeleteOrphans, result);
+			result = IncludeIfNeeded(source, CascadeOn.All, result);
+			return result;
+		}
+
+		private static Cascade IncludeIfNeeded(CascadeOn source, CascadeOn valueToCheck, Cascade destination)
+		{
+			return source.Has(valueToCheck) ? destination.Include(ConvertSingleValue(valueToCheck)) : destination;
+		}
+
+		private static Cascade ConvertSingleValue(CascadeOn source)
+		{
+			switch (source)
+			{
+				case CascadeOn.None:
+					return Cascade.None;
+				case CascadeOn.Persist:
+					return Cascade.Persist;
+				case CascadeOn.Refresh:
+					return Cascade.Refresh;
+				case CascadeOn.Merge:
+					return Cascade.Merge;
+				case CascadeOn.Remove:
+					return Cascade.Remove;
+				case CascadeOn.Detach:
+					return Cascade.Detach;
+				case CascadeOn.ReAttach:
+					return Cascade.ReAttach;
+				case CascadeOn.DeleteOrphans:
+					return Cascade.DeleteOrphans;
+				case CascadeOn.All:
+					return Cascade.All;
+				default:
+					throw new ArgumentOutOfRangeException("source");
+			}
 		}
 	}
 }
