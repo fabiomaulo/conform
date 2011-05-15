@@ -12,7 +12,7 @@ namespace ConfOrm
 	/// <seealso cref="Extensions.Include"/>
 	/// <seealso cref="Extensions.Exclude"/>
 	[Flags]
-	public enum Cascade
+	public enum CascadeOn
 	{
 		None = 0,
 		Persist= 2,
