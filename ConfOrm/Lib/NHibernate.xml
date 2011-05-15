@@ -2285,38 +2285,6 @@
             </summary>
             <param name="name">The session factory name. Null or empty string are allowed.</param>
         </member>
-        <member name="M:NHibernate.Cfg.Loquacious.ConfigurationExtensions.TypeDefinition``1(NHibernate.Cfg.Configuration,System.Action{NHibernate.Cfg.Loquacious.ITypeDefConfigurationProperties})">
-             <summary>
-             Add a type-definition for mappings.
-             </summary>
-             <typeparam name="TDef">The peristent type.</typeparam>
-             <param name="configuration">The <see cref="T:NHibernate.Cfg.Configuration"/> where add the type-definition.</param>
-             <param name="typeDefConfiguration">The custom configuration action.</param>
-             <returns>The <see cref="T:NHibernate.Cfg.Configuration"/>.</returns>
-             <remarks>
-             <para>
-             <list type="bullet">
-             <listheader>
-             <description>Depending on where you will use the type-definition in the mapping the
-              <typeparamref name="TDef"/> can be :
-             </description>
-            </listheader>
-            <item>
-                <term><see cref="T:NHibernate.UserTypes.IUserType"/></term>
-            </item>
-            <item>
-                <term><see cref="T:NHibernate.UserTypes.IUserCollectionType"/></term>
-            </item>
-            <item>
-                <term><see cref="T:NHibernate.UserTypes.IUserVersionType"/></term>
-            </item>
-            <item>
-                <term><see cref="T:NHibernate.Id.IPersistentIdentifierGenerator"/> </term>
-            </item>
-            </list>
-             </para>
-             </remarks>
-        </member>
         <member name="M:NHibernate.Cfg.Loquacious.IDbIntegrationConfiguration.Using``1">
             <summary>
             Define the dialect to use.
@@ -2356,7 +2324,7 @@
             <summary>
             Properties of TypeDef configuration.
             </summary>
-            <seealso cref="M:NHibernate.Cfg.Loquacious.ConfigurationExtensions.TypeDefinition``1(NHibernate.Cfg.Configuration,System.Action{NHibernate.Cfg.Loquacious.ITypeDefConfigurationProperties})"/>
+            <seealso cref="M:NHibernate.Cfg.ConfigurationExtensions.TypeDefinition``1(NHibernate.Cfg.Configuration,System.Action{NHibernate.Cfg.Loquacious.ITypeDefConfigurationProperties})"/>
         </member>
         <member name="P:NHibernate.Cfg.Loquacious.ITypeDefConfigurationProperties.Alias">
             <summary>
@@ -4845,6 +4813,9 @@
         <member name="F:NHibernate.Cfg.MappingSchema.HbmJoinedSubclass.table">
             <remarks/>
         </member>
+        <member name="F:NHibernate.Cfg.MappingSchema.HbmJoinedSubclass.schemaaction">
+            <remarks/>
+        </member>
         <member name="F:NHibernate.Cfg.MappingSchema.HbmJoinedSubclass.schema">
             <remarks/>
         </member>
@@ -5846,6 +5817,12 @@
             </summary>
             <returns>An <see cref="T:NHibernate.ISessionFactory"/> instance.</returns>
         </member>
+        <member name="M:NHibernate.Cfg.Configuration.GetDerivedProperties">
+            <summary>
+            Returns the set of properties computed from the default properties in the dialect combined with the other properties in the configuration.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:NHibernate.Cfg.Configuration.SetDefaultAssembly(System.String)">
             <summary>
             Set the default assembly to use for the mappings added to the configuration
@@ -6120,6 +6097,38 @@
             Defines operations common to "compiled" mappings (ie. <c>SessionFactory</c>) and
             "uncompiled" mappings (ie <c>Configuration</c> that are used by implementors of <c>IType</c>
             </summary>
+        </member>
+        <member name="M:NHibernate.Cfg.ConfigurationExtensions.TypeDefinition``1(NHibernate.Cfg.Configuration,System.Action{NHibernate.Cfg.Loquacious.ITypeDefConfigurationProperties})">
+             <summary>
+             Add a type-definition for mappings.
+             </summary>
+             <typeparam name="TDef">The peristent type.</typeparam>
+             <param name="configuration">The <see cref="T:NHibernate.Cfg.Configuration"/> where add the type-definition.</param>
+             <param name="typeDefConfiguration">The custom configuration action.</param>
+             <returns>The <see cref="T:NHibernate.Cfg.Configuration"/>.</returns>
+             <remarks>
+             <para>
+             <list type="bullet">
+             <listheader>
+             <description>Depending on where you will use the type-definition in the mapping the
+              <typeparamref name="TDef"/> can be :
+             </description>
+            </listheader>
+            <item>
+                <term><see cref="T:NHibernate.UserTypes.IUserType"/></term>
+            </item>
+            <item>
+                <term><see cref="T:NHibernate.UserTypes.IUserCollectionType"/></term>
+            </item>
+            <item>
+                <term><see cref="T:NHibernate.UserTypes.IUserVersionType"/></term>
+            </item>
+            <item>
+                <term><see cref="T:NHibernate.Id.IPersistentIdentifierGenerator"/> </term>
+            </item>
+            </list>
+             </para>
+             </remarks>
         </member>
         <member name="T:NHibernate.Cfg.ConfigurationSectionHandler">
             <summary>
@@ -10820,6 +10829,12 @@
             <param name="cacheRegion">the name of a query cache region, or <see langword="null" />
             for the default query cache</param>
         </member>
+        <member name="M:NHibernate.IQueryOver`1.ReadOnly">
+            <summary>
+            Set the read-only mode for entities (and proxies) loaded by this QueryOver.
+            (see <see cref="M:NHibernate.ICriteria.SetReadOnly(System.Boolean)"/>).
+            </summary>
+        </member>
         <member name="M:NHibernate.Criterion.QueryOver`1.GetExecutableQueryOver(NHibernate.ISession)">
             <summary>
             Get an executable instance of <c>IQueryOver&lt;TRoot&gt;</c>,
@@ -11122,6 +11137,17 @@
             <param name="joinType">Type of join</param>
             <returns>The created "sub criteria"</returns>
         </member>
+        <member name="M:NHibernate.IQueryOver`2.JoinQueryOver``1(System.Linq.Expressions.Expression{System.Func{`1,``0}},System.Linq.Expressions.Expression{System.Func{``0}},NHibernate.SqlCommand.JoinType,NHibernate.Criterion.ICriterion)">
+            <summary>
+            Creates a new NHibernate.IQueryOver&lt;TRoot, U&gt;, "rooted" at the associated entity
+            </summary>
+            <typeparam name="U">Type of sub-criteria</typeparam>
+            <param name="path">Lambda expression returning association path</param>
+            <param name="alias">Lambda expression returning alias reference</param>
+            <param name="joinType">Type of join</param>
+            <param name="withClause">Additional criterion for the SQL on clause</param>
+            <returns>The created "sub criteria"</returns>
+        </member>
         <member name="M:NHibernate.IQueryOver`2.JoinQueryOver``1(System.Linq.Expressions.Expression{System.Func{``0}},System.Linq.Expressions.Expression{System.Func{``0}},NHibernate.SqlCommand.JoinType)">
             <summary>
             Creates a new NHibernate.IQueryOver&lt;TRoot, U&gt;, "rooted" at the associated entity
@@ -11130,6 +11156,17 @@
             <param name="path">Lambda expression returning association path</param>
             <param name="alias">Lambda expression returning alias reference</param>
             <param name="joinType">Type of join</param>
+            <returns>The created "sub criteria"</returns>
+        </member>
+        <member name="M:NHibernate.IQueryOver`2.JoinQueryOver``1(System.Linq.Expressions.Expression{System.Func{``0}},System.Linq.Expressions.Expression{System.Func{``0}},NHibernate.SqlCommand.JoinType,NHibernate.Criterion.ICriterion)">
+            <summary>
+            Creates a new NHibernate.IQueryOver&lt;TRoot, U&gt;, "rooted" at the associated entity
+            </summary>
+            <typeparam name="U">Type of sub-criteria</typeparam>
+            <param name="path">Lambda expression returning association path</param>
+            <param name="alias">Lambda expression returning alias reference</param>
+            <param name="joinType">Type of join</param>
+            <param name="withClause">Additional criterion for the SQL on clause</param>
             <returns>The created "sub criteria"</returns>
         </member>
         <member name="M:NHibernate.IQueryOver`2.JoinQueryOver``1(System.Linq.Expressions.Expression{System.Func{`1,System.Collections.Generic.IEnumerable{``0}}})">
@@ -11201,6 +11238,18 @@
             <param name="joinType">Type of join</param>
             <returns>The created "sub criteria"</returns>
         </member>
+        <member name="M:NHibernate.IQueryOver`2.JoinQueryOver``1(System.Linq.Expressions.Expression{System.Func{`1,System.Collections.Generic.IEnumerable{``0}}},System.Linq.Expressions.Expression{System.Func{``0}},NHibernate.SqlCommand.JoinType,NHibernate.Criterion.ICriterion)">
+            <summary>
+            Creates a new NHibernate.IQueryOver&lt;TRoot, U&gt;, "rooted" at the associated entity
+            specifying a collection for the join.
+            </summary>
+            <typeparam name="U">Type of sub-criteria (type of the collection)</typeparam>
+            <param name="path">Lambda expression returning association path</param>
+            <param name="alias">Lambda expression returning alias reference</param>
+            <param name="joinType">Type of join</param>
+            <param name="withClause">Additional criterion for the SQL on clause</param>
+            <returns>The created "sub criteria"</returns>
+        </member>
         <member name="M:NHibernate.IQueryOver`2.JoinQueryOver``1(System.Linq.Expressions.Expression{System.Func{System.Collections.Generic.IEnumerable{``0}}},System.Linq.Expressions.Expression{System.Func{``0}},NHibernate.SqlCommand.JoinType)">
             <summary>
             Creates a new NHibernate.IQueryOver&lt;TRoot, U&gt;, "rooted" at the associated entity
@@ -11210,6 +11259,18 @@
             <param name="path">Lambda expression returning association path</param>
             <param name="alias">Lambda expression returning alias reference</param>
             <param name="joinType">Type of join</param>
+            <returns>The created "sub criteria"</returns>
+        </member>
+        <member name="M:NHibernate.IQueryOver`2.JoinQueryOver``1(System.Linq.Expressions.Expression{System.Func{System.Collections.Generic.IEnumerable{``0}}},System.Linq.Expressions.Expression{System.Func{``0}},NHibernate.SqlCommand.JoinType,NHibernate.Criterion.ICriterion)">
+            <summary>
+            Creates a new NHibernate.IQueryOver&lt;TRoot, U&gt;, "rooted" at the associated entity
+            specifying a collection for the join.
+            </summary>
+            <typeparam name="U">Type of sub-criteria (type of the collection)</typeparam>
+            <param name="path">Lambda expression returning association path</param>
+            <param name="alias">Lambda expression returning alias reference</param>
+            <param name="joinType">Type of join</param>
+            <param name="withClause">Additional criterion for the SQL on clause</param>
             <returns>The created "sub criteria"</returns>
         </member>
         <member name="M:NHibernate.IQueryOver`2.JoinAlias(System.Linq.Expressions.Expression{System.Func{`1,System.Object}},System.Linq.Expressions.Expression{System.Func{System.Object}})">
@@ -11237,6 +11298,27 @@
             <param name="joinType">Type of join</param>
             <returns>criteria instance</returns>
         </member>
+        <member name="M:NHibernate.IQueryOver`2.JoinAlias``1(System.Linq.Expressions.Expression{System.Func{`1,``0}},System.Linq.Expressions.Expression{System.Func{``0}},NHibernate.SqlCommand.JoinType,NHibernate.Criterion.ICriterion)">
+            <summary>
+            Join an association, assigning an alias to the joined entity
+            </summary>
+            <param name="path">Lambda expression returning association path</param>
+            <param name="alias">Lambda expression returning alias reference</param>
+            <param name="joinType">Type of join</param>
+            <param name="withClause">Additional criterion for the SQL on clause</param>
+            <returns>criteria instance</returns>
+        </member>
+        <member name="M:NHibernate.IQueryOver`2.JoinAlias``1(System.Linq.Expressions.Expression{System.Func{`1,System.Collections.Generic.IEnumerable{``0}}},System.Linq.Expressions.Expression{System.Func{``0}},NHibernate.SqlCommand.JoinType,NHibernate.Criterion.ICriterion)">
+            <summary>
+            Join an association, assigning an alias to the joined entity
+            </summary>
+            <typeparam name="U">Type of sub-criteria (type of the collection)</typeparam>
+            <param name="path">Lambda expression returning association path</param>
+            <param name="alias">Lambda expression returning alias reference</param>
+            <param name="joinType">Type of join</param>
+            <param name="withClause">Additional criterion for the SQL on clause</param>
+            <returns>criteria instance</returns>
+        </member>
         <member name="M:NHibernate.IQueryOver`2.JoinAlias(System.Linq.Expressions.Expression{System.Func{System.Object}},System.Linq.Expressions.Expression{System.Func{System.Object}},NHibernate.SqlCommand.JoinType)">
             <summary>
             Join an association, assigning an alias to the joined entity
@@ -11244,6 +11326,27 @@
             <param name="path">Lambda expression returning association path</param>
             <param name="alias">Lambda expression returning alias reference</param>
             <param name="joinType">Type of join</param>
+            <returns>criteria instance</returns>
+        </member>
+        <member name="M:NHibernate.IQueryOver`2.JoinAlias``1(System.Linq.Expressions.Expression{System.Func{``0}},System.Linq.Expressions.Expression{System.Func{``0}},NHibernate.SqlCommand.JoinType,NHibernate.Criterion.ICriterion)">
+            <summary>
+            Join an association, assigning an alias to the joined entity
+            </summary>
+            <param name="path">Lambda expression returning association path</param>
+            <param name="alias">Lambda expression returning alias reference</param>
+            <param name="joinType">Type of join</param>
+            <param name="withClause">Additional criterion for the SQL on clause</param>
+            <returns>criteria instance</returns>
+        </member>
+        <member name="M:NHibernate.IQueryOver`2.JoinAlias``1(System.Linq.Expressions.Expression{System.Func{System.Collections.Generic.IEnumerable{``0}}},System.Linq.Expressions.Expression{System.Func{``0}},NHibernate.SqlCommand.JoinType,NHibernate.Criterion.ICriterion)">
+            <summary>
+            Join an association, assigning an alias to the joined entity
+            </summary>
+            <typeparam name="U">Type of sub-criteria (type of the collection)</typeparam>
+            <param name="path">Lambda expression returning association path</param>
+            <param name="alias">Lambda expression returning alias reference</param>
+            <param name="joinType">Type of join</param>
+            <param name="withClause">Additional criterion for the SQL on clause</param>
             <returns>criteria instance</returns>
         </member>
         <member name="P:NHibernate.IQueryOver`2.WithSubquery">
@@ -12066,7 +12169,7 @@
         </member>
         <member name="M:NHibernate.Dialect.Dialect.GetAddForeignKeyConstraintString(System.String,System.String[],System.String,System.String[],System.Boolean)">
             <summary> 
-            The syntax used to add a foreign key constraint to a table. 
+            The syntax used to add a foreign key constraint to a table.  If SupportsForeignKeyConstraintInAlterTable is false, the returned string will be added to the create table statement instead.  In this case, extra strings, like "add", that apply when using alter table should be omitted.
             </summary>
             <param name="constraintName">The FK constraint name. </param>
             <param name="foreignKey">The names of the columns comprising the FK </param>
@@ -12702,11 +12805,6 @@
             The keyword used to create a primary key constraint
             </summary>
         </member>
-        <member name="P:NHibernate.Dialect.Dialect.HasAlterTable">
-            <summary>
-            Does this dialect support the <c>ALTER TABLE</c> syntax?
-            </summary>
-        </member>
         <member name="P:NHibernate.Dialect.Dialect.DropConstraints">
             <summary>
             Do we need to drop constraints before dropping tables in the dialect?
@@ -12825,6 +12923,12 @@
         <member name="P:NHibernate.Dialect.Dialect.IdentityColumnString">
             <summary>
             The keyword used to specify an identity column, if native key generation is supported
+            </summary>
+        </member>
+        <member name="P:NHibernate.Dialect.Dialect.GenerateTablePrimaryKeyConstraintForIdentityColumn">
+            <summary>
+            Set this to false if no table-level primary key constraint should be generated when an identity column has been specified for the table.
+            This is used as a work-around for SQLite so it doesn't tell us we have "more than one primary key".
             </summary>
         </member>
         <member name="P:NHibernate.Dialect.Dialect.SupportsSequences">
@@ -13102,6 +13206,16 @@
             Batches http://msdn.microsoft.com/en-us/library/ms175502.aspx
             </remarks>
         </member>
+        <member name="P:NHibernate.Dialect.Dialect.DisableForeignKeyConstraintsString">
+            <summary>
+            Only needed if the Dialect does not have SupportsForeignKeyConstraintInAlterTable.
+            </summary>
+        </member>
+        <member name="P:NHibernate.Dialect.Dialect.EnableForeignKeyConstraintsString">
+            <summary>
+            Only needed if the Dialect does not have SupportsForeignKeyConstraintInAlterTable.
+            </summary>
+        </member>
         <member name="T:NHibernate.Dialect.Dialect.QuotedAndParenthesisStringTokenizer">
             <summary>
             This specialized string tokenizier will break a string to tokens, taking
@@ -13175,6 +13289,16 @@
         </member>
         <member name="P:NHibernate.Dialect.DB2Dialect.UseMaxForLimit">
             <summary></summary>
+        </member>
+        <member name="F:NHibernate.Dialect.InsertGeneratedIdentifierRetrievalMethod.OutputParameter">
+            <summary>
+            Use a parameter with ParameterDirection.Output
+            </summary>
+        </member>
+        <member name="F:NHibernate.Dialect.InsertGeneratedIdentifierRetrievalMethod.ReturnValueParameter">
+            <summary>
+            Use a parameter with ParameterDirection.ReturnValue
+            </summary>
         </member>
         <member name="T:NHibernate.Dialect.FirebirdDialect">
             <summary>
@@ -13914,19 +14038,16 @@
             <remarks>
             The PostgreSQLDialect defaults the following configuration properties:
             <list type="table">
-            	<listheader>
-            		<term>Property</term>
-            		<description>Default Value</description>
-            	</listheader>
-            	<item>
-            		<term>connection.driver_class</term>
-            		<description><see cref="T:NHibernate.Driver.NpgsqlDriver"/></description>
-            	</item>
+            <listheader>
+            	<term>Property</term>
+            	<description>Default Value</description>
+            </listheader>
+            <item>
+            	<term>connection.driver_class</term>
+            	<description><see cref="T:NHibernate.Driver.NpgsqlDriver"/></description>
+            </item>
             </list>
             </remarks>
-        </member>
-        <member name="M:NHibernate.Dialect.PostgreSQLDialect.#ctor">
-            <summary></summary>
         </member>
         <member name="M:NHibernate.Dialect.PostgreSQLDialect.GetLimitString(NHibernate.SqlCommand.SqlString,System.Int32,System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
@@ -13947,12 +14068,6 @@
             </remarks>
             <param name="sqlType">The <see cref="T:System.Data.DbType"/> type code.</param>
             <returns>null casted as <paramref name="sqlType"/>: "<c>null::sqltypename</c>"</returns>
-        </member>
-        <member name="P:NHibernate.Dialect.PostgreSQLDialect.AddColumnString">
-            <summary></summary>
-        </member>
-        <member name="P:NHibernate.Dialect.PostgreSQLDialect.DropConstraints">
-            <summary></summary>
         </member>
         <member name="P:NHibernate.Dialect.PostgreSQLDialect.SupportsUnionAll">
             <summary>PostgreSQL supports UNION ALL clause</summary>
@@ -14033,6 +14148,16 @@
             <param name="offset">Offset of the first row to process in the result set</param>
             <returns>A new SqlString that contains the <c>LIMIT</c> clause.</returns>
         </member>
+        <member name="P:NHibernate.Dialect.SQLiteDialect.DisableForeignKeyConstraintsString">
+            <summary>
+            SQLite does not currently support dropping foreign key constraints by alter statements.
+            This means that tables cannot be dropped if there are any rows that depend on those.
+            If there are cycles between tables, it would even be excessively difficult to delete
+            the data in the right order first.  Because of this, we just turn off the foreign
+            constraints before we drop the schema and hope that we're not going to break anything. :(
+            We could theoretically check for data consistency afterwards, but we don't currently.
+            </summary>
+        </member>
         <member name="T:NHibernate.Dialect.SybaseASA9Dialect">
             <summary>
             An SQL dialect for Sybase Adaptive Server Anywhere 9.0
@@ -14050,7 +14175,7 @@
             </listheader>
             <item>
             	<term>connection.driver_class</term>
-            	<description><see cref="T:NHibernate.Driver.ASAClientDriver"/></description>
+            	<description><see cref="T:NHibernate.Driver.SybaseAsaClientDriver"/></description>
             </item>
             <item>
             	<term>prepare_sql</term>
@@ -14059,17 +14184,47 @@
             </list>
             </remarks>
         </member>
-        <member name="P:NHibernate.Dialect.SybaseASA9Dialect.IdentityColumnString">
-            <summary></summary>
-        </member>
-        <member name="P:NHibernate.Dialect.SybaseASA9Dialect.NoColumnsInsertString">
-            <summary></summary>
-        </member>
         <member name="P:NHibernate.Dialect.SybaseASA9Dialect.DropConstraints">
             <summary>
             ASA does not require to drop constraint before dropping tables, and DROP statement
             syntax used by Hibernate to drop constraint is not compatible with ASA, so disable it.
             Comments matchs SybaseAnywhereDialect from Hibernate-3.1 src
+            </summary>
+        </member>
+        <member name="T:NHibernate.Dialect.SybaseASE15Dialect">
+            <summary>
+            An SQL dialect targeting Sybase Adaptive Server Enterprise (ASE) 15 and higher.
+            </summary>
+            <remarks>
+            The dialect defaults the following configuration properties:
+            <list type="table">
+            <listheader>
+            	<term>Property</term>
+            	<description>Default Value</description>
+            </listheader>
+            <item>
+            	<term>connection.driver_class</term>
+            	<description><see cref="T:NHibernate.Driver.SybaseAseClientDriver"/></description>
+            </item>
+            </list>
+            </remarks>
+        </member>
+        <member name="P:NHibernate.Dialect.SybaseASE15Dialect.SupportsTemporaryTables">
+            <summary>
+            Sybase ASE 15 temporary tables are not supported
+            </summary>
+            <remarks>
+            By default, temporary tables in Sybase ASE 15 can only be created outside a transaction.
+            This is not supported by NHibernate. Temporary tables (and other DDL) statements can only
+            be run in a transaction if the 'ddl in tran' database option on tempdb is set to 'true'.
+            However, Sybase does not recommend this setting due to the performance impact arising from
+            locking and contention on tempdb system tables.
+            </remarks>
+        </member>
+        <member name="P:NHibernate.Dialect.SybaseASE15Dialect.AreStringComparisonsCaseInsensitive">
+            <summary>
+            This is false only by default. The database can be configured to be
+            case-insensitive.
             </summary>
         </member>
         <member name="T:NHibernate.Dialect.SybaseSQLAnywhere10Dialect">
@@ -14093,23 +14248,22 @@
              You should have received a copy of the GNU Lesser General Public
              License along with this library; if not, write to the Free Software
              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-            
              </summary>
              <remarks>
              The dialect defaults the following configuration properties:
              <list type="table">
-            		<listheader>
-            			<term>Property</term>
-            			<description>Default Value</description>
-            		</listheader>
-            		<item>
-            			<term>connection.driver_class</term>
-            			<description><see cref="T:NHibernate.Driver.ASA10ClientDriver"/></description>
-            		</item>
-            		<item>
-            			<term>prepare_sql</term>
-            			<description><see langword="false"/></description>
-            		</item>
+            	<listheader>
+            		<term>Property</term>
+            		<description>Default Value</description>
+            	</listheader>
+            	<item>
+            		<term>connection.driver_class</term>
+            		<description><see cref="T:NHibernate.Driver.SybaseSQLAnywhereDriver"/></description>
+            	</item>
+            	<item>
+            		<term>prepare_sql</term>
+            		<description><see langword="false"/></description>
+            	</item>
              </list>
              </remarks>
         </member>
@@ -14175,25 +14329,6 @@
             <summary>
             SQL Anywhere uses <tt>DEFAULT AUTOINCREMENT</tt> to identify an IDENTITY
             column in a <tt>CREATE TABLE</tt> statement.
-            </summary>
-        </member>
-        <member name="P:NHibernate.Dialect.SybaseSQLAnywhere10Dialect.SupportsLimit">
-            <summary>
-            SQL Anywhere supports a query statement that provides <c>LIMIT</c>
-            functionality.
-            </summary>
-            <value><c>true</c></value>
-        </member>
-        <member name="P:NHibernate.Dialect.SybaseSQLAnywhere10Dialect.SupportsLimitOffset">
-            <summary>
-            SQL Anywhere supports a query statement that provides <c>LIMIT</c>
-            functionality with an offset.
-            </summary>
-            <value><c>true</c></value>
-        </member>
-        <member name="P:NHibernate.Dialect.SybaseSQLAnywhere10Dialect.SupportsVariableLimit">
-            <summary>
-            Can parameters be used for a statement containing a LIMIT?
             </summary>
         </member>
         <member name="P:NHibernate.Dialect.SybaseSQLAnywhere10Dialect.BindLimitParametersInReverseOrder">
@@ -14278,11 +14413,6 @@
             quoted identifiers.
             </summary>
         </member>
-        <member name="P:NHibernate.Dialect.SybaseSQLAnywhere10Dialect.SupportsEmptyInList">
-            <summary>
-            SQL Anywhere Does not support empty IN lists.
-            </summary>
-        </member>
         <member name="P:NHibernate.Dialect.SybaseSQLAnywhere10Dialect.SupportsResultSetPositionQueryMethodsOnForwardOnlyCursor">
             <summary>
             SQL Anywhere's implementation of KEYSET-DRIVEN cursors does not
@@ -14291,12 +14421,6 @@
             first; it will fail with the iAnywhere JDBC driver. Because the server
             may decide to use a KEYSET cursor even if the cursor is declared as
             FORWARD ONLY, this support is disabled.
-            </summary>
-        </member>
-        <member name="P:NHibernate.Dialect.SybaseSQLAnywhere10Dialect.SupportsExistsInSelect">
-            <summary>
-            SQL Anywhere does not support an EXISTS clause within a
-            SELECT list.
             </summary>
         </member>
         <member name="P:NHibernate.Dialect.SybaseSQLAnywhere10Dialect.AreStringComparisonsCaseInsensitive">
@@ -14320,11 +14444,6 @@
             expected by NHibernate (see Table.cs), is not supported.
             </summary>
         </member>
-        <member name="P:NHibernate.Dialect.SybaseSQLAnywhere10Dialect.QualifyIndexName">
-            <summary>
-            SQL Anywhere does not require qualification of index names.
-            </summary>
-        </member>
         <member name="P:NHibernate.Dialect.SybaseSQLAnywhere10Dialect.NoColumnsInsertString">
             <summary>
             SQL Anywhere currently supports only "VALUES (DEFAULT)", not
@@ -14341,23 +14460,15 @@
             </summary>
         </member>
         <member name="P:NHibernate.Dialect.SybaseSQLAnywhere10Dialect.CreateTemporaryTableString">
-             <summary>
-             In SQL Anywhere, the syntax
-            
-             DECLARE LOCAL TEMPORARY TABLE ...
-            
-             can also be used, which creates a temporary table with procedure scope,
-             which may be important for stored procedures.
-             </summary>
+            <summary>
+            In SQL Anywhere, the syntax, DECLARE LOCAL TEMPORARY TABLE ...,
+            can also be used, which creates a temporary table with procedure scope,
+            which may be important for stored procedures.
+            </summary>
         </member>
         <member name="P:NHibernate.Dialect.SybaseSQLAnywhere10Dialect.CreateTemporaryTablePostfix">
             <summary>
             Assume that temporary table rows should be preserved across COMMITs.
-            </summary>
-        </member>
-        <member name="P:NHibernate.Dialect.SybaseSQLAnywhere10Dialect.SupportsUnionAll">
-            <summary>
-            SQL Anywhere does support query expressions containing UNION ALL.
             </summary>
         </member>
         <member name="T:NHibernate.Dialect.SybaseSQLAnywhere11Dialect">
@@ -14381,23 +14492,22 @@
              You should have received a copy of the GNU Lesser General Public
              License along with this library; if not, write to the Free Software
              Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-            
              </summary>
              <remarks>
              The dialect defaults the following configuration properties:
              <list type="table">
-            		<listheader>
-            			<term>Property</term>
-            			<description>Default Value</description>
-            		</listheader>
-            		<item>
-            			<term>connection.driver_class</term>
-            			<description><see cref="T:NHibernate.Driver.ASA10ClientDriver"/></description>
-            		</item>
-            		<item>
-            			<term>prepare_sql</term>
-            			<description><see langword="false"/></description>
-            		</item>
+            	<listheader>
+            		<term>Property</term>
+            		<description>Default Value</description>
+            	</listheader>
+            	<item>
+            		<term>connection.driver_class</term>
+            		<description><see cref="T:NHibernate.Driver.SybaseSQLAnywhereDriver"/></description>
+            	</item>
+            	<item>
+            		<term>prepare_sql</term>
+            		<description><see langword="false"/></description>
+            	</item>
              </list>
              </remarks>
         </member>
@@ -14479,9 +14589,9 @@
             <param name="typecode"></param>
             <param name="value"></param>
         </member>
-        <member name="T:NHibernate.Driver.ASA10ClientDriver">
+        <member name="T:NHibernate.Driver.SybaseSQLAnywhereDriver">
             <summary>
-            The ASAClientDriver Driver provides a database driver for Adaptive Server Anywhere 10.0.
+            The SybaseSQLAnywhereDriver Driver provides a database driver for Sybase SQL Anywhere 10 and above
             </summary>
         </member>
         <member name="T:NHibernate.Driver.DriverBase">
@@ -14537,7 +14647,7 @@
             Prepare the <paramref name="command"/> by calling <see cref="M:System.Data.IDbCommand.Prepare"/>.
             May be a no-op if the driver does not support preparing commands, or for any other reason.
             </summary>
-            <param name="command"></param>
+            <param name="command">The command.</param>
         </member>
         <member name="M:NHibernate.Driver.IDriver.GenerateParameter(System.Data.IDbCommand,System.String,NHibernate.SqlTypes.SqlType)">
             <summary>
@@ -14560,6 +14670,16 @@
             'select ... from MyTable t where t.Col1 = ? and t.Col2 = ?'
             </remarks>
         </member>
+        <member name="M:NHibernate.Driver.IDriver.AdjustCommand(System.Data.IDbCommand)">
+            <summary>
+            Make any adjustments to each IDbCommand object before it is added to the batcher.
+            </summary>
+            <param name="command">The command.</param>
+            <remarks>
+            This method should be executed before add each single command to the batcher.
+            If you have to adjust parameters values/type (when the command is full filled) this is a good place where do it.
+            </remarks>
+        </member>
         <member name="P:NHibernate.Driver.IDriver.SupportsMultipleOpenReaders">
             <summary>
             Does this Driver support having more than 1 open IDataReader with
@@ -14579,17 +14699,6 @@
             it is set to <see langword="true"/>.
             </para>
             </remarks>
-        </member>
-        <member name="P:NHibernate.Driver.IDriver.SupportsMultipleQueries">
-            <summary>
-            Can we issue several select queries in a single query, and get
-            several result sets back?
-            </summary>
-        </member>
-        <member name="P:NHibernate.Driver.IDriver.MultipleQueriesSeparator">
-            <summary>
-            How we separate the queries when we use multiply queries.
-            </summary>
         </member>
         <member name="M:NHibernate.Driver.DriverBase.FormatNameForSql(System.String)">
             <summary>
@@ -14626,6 +14735,17 @@
             Parameters have been bound by this point, so their order can be adjusted too.
             This is analagous to the RegisterResultSetOutParameter() function in Hibernate.
             </summary>
+        </member>
+        <member name="M:NHibernate.Driver.DriverBase.AdjustCommand(System.Data.IDbCommand)">
+            <summary>
+            Override to make any adjustments to each IDbCommand object before it added to the batcher.
+            </summary>
+            <param name="command">The command.</param>
+            <remarks>
+            This method is similar to the <see cref="M:NHibernate.Driver.DriverBase.OnBeforePrepare(System.Data.IDbCommand)"/> but, instead be called just before execute the command (that can be a batch)
+            is executed before add each single command to the batcher and before <see cref="M:NHibernate.Driver.DriverBase.OnBeforePrepare(System.Data.IDbCommand)"/> .
+            If you have to adjust parameters values/type (when the command is full filled) this is a good place where do it.
+            </remarks>
         </member>
         <member name="P:NHibernate.Driver.DriverBase.UseNamedPrefixInSql">
             <summary>
@@ -14694,47 +14814,30 @@
             <param name="commandTypeName">Command type name.</param>
             <seealso cref="M:System.Data.Common.DbProviderFactories.GetFactory(System.String)"/>
         </member>
-        <member name="M:NHibernate.Driver.ASA10ClientDriver.#ctor">
+        <member name="M:NHibernate.Driver.SybaseSQLAnywhereDriver.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:NHibernate.Driver.ASAClientDriver"/> class.
+            Initializes a new instance of the <see cref="T:NHibernate.Driver.SybaseSQLAnywhereDriver"/> class.
             </summary>
             <exception cref="T:NHibernate.HibernateException">
             Thrown when the iAnywhere.Data.SQLAnywhere assembly is not and can not be loaded.
             </exception>
         </member>
-        <member name="P:NHibernate.Driver.ASA10ClientDriver.UseNamedPrefixInSql">
+        <member name="T:NHibernate.Driver.SybaseAsaClientDriver">
             <summary>
-            iAnywhere.Data.SQLAnywhere uses named parameters in the sql.
-            </summary>
-            <value><see langword="true" /> - Sybase uses <c>String.Empty</c> in the sql.</value>
-        </member>
-        <member name="P:NHibernate.Driver.ASA10ClientDriver.NamedPrefix">
-            <summary>
-            iAnywhere.Data.SQLAnywhere use the <c>string.Empty</c> to locate parameters in sql.
+            The SybaseAsaClientDriver driver provides a database driver for Adaptive Server Anywhere 9.0.
             </summary>
         </member>
-        <member name="T:NHibernate.Driver.ASAClientDriver">
+        <member name="M:NHibernate.Driver.SybaseAsaClientDriver.#ctor">
             <summary>
-            The ASAClientDriver Driver provides a database driver for Adaptive Server Anywhere 9.0.
-            </summary>
-        </member>
-        <member name="M:NHibernate.Driver.ASAClientDriver.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:NHibernate.Driver.ASAClientDriver"/> class.
+            Initializes a new instance of the <see cref="T:NHibernate.Driver.SybaseAsaClientDriver"/> class.
             </summary>
             <exception cref="T:NHibernate.HibernateException">
-            Thrown when the ASA.Data.AsaClient assembly is not and can not be loaded.
+            Thrown when the iAnywhere.Data.AsaClient assembly is not and can not be loaded.
             </exception>
         </member>
-        <member name="P:NHibernate.Driver.ASAClientDriver.UseNamedPrefixInSql">
+        <member name="T:NHibernate.Driver.BatcherDataReaderWrapper">
             <summary>
-            iAnywhere.Data.AsaClient uses named parameters in the sql.
-            </summary>
-            <value><see langword="true" /> - Sybase uses <c>String.Empty</c> in the sql.</value>
-        </member>
-        <member name="P:NHibernate.Driver.ASAClientDriver.NamedPrefix">
-            <summary>
-            iAnywhere.Data.AsaClient use the <c>string.Empty</c> to locate parameters in sql.
+            Datareader wrapper with the same life cycle of its command (through the batcher)
             </summary>
         </member>
         <member name="T:NHibernate.Driver.CsharpSqliteDriver">
@@ -15741,6 +15844,18 @@
             Ms Sql 2000 (and 7) throws an Exception when multiple DataReaders are 
             attempted to be Opened.  When Yukon comes out a new Driver will be 
             created for Yukon because it is supposed to support it.
+            </remarks>
+        </member>
+        <member name="T:NHibernate.Driver.SybaseAseClientDriver">
+            <summary>
+            This provides a driver for Sybase ASE 15 using the ADO.NET driver.
+            </summary>
+            <remarks>
+            You will need the following libraries available to your application:
+            <ul>
+            <li>Sybase.AdoNet2.AseClient.dll</li>
+            <li>sybdrvado20.dll</li>
+            </ul>
             </remarks>
         </member>
         <member name="T:NHibernate.Engine.Loading.CollectionLoadContext">
@@ -17433,6 +17548,9 @@
         </member>
         <member name="P:NHibernate.Engine.IPersistenceContext.HasNonReadOnlyEntities">
             <summary>False if we know for certain that all the entities are read-only</summary>
+        </member>
+        <member name="P:NHibernate.Engine.IPersistenceContext.IsLoadFinished">
+            <summary>Is in a two-phase load? </summary>
         </member>
         <member name="T:NHibernate.Engine.ISessionFactoryImplementor">
             <summary>
@@ -20414,14 +20532,32 @@
             Creates a new <c>IQueryOver&lt;T&gt;</c> for the entity class.
             </summary>
             <typeparam name="T">The entity class</typeparam>
-            <returns>An ICriteria&lt;T&gt; object</returns>
+            <returns>An IQueryOver&lt;T&gt; object</returns>
         </member>
         <member name="M:NHibernate.ISession.QueryOver``1(System.Linq.Expressions.Expression{System.Func{``0}})">
             <summary>
             Creates a new <c>IQueryOver&lt;T&gt;</c> for the entity class.
             </summary>
             <typeparam name="T">The entity class</typeparam>
-            <returns>An ICriteria&lt;T&gt; object</returns>
+            <param name="alias">The alias of the entity</param>
+            <returns>An IQueryOver&lt;T&gt; object</returns>
+        </member>
+        <member name="M:NHibernate.ISession.QueryOver``1(System.String)">
+            <summary>
+            Creates a new <c>IQueryOver{T};</c> for the entity class.
+            </summary>
+            <typeparam name="T">The entity class</typeparam>
+            <param name="entityName">The name of the entity to Query</param>
+            <returns>An IQueryOver{T} object</returns>
+        </member>
+        <member name="M:NHibernate.ISession.QueryOver``1(System.String,System.Linq.Expressions.Expression{System.Func{``0}})">
+            <summary>
+            Creates a new <c>IQueryOver{T}</c> for the entity class.
+            </summary>
+            <typeparam name="T">The entity class</typeparam>
+            <param name="entityName">The name of the entity to Query</param>
+            <param name="alias">The alias of the entity</param>
+            <returns>An IQueryOver{T} object</returns>
         </member>
         <member name="M:NHibernate.ISession.CreateQuery(System.String)">
             <summary>
@@ -21264,6 +21400,11 @@
              sql generator uses " , " in the WHERE and ", " in SELECT.
             
              @param comma either " , " or ", "
+        </member>
+        <member name="T:NHibernate.Hql.Ast.ANTLR.SqlGenerator.QueryWriter">
+            <summary>
+            The default SQL writer.
+            </summary>
         </member>
         <member name="T:NHibernate.Loader.Loader">
             <summary>
@@ -28369,6 +28510,14 @@
         <member name="M:NHibernate.Intercept.ILazyPropertyInitializer.InitializeLazyProperty(System.String,System.Object,NHibernate.Engine.ISessionImplementor)">
             <summary> Initialize the property, and return its new value</summary>
         </member>
+        <member name="T:NHibernate.Linq.Visitors.NhJoinClause">
+            <summary>
+            All joins are created as outer joins. An optimization in <see cref="T:NHibernate.Linq.Visitors.WhereJoinDetector"/> finds
+            joins that may be inner joined and calls <see cref="M:NHibernate.Linq.Visitors.NhJoinClause.MakeInner"/> on them.
+            <see cref="T:NHibernate.Linq.Visitors.QueryModelVisitor"/>'s <see cref="M:NHibernate.Linq.Visitors.QueryModelVisitor.VisitAdditionalFromClause(Remotion.Linq.Clauses.AdditionalFromClause,Remotion.Linq.QueryModel,System.Int32)"/> will
+            then emit the correct HQL join.
+            </summary>
+        </member>
         <member name="T:NHibernate.Linq.GroupBy.AggregatingGroupByRewriter">
             <summary>
             An AggregatingGroupBy is a query such as:
@@ -28426,28 +28575,28 @@
         </member>
         <member name="P:NHibernate.Linq.ReWriters.ResultOperatorRewriter.ResultOperatorExpressionRewriter.ResultOperators">
             <summary>
-            Gets an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Remotion.Data.Linq.Clauses.ResultOperatorBase"/> that were rewritten.
+            Gets an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Remotion.Linq.Clauses.ResultOperatorBase"/> that were rewritten.
             </summary>
         </member>
         <member name="P:NHibernate.Linq.ReWriters.ResultOperatorRewriter.ResultOperatorExpressionRewriter.EvaluationType">
             <summary>
-            Gets the <see cref="T:Remotion.Data.Linq.Clauses.StreamedData.IStreamedDataInfo"/> representing the type of data that the operator works upon.
+            Gets the <see cref="T:Remotion.Linq.Clauses.StreamedData.IStreamedDataInfo"/> representing the type of data that the operator works upon.
             </summary>
         </member>
         <member name="T:NHibernate.Linq.ReWriters.ResultOperatorRewriterResult">
             <summary>
-            Result of <see cref="M:NHibernate.Linq.ReWriters.ResultOperatorRewriter.Rewrite(Remotion.Data.Linq.QueryModel)"/>.
+            Result of <see cref="M:NHibernate.Linq.ReWriters.ResultOperatorRewriter.Rewrite(Remotion.Linq.QueryModel)"/>.
             </summary>
         </member>
         <member name="P:NHibernate.Linq.ReWriters.ResultOperatorRewriterResult.RewrittenOperators">
             <summary>
-            Gets an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Remotion.Data.Linq.Clauses.ResultOperatorBase"/> implementations that were
+            Gets an <see cref="T:System.Collections.Generic.IEnumerable`1"/> of <see cref="T:Remotion.Linq.Clauses.ResultOperatorBase"/> implementations that were
             rewritten.
             </summary>
         </member>
         <member name="P:NHibernate.Linq.ReWriters.ResultOperatorRewriterResult.EvaluationType">
             <summary>
-            Gets the <see cref="T:Remotion.Data.Linq.Clauses.StreamedData.IStreamedDataInfo"/> representing the type of data that the operator works upon.
+            Gets the <see cref="T:Remotion.Linq.Clauses.StreamedData.IStreamedDataInfo"/> representing the type of data that the operator works upon.
             </summary>
         </member>
         <member name="T:NHibernate.Linq.Visitors.EqualityHqlGenerator">
@@ -28472,6 +28621,18 @@
         <member name="T:NHibernate.Linq.Visitors.Nominator">
             <summary>
             Performs bottom-up analysis to determine which nodes that match a certain predicate
+            </summary>
+        </member>
+        <member name="T:NHibernate.Linq.Visitors.WhereJoinDetector">
+            <summary>
+            The WhereJoinDetector creates the joins for the where clause, including
+            optimizations for inner joins. The algorithms are explained in 
+            the accompanying text file.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Linq.Visitors.WhereJoinDetector.#cctor">
+            <summary>
+            Setup of <see cref="F:NHibernate.Linq.Visitors.WhereJoinDetector.AND"/>, <see cref="F:NHibernate.Linq.Visitors.WhereJoinDetector.OR"/>, <see cref="F:NHibernate.Linq.Visitors.WhereJoinDetector.NOT"/>.
             </summary>
         </member>
         <member name="M:NHibernate.Linq.ReflectionHelper.GetMethodDefinition``1(System.Linq.Expressions.Expression{System.Action{``0}})">
@@ -28499,14 +28660,6 @@
             <typeparam name="TResult">The type of the property.</typeparam>
             <param name="property">The expression representing the property getter.</param>
             <returns>The <see cref="T:System.Reflection.MemberInfo"/> of the property.</returns>
-        </member>
-        <member name="M:NHibernate.Linq.ReflectionHelper.IsMethodOf(System.Reflection.MethodInfo,System.Type)">
-            <summary>
-            Check if a method is declared in a given <see cref="T:System.Type"/>.
-            </summary>
-            <param name="source">The method to check.</param>
-            <param name="realDeclaringType">The where the method is really declared.</param>
-            <returns>True if the method is an implementation of the method declared in <paramref name="realDeclaringType"/>; false otherwise. </returns>
         </member>
         <member name="T:NHibernate.Linq.NhQueryable`1">
             <summary>
@@ -29170,6 +29323,214 @@
             Get the position of the join with the given alias in the
             list of joins
             </summary>
+        </member>
+        <member name="M:NHibernate.Mapping.ByCode.IAnyMapper.MetaValue(System.Object,System.Type)">
+            <summary>
+            Add or modify a value-class pair.
+            </summary>
+            <param name="value">The value of the DB-field dor a given association instance (should override <see cref="M:System.Object.ToString"/>)</param>
+            <param name="entityType">The class associated to the specific <paramref name="value"/>. </param>
+        </member>
+        <member name="M:NHibernate.Mapping.ByCode.ICacheMapper.Include(NHibernate.Mapping.ByCode.CacheInclude)">
+            <summary>
+            
+            </summary>
+            <param name="cacheInclude"></param>
+            <remarks>Not supported in NH3.</remarks>
+        </member>
+        <member name="M:NHibernate.Mapping.ByCode.IClassMapper.Join(System.String,System.Action{NHibernate.Mapping.ByCode.IJoinMapper})">
+            <summary>
+            Using the Join, it is possible to split properties of one class to several tables, when there's a 1-to-1 relationship between the table
+            </summary>
+            <param name="splitGroupId">The split-group identifier. By default it is assigned to the join-table-name</param>
+            <param name="splittedMapping">The lambda to map the join.</param>
+        </member>
+        <member name="M:NHibernate.Mapping.ByCode.IComponentAsIdAttributesMapper.Class(System.Type)">
+            <summary>
+            Force the component to a different type than the one of the property.
+            </summary>
+            <param name="componentType">Mapped component type.</param>
+            <remarks>
+            Useful when the property is an interface and you need the mapping to a concrete class mapped as component.
+            </remarks>
+        </member>
+        <member name="M:NHibernate.Mapping.ByCode.Impl.ICandidatePersistentMembersProvider.GetEntityMembersForPoid(System.Type)">
+            <summary>
+            Get all candidate persistent properties, or fields, to be used as Persistent-Object-ID, for a given root-entity class or interface.
+            </summary>
+            <param name="entityClass">The root-entity class or interface.</param>
+            <returns>All candidate properties or fields to be used as Persistent-Object-ID.</returns>
+        </member>
+        <member name="M:NHibernate.Mapping.ByCode.Impl.ICandidatePersistentMembersProvider.GetRootEntityMembers(System.Type)">
+            <summary>
+            Get all candidate persistent properties or fields for a given root-entity class or interface.
+            </summary>
+            <param name="entityClass">The root-entity class or interface.</param>
+            <returns>All candidate properties or fields.</returns>
+        </member>
+        <member name="M:NHibernate.Mapping.ByCode.Impl.ICandidatePersistentMembersProvider.GetSubEntityMembers(System.Type,System.Type)">
+            <summary>
+            Get all candidate persistent properties or fields for a given entity subclass or interface.
+            </summary>
+            <param name="entityClass">The entity subclass or interface.</param>
+            <param name="entitySuperclass">The superclass (it may be different from <see cref="P:System.Type.BaseType"/>)</param>
+            <returns>All candidate properties or fields.</returns>
+            <remarks>
+            In NHibernate, for a subclass, the method should return only those members not included in
+            its super-classes.
+            </remarks>
+        </member>
+        <member name="M:NHibernate.Mapping.ByCode.Impl.ICandidatePersistentMembersProvider.GetComponentMembers(System.Type)">
+            <summary>
+            Get all candidate persistent properties or fields for a given entity subclass or interface.
+            </summary>
+            <param name="componentClass">The class of the component or an interface.</param>
+            <returns>All candidate properties or fields.</returns>
+        </member>
+        <member name="M:NHibernate.Mapping.ByCode.IManyToOneMapper.Class(System.Type)">
+            <summary>
+            Force the many-to-one to a different type than the one of the property.
+            </summary>
+            <param name="entityType">Mapped entity type.</param>
+            <remarks>
+            Useful when the property is an interface and you need the mapping to a concrete class mapped as entity.
+            </remarks>
+        </member>
+        <member name="M:NHibernate.Mapping.ByCode.IKeyMapper.ForeignKey(System.String)">
+            <summary>
+            Set the Foreing-Key name
+            </summary>
+            <param name="foreingKeyName">The name of the Foreing-Key</param>
+            <remarks>
+            Where the <paramref name="foreingKeyName"/> is "none" or <see cref="F:System.String.Empty"/> or all white-spaces the FK won't be created.
+            Use null to reset the default NHibernate's behavior.
+            </remarks>
+        </member>
+        <member name="T:NHibernate.Mapping.ByCode.Impl.KeyPropertyMapper">
+            <summary>
+            Manage the mapping of a HbmKeyProperty but implementing <see cref="T:NHibernate.Mapping.ByCode.IPropertyMapper"/>
+            instead a more limitated KeyProperty.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Mapping.ByCode.Cascade">
+            <summary>
+            Defines behavior of soft-cascade actions.
+            </summary>
+            <remarks>
+            To check the content or to include/exclude values, from cascade, is strongly recommanded the usage of extensions methods defined in <see cref="T:NHibernate.Mapping.ByCode.CascadeExtensions"/>
+            </remarks>
+            <seealso cref="M:NHibernate.Mapping.ByCode.CascadeExtensions.Has(NHibernate.Mapping.ByCode.Cascade,NHibernate.Mapping.ByCode.Cascade)"/>
+            <seealso cref="M:NHibernate.Mapping.ByCode.CascadeExtensions.Include(NHibernate.Mapping.ByCode.Cascade,NHibernate.Mapping.ByCode.Cascade)"/>
+            <seealso cref="M:NHibernate.Mapping.ByCode.CascadeExtensions.Exclude(NHibernate.Mapping.ByCode.Cascade,NHibernate.Mapping.ByCode.Cascade)"/>
+        </member>
+        <member name="E:NHibernate.Mapping.ByCode.ModelMapper.BeforeMapClass">
+            <summary>
+            Occurs before apply pattern-appliers on a root class.
+            </summary>
+        </member>
+        <member name="E:NHibernate.Mapping.ByCode.ModelMapper.BeforeMapSubclass">
+            <summary>
+            Occurs before apply pattern-appliers on a subclass.
+            </summary>
+        </member>
+        <member name="E:NHibernate.Mapping.ByCode.ModelMapper.BeforeMapJoinedSubclass">
+            <summary>
+            Occurs before apply pattern-appliers on a joined-subclass.
+            </summary>
+        </member>
+        <member name="E:NHibernate.Mapping.ByCode.ModelMapper.BeforeMapUnionSubclass">
+            <summary>
+            Occurs before apply pattern-appliers on a union-subclass.
+            </summary>
+        </member>
+        <member name="E:NHibernate.Mapping.ByCode.ModelMapper.AfterMapClass">
+            <summary>
+            Occurs after apply the last customizer on a root class.
+            </summary>
+        </member>
+        <member name="E:NHibernate.Mapping.ByCode.ModelMapper.AfterMapSubclass">
+            <summary>
+            Occurs after apply the last customizer on a subclass.
+            </summary>
+        </member>
+        <member name="E:NHibernate.Mapping.ByCode.ModelMapper.AfterMapJoinedSubclass">
+            <summary>
+            Occurs after apply the last customizer on a joined-subclass..
+            </summary>
+        </member>
+        <member name="E:NHibernate.Mapping.ByCode.ModelMapper.AfterMapUnionSubclass">
+            <summary>
+            Occurs after apply the last customizer on a union-subclass..
+            </summary>
+        </member>
+        <member name="T:NHibernate.Mapping.ByCode.MappingsExtensions">
+            <summary>
+            Util extensions to use in your test or where you need to see the XML mappings
+            </summary>
+        </member>
+        <member name="M:NHibernate.Mapping.ByCode.PropertyPathExtensions.InverseProgressivePath(NHibernate.Mapping.ByCode.PropertyPath)">
+            <summary>
+            Provide the list of progressive-paths
+            </summary>
+            <param name="source"></param>
+            <returns>
+            Given a path as : Pl1.Pl2.Pl3.Pl4.Pl5 returns paths-sequence as:
+            Pl5
+            Pl4.Pl5
+            Pl3.Pl4.Pl5
+            Pl2.Pl3.Pl4.Pl5
+            Pl1.Pl2.Pl3.Pl4.Pl5
+            </returns>
+        </member>
+        <member name="P:NHibernate.Mapping.ByCode.PropertyToField.DefaultStrategies">
+            <summary>
+            Dictionary containing the embedded strategies to find a field giving a property name.
+            The key is the "partial-name" of the strategy used in XML mapping.
+            The value is an instance of the strategy.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Mapping.ByCode.SimpleModelInspector">
+            <summary>
+            A <see cref="T:NHibernate.Mapping.ByCode.IModelInspector"/> which allows customization of conditions with explicitly declared members.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Mapping.ByCode.TypeExtensions.DecodeMemberAccessExpressionOf``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            Decode a member access expression of a specific ReflectedType
+            </summary>
+            <typeparam name="TEntity">Type to reflect</typeparam>
+            <param name="expression">The expression of the property getter</param>
+            <returns>The <see cref="T:System.Reflection.MemberInfo"/> os the ReflectedType. </returns>
+        </member>
+        <member name="M:NHibernate.Mapping.ByCode.TypeExtensions.DecodeMemberAccessExpressionOf``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Decode a member access expression of a specific ReflectedType
+            </summary>
+            <typeparam name="TEntity">Type to reflect</typeparam>
+            <typeparam name="TProperty">Type of property</typeparam>
+            <param name="expression">The expression of the property getter</param>
+            <returns>The <see cref="T:System.Reflection.MemberInfo"/> os the ReflectedType. </returns>
+        </member>
+        <member name="M:NHibernate.Mapping.ByCode.TypeExtensions.GetMemberFromReflectedType(System.Reflection.MemberInfo,System.Type)">
+            <summary>
+            Given a property or a field try to get the member from a given possible inherited type.
+            </summary>
+            <param name="member">The member to find.</param>
+            <param name="reflectedType">The type where find the member.</param>
+            <returns>The member from the reflected-type or the original <paramref name="member"/> where the <paramref name="member"/> is not accessible from <paramref name="reflectedType"/>.</returns>
+        </member>
+        <member name="M:NHibernate.Mapping.ByCode.TypeExtensions.GetPropertyOrFieldMatchingName(System.Type,System.String)">
+            <summary>
+            Try to find a property or field from a given type.
+            </summary>
+            <param name="source">The type</param>
+            <param name="memberName">The property or field name.</param>
+            <returns>
+            A <see cref="T:System.Reflection.PropertyInfo"/> or a <see cref="T:System.Reflection.FieldInfo"/> where the member is found; null otherwise.
+            </returns>
+            <remarks>
+            Where found the member is returned always from the declaring type.
+            </remarks>
         </member>
         <member name="T:NHibernate.Mapping.AbstractAuxiliaryDatabaseObject">
             <summary> 
@@ -31847,6 +32208,16 @@
             <param name="suffix">The suffix to use in the identifier column alias generation.</param>
             <returns>The identifier column aliases.</returns>
         </member>
+        <member name="M:NHibernate.Persister.Collection.ICollectionPersister.GetElementByIndex(System.Object,System.Object,NHibernate.Engine.ISessionImplementor,System.Object)">
+            <summary>
+            Try to find an element by a given index.
+            </summary>
+            <param name="key">The key of the collection (collection-owner identifier)</param>
+            <param name="index">The given index.</param>
+            <param name="session">The active <see cref="T:NHibernate.ISession"/>.</param>
+            <param name="owner">The owner of the collection.</param>
+            <returns>The value of the element where available; otherwise <see cref="P:NHibernate.Persister.Collection.ICollectionPersister.NotFoundObject"/>.</returns>
+        </member>
         <member name="P:NHibernate.Persister.Collection.ICollectionPersister.Cache">
             <summary>
             Get the cache
@@ -31966,6 +32337,11 @@
             Is this an ordered collection? (An ordered collection is
             ordered by the initialization operation, not by sorting
             that happens in memory, as in the case of a sorted collection.)
+            </summary>
+        </member>
+        <member name="P:NHibernate.Persister.Collection.ICollectionPersister.NotFoundObject">
+            <summary>
+            A place-holder to inform that the data-reader was empty.
             </summary>
         </member>
         <member name="M:NHibernate.Persister.Collection.IQueryableCollection.SelectFragment(System.String,System.String)">
@@ -40885,6 +41261,17 @@
             </remarks>
             <exception cref="T:System.TypeLoadException">If no System.Type was found for <paramref name="classFullName"/>.</exception>
         </member>
+        <member name="M:NHibernate.Util.ReflectHelper.ClassForFullNameOrNull(System.String)">
+            <summary>
+            Load a System.Type given is't name.
+            </summary>
+            <param name="classFullName">The class FullName or AssemblyQualifiedName</param>
+            <returns>The System.Type or null</returns>
+            <remarks>
+            If the <paramref name="classFullName"/> don't represent an <see cref="P:System.Type.AssemblyQualifiedName"/>
+            the method try to find the System.Type scanning all Assemblies of the <see cref="P:System.AppDomain.CurrentDomain"/>.
+            </remarks>
+        </member>
         <member name="M:NHibernate.Util.ReflectHelper.TypeFromAssembly(NHibernate.Util.AssemblyQualifiedTypeName,System.Boolean)">
             <summary>
             Returns a <see cref="T:System.Type"/> from an already loaded Assembly or an
@@ -40977,6 +41364,14 @@
             When the user defines a field.xxxxx access strategy should be because both the property and the field exists.
             NHibernate can work even when the property does not exist but in this case the user should use the appropiate accessor.
             </remarks>
+        </member>
+        <member name="M:NHibernate.Util.ReflectHelper.IsMethodOf(System.Reflection.MethodInfo,System.Type)">
+            <summary>
+            Check if a method is declared in a given <see cref="T:System.Type"/>.
+            </summary>
+            <param name="source">The method to check.</param>
+            <param name="realDeclaringType">The where the method is really declared.</param>
+            <returns>True if the method is an implementation of the method declared in <paramref name="realDeclaringType"/>; false otherwise. </returns>
         </member>
         <member name="T:NHibernate.Util.SafetyEnumerable`1">
             <summary>
