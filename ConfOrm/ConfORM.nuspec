@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>ConfOrm</id>
-    <version>1.0.1.5</version>
+    <version>2.0.0.0</version>
     <authors>Fabio Maulo, OSS community</authors>
     <summary>ORM configuration by code.</summary>
     <description>
@@ -15,7 +15,7 @@
     <licenseUrl>http://www.gnu.org/licenses/lgpl.html</licenseUrl>
     <iconUrl>http://code.google.com/p/codeconform/logo?cct=1298449979</iconUrl>
     <dependencies>
-      <dependency id="NHibernate" version="3.1.0.4000" />
+      <dependency id="NHibernate" version="3.2.0.4000" />
     </dependencies>
   </metadata>
   <files>
