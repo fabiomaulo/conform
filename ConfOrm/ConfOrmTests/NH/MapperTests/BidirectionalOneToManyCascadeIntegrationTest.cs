@@ -27,7 +27,7 @@ namespace ConfOrmTests.NH.MapperTests
 		{
 			var orm = new ObjectRelationalMapper();
 			orm.TablePerClass(new[] { typeof(UpAggregateRoot), typeof(DownAggregateRoot) });
-			orm.Cascade<UpAggregateRoot, DownAggregateRoot>(Cascade.None);
+			orm.Cascade<UpAggregateRoot, DownAggregateRoot>(CascadeOn.None);
 
 			var mapper = new Mapper(orm);
 			var mapping = mapper.CompileMappingFor(new[] { typeof(UpAggregateRoot) });
@@ -42,7 +42,7 @@ namespace ConfOrmTests.NH.MapperTests
 		{
 			var orm = new ObjectRelationalMapper();
 			orm.TablePerClass(new[] { typeof(UpAggregateRoot), typeof(DownAggregateRoot) });
-			orm.Cascade<UpAggregateRoot, DownAggregateRoot>(Cascade.None);
+			orm.Cascade<UpAggregateRoot, DownAggregateRoot>(CascadeOn.None);
 
 			var mapper = new Mapper(orm);
 			var mapping = mapper.CompileMappingFor(new[] { typeof(UpAggregateRoot) });

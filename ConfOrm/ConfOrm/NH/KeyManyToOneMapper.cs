@@ -46,7 +46,7 @@ namespace ConfOrm.NH
 			manyToOne.@class = entityType.GetShortClassName(mapDoc);
 		}
 
-		public void Cascade(Cascade cascadeStyle)
+		public void Cascade(CascadeOn cascadeStyle)
 		{
 			// not supported by HbmKeyManyToOne
 		}

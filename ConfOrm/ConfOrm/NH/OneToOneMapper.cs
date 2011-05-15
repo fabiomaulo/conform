@@ -31,9 +31,9 @@ namespace ConfOrm.NH
 
 		#region Implementation of IOneToOneMapper
 
-		public void Cascade(Cascade cascadeStyle)
+		public void Cascade(CascadeOn cascadeStyle)
 		{
-			oneToOne.cascade = (cascadeStyle.Exclude(ConfOrm.Cascade.DeleteOrphans)).ToCascadeString();
+			oneToOne.cascade = (cascadeStyle.Exclude(ConfOrm.CascadeOn.DeleteOrphans)).ToCascadeString();
 		}
 
 		#endregion

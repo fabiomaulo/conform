@@ -37,7 +37,7 @@ namespace ConfOrm.Patterns
 		public void Apply(MemberInfo subject, IManyToOneMapper applyTo)
 		{
 			applyTo.Unique(true);
-			applyTo.Cascade(Cascade.All);
+			applyTo.Cascade(CascadeOn.All);
 		}
 
 		#endregion

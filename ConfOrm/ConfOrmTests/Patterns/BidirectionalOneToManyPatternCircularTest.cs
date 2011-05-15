@@ -75,7 +75,7 @@ namespace ConfOrmTests.Patterns
 			var collectionMapping = new Mock<ICollectionPropertiesMapper>();
 
 			pattern.Apply(null, collectionMapping.Object);
-			collectionMapping.Verify(cm=> cm.Cascade(It.Is<Cascade>(cascade=> cascade.Has(Cascade.All) && cascade.Has(Cascade.DeleteOrphans))));
+			collectionMapping.Verify(cm=> cm.Cascade(It.Is<CascadeOn>(cascade=> cascade.Has(CascadeOn.All) && cascade.Has(CascadeOn.DeleteOrphans))));
 		}
 	}
 }

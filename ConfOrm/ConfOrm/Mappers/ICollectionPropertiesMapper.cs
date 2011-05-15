@@ -17,7 +17,7 @@ namespace ConfOrm.Mappers
 		void OrderBy(string sqlOrderByClause);
 		void Sort();
 		void Sort<TComparer>();
-		void Cascade(Cascade cascadeStyle);
+		void Cascade(CascadeOn cascadeStyle);
 		//void Type(string namedCollectionType); // TODO: figure out a way to avoid string for embedded namedCollectionType
 		void Type<TCollection>() where TCollection: IUserCollectionType;
 		void Type(Type collectionType);
@@ -41,7 +41,7 @@ namespace ConfOrm.Mappers
 		void OrderBy(string sqlOrderByClause);
 		void Sort();
 		void Sort<TComparer>();
-		void Cascade(Cascade cascadeStyle);
+		void Cascade(CascadeOn cascadeStyle);
 		void Type<TCollection>() where TCollection : IUserCollectionType;
 		void Type(Type collectionType);
 		void Table(string tableName);

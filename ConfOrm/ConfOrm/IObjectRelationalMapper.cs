@@ -63,7 +63,7 @@ namespace ConfOrm
 		void Bidirectional<TEntity1, TEntity2>(Expression<Func<TEntity1, TEntity2>> propertyGetter1, Expression<Func<TEntity2, IEnumerable<TEntity1>>> propertyGetter2);
 		void Bidirectional<TEntity1, TEntity2>(Expression<Func<TEntity1, IEnumerable<TEntity2>>> propertyGetter1, Expression<Func<TEntity2, IEnumerable<TEntity1>>> propertyGetter2);
 	
-		void Cascade<TFromEntity, TToEntity>(Cascade cascadeOptions);
+		void Cascade<TFromEntity, TToEntity>(CascadeOn cascadeOptions);
 		
 		void PersistentProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter);
 		void ExcludeProperty<TEntity>(Expression<Func<TEntity, object>> propertyGetter);

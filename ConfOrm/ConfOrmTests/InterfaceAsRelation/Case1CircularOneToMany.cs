@@ -73,7 +73,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			var orm = new ObjectRelationalMapper();
 			orm.TablePerClass<Node>();
 
-			orm.Cascade<INode, INode>(Cascade.Persist);
+			orm.Cascade<INode, INode>(CascadeOn.Persist);
 
 			var mapper = new Mapper(orm);
 			var mapping = mapper.CompileMappingFor(new[] { typeof(Node) });
@@ -89,7 +89,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			var orm = new ObjectRelationalMapper();
 			orm.TablePerClass<Node>();
 
-			orm.Cascade<Node, Node>(Cascade.Persist);
+			orm.Cascade<Node, Node>(CascadeOn.Persist);
 
 			var mapper = new Mapper(orm);
 			var mapping = mapper.CompileMappingFor(new[] { typeof(Node) });

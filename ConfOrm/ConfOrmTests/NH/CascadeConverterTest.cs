@@ -10,55 +10,55 @@ namespace ConfOrmTests.NH
 		[Test]
 		public void ConvertAll()
 		{
-			Cascade.All.ToCascadeString().Should().Contain("all");
+			CascadeOn.All.ToCascadeString().Should().Contain("all");
 		}
 
 		[Test]
 		public void ConvertPersist()
 		{
-			Cascade.Persist.ToCascadeString().Should().Contain("save-update").And.Contain("persist");
+			CascadeOn.Persist.ToCascadeString().Should().Contain("save-update").And.Contain("persist");
 		}
 
 		[Test]
 		public void ConvertDeleteOrphans()
 		{
-			Cascade.DeleteOrphans.ToCascadeString().Should().Be.EqualTo("delete-orphan");
+			CascadeOn.DeleteOrphans.ToCascadeString().Should().Be.EqualTo("delete-orphan");
 		}
 
 		[Test]
 		public void ConvertDetach()
 		{
-			Cascade.Detach.ToCascadeString().Should().Be.EqualTo("evict");
+			CascadeOn.Detach.ToCascadeString().Should().Be.EqualTo("evict");
 		}
 
 		[Test]
 		public void ConvertMerge()
 		{
-			Cascade.Merge.ToCascadeString().Should().Be.EqualTo("merge");
+			CascadeOn.Merge.ToCascadeString().Should().Be.EqualTo("merge");
 		}
 
 		[Test]
 		public void ConvertReAttach()
 		{
-			Cascade.ReAttach.ToCascadeString().Should().Be.EqualTo("lock");
+			CascadeOn.ReAttach.ToCascadeString().Should().Be.EqualTo("lock");
 		}
 
 		[Test]
 		public void ConvertRefresh()
 		{
-			Cascade.Refresh.ToCascadeString().Should().Be.EqualTo("refresh");
+			CascadeOn.Refresh.ToCascadeString().Should().Be.EqualTo("refresh");
 		}
 
 		[Test]
 		public void ConvertRemove()
 		{
-			Cascade.Remove.ToCascadeString().Should().Be.EqualTo("delete");
+			CascadeOn.Remove.ToCascadeString().Should().Be.EqualTo("delete");
 		}
 
 		[Test]
 		public void WhwnCombinationHasCommaSeparatedValues()
 		{
-			var cascadeString = (Cascade.Detach | Cascade.ReAttach).ToCascadeString();
+			var cascadeString = (CascadeOn.Detach | CascadeOn.ReAttach).ToCascadeString();
 			cascadeString.Should().Contain("evict").And.Contain("lock");
 			cascadeString.Split(new[] { ',' }).Should().Have.SameValuesAs("lock", "evict");
 		}

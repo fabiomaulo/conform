@@ -23,7 +23,7 @@ namespace ConfOrm.Mappers
 		void MetaValue(object value, Type entityType);
 
 
-		void Cascade(Cascade cascadeStyle);
+		void Cascade(CascadeOn cascadeStyle);
 		void Index(string indexName);
 		void Lazy(bool isLazy);
 		void Update(bool consideredInUpdateQuery);

@@ -23,9 +23,9 @@ namespace ConfOrm.Patterns
 				// Circular references
 				return false;
 			}
-			Cascade? applyCascade = DomainInspector.ApplyCascade(one, subject, many);
-			if(applyCascade.HasValue && !applyCascade.Value.Has(Cascade.DeleteOrphans)
-				&& !applyCascade.Value.Has(Cascade.Remove) && !applyCascade.Value.Has(Cascade.All))
+			CascadeOn? applyCascade = DomainInspector.ApplyCascade(one, subject, many);
+			if(applyCascade.HasValue && !applyCascade.Value.Has(CascadeOn.DeleteOrphans)
+				&& !applyCascade.Value.Has(CascadeOn.Remove) && !applyCascade.Value.Has(CascadeOn.All))
 			{
 				return false;
 			}

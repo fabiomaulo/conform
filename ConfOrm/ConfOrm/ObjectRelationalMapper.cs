@@ -306,7 +306,7 @@ namespace ConfOrm
 			RegisterBidirectionalRelation<TEntity1, TEntity2>(member1, member2);
 		}
 
-		public virtual void Cascade<TFromEntity, TToEntity>(Cascade cascadeOptions)
+		public virtual void Cascade<TFromEntity, TToEntity>(CascadeOn cascadeOptions)
 		{
 			explicitDeclarations.Cascades.Add(new Relation(typeof(TFromEntity), typeof(TToEntity)), cascadeOptions);
 		}
@@ -522,11 +522,11 @@ namespace ConfOrm
 			return explicitDeclarations.HeterogeneousAssociations.ContainsMember(member) || Patterns.HeterogeneousAssociations.Match(member);
 		}
 
-		public virtual Cascade? ApplyCascade(Type from, MemberInfo on, Type to)
+		public virtual CascadeOn? ApplyCascade(Type from, MemberInfo on, Type to)
 		{
 			var relationOn = new RelationOn(from, on, to);
 
-			Cascade resultByClasses;
+			CascadeOn resultByClasses;
 			var relation = new Relation(from, to);
 			if (explicitDeclarations.Cascades.TryGetValue(relation, out resultByClasses))
 			{

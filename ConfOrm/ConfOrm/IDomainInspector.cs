@@ -21,7 +21,7 @@ namespace ConfOrm
 		bool IsMasterManyToMany(Type from, Type to);
 		bool IsOneToMany(Type from, Type to);
 		bool IsHeterogeneousAssociation(MemberInfo member);
-		Cascade? ApplyCascade(Type from, MemberInfo on, Type to);
+		CascadeOn? ApplyCascade(Type from, MemberInfo on, Type to);
 
 		/// <summary>
 		/// Provide the bidirectional member of a relation where available.

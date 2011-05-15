@@ -2,37 +2,37 @@ namespace ConfOrm
 {
 	public static class Extensions
 	{
-		private const Cascade AnyButOrphans = Cascade.Persist | Cascade.Refresh | Cascade.Merge | Cascade.Remove | Cascade.Detach | Cascade.ReAttach;
+		private const CascadeOn AnyButOrphans = CascadeOn.Persist | CascadeOn.Refresh | CascadeOn.Merge | CascadeOn.Remove | CascadeOn.Detach | CascadeOn.ReAttach;
 
-		public static bool Has(this Cascade source, Cascade value)
+		public static bool Has(this CascadeOn source, CascadeOn value)
 		{
 			return (source & value) == value;
 		}
 
-		public static Cascade Include(this Cascade source, Cascade value)
+		public static CascadeOn Include(this CascadeOn source, CascadeOn value)
 		{
 			return Cleanup(source | value);
 		}
 
-		private static Cascade Cleanup(Cascade cascade)
+		private static CascadeOn Cleanup(CascadeOn cascade)
 		{
-			bool hasAll = cascade.Has(Cascade.All) || cascade.Has(AnyButOrphans);
-			if (hasAll && cascade.Has(Cascade.DeleteOrphans))
+			bool hasAll = cascade.Has(CascadeOn.All) || cascade.Has(AnyButOrphans);
+			if (hasAll && cascade.Has(CascadeOn.DeleteOrphans))
 			{
-				return Cascade.All | Cascade.DeleteOrphans;
+				return CascadeOn.All | CascadeOn.DeleteOrphans;
 			}
 			if (hasAll)
 			{
-				return Cascade.All;
+				return CascadeOn.All;
 			}
 			return cascade;
 		}
 
-		public static Cascade Exclude(this Cascade source, Cascade value)
+		public static CascadeOn Exclude(this CascadeOn source, CascadeOn value)
 		{
-			if(source.Has(Cascade.All) && !value.Has(Cascade.All))
+			if(source.Has(CascadeOn.All) && !value.Has(CascadeOn.All))
 			{
-				return Cleanup(((source & ~Cascade.All) | AnyButOrphans) & ~value);
+				return Cleanup(((source & ~CascadeOn.All) | AnyButOrphans) & ~value);
 			}
 			return Cleanup(source & ~value);
 		}

@@ -96,7 +96,7 @@ namespace ConfOrm.Patterns
 			}
 		}
 
-		protected Cascade? GetExplicitPolymorphismCascade(MemberInfo subject)
+		protected CascadeOn? GetExplicitPolymorphismCascade(MemberInfo subject)
 		{
 			return (from relation in GetRelations(subject)
 							let cascade = DomainInspector.ApplyCascade(relation.From, subject, relation.To)

@@ -38,7 +38,7 @@ namespace ConfOrmTests.NH
 			var hbmMapping = new HbmMapping();
 			var hbm = new HbmKeyManyToOne();
 			var mapper = new KeyManyToOneMapper(null, hbm, hbmMapping);
-			mapper.Executing(m => m.Cascade(Cascade.Persist | Cascade.Remove)).NotThrows();
+			mapper.Executing(m => m.Cascade(CascadeOn.Persist | CascadeOn.Remove)).NotThrows();
 		}
 
 		[Test]

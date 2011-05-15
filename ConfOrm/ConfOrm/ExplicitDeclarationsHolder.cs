@@ -22,7 +22,7 @@ namespace ConfOrm
 		private readonly HashSet<MemberInfo> arrays = new HashSet<MemberInfo>();
 		private readonly HashSet<MemberInfo> dictionaries = new HashSet<MemberInfo>();
 		private readonly HashSet<Type> components = new HashSet<Type>();
-		private readonly Dictionary<Relation, Cascade> cascades = new Dictionary<Relation, Cascade>();
+		private readonly Dictionary<Relation, CascadeOn> cascades = new Dictionary<Relation, CascadeOn>();
 		private readonly HashSet<MemberInfo> persistentProperties = new HashSet<MemberInfo>();
 		private readonly HashSet<Type> complexTypes = new HashSet<Type>();
 		private readonly HashSet<MemberInfo> poids = new HashSet<MemberInfo>();
@@ -113,7 +113,7 @@ namespace ConfOrm
 			get { return components; }
 		}
 
-		public IDictionary<Relation, Cascade> Cascades
+		public IDictionary<Relation, CascadeOn> Cascades
 		{
 			get { return cascades; }
 		}

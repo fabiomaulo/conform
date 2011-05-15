@@ -46,9 +46,9 @@ namespace ConfOrm.NH
 			manyToOne.@class = entityType.GetShortClassName(mapDoc);
 		}
 
-		public void Cascade(Cascade cascadeStyle)
+		public void Cascade(CascadeOn cascadeStyle)
 		{
-			manyToOne.cascade = (cascadeStyle.Exclude(ConfOrm.Cascade.DeleteOrphans)).ToCascadeString();
+			manyToOne.cascade = (cascadeStyle.Exclude(ConfOrm.CascadeOn.DeleteOrphans)).ToCascadeString();
 		}
 
 		public void NotNullable(bool notnull)

@@ -16,7 +16,7 @@ namespace ConfOrm.Patterns
 
 		public void Apply(MemberInfo subject, IOneToOneMapper applyTo)
 		{
-			applyTo.Cascade(Cascade.All);
+			applyTo.Cascade(CascadeOn.All);
 		}
 
 		#endregion

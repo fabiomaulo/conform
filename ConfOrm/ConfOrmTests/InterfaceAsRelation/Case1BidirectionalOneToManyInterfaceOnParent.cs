@@ -81,7 +81,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			orm.TablePerClass<Parent>();
 			orm.TablePerClass<Child>();
 
-			orm.Cascade<IParent, Child>(Cascade.Persist);
+			orm.Cascade<IParent, Child>(CascadeOn.Persist);
 
 			var mapper = new Mapper(orm);
 			var mapping = mapper.CompileMappingFor(new[] { typeof(Parent) });
@@ -98,7 +98,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			orm.TablePerClass<Parent>();
 			orm.TablePerClass<Child>();
 
-			orm.Cascade<Parent, Child>(Cascade.Persist);
+			orm.Cascade<Parent, Child>(CascadeOn.Persist);
 
 			var mapper = new Mapper(orm);
 			var mapping = mapper.CompileMappingFor(new[] { typeof(Parent) });
@@ -115,7 +115,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			orm.TablePerClass<Parent>();
 			orm.TablePerClass<Child>();
 
-			orm.Cascade<IParent, Child>(Cascade.Persist);
+			orm.Cascade<IParent, Child>(CascadeOn.Persist);
 
 			var mapper = new Mapper(orm);
 			var mapping = mapper.CompileMappingFor(new[] { typeof(Parent) });
@@ -132,7 +132,7 @@ namespace ConfOrmTests.InterfaceAsRelation
 			orm.TablePerClass<Parent>();
 			orm.TablePerClass<Child>();
 
-			orm.Cascade<Parent, Child>(Cascade.Persist);
+			orm.Cascade<Parent, Child>(CascadeOn.Persist);
 
 			var mapper = new Mapper(orm);
 			var mapping = mapper.CompileMappingFor(new[] { typeof(Parent) });

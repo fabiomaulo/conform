@@ -73,7 +73,7 @@ namespace ConfOrm.NH.CustomizersImpl
 			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.Sort<TComparer>());
 		}
 
-		public void Cascade(Cascade cascadeStyle)
+		public void Cascade(CascadeOn cascadeStyle)
 		{
 			CustomizersHolder.AddCustomizer(PropertyPath, (ICollectionPropertiesMapper x) => x.Cascade(cascadeStyle));
 		}

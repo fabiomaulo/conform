@@ -28,9 +28,9 @@ namespace ConfOrm.Patterns
 				return false;
 			}
 
-			Cascade? applyCascade = GetExplicitPolymorphismCascade(subject);
-			if (applyCascade.HasValue && !applyCascade.Value.Has(Cascade.DeleteOrphans)
-				&& !applyCascade.Value.Has(Cascade.Remove) && !applyCascade.Value.Has(Cascade.All))
+			CascadeOn? applyCascade = GetExplicitPolymorphismCascade(subject);
+			if (applyCascade.HasValue && !applyCascade.Value.Has(CascadeOn.DeleteOrphans)
+				&& !applyCascade.Value.Has(CascadeOn.Remove) && !applyCascade.Value.Has(CascadeOn.All))
 			{
 				return false;
 			}

@@ -66,7 +66,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			orm.TablePerClass<Parent>();
 			orm.TablePerClass<Child>();
 			orm.ManyToOne<Child, Parent>();
-			orm.Cascade<Parent, Child>(Cascade.All | Cascade.DeleteOrphans);
+			orm.Cascade<Parent, Child>(CascadeOn.All | CascadeOn.DeleteOrphans);
 			HbmMapping mapping = GetMapping(orm);
 
 			VerifyMapping(mapping);
@@ -91,7 +91,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			orm.TablePerClass<Parent>();
 			orm.TablePerClass<Child>();
 			orm.ManyToOne<Child, Parent>();
-			orm.Cascade<Parent, Child>(Cascade.None);
+			orm.Cascade<Parent, Child>(CascadeOn.None);
 			HbmMapping mapping = GetMapping(orm);
 
 			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Parent"));
@@ -107,7 +107,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			orm.TablePerClass<Parent>();
 			orm.TablePerClass<Child>();
 			orm.ManyToOne<Child, Parent>();
-			orm.Cascade<Parent, Child>(Cascade.Persist | Cascade.ReAttach);
+			orm.Cascade<Parent, Child>(CascadeOn.Persist | CascadeOn.ReAttach);
 			HbmMapping mapping = GetMapping(orm);
 
 			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Parent"));
@@ -123,7 +123,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			orm.TablePerClass<Parent>();
 			orm.TablePerClass<Child>();
 			orm.ManyToOne<Child, Parent>();
-			orm.Cascade<Parent, Child>(Cascade.Persist | Cascade.ReAttach | Cascade.Remove);
+			orm.Cascade<Parent, Child>(CascadeOn.Persist | CascadeOn.ReAttach | CascadeOn.Remove);
 			HbmMapping mapping = GetMapping(orm);
 
 			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Parent"));
@@ -139,7 +139,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			orm.TablePerClass<Parent>();
 			orm.TablePerClass<Child>();
 			orm.ManyToOne<Child, Parent>();
-			orm.Cascade<Parent, Child>(Cascade.Persist | Cascade.ReAttach | Cascade.Remove);
+			orm.Cascade<Parent, Child>(CascadeOn.Persist | CascadeOn.ReAttach | CascadeOn.Remove);
 			HbmMapping mapping = GetMapping(orm);
 
 			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Parent"));
@@ -155,7 +155,7 @@ namespace ConfOrmTests.ObjectRelationalMapperTests
 			orm.TablePerClass<Parent>();
 			orm.TablePerClass<Child>();
 			orm.ManyToOne<Child, Parent>();
-			orm.Cascade<Parent, Child>(Cascade.All);
+			orm.Cascade<Parent, Child>(CascadeOn.All);
 			HbmMapping mapping = GetMapping(orm);
 
 			HbmClass rc = mapping.RootClasses.First(r => r.Name.Contains("Parent"));

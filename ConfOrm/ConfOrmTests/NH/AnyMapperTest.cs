@@ -107,7 +107,7 @@ namespace ConfOrmTests.NH
 			var hbmMapping = new HbmMapping();
 			var hbmAny = new HbmAny();
 			var mapper = new AnyMapper(null, typeof(int), hbmAny, hbmMapping);
-			mapper.Cascade(Cascade.All);
+			mapper.Cascade(CascadeOn.All);
 			hbmAny.cascade.Should().Be("all");
 		}
 
@@ -117,7 +117,7 @@ namespace ConfOrmTests.NH
 			var hbmMapping = new HbmMapping();
 			var hbmAny = new HbmAny();
 			var mapper = new AnyMapper(null, typeof(int), hbmAny, hbmMapping);
-			mapper.Cascade(Cascade.All | Cascade.DeleteOrphans);
+			mapper.Cascade(CascadeOn.All | CascadeOn.DeleteOrphans);
 			hbmAny.cascade.Should().Be("all");
 		}
 

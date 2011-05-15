@@ -36,8 +36,8 @@ namespace ConfOrm.Patterns
 			applyTo.Unique(true);
 			var from = subject.DeclaringType;
 			var to = subject.GetPropertyOrFieldType();
-			Cascade? applyCascade = domainInspector.ApplyCascade(from, subject, to);
-			applyTo.Cascade(applyCascade.HasValue ? applyCascade.Value : Cascade.All);
+			CascadeOn? applyCascade = domainInspector.ApplyCascade(from, subject, to);
+			applyTo.Cascade(applyCascade.HasValue ? applyCascade.Value : CascadeOn.All);
 		}
 
 		#endregion

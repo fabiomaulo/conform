@@ -182,9 +182,9 @@ namespace ConfOrm.NH
 			any.metavalue = values.Select(vd => new HbmMetaValue { value = vd.Key, @class = vd.Value }).ToArray();
 		}
 
-		public void Cascade(Cascade cascadeStyle)
+		public void Cascade(CascadeOn cascadeStyle)
 		{
-			any.cascade = (cascadeStyle.Exclude(ConfOrm.Cascade.DeleteOrphans)).ToCascadeString();
+			any.cascade = (cascadeStyle.Exclude(ConfOrm.CascadeOn.DeleteOrphans)).ToCascadeString();
 		}
 
 		public void Index(string indexName)

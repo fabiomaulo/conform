@@ -114,7 +114,7 @@ namespace ConfOrm.NH
 		public void Sort() { }
 		public void Sort<TComparer>() {}
 
-		public void Cascade(Cascade cascadeStyle)
+		public void Cascade(CascadeOn cascadeStyle)
 		{
 			mapping.cascade = cascadeStyle.ToCascadeString();
 		}

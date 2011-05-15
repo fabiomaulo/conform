@@ -13,7 +13,7 @@ namespace ConfOrm.Mappers
 		/// </remarks>
 		void Class(Type entityType);
 
-		void Cascade(Cascade cascadeStyle);
+		void Cascade(CascadeOn cascadeStyle);
 		void NotNullable(bool notnull);
 		void Unique(bool unique);
 		void UniqueKey(string uniquekeyName);

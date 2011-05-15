@@ -116,7 +116,7 @@ namespace ConfOrm.NH
 			throw new NotImplementedException();
 		}
 
-		public void Cascade(Cascade cascadeStyle)
+		public void Cascade(CascadeOn cascadeStyle)
 		{
 			mapping.cascade = cascadeStyle.ToCascadeString();
 		}

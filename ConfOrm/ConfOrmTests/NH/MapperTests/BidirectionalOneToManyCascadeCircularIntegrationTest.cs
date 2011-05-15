@@ -49,7 +49,7 @@ namespace ConfOrmTests.NH.MapperTests
 		{
 			var orm = new ObjectRelationalMapper();
 			orm.TablePerClass<Node>();
-			orm.Cascade<Node, Node>(Cascade.Persist);
+			orm.Cascade<Node, Node>(CascadeOn.Persist);
 
 			HbmMapping mapping = GetMapping(orm);
 
@@ -67,7 +67,7 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.TablePerClass<Node>();
 
 			var mapper = new Mapper(orm);
-			mapper.Customize<Node>(node=> node.ManyToOne(n=>n.Parent, m=> m.Cascade(Cascade.Persist)));
+			mapper.Customize<Node>(node=> node.ManyToOne(n=>n.Parent, m=> m.Cascade(CascadeOn.Persist)));
 
 			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(Node) });
 
@@ -85,7 +85,7 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.TablePerClass<Node>();
 
 			var mapper = new Mapper(orm);
-			mapper.Class<Node>(node => node.ManyToOne(n => n.Parent, m => m.Cascade(Cascade.Persist)));
+			mapper.Class<Node>(node => node.ManyToOne(n => n.Parent, m => m.Cascade(CascadeOn.Persist)));
 
 			HbmMapping mapping = mapper.CompileMappingFor(new[] { typeof(Node) });
 

@@ -38,7 +38,7 @@ namespace ConfOrmTests.NH.Customizers
 			customizer.OrderBy(x=>x.Name);
 			customizer.Sort();
 			customizer.Sort<object>();
-			customizer.Cascade(Cascade.DeleteOrphans);
+			customizer.Cascade(CascadeOn.DeleteOrphans);
 			customizer.Type<FakeUserCollectionType>();
 			customizer.Type(typeof(FakeUserCollectionType));
 			customizer.Table("table");
@@ -58,7 +58,7 @@ namespace ConfOrmTests.NH.Customizers
 			collectionMapper.Verify(x => x.OrderBy(It.Is<MemberInfo>(v => v == ForClass<MyEle>.Property(p=>p.Name))), Times.Once());
 			collectionMapper.Verify(x => x.Sort(), Times.Once());
 			collectionMapper.Verify(x => x.Sort<object>(), Times.Once());
-			collectionMapper.Verify(x => x.Cascade(It.Is<Cascade>(v => v == Cascade.DeleteOrphans)), Times.Once());
+			collectionMapper.Verify(x => x.Cascade(It.Is<CascadeOn>(v => v == CascadeOn.DeleteOrphans)), Times.Once());
 			collectionMapper.Verify(x => x.Type<FakeUserCollectionType>(), Times.Once());
 			collectionMapper.Verify(x => x.Type(It.Is<Type>(v => v == typeof(FakeUserCollectionType))), Times.Once());
 			collectionMapper.Verify(x => x.Table(It.Is<string>(v => v == "table")), Times.Once());

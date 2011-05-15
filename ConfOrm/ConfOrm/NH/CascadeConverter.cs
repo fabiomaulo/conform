@@ -5,42 +5,42 @@ namespace ConfOrm.NH
 {
 	public static class CascadeConverter
 	{
-		public static string ToCascadeString(this Cascade source)
+		public static string ToCascadeString(this CascadeOn source)
 		{
-			return source == Cascade.None ? null : string.Join(",", source.CascadeDefinitions().ToArray());
+			return source == CascadeOn.None ? null : string.Join(",", source.CascadeDefinitions().ToArray());
 		}
 
-		private static IEnumerable<string> CascadeDefinitions(this Cascade source)
+		private static IEnumerable<string> CascadeDefinitions(this CascadeOn source)
 		{
-			if (source.Has(Cascade.All))
+			if (source.Has(CascadeOn.All))
 			{
 				yield return "all";				
 			}
-			if (source.Has(Cascade.Persist))
+			if (source.Has(CascadeOn.Persist))
 			{
 				yield return "save-update, persist";
 			}
-			if (source.Has(Cascade.Refresh))
+			if (source.Has(CascadeOn.Refresh))
 			{
 				yield return "refresh";
 			}
-			if (source.Has(Cascade.Merge))
+			if (source.Has(CascadeOn.Merge))
 			{
 				yield return "merge";
 			}
-			if (source.Has(Cascade.Remove))
+			if (source.Has(CascadeOn.Remove))
 			{
 				yield return "delete";
 			}
-			if (source.Has(Cascade.Detach))
+			if (source.Has(CascadeOn.Detach))
 			{
 				yield return "evict";
 			}
-			if (source.Has(Cascade.ReAttach))
+			if (source.Has(CascadeOn.ReAttach))
 			{
 				yield return "lock";
 			}
-			if (source.Has(Cascade.DeleteOrphans))
+			if (source.Has(CascadeOn.DeleteOrphans))
 			{
 				yield return "delete-orphan";
 			}

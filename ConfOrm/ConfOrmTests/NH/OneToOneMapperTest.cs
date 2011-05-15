@@ -26,7 +26,7 @@ namespace ConfOrmTests.NH
 		{
 			var hbm = new HbmOneToOne();
 			var mapper = new OneToOneMapper(null, hbm);
-			mapper.Cascade(Cascade.Persist | Cascade.Remove);
+			mapper.Cascade(CascadeOn.Persist | CascadeOn.Remove);
 			hbm.cascade.Split(',').Select(w=> w.Trim()).Should().Contain("persist").And.Contain("delete");
 		}
 
@@ -35,7 +35,7 @@ namespace ConfOrmTests.NH
 		{
 			var hbm = new HbmOneToOne();
 			var mapper = new OneToOneMapper(null, hbm);
-			mapper.Cascade(Cascade.Persist | Cascade.DeleteOrphans | Cascade.Remove);
+			mapper.Cascade(CascadeOn.Persist | CascadeOn.DeleteOrphans | CascadeOn.Remove);
 			hbm.cascade.Split(',').Select(w => w.Trim()).All(w=> w.Satisfy(cascade=> !cascade.Contains("orphan")));
 		}
 

@@ -52,20 +52,20 @@ namespace ConfOrmExample
 			});
 			mapper.Class<Human>(cm => cm.Bag(human => human.Pets, bagm =>
 			{
-				bagm.Cascade(Cascade.None);
+				bagm.Cascade(CascadeOn.None);
 				bagm.Key(km => km.OnDelete(OnDeleteAction.NoAction));
 			}, cer => { }));
 			mapper.Class<Zoo>(cm =>
 			{
 				cm.Map(zoo => zoo.Mammals, mapm =>
 				{
-					mapm.Cascade(Cascade.None);
+					mapm.Cascade(CascadeOn.None);
 					mapm.Key(km => km.OnDelete(OnDeleteAction.NoAction));
 					mapm.Inverse(false);
 				}, x=> { }, cer => { });
 				cm.Map(zoo => zoo.Animals, mapm =>
 				{
-					mapm.Cascade(Cascade.None);
+					mapm.Cascade(CascadeOn.None);
 					mapm.Key(km => km.OnDelete(OnDeleteAction.NoAction));
 				}, x => { }, cer => { });
 			});

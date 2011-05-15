@@ -33,7 +33,7 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.Setup(m => m.IsPersistentId(It.Is<MemberInfo>(mi => mi.Name == "Id"))).Returns(true);
 			orm.Setup(m => m.IsPersistentProperty(It.Is<MemberInfo>(mi => mi.Name != "Id"))).Returns(true);
 			orm.Setup(m => m.IsManyToOne(It.Is<Type>(t => t == typeof(AEntity)), It.Is<Type>(t => t == typeof(BEntity)))).Returns(true);
-			orm.Setup(m => m.ApplyCascade(It.Is<Type>(t => t == typeof(AEntity)), It.IsAny<MemberInfo>(), It.Is<Type>(t => t == typeof(BEntity)))).Returns(Cascade.Persist | Cascade.Remove);
+			orm.Setup(m => m.ApplyCascade(It.Is<Type>(t => t == typeof(AEntity)), It.IsAny<MemberInfo>(), It.Is<Type>(t => t == typeof(BEntity)))).Returns(CascadeOn.Persist | CascadeOn.Remove);
 			return orm;
 		}
 
@@ -70,7 +70,7 @@ namespace ConfOrmTests.NH.MapperTests
 			orm.TablePerClass<AEntity>();
 			orm.TablePerClass<BEntity>();
 			orm.ManyToOne<AEntity, BEntity>();
-			orm.Cascade<AEntity, BEntity>(Cascade.Persist | Cascade.Remove);
+			orm.Cascade<AEntity, BEntity>(CascadeOn.Persist | CascadeOn.Remove);
 			HbmMapping mapping = GetMapping(orm);
 
 			VerifyMappingWithCascade(mapping);
