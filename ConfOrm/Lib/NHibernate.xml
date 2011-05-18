@@ -10668,6 +10668,12 @@
             <param name="alias">LambdaExpression returning an alias</param>
             <returns>return NHibernate.Criterion.IProjection</returns>
         </member>
+        <member name="M:NHibernate.Criterion.ProjectionsExtensions.Year(System.DateTime)">
+            <summary>
+            Project SQL function year()
+            Note: throws an exception outside of a QueryOver expression
+            </summary>
+        </member>
         <member name="T:NHibernate.Criterion.Property">
             <summary>
             A factory for property-specific  AbstractCriterion  and projection instances
@@ -14914,7 +14920,7 @@
             Initializes a new instance of the <see cref="T:NHibernate.Driver.FirebirdDriver"/> class.
             </summary>
             <exception cref="T:NHibernate.HibernateException">
-            Thrown when the <c>FirebirdSql.Data.Firebird</c> assembly can not be loaded.
+            Thrown when the <c>FirebirdSql.Data.FirebirdClient</c> assembly can not be loaded.
             </exception>
         </member>
         <member name="T:NHibernate.Driver.IfxDriver">
@@ -17783,8 +17789,8 @@
             <summary>
             Get the names of all persistent classes that implement/extend the given interface/class
             </summary>
-            <param name="className"></param>
-            <returns></returns>
+            <param name="entityOrClassName">The entity-name, the class name or full name, the imported class name.</param>
+            <returns>All implementors class names.</returns>
         </member>
         <member name="M:NHibernate.Engine.ISessionFactoryImplementor.GetImportedClassName(System.String)">
             <summary>
@@ -22130,6 +22136,171 @@
             Ported by: Steve Strong
             </summary>
         </member>
+        <member name="T:NHibernate.Hql.Ast.ANTLR.Tree.IParameterContainer">
+            <summary>
+            Currently this is needed in order to deal with {@link FromElement FromElements} which
+            contain "hidden" JDBC parameters from applying filters.
+            Would love for this to go away, but that would require that Hibernate's
+            internal {@link org.hibernate.engine.JoinSequence join handling} be able to either:<ul>
+            <li>render the same AST structures</li>
+            <li>render structures capable of being converted to these AST structures</li>
+            </ul>
+            In the interim, this allows us to at least treat these "hidden" parameters properly which is
+            the most pressing need.
+            Author: Steve Ebersole
+            Ported by: Steve Strong
+            </summary>
+        </member>
+        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.IParameterContainer.AddEmbeddedParameter(NHibernate.Param.IParameterSpecification)">
+            <summary>
+            Adds a parameter specification for a parameter encountered within this node.  We use the term 'embedded' here
+            because of the fact that the parameter was simply encountered as part of the node's text; it does not exist
+            as part of a subtree as it might in a true AST.
+            </summary>
+            <param name="specification">The generated specification.</param>
+        </member>
+        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.IParameterContainer.GetEmbeddedParameters">
+            <summary>
+            Retrieve all embedded parameter specifications.
+            </summary>
+            <returns>All embedded parameter specifications; may return null.</returns>
+        </member>
+        <member name="P:NHibernate.Hql.Ast.ANTLR.Tree.IParameterContainer.Text">
+            <summary>
+            Set the renderable text of this node.
+            </summary>
+        </member>
+        <member name="P:NHibernate.Hql.Ast.ANTLR.Tree.IParameterContainer.HasEmbeddedParameters">
+            <summary>
+            Determine whether this node contans embedded parameters.  The implication is that
+            {@link #getEmbeddedParameters()} is allowed to return null if this method returns false.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElement.#ctor(NHibernate.Hql.Ast.ANTLR.Tree.FromClause,NHibernate.Hql.Ast.ANTLR.Tree.FromElement,System.String)">
+            <summary>
+            Constructor form used to initialize <see cref="T:NHibernate.Hql.Ast.ANTLR.Tree.ComponentJoin"/>.
+            </summary>
+            <param name="fromClause">The FROM clause to which this element belongs.</param>
+            <param name="origin">The origin (LHS) of this element.</param>
+            <param name="alias">The alias applied to this element.</param>
+        </member>
+        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElement.RenderIdentifierSelect(System.Int32,System.Int32)">
+            <summary>
+            Returns the identifier select SQL fragment.
+            </summary>
+            <param name="size">The total number of returned types.</param>
+            <param name="k">The sequence of the current returned type.</param>
+            <returns>the identifier select SQL fragment.</returns>
+        </member>
+        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElement.RenderPropertySelect(System.Int32,System.Int32)">
+            <summary>
+            Returns the property select SQL fragment.
+            </summary>
+            <param name="size">The total number of returned types.</param>
+            <param name="k">The sequence of the current returned type.</param>
+            <returns>the property select SQL fragment.</returns>
+        </member>
+        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElement.RenderScalarIdentifierSelect(System.Int32)">
+            <summary>
+            Render the identifier select, but in a 'scalar' context (i.e. generate the column alias).
+            </summary>
+            <param name="i">the sequence of the returned type</param>
+            <returns>the identifier select with the column alias.</returns>
+        </member>
+        <member name="P:NHibernate.Hql.Ast.ANTLR.Tree.FromElement.IsImplied">
+            <summary>
+            Returns true if this FromElement was implied by a path, or false if this FROM element is explicitly declared in
+            the FROM clause.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Hql.Ast.ANTLR.Tree.FromElementType">
+            <summary>
+            Delegate that handles the type and join sequence information for a FromElement.
+            Author: josh
+            Ported by: Steve Strong
+            </summary>
+        </member>
+        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElementType.RenderIdentifierSelect(System.Int32,System.Int32)">
+            <summary>
+            Returns the identifier select SQL fragment.
+            </summary>
+            <param name="size">The total number of returned types.</param>
+            <param name="k">The sequence of the current returned type.</param>
+            <returns>the identifier select SQL fragment.</returns>
+        </member>
+        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElementType.RenderScalarIdentifierSelect(System.Int32)">
+            <summary>
+            Render the identifier select, but in a 'scalar' context (i.e. generate the column alias).
+            </summary>
+            <param name="i">the sequence of the returned type</param>
+            <returns>the identifier select with the column alias.</returns>
+        </member>
+        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElementType.RenderPropertySelect(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Returns the property select SQL fragment.
+            </summary>
+            <param name="size">The total number of returned types.</param>
+            <param name="k">The sequence of the current returned type.</param>
+            <param name="allProperties"></param>
+            <returns>the property select SQL fragment.</returns>
+        </member>
+        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElementType.GetPropertyType(System.String,System.String)">
+            <summary>
+            Returns the type of a property, given it's name (the last part) and the full path.
+            </summary>
+            <param name="propertyName">The last part of the full path to the property.</param>
+            <param name="propertyPath">The full property path.</param>
+            <returns>The type</returns>
+        </member>
+        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElementType.TrimLeadingCommaAndSpaces(System.String)">
+            <summary>
+            This accounts for a quirk in Queryable, where it sometimes generates ',  ' in front of the
+            SQL fragment.  :-P
+            </summary>
+            <param name="fragment">A SQL fragment.</param>
+            <returns>The fragment, without the leading comma and spaces.</returns>
+        </member>
+        <member name="P:NHibernate.Hql.Ast.ANTLR.Tree.FromElementType.Queryable">
+            <summary>
+            Returns the Hibernate queryable implementation for the HQL class.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Persister.Entity.IPropertyMapping">
+            <summary>
+            Abstraction of all mappings that define properties: entities, collection elements.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Persister.Entity.IPropertyMapping.ToType(System.String)">
+            <summary>
+            Given a component path expression, get the type of the property
+            </summary>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Persister.Entity.IPropertyMapping.TryToType(System.String,NHibernate.Type.IType@)">
+            <summary>
+            Given a component path expression, get the type of the property. 
+            </summary>
+            <param name="propertyName"></param>
+            <param name="type"></param>
+            <returns>true if a type was found, false if not</returns>
+        </member>
+        <member name="M:NHibernate.Persister.Entity.IPropertyMapping.ToColumns(System.String,System.String)">
+            <summary>
+            Given a query alias and a property path, return the qualified column name
+            </summary>
+            <param name="alias"></param>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Persister.Entity.IPropertyMapping.ToColumns(System.String)">
+            <summary> Given a property path, return the corresponding column name(s).</summary>
+        </member>
+        <member name="P:NHibernate.Persister.Entity.IPropertyMapping.Type">
+            <summary>
+            Get the type of the thing containing the properties
+            </summary>
+        </member>
         <member name="T:NHibernate.Hql.Ast.ANTLR.Tree.SelectExpressionList">
             <summary>
             Common behavior - a node that contains a list of select expressions.
@@ -22365,75 +22536,6 @@
             Look for an existing implicit or explicit join by the given path.
             </summary>
         </member>
-        <member name="T:NHibernate.Hql.Ast.ANTLR.Tree.IParameterContainer">
-            <summary>
-            Currently this is needed in order to deal with {@link FromElement FromElements} which
-            contain "hidden" JDBC parameters from applying filters.
-            Would love for this to go away, but that would require that Hibernate's
-            internal {@link org.hibernate.engine.JoinSequence join handling} be able to either:<ul>
-            <li>render the same AST structures</li>
-            <li>render structures capable of being converted to these AST structures</li>
-            </ul>
-            In the interim, this allows us to at least treat these "hidden" parameters properly which is
-            the most pressing need.
-            Author: Steve Ebersole
-            Ported by: Steve Strong
-            </summary>
-        </member>
-        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.IParameterContainer.AddEmbeddedParameter(NHibernate.Param.IParameterSpecification)">
-            <summary>
-            Adds a parameter specification for a parameter encountered within this node.  We use the term 'embedded' here
-            because of the fact that the parameter was simply encountered as part of the node's text; it does not exist
-            as part of a subtree as it might in a true AST.
-            </summary>
-            <param name="specification">The generated specification.</param>
-        </member>
-        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.IParameterContainer.GetEmbeddedParameters">
-            <summary>
-            Retrieve all embedded parameter specifications.
-            </summary>
-            <returns>All embedded parameter specifications; may return null.</returns>
-        </member>
-        <member name="P:NHibernate.Hql.Ast.ANTLR.Tree.IParameterContainer.Text">
-            <summary>
-            Set the renderable text of this node.
-            </summary>
-        </member>
-        <member name="P:NHibernate.Hql.Ast.ANTLR.Tree.IParameterContainer.HasEmbeddedParameters">
-            <summary>
-            Determine whether this node contans embedded parameters.  The implication is that
-            {@link #getEmbeddedParameters()} is allowed to return null if this method returns false.
-            </summary>
-        </member>
-        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElement.RenderIdentifierSelect(System.Int32,System.Int32)">
-            <summary>
-            Returns the identifier select SQL fragment.
-            </summary>
-            <param name="size">The total number of returned types.</param>
-            <param name="k">The sequence of the current returned type.</param>
-            <returns>the identifier select SQL fragment.</returns>
-        </member>
-        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElement.RenderPropertySelect(System.Int32,System.Int32)">
-            <summary>
-            Returns the property select SQL fragment.
-            </summary>
-            <param name="size">The total number of returned types.</param>
-            <param name="k">The sequence of the current returned type.</param>
-            <returns>the property select SQL fragment.</returns>
-        </member>
-        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElement.RenderScalarIdentifierSelect(System.Int32)">
-            <summary>
-            Render the identifier select, but in a 'scalar' context (i.e. generate the column alias).
-            </summary>
-            <param name="i">the sequence of the returned type</param>
-            <returns>the identifier select with the column alias.</returns>
-        </member>
-        <member name="P:NHibernate.Hql.Ast.ANTLR.Tree.FromElement.IsImplied">
-            <summary>
-            Returns true if this FromElement was implied by a path, or false if this FROM element is explicitly declared in
-            the FROM clause.
-            </summary>
-        </member>
         <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElementFactory.#ctor(NHibernate.Hql.Ast.ANTLR.Tree.FromClause,NHibernate.Hql.Ast.ANTLR.Tree.FromElement,System.String)">
             <summary>
             Creates entity from elements.
@@ -22452,58 +22554,6 @@
             <param name="classAlias"></param>
             <param name="columns"></param>
             <param name="implied"></param>
-        </member>
-        <member name="T:NHibernate.Hql.Ast.ANTLR.Tree.FromElementType">
-            <summary>
-            Delegate that handles the type and join sequence information for a FromElement.
-            Author: josh
-            Ported by: Steve Strong
-            </summary>
-        </member>
-        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElementType.RenderIdentifierSelect(System.Int32,System.Int32)">
-            <summary>
-            Returns the identifier select SQL fragment.
-            </summary>
-            <param name="size">The total number of returned types.</param>
-            <param name="k">The sequence of the current returned type.</param>
-            <returns>the identifier select SQL fragment.</returns>
-        </member>
-        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElementType.RenderScalarIdentifierSelect(System.Int32)">
-            <summary>
-            Render the identifier select, but in a 'scalar' context (i.e. generate the column alias).
-            </summary>
-            <param name="i">the sequence of the returned type</param>
-            <returns>the identifier select with the column alias.</returns>
-        </member>
-        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElementType.RenderPropertySelect(System.Int32,System.Int32,System.Boolean)">
-            <summary>
-            Returns the property select SQL fragment.
-            </summary>
-            <param name="size">The total number of returned types.</param>
-            <param name="k">The sequence of the current returned type.</param>
-            <param name="allProperties"></param>
-            <returns>the property select SQL fragment.</returns>
-        </member>
-        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElementType.GetPropertyType(System.String,System.String)">
-            <summary>
-            Returns the type of a property, given it's name (the last part) and the full path.
-            </summary>
-            <param name="propertyName">The last part of the full path to the property.</param>
-            <param name="propertyPath">The full property path.</param>
-            <returns>The type</returns>
-        </member>
-        <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.FromElementType.TrimLeadingCommaAndSpaces(System.String)">
-            <summary>
-            This accounts for a quirk in Queryable, where it sometimes generates ',  ' in front of the
-            SQL fragment.  :-P
-            </summary>
-            <param name="fragment">A SQL fragment.</param>
-            <returns>The fragment, without the leading comma and spaces.</returns>
-        </member>
-        <member name="P:NHibernate.Hql.Ast.ANTLR.Tree.FromElementType.Queryable">
-            <summary>
-            Returns the Hibernate queryable implementation for the HQL class.
-            </summary>
         </member>
         <member name="M:NHibernate.Hql.Ast.ANTLR.Tree.HqlSqlWalkerTreeNodeStream.InsertChild(NHibernate.Hql.Ast.ANTLR.Tree.IASTNode,NHibernate.Hql.Ast.ANTLR.Tree.IASTNode)">
             <summary>
@@ -26679,6 +26729,11 @@
             Invoke the expression to extract its runtime value
             </summary>
         </member>
+        <member name="M:NHibernate.Impl.ExpressionProcessor.FindMemberProjection(System.Linq.Expressions.Expression)">
+            <summary>
+            Retrieves the projection for the expression
+            </summary>
+        </member>
         <member name="M:NHibernate.Impl.ExpressionProcessor.FindMemberExpression(System.Linq.Expressions.Expression)">
             <summary>
             Retrieves the name of the property from a member expression
@@ -26763,6 +26818,13 @@
             </summary>
             <param name="function">Lambda expression demonstrating call of custom method</param>
             <param name="functionProcessor">function to convert MethodCallExpression to ICriterion</param>
+        </member>
+        <member name="M:NHibernate.Impl.ExpressionProcessor.RegisterCustomProjection``1(System.Linq.Expressions.Expression{System.Func{``0}},System.Func{System.Linq.Expressions.MethodCallExpression,NHibernate.Criterion.IProjection})">
+            <summary>
+            Register a custom projection for use in a QueryOver expression
+            </summary>
+            <param name="function">Lambda expression demonstrating call of custom method</param>
+            <param name="functionProcessor">function to convert MethodCallExpression to IProjection</param>
         </member>
         <member name="M:NHibernate.Impl.ExpressionQueryImpl.ExpandParameters(System.Collections.Generic.IDictionary{System.String,NHibernate.Engine.TypedValue})">
             <summary> 
@@ -31987,42 +32049,6 @@
         <member name="T:NHibernate.Persister.Collection.IQueryableCollection">
             <summary>
             A collection role that may be queried or loaded by outer join.
-            </summary>
-        </member>
-        <member name="T:NHibernate.Persister.Entity.IPropertyMapping">
-            <summary>
-            Abstraction of all mappings that define properties: entities, collection elements.
-            </summary>
-        </member>
-        <member name="M:NHibernate.Persister.Entity.IPropertyMapping.ToType(System.String)">
-            <summary>
-            Given a component path expression, get the type of the property
-            </summary>
-            <param name="propertyName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NHibernate.Persister.Entity.IPropertyMapping.TryToType(System.String,NHibernate.Type.IType@)">
-            <summary>
-            Given a component path expression, get the type of the property. 
-            </summary>
-            <param name="propertyName"></param>
-            <param name="type"></param>
-            <returns>true if a type was found, false if not</returns>
-        </member>
-        <member name="M:NHibernate.Persister.Entity.IPropertyMapping.ToColumns(System.String,System.String)">
-            <summary>
-            Given a query alias and a property path, return the qualified column name
-            </summary>
-            <param name="alias"></param>
-            <param name="propertyName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:NHibernate.Persister.Entity.IPropertyMapping.ToColumns(System.String)">
-            <summary> Given a property path, return the corresponding column name(s).</summary>
-        </member>
-        <member name="P:NHibernate.Persister.Entity.IPropertyMapping.Type">
-            <summary>
-            Get the type of the thing containing the properties
             </summary>
         </member>
         <member name="T:NHibernate.Persister.Entity.IJoinable">
