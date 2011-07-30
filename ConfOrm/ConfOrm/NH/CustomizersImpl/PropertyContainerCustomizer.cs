@@ -169,7 +169,7 @@ namespace ConfOrm.NH.CustomizersImpl
 		{
 			foreach (var member in members)
 			{
-				CustomizersHolder.AddCustomizer(new PropertyPath(PropertyPath, member), am => am.IdType(idTypeOfMetaType));
+				CustomizersHolder.AddCustomizer(new PropertyPath(PropertyPath, member), (IAnyMapper am) => am.IdType(idTypeOfMetaType));
 				CustomizersHolder.AddCustomizer(new PropertyPath(PropertyPath, member), mapping);
 			}
 		}

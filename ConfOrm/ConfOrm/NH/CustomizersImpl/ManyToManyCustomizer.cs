@@ -53,5 +53,10 @@ namespace ConfOrm.NH.CustomizersImpl
 		{
 			customizersHolder.AddCustomizer(propertyPath, (IManyToManyMapper x) => x.Lazy(lazyRelation));
 		}
+
+		public void ForeignKey(string foreignKeyName)
+		{
+			customizersHolder.AddCustomizer(propertyPath, (IManyToManyMapper x) => x.ForeignKey(foreignKeyName));
+		}
 	}
 }

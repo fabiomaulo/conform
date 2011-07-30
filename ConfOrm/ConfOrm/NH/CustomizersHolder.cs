@@ -56,7 +56,10 @@ namespace ConfOrm.NH
 
 		private readonly Dictionary<PropertyPath, List<Action<IManyToManyMapper>>> collectionRelationManyToManyCustomizers =
 			new Dictionary<PropertyPath, List<Action<IManyToManyMapper>>>();
-		
+
+		private readonly Dictionary<PropertyPath, List<Action<IManyToAnyMapper>>> collectionRelationManyToAnyCustomizers =
+			new Dictionary<PropertyPath, List<Action<IManyToAnyMapper>>>();
+
 		private readonly Dictionary<PropertyPath, List<Action<IMapKeyManyToManyMapper>>> mapKeyManyToManyCustomizers =
 			new Dictionary<PropertyPath, List<Action<IMapKeyManyToManyMapper>>>();
 
@@ -158,6 +161,11 @@ namespace ConfOrm.NH
 			AddCustomizer(collectionRelationOneToManyCustomizers, member, collectionRelationOneToManyCustomizer);
 		}
 
+		public void AddCustomizer(PropertyPath member, Action<IManyToAnyMapper> collectionRelationManyToAnyCustomizer)
+		{
+			AddCustomizer(collectionRelationManyToAnyCustomizers, member, collectionRelationManyToAnyCustomizer);
+		}
+
 		public void AddCustomizer(PropertyPath member, Action<IMapKeyManyToManyMapper> mapKeyManyToManyCustomizer)
 		{
 			AddCustomizer(mapKeyManyToManyCustomizers, member, mapKeyManyToManyCustomizer);
@@ -255,6 +263,11 @@ namespace ConfOrm.NH
 		public void InvokeCustomizers(PropertyPath member, IOneToManyMapper mapper)
 		{
 			InvokeCustomizers(collectionRelationOneToManyCustomizers, member, mapper);
+		}
+
+		public void InvokeCustomizers(PropertyPath member, IManyToAnyMapper mapper)
+		{
+			InvokeCustomizers(collectionRelationManyToAnyCustomizers, member, mapper);
 		}
 
 		public void InvokeCustomizers(PropertyPath member, IMapKeyManyToManyMapper mapper)

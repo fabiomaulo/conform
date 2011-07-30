@@ -52,5 +52,20 @@ namespace ConfOrm.NH.CustomizersImpl
 			var componetElementCustomizer = new ComponentElementCustomizer<TElement>(propertyPath, customizersHolder);
 			mapping(componetElementCustomizer);
 		}
+
+		public void ManyToAny(Type idTypeOfMetaType, Action<IManyToAnyMapper> mapping)
+		{
+			if (mapping == null)
+			{
+				throw new ArgumentNullException("mapping");
+			}
+			var manyToAnyCustomizer = new ManyToAnyCustomizer(propertyPath, customizersHolder);
+			mapping(manyToAnyCustomizer);
+		}
+
+		public void ManyToAny<TIdTypeOfMetaType>(Action<IManyToAnyMapper> mapping)
+		{
+			ManyToAny(typeof(TIdTypeOfMetaType), mapping);
+		}
 	}
 }
